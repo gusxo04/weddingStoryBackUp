@@ -1,0 +1,7 @@
+기본적으로 깔아야 하는 거
+npm install react-router-dom
+npm install axios
+npm install recoil
+npm install @toast-ui/react-editor --force
+npm install sweetalert2
+--------
