@@ -19,8 +19,8 @@ public class ConventionDTO {
     private String conventionTitle;
     private String conventionContent;
     private String conventionImg;
-    private String conventionStart;
-    private String conventionEnd;
+    private Date conventionStart;
+    private Date conventionEnd;
     private int conventionMemberPrice;
     private int conventionLimit;
     private int conventionImgType;
