@@ -1,0 +1,13 @@
+.header{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 200px;
+    background-color: aliceblue;
+}
+
+.header-content{
+    background-color: antiquewhite;
+    width: 1200px;
+    height: 100%;
+}

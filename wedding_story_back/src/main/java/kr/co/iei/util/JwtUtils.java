@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import kr.co.iei.member.model.dto.LoginMemberDTO;
+//import kr.co.iei.member.model.dto.LoginMemberDTO;
 
 @Component
 public class JwtUtils {
@@ -57,20 +57,20 @@ public class JwtUtils {
         return token;
     }
 
-    public LoginMemberDTO checkToken(String token){
-        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
-        Claims claims = (Claims) Jwts.parser()             
-                                    .verifyWith(key)     
-                                    .build()
-                                    .parse(token)
-                                    .getPayload();
-        String memberId = (String)claims.get("memberId");
-        int memberType = (int)claims.get("memberType");
-        LoginMemberDTO loginMember = new LoginMemberDTO();
-        loginMember.setMemberId(memberId);
-        loginMember.setMemberType(memberType);
-        return loginMember;
-    }
+//    public LoginMemberDTO checkToken(String token){
+//        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
+//        Claims claims = (Claims) Jwts.parser()             
+//                                    .verifyWith(key)     
+//                                    .build()
+//                                    .parse(token)
+//                                    .getPayload();
+//        String memberId = (String)claims.get("memberId");
+//        int memberType = (int)claims.get("memberType");
+//        LoginMemberDTO loginMember = new LoginMemberDTO();
+//        loginMember.setMemberId(memberId);
+//        loginMember.setMemberType(memberType);
+//        return loginMember;
+//    }
     
     
 }
