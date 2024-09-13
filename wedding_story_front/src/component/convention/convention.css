@@ -1,13 +1,13 @@
-.header{
+.convention-wrap{
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 200px;
+    height: 100vh;
     background-color: aliceblue;
 }
 
-.header-content{
-    background-color: antiquewhite;
+.convention-container{
     width: 1200px;
     height: 100%;
+    background-color: aquamarine;
 }
