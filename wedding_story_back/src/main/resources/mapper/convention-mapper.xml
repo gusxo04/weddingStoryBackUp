@@ -3,7 +3,10 @@
 <mapper namespace="kr.co.iei.convention.model.dao.ConventionDao">
 
     <select id="getTime" resultType="convention">
-        select * from convention
+        select * from 
+            (select rownum as rnum, c1.* from 
+                (select * from convention order by 1 desc)c1) 
+        where rnum = 1
     </select>
 
 </mapper>
