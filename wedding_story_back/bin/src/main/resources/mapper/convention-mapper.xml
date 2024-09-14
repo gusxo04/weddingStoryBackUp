@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.convention.model.dao.ConventionDao">
+
+    <select id="getTime" resultType="convention">
+        select * from 
+            (select rownum as rnum, c1.* from 
+                (select * from convention order by 1 desc)c1) 
+        where rnum = 1
+    </select>
+
+</mapper>
