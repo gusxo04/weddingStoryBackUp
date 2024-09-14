@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import Header from "./component/common/Header";
 import ConventionMain from "./component/convention/ConventionMain";
 import "./main.css";
+import ConventionLayout from "./component/utils/ConventionLayout";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
 
         
         <Route path="/convention" element={<ConventionMain/>} />
-        
+        <Route path="/test" element={<ConventionLayout/>}/>
         
         
         

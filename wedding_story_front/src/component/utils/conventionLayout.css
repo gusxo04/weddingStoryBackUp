@@ -1,0 +1,48 @@
+.convention-layout-wrap{
+    display: flex;
+    justify-content: center;
+    width: 100%
+}
+
+.convention-layout-container{
+    display: flex;
+    width: 960px;
+    height: 50vh;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.layout{
+    display: flex;
+}
+
+.layout-a, .layout-c{
+    width: 30%;
+    background-color: rgb(189, 255, 233);
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    justify-content: center;
+    height: 100%;
+}
+.layout-b{
+    width: 40%;
+    background-color: rgb(159, 159, 255);
+    flex-wrap: wrap;
+
+}
+
+
+.layout .seat2,.layout .seat3,.layout .seat6,.layout .seat7{
+    margin-top: 10%;
+}
+
+
+
+
+.seat{
+    width: 70px;
+    border: 1px solid black;
+    flex-basis: calc(35% - 10px);
+    margin: 0px 20px;
+
+}

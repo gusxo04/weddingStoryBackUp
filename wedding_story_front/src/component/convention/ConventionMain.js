@@ -1,7 +1,7 @@
 import axios from "axios";
 import "./convention.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const ConventionMain = () => {
@@ -41,17 +41,25 @@ const ConventionMain = () => {
         ""} */}
         {Object.keys(convention).length > 0 ? 
         endDate > 0 ?
-        (startDate > 0 ? "박람회 신청 가능" : "박람회 있지만 신청 불가능") 
+        (startDate > 0 ? <Link to="/test">신청하기</Link> : "박람회 있지만 신청 불가능") 
         : 
-        <div className="empty-convention-wrap">
-          <span>현재 진행중이거나 예정인 박람회가 없습니다</span>
-          <button onClick={() => {
-              navigate(-1);
-            }}>돌아가기</button>
-        </div>
+        <EmptyConvention navigate={navigate} />
         :
         "비어있음"}
       </div>
+    </div>
+  )
+}
+
+//박람회가 없을 경우
+const EmptyConvention = (props) => {
+  const navigate = props.navigate;
+  return (
+    <div className="empty-convention-wrap">
+      <span>현재 진행중이거나 예정인 박람회가 없습니다</span>
+      <button onClick={() => {
+          navigate(-1);
+        }}>돌아가기</button>
     </div>
   )
 }

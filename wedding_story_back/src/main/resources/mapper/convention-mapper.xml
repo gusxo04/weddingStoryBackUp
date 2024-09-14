@@ -6,7 +6,24 @@
         select * from 
             (select rownum as rnum, c1.* from 
                 (select * from convention order by 1 desc)c1) 
-        where rnum = 1
+        where rnum = 4
+    </select>
+
+    <select id="selectConventionSeat" resultType="conventionSeat">
+        select * from convention_seat where
+        seat_code like 
+        <choose>
+            <when test="i == 0">
+                'A%'
+            </when>
+            <when test="i == 1">
+                'B%'
+            </when>
+            <when test="i == 2">
+                'C%'
+            </when>
+        </choose>
+        order by 1
     </select>
 
 </mapper>
