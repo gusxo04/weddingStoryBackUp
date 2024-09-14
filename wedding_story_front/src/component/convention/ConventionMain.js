@@ -57,7 +57,8 @@ const EmptyConvention = (props) => {
   return (
     <div className="empty-convention-wrap">
       <span>현재 진행중이거나 예정인 박람회가 없습니다</span>
-      <button onClick={() => {
+      <Link to="/newConvention" className="locate">박람회 등록하기</Link>
+      <button className="locate" onClick={() => {
           navigate(-1);
         }}>돌아가기</button>
     </div>
