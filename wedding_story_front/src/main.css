@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+button{
+    cursor: pointer;
+}
+
+ul, li{
+    list-style-type: none;
+}
+
+:root {
+    --main1 : #C19975;
+    --main2 :#DCE4E9;
+}

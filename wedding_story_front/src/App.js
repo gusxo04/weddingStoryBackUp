@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Header from "./component/common/Header";
 import ConventionMain from "./component/convention/ConventionMain";
-
+import "./main.css";
 
 
 function App() {
