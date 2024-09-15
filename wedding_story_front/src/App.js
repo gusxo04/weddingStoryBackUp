@@ -7,6 +7,7 @@ import ConventionMain from "./component/convention/ConventionMain";
 import "./main.css";
 import ConventionLayout from "./component/utils/ConventionLayout";
 import InsertConvention from './component/convention/InsertConvention';
+import Footer from "./component/common/Footer";
 
 
 function App() {
@@ -18,23 +19,26 @@ function App() {
       
       <Header/>
 
-      <Routes>
+      <main className="content-wrap">
+
+        <Routes>
 
 
 
 
-        
-        <Route path="/convention" element={<ConventionMain/>} />
-        <Route path="/test" element={<ConventionLayout/>}/>
-        <Route path="/newConvention" element={<InsertConvention/>} />
-        
-        
-        
-      </Routes>
+          
+          <Route path="/convention" element={<ConventionMain/>} />
+          <Route path="/test" element={<ConventionLayout/>}/>
+          <Route path="/newConvention" element={<InsertConvention/>} />
+          
+          
+          
+        </Routes>
+      </main>
       
       
       
-      
+      <Footer/>
       
     </div>
   );

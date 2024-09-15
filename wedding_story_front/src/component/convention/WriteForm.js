@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import ToastEditor from "../utils/ToastEditor";
+import axios from "axios";
 
 
 const WriteForm = (props) => {
@@ -13,10 +14,10 @@ const WriteForm = (props) => {
   const {
     conventionTitle,
     setConventionTitle,
-    conventionStartDate,
-    setConventionStartDate,
-    conventionEndDate,
-    setConventionEndDate,
+    conventionStart,
+    setConventionStart,
+    conventionEnd,
+    setConventionEnd,
     conventionContent,
     setConventionContent,
     image,
@@ -34,40 +35,7 @@ const WriteForm = (props) => {
     showImage,
     setShowImage
   } = props;
-  const compareDate = () => {
-    // 날짜 비교
-    if(conventionStartDate === "" || conventionEndDate === "") return false;
-    const startDate = new Date(conventionStartDate);
-    const endDate = new Date(conventionEndDate);
-    
-    if(startDate <= endDate){
-      console.log("맞음");
-      return true
-    }
-    return false;
-  }
-  compareDate();
   
-  const compareTime = () => {
-    // 시간 비교
-    setConventionTime("");
-    if(conventionStartTime === "" || conventionEndTime === "") return false;
-    const startHour = parseInt(conventionStartTime.split(":")[0]);
-    const startMinute = parseInt(conventionStartTime.split(":")[1]);
-    const endHour = parseInt(conventionEndTime.split(":")[0]);
-    const endMinute = parseInt(conventionEndTime.split(":")[1]);
-
-  
-    if (startHour > endHour) {
-      return false;
-    } else if (startHour === endHour) {
-      if (startMinute >= endMinute) {
-        return false;
-      }
-    }
-    setConventionTime(conventionStartTime+"~"+conventionEndTime);
-    return true;
-  }
     
   
 
@@ -90,6 +58,8 @@ const WriteForm = (props) => {
     }
   }
 
+
+  
   
   return (
     
@@ -134,12 +104,12 @@ const WriteForm = (props) => {
           </div>
           <div className="input-zone">
 
-            <input type="date" className="start-date" value={conventionStartDate} onChange={(e) => {
-              setConventionStartDate(e.target.value);
+            <input type="date" className="start-date" value={conventionStart} onChange={(e) => {
+              setConventionStart(e.target.value);
             }} />
             <span>~</span>
-            <input type="date" className="end-date" value={conventionEndDate} onChange={(e) => {
-              setConventionEndDate(e.target.value);
+            <input type="date" className="end-date" value={conventionEnd} onChange={(e) => {
+              setConventionEnd(e.target.value);
             }} />
 
           </div>
@@ -161,8 +131,6 @@ const WriteForm = (props) => {
             }} />
           </div>
         </div>
-
-        <button onClick={compareTime}>테스트</button>
 
 
         <div className="input-wrap">
@@ -195,10 +163,13 @@ const WriteForm = (props) => {
       </div>
         {/* type 1은 convention에서 작성이라는 뜻 (convention에서 textarea쓸 때는 파일이나 이런건 업로드 안 할거임) */}
       
-      <div style={{width:"100%",height:"1000px"}}></div>
     </>
 
     
   )
 }
+
+
+
+
 export default WriteForm

@@ -89,6 +89,7 @@
     width: 700px;
     height: 700px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .convention-img-type{
@@ -179,6 +180,8 @@ input[type="number"] {
   -moz-appearance: textfield;
 } */
 
+
+/* for editor  */
 .editor-wrap{
     width: 70%;
     margin-top: 20px;
@@ -190,3 +193,43 @@ input[type="number"] {
 .editor-wrap * {
     font-size: 18px;
 }
+
+
+/* Preview */
+.convention-preview-wrap{
+    width: 100%;
+}
+/* main image 버전 */
+.preview-main-wrap{
+    display: flex;
+    width: 100%;
+}
+
+.main-image-zone{
+    width: 70%;
+    height: 500px;
+    display: flex;
+}
+
+#main-image{
+    width: 90%;
+    object-fit: cover;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* back image 버전 */
