@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import ToastEditor from "../utils/ToastEditor";
 
 
 const WriteForm = (props) => {
@@ -12,10 +13,10 @@ const WriteForm = (props) => {
   const {
     conventionTitle,
     setConventionTitle,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
+    conventionStartDate,
+    setConventionStartDate,
+    conventionEndDate,
+    setConventionEndDate,
     conventionContent,
     setConventionContent,
     image,
@@ -24,11 +25,51 @@ const WriteForm = (props) => {
     setConventionPrice,
     conventionLimit,
     setConventionLimit,
+    conventionStartTime,
+    setConventionStartTime,
+    conventionEndTime,
+    setConventionEndTime,
     conventionTime,
     setConventionTime,
     showImage,
     setShowImage
   } = props;
+  const compareDate = () => {
+    // 날짜 비교
+    if(conventionStartDate === "" || conventionEndDate === "") return false;
+    const startDate = new Date(conventionStartDate);
+    const endDate = new Date(conventionEndDate);
+    
+    if(startDate <= endDate){
+      console.log("맞음");
+      return true
+    }
+    return false;
+  }
+  compareDate();
+  
+  const compareTime = () => {
+    // 시간 비교
+    setConventionTime("");
+    if(conventionStartTime === "" || conventionEndTime === "") return false;
+    const startHour = parseInt(conventionStartTime.split(":")[0]);
+    const startMinute = parseInt(conventionStartTime.split(":")[1]);
+    const endHour = parseInt(conventionEndTime.split(":")[0]);
+    const endMinute = parseInt(conventionEndTime.split(":")[1]);
+
+  
+    if (startHour > endHour) {
+      return false;
+    } else if (startHour === endHour) {
+      if (startMinute >= endMinute) {
+        return false;
+      }
+    }
+    setConventionTime(conventionStartTime+"~"+conventionEndTime);
+    return true;
+  }
+    
+  
 
   const changeImage = (e) => {
     console.log(e);
@@ -48,7 +89,7 @@ const WriteForm = (props) => {
       setShowImage(null);
     }
   }
-  
+
   
   return (
     
@@ -93,12 +134,12 @@ const WriteForm = (props) => {
           </div>
           <div className="input-zone">
 
-            <input type="date" className="start-date" value={startDate} onChange={(e) => {
-              setStartDate(e.target.value);
+            <input type="date" className="start-date" value={conventionStartDate} onChange={(e) => {
+              setConventionStartDate(e.target.value);
             }} />
             <span>~</span>
-            <input type="date" className="end-date" value={endDate} onChange={(e) => {
-              setEndDate(e.target.value);
+            <input type="date" className="end-date" value={conventionEndDate} onChange={(e) => {
+              setConventionEndDate(e.target.value);
             }} />
 
           </div>
@@ -110,11 +151,19 @@ const WriteForm = (props) => {
             <span>박람회 시간</span>
           </div>
           <div className="input-zone">
-            <input type="time" value={conventionTime} onChange={(e) => {
-              setConventionTime(e.target.value); 
+            <input type="time" value={conventionStartTime} onChange={(e) => {
+              setConventionStartTime(e.target.value); 
+              
+            }} />
+            <span>~</span>
+            <input type="time" value={conventionEndTime} onChange={(e) => {
+              setConventionEndTime(e.target.value); 
             }} />
           </div>
         </div>
+
+        <button onClick={compareTime}>테스트</button>
+
 
         <div className="input-wrap">
           <div className="input-info">
@@ -141,8 +190,10 @@ const WriteForm = (props) => {
             }} />
           </div>
         </div>
-        
+
+        <ToastEditor boardContent={conventionContent} setBoardContent={setConventionContent} type={1} />
       </div>
+        {/* type 1은 convention에서 작성이라는 뜻 (convention에서 textarea쓸 때는 파일이나 이런건 업로드 안 할거임) */}
       
       <div style={{width:"100%",height:"1000px"}}></div>
     </>

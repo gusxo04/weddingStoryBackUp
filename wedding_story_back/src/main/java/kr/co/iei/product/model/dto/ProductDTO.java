@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value = "product")
 public class ProductDTO {
-
+	private int test;
 }

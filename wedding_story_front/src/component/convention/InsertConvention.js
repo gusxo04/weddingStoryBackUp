@@ -16,9 +16,11 @@ const InsertConvention = () => {
   const [showImage, setShowImage] = useState(null); //미리보기 이미지임
   const [conventionLimit, setConventionLimit] = useState(100);
   const [conventionPrice, setConventionPrice] = useState("");
+  const [conventionStartTime, setConventionStartTime] = useState("");
+  const [conventionEndTime, setConventionEndTime] = useState("");
   const [conventionTime, setConventionTime] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [conventionStartDate, setConventionStartDate] = useState("");
+  const [conventionEndDate, setConventionEndDate] = useState("");
   
   return (
     <div className="convention-wrap">
@@ -28,12 +30,14 @@ const InsertConvention = () => {
         {formType ? 
           <WriteForm imgStyle={imgStyle} setImgStyle={setImgStyle} 
           conventionTitle={conventionTitle} setConventionTitle={setConventionTitle} 
-          startDate={startDate} setStartDate={setStartDate} 
-          endDate={endDate} setEndDate={setEndDate} 
+          conventionStartDate={conventionStartDate} setConventionStartDate={setConventionStartDate} 
+          conventionEndDate={conventionEndDate} setConventionEndDate={setConventionEndDate} 
           conventionContent={conventionContent} setConventionContent={setConventionContent}
           image={image} setImage={setImage}
           conventionPrice={conventionPrice} setConventionPrice={setConventionPrice}
           conventionLimit={conventionLimit} setConventionLimit={setConventionLimit}
+          conventionStartTime={conventionStartTime} setConventionStartTime={setConventionStartTime}
+          conventionEndTime={conventionEndTime} setConventionEndTime={setConventionEndTime}
           conventionTime={conventionTime} setConventionTime={setConventionTime}
           showImage={showImage} setShowImage={setShowImage}
           /> 

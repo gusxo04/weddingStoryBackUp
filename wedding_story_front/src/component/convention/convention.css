@@ -166,7 +166,8 @@
     padding: 5px;
 }
 
-.convention-info-wrap>.input-wrap:last-child{
+.convention-info-wrap>.input-wrap:nth-last-child(2){
+    /* 이유는 모르겠는데 <ToastEditor 컴포넌트 들어오면서 last-child나 last of child가 안 먹힘 뭐임 */
     border-bottom: 1px solid #bbb;
 }
 /* input[type="number"]::-webkit-inner-spin-button,
@@ -177,3 +178,15 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 } */
+
+.editor-wrap{
+    width: 70%;
+    margin-top: 20px;
+}
+.editor-wrap > div {
+    width: 100%;
+}
+
+.editor-wrap * {
+    font-size: 18px;
+}
