@@ -198,38 +198,79 @@ input[type="number"] {
 /* Preview */
 .convention-preview-wrap{
     width: 100%;
+    margin-top: 30px;
 }
 /* main image 버전 */
 .preview-main-wrap{
     display: flex;
     width: 100%;
+    height: 500px;
 }
 
 .main-image-zone{
     width: 70%;
-    height: 500px;
     display: flex;
 }
 
 #main-image{
-    width: 90%;
+    width: 95%;
     object-fit: cover;
 }
 
 
+.main-info-zone{
+    width: 30%;
+    /* background-color: #bbb; */
+    display: flex;
+    flex-direction: column;
+}
 
+.main-info-zone>.main-info-title{
+    height: 25%;
+    max-height: 40%;
+    margin-top: 20%;
+    overflow: hidden;
+}
+.main-info-zone>.main-info-date{
+    height: 15%;
+    align-content: center;
+}
+.main-info-zone>.main-info-time{
+    height: 10%;
+}
+.main-info-zone>.main-info-price{
+    height: 10%;
+}
+.main-info-zone>.main-info-limit{
+    height: 10%;
+}
 
-
-
-
-
-
-
-
-
-
+.main-info-zone>div:not(.main-info-title)>div{
+    font-size: 23px;
+}
 
 
 
 
 /* back image 버전 */
+.back-main-wrap{
+    width: 100%;
+    height: 500px;
+    display: flex;
+}
+
+.back-image-zone{
+    width: 100%;
+    height: 500px;
+}
+#back-image{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* width: 100%; */
+    /* height: 100%; */
+    z-index: -1;
+    /* object-fit: cover; */
+}

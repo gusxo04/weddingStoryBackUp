@@ -2,7 +2,7 @@ const SwitchButton = (props) => {
 
   const {
     formType,
-    setFormType
+    setFormType,
   } = props;
   
   return (

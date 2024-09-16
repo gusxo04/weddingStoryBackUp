@@ -1,5 +1,5 @@
 import "./convention.css";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Preview from "./Preview";
 import WriteForm from "./WriteForm";
 import SwitchButton from "./SwitchButton";
@@ -99,13 +99,14 @@ const InsertConvention = () => {
           conventionTime={conventionTime} setConventionTime={setConventionTime}
           showImage={showImage} setShowImage={setShowImage}
           /> 
+          <button onClick={compareTime}>시간</button>
           <div>
             <button onClick={write} style={{height:"100px", width:"100px"}}>작성끝!</button>
           </div>
         </>
           :
           <Preview imgStyle={imgStyle} conventionTitle={conventionTitle} conventionContent={conventionContent} 
-          conventionStartDate={conventionStart} conventionEndDate={conventionEnd}
+          conventionStart={conventionStart} conventionEnd={conventionEnd}
           conventionPrice={conventionPrice} conventionLimit={conventionLimit}
           conventionTime={conventionTime} showImage={showImage}
           />
