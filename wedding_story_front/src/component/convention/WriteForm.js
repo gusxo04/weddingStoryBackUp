@@ -164,6 +164,10 @@ const WriteForm = (props) => {
           </div>
         </div>
 
+        <div className="input-msg">
+          <span ref={contentRef}></span>
+        </div>
+
         <ToastEditor boardContent={conventionContent} setBoardContent={setConventionContent} type={1} />
       </div>
         {/* type 1은 convention에서 작성이라는 뜻 (convention에서 textarea쓸 때는 파일이나 이런건 업로드 안 할거임) */}

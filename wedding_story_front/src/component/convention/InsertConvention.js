@@ -44,21 +44,30 @@ const InsertConvention = () => {
     let isTest = true;
     const titleReg = /^.{1,100}$/;
     const contentReg = /^.{1,1300}$/;
+    const contentReg2 = /<p>|<\/p>|&nbsp;|<br>|<br\/>/g;
+    const newContent = conventionContent.replace(contentReg2, "");
 
     titleRef.current.classList.remove("invalid");
     dateRef.current.classList.remove("invalid");
     timeRef.current.classList.remove("invalid");
     limitRef.current.classList.remove("invalid");
     priceRef.current.classList.remove("invalid");
-    const d = isTest = false;
+    contentRef.current.classList.remove("invalid");
+    contentRef.current.textContent = "";
     
     if(!titleReg.test(conventionTitle) || conventionTitle.trim() === ""){
       //박람회 제목 테스트
       titleRef.current.classList.add("invalid");
       isTest = false;
     }
-    if(!contentReg.test(conventionContent) || conventionContent.trim() === ""){
-      // contentRef.current.classList.add("invalid");
+    if(!contentReg.test(conventionContent) || conventionContent.trim() === ""  ){
+      contentRef.current.classList.add("invalid");
+      contentRef.current.textContent = "내용이 너무 깁니다!";
+      isTest = false;
+    }
+    if(newContent.trim() === ""){
+      contentRef.current.classList.add("invalid");
+      contentRef.current.textContent = "내용을 입력해주세요";
       isTest = false;
     }
 
@@ -70,6 +79,7 @@ const InsertConvention = () => {
 
     const isTime = compareTime();
     if(!isTime){
+      // 시작날짜랑 종료 날짜가 오늘 이후인지도 체크 해야 됨
       timeRef.current.classList.add("invalid");
       isTest = false;
     }
@@ -88,6 +98,7 @@ const InsertConvention = () => {
       isTest = false;
     }
     
+    if(isTest) write();
   }
 
 
@@ -98,6 +109,11 @@ const InsertConvention = () => {
     form.append("conventionTitle",conventionTitle);
     form.append("conventionContent",conventionContent);
     form.append("conventionTime",conventionTime);
+    form.append("conventionStart", conventionStart);
+    form.append("conventionEnd", conventionEnd);
+    form.append("conventionPrice", conventionPrice);
+    form.append("conventionLimit", conventionLimit);
+    form.append("imgStyle", imgStyle);
     form.append("image",image);
 
     axios.post(`${backServer}/convention/write`,form)
@@ -165,7 +181,6 @@ const InsertConvention = () => {
           limitRef={limitRef} priceRef={priceRef}
           /> 
 
-          <button onClick={compareTime}>시간</button>
           <div>
             <button onClick={writeTest} style={{height:"100px", width:"100px"}}>작성끝!</button>
           </div>

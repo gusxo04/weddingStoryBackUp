@@ -17,6 +17,8 @@ public interface ConventionDao {
 
     List selectConventionSeat(int i);
 
+    boolean insertConvention(ConventionDTO convention);
+
 
 
 }

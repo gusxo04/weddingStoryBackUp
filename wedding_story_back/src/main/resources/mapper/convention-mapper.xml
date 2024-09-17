@@ -27,4 +27,8 @@
         order by 1
     </select>
 
+    <insert id="insertConvention">
+        insert into convention values(convention_seq.nextval,#{conventionTitle},#{conventionContent},#{conventionImg},#{conventionStart},#{conventionEnd},#{conventionTime},sysdate,#{conventionPrice},#{conventionLimit},#{imgStyle})
+    </insert>
+
 </mapper>

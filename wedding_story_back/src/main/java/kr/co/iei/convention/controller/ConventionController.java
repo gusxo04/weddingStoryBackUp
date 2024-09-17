@@ -1,6 +1,5 @@
 package kr.co.iei.convention.controller;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -10,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,11 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.util.FileUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -68,9 +65,15 @@ public class ConventionController {
 
     @PostMapping("/write")
     public ResponseEntity<Boolean> writeConvention(@ModelAttribute ConventionDTO convention, @ModelAttribute MultipartFile image) {
-        System.out.println(convention);
-        System.out.println(image);
-        return ResponseEntity.ok(true);
+        // System.out.println(convention);
+        // System.out.println(image);
+        if(image != null){
+            String savepath = root+"/convention/";
+            String filepath = fileUtils.upload(savepath, image);
+            convention.setConventionImg(filepath);
+        }
+        boolean result = conventionService.insertConvention(convention);
+        return ResponseEntity.ok(result);
     }
     
 

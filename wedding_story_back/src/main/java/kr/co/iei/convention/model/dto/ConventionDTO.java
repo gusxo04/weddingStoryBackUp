@@ -1,6 +1,8 @@
 package kr.co.iei.convention.model.dto;
 
 
+
+
 import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
@@ -23,7 +25,7 @@ public class ConventionDTO {
     private Date conventionEnd;
     private String conventionTime;
     private Date conventionRegisteredDate;
-    private int conventionMemberPrice;
+    private int conventionPrice;
     private int conventionLimit;
-    private int conventionImgType;
+    private int imgStyle;
 }
