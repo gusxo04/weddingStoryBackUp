@@ -33,14 +33,19 @@ const WriteForm = (props) => {
     conventionTime,
     setConventionTime,
     showImage,
-    setShowImage
+    setShowImage,
+    titleRef,
+    contentRef, 
+    timeRef, 
+    dateRef, 
+    limitRef, 
+    priceRef
   } = props;
   
     
   
 
   const changeImage = (e) => {
-    console.log(e);
     const files = e.currentTarget.files;
     if(files.length !== 0 && files[0] !== 0){
       setImage(files[0]);
@@ -89,7 +94,7 @@ const WriteForm = (props) => {
 
         <div className="input-wrap">
           <div className="input-info">
-            <span>박람회 제목</span>
+            <span ref={titleRef}>박람회 제목</span>
           </div>
           <div className="input-zone">
             <input type="text" value={conventionTitle} onChange={(e) => {
@@ -100,7 +105,7 @@ const WriteForm = (props) => {
 
         <div className="input-wrap">
           <div className="input-info">
-            <span>박람회 일정</span>
+            <span ref={dateRef}>박람회 일정</span>
           </div>
           <div className="input-zone">
 
@@ -118,7 +123,7 @@ const WriteForm = (props) => {
 
         <div className="input-wrap">
           <div className="input-info">
-            <span>박람회 시간</span>
+            <span ref={timeRef}>박람회 시간</span>
           </div>
           <div className="input-zone">
             <input type="time" value={conventionStartTime} onChange={(e) => {
@@ -135,7 +140,7 @@ const WriteForm = (props) => {
 
         <div className="input-wrap">
           <div className="input-info">
-            <span>박람회 정원</span>
+            <span ref={limitRef}>박람회 정원</span>
           </div>
           <div className="input-zone">
             <input type="type" value={conventionLimit} onChange={(e) => {
@@ -148,7 +153,7 @@ const WriteForm = (props) => {
 
         <div className="input-wrap">
           <div className="input-info">
-            <span>박람회 가격</span>
+            <span ref={priceRef}>박람회 가격</span>
           </div>
           <div className="input-zone">
             <input type="type" value={conventionPrice} onChange={(e) => {

@@ -24,9 +24,72 @@ const InsertConvention = () => {
   const [conventionStart, setConventionStart] = useState("");
   const [conventionEnd, setConventionEnd] = useState("");
 
+  const titleRef = useRef(null);
+  const contentRef = useRef(null);
+  const dateRef = useRef(null);
+  const timeRef = useRef(null);
+  const limitRef = useRef(null);
+  const priceRef = useRef(null);
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [formType]);
+
+  useEffect(() => {
+    setConventionTime(conventionStartTime+" ~ "+conventionEndTime);
+  }, [conventionStartTime, conventionEndTime]);
+
+
+  const writeTest = () => {
+    let isTest = true;
+    const titleReg = /^.{1,100}$/;
+    const contentReg = /^.{1,1300}$/;
+
+    titleRef.current.classList.remove("invalid");
+    dateRef.current.classList.remove("invalid");
+    timeRef.current.classList.remove("invalid");
+    limitRef.current.classList.remove("invalid");
+    priceRef.current.classList.remove("invalid");
+    const d = isTest = false;
+    
+    if(!titleReg.test(conventionTitle) || conventionTitle.trim() === ""){
+      //박람회 제목 테스트
+      titleRef.current.classList.add("invalid");
+      isTest = false;
+    }
+    if(!contentReg.test(conventionContent) || conventionContent.trim() === ""){
+      // contentRef.current.classList.add("invalid");
+      isTest = false;
+    }
+
+    const isDate = compareDate();
+    if(!isDate){
+      dateRef.current.classList.add("invalid");
+      isTest = false;
+    }
+
+    const isTime = compareTime();
+    if(!isTime){
+      timeRef.current.classList.add("invalid");
+      isTest = false;
+    }
+    // 정원이 하루마다인지 총인지 알아야 할 듯
+    // 일단 숫자인지 아닌지 체크부터
+    if(isNaN(conventionLimit)){
+      // 일단 숫자가 아니면 입력이 안 되긴하는데 혹시 모르니까 체크
+      setConventionLimit(100);
+      limitRef.current.classList.add("invalid");
+      isTest = false;
+    }
+    
+    if(isNaN(conventionPrice)){
+      setConventionPrice(100000);
+      priceRef.current.classList.add("invalid");
+      isTest = false;
+    }
+    
+  }
+
 
   const write = () => {
     compareTime();
@@ -46,6 +109,7 @@ const InsertConvention = () => {
     })
   }
 
+  
   const compareDate = () => {
     // 날짜 비교
     if(conventionStart === "" || conventionEnd === "") return false;
@@ -60,7 +124,6 @@ const InsertConvention = () => {
   
   const compareTime = () => {
     // 시간 비교
-    setConventionTime("");
     if(conventionStartTime === "" || conventionEndTime === "") return false;
     const startHour = parseInt(conventionStartTime.split(":")[0]);
     const startMinute = parseInt(conventionStartTime.split(":")[1]);
@@ -75,7 +138,7 @@ const InsertConvention = () => {
         return false;
       }
     }
-    setConventionTime(conventionStartTime+"~"+conventionEndTime);
+    
     return true;
   }
 
@@ -98,10 +161,13 @@ const InsertConvention = () => {
           conventionEndTime={conventionEndTime} setConventionEndTime={setConventionEndTime}
           conventionTime={conventionTime} setConventionTime={setConventionTime}
           showImage={showImage} setShowImage={setShowImage}
+          titleRef={titleRef} contentRef={contentRef} timeRef={timeRef} dateRef={dateRef}
+          limitRef={limitRef} priceRef={priceRef}
           /> 
+
           <button onClick={compareTime}>시간</button>
           <div>
-            <button onClick={write} style={{height:"100px", width:"100px"}}>작성끝!</button>
+            <button onClick={writeTest} style={{height:"100px", width:"100px"}}>작성끝!</button>
           </div>
         </>
           :
