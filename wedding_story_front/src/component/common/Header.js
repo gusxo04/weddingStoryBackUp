@@ -6,9 +6,11 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         <Link to="/convention">박람회임</Link>
+        <span> | </span>
         <Link to="/product/list">게시글</Link>
-        <Link to="/product/list">게시글</Link>
+        <span> | </span>
         <Link to="/admin">관리자</Link>
+        <span> | </span>
       </div>
     </header>
   );
