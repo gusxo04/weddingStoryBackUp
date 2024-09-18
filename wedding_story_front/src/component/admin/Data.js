@@ -1,9 +1,9 @@
 export const Data = {
   2023: {
-    1: { sales: 120000 },
+    1: { sales: 100 },
     2: { sales: 150000 },
     3: { sales: 130000 },
-    4: { sales: 160000 },
+    4: { sales: 300 },
     5: { sales: 170000 },
     6: { sales: 180000 },
     7: { sales: 190000 },
