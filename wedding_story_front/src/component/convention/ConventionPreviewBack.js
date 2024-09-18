@@ -2,6 +2,7 @@ import { Viewer } from "@toast-ui/react-editor";
 
 const ConventionPreviewBack = (props) => {
 
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const {
     imgStyle,
     conventionTitle,
@@ -12,6 +13,7 @@ const ConventionPreviewBack = (props) => {
     conventionLimit,
     conventionTime,
     showImage,
+    conventionImg
   } = props;
 
   console.log(props);
@@ -19,7 +21,14 @@ const ConventionPreviewBack = (props) => {
   return (
     <div className="back-main-wrap">
       <div className="back-image-zone">
+        {showImage ? 
         <img id="back-image" src={showImage} />
+        : 
+        conventionImg ? 
+        <img id="back-image" src={`${backServer}/convention/image/${conventionImg}`} />
+        :
+        <img id="back-image" src="/image/default_img.png" />
+        }
       </div>
 
       <div className="back-inner-img-zone">

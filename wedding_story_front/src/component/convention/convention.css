@@ -40,7 +40,35 @@
 }
 
 
+.convention-preview-info-wrap{
+    display: flex;
+    width: 100%;
+    height: 100px;
+    justify-content: space-around;
+}
 
+.convention-preview-info-wrap>.convention-inner-preview-info{
+    width: calc(100% / 3);
+    text-align: center;
+}
+.convention-preview-info-wrap>.convention-inner-preview-info:first-child{
+    text-align: right;
+}
+.convention-preview-info-wrap>.convention-inner-preview-info:last-child{
+    text-align: left;
+}
+.convention-preview-info-wrap>.convention-inner-preview-info>button{
+    width: 30%;
+    height: 40%;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--main1);
+    font-size: 16px;
+    font-weight: 600;
+}
+.convention-preview-info-wrap>.convention-inner-preview-info>button:hover{
+    /* hover */
+}
 
 /* InsertConvention css */
 .insert-convention-container{
@@ -185,6 +213,22 @@ input[type="number"] {
     margin-top: 20px;
 }
 
+.write-btn-zone{
+    width: 100%;
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+}
+.write-btn-zone>button{
+    width: 10%;
+    height: 30px;
+    border: none;
+    background-color: var(--main1);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 15px;
+}
+
 
 /* for editor  */
 .editor-wrap{
@@ -276,16 +320,17 @@ input[type="number"] {
 /* back image 버전 */
 .back-main-wrap{
     width: 100%;
-    /* height: 500px; */
+    height: 900px;
     display: flex;
     position: relative;
-    min-height: 700px;
+    /* min-height: 700px; */
     margin-bottom: 30px;
     max-height: 1200px;
 }
 
 .back-image-zone{
     width: 100%;
+    /* min-height: 700px; */
     max-height: 1200px;
     /* height: 700px; */
 }
