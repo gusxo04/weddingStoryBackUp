@@ -10,7 +10,6 @@ import InsertConvention from "./component/convention/InsertConvention";
 import Footer from "./component/common/Footer";
 import ProductMain from "./component/product/ProductMain";
 import Admin from "./component/admin/Admin";
-import Sales from "./component/admin/Sales";
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
           <Route path="/newConvention" element={<InsertConvention />} />
           <Route path="/product/*" element={<ProductMain />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/sales" element={<Sales />} />
         </Routes>
       </main>
 
