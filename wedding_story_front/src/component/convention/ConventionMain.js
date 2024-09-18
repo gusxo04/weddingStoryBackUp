@@ -14,6 +14,7 @@ const ConventionMain = () => {
   const [convention, setConvention] = useState({});
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [te, setTe] = useState(false);
 
   useEffect(() => {
     axios.get(`${backServer}/convention`)
@@ -22,11 +23,14 @@ const ConventionMain = () => {
       setConvention(res.data.convention);
       setStartDate(res.data.startDate);
       setEndDate(res.data.endDate);
+      setTe(true);
     })
     .catch(err => {
       console.error(err); 
     })
   }, []);
+
+
   
   return (
     <div className="convention-wrap">
@@ -47,11 +51,13 @@ const ConventionMain = () => {
         : 
         <EmptyConvention navigate={navigate} />
         :
-        "비어있음"}
+        "비어있어요"}
       </div>
     </div>
   )
 }
+
+
 
 //박람회가 없을 경우
 const EmptyConvention = (props) => {
@@ -69,6 +75,7 @@ const EmptyConvention = (props) => {
 
 const ShowConvention = (props) => {
 
+  
   const {
     convention,
     type
@@ -82,6 +89,23 @@ const ShowConvention = (props) => {
       : 
       <ConventionPreviewMain {...convention} />
       }
+
+      <div className="convention-preview-info-wrap">
+        <div className="convention-inner-preview-info convention-layout-btn">
+          <button>부스 보기</button>
+        </div>
+
+        <div className="convention-inner-preview-info convention-way-btn">
+          <button>찾아오시는 길</button>
+        </div>
+
+        <div className="convention-inner-preview-info convention-buy-btn">
+          <button>박람회 신청</button>
+          {/* 일단은 유저꺼 먼저 제작 */}
+          {/* 일반유저면 신청 / 업체면 부스 등록 / 관리자면 수정 */}
+        </div>
+      </div>
+      
     </div>
   )
 }

@@ -4,9 +4,9 @@ import axios from "axios";
 
 
 const WriteForm = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const imgStyle = props.imgStyle;
   const setImgStyle = props.setImgStyle;
-
   const imageRef = useRef(null);
 
   // const conventionTitle = props.conventionTitle;
@@ -22,6 +22,7 @@ const WriteForm = (props) => {
     setConventionContent,
     image,
     setImage,
+    conventionImg,
     conventionPrice,
     setConventionPrice,
     conventionLimit,
@@ -43,7 +44,6 @@ const WriteForm = (props) => {
     imgRef
   } = props;
   
-    
   
 
   const changeImage = (e) => {
@@ -66,7 +66,6 @@ const WriteForm = (props) => {
 
 
   
-  
   return (
     
     <>
@@ -75,7 +74,10 @@ const WriteForm = (props) => {
         <img src={showImage} ref={imgRef} onClick={() => {
           imageRef.current.click();
         }}/>
-        : 
+        :
+        conventionImg ? 
+        <img src={`${backServer}/convention/image/${conventionImg}`} ref={imgRef} />
+        :
         // 나중에 수정할때 또 삼항연산자 써서 해줘야 함 (showImage 말고 db에서 가져온 src정보)
         <img src="/image/default_img.png" ref={imgRef} onClick={() => {
           imageRef.current.click();
@@ -91,6 +93,7 @@ const WriteForm = (props) => {
           setImgStyle(1);
         }}>백그라운드 이미지로 변경</button>
       </div>
+
 
       <div className="convention-info-wrap">
 

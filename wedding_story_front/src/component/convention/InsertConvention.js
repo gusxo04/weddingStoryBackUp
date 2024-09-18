@@ -4,11 +4,13 @@ import Preview from "./Preview";
 import WriteForm from "./WriteForm";
 import SwitchButton from "./SwitchButton";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const InsertConvention = () => {
   
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [formType, setFormType] = useState(true);
   const [imgStyle, setImgStyle] = useState(0);
   
@@ -140,6 +142,7 @@ const InsertConvention = () => {
     axios.post(`${backServer}/convention/write`,form)
     .then(res => {
       console.log(res);
+      navigate("/convention");
     })
     .catch(err => {
       console.error(err); 
@@ -203,8 +206,8 @@ const InsertConvention = () => {
           limitRef={limitRef} priceRef={priceRef} imgRef={imgRef}
           /> 
 
-          <div>
-            <button onClick={writeTest} style={{height:"100px", width:"100px"}}>작성끝!</button>
+          <div className="write-btn-zone">
+            <button onClick={writeTest}>박람회 등록</button>
           </div>
         </>
           :
