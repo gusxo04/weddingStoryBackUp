@@ -105,10 +105,24 @@ const ShowConvention = (props) => {
           {/* 일반유저면 신청 / 업체면 부스 등록 / 관리자면 수정 */}
         </div>
       </div>
+
+      <div className="convention-member-alert-wrap">
+        <div className="convention-input-alert">
+          안녕
+        </div>
+      </div>
       
     </div>
   )
 }
+
+
+
+
+
+
+
+
 
 export default ConventionMain
 
