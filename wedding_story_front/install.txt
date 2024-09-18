@@ -8,3 +8,9 @@ npm install @toast-ui/react-editor --force
 
 정현태
 2024-09-14 오후 9:42
+
+김연우
+2024-09-18 오후 8:41
+npm uninstall @toast-ui/react-editor
+npm install @toast-ui/react-editor@latest --force >> chart.js 사용하기 위해 최신버전으로 재 다운로드
+npm install chart.js
