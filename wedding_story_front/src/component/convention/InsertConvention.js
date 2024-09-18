@@ -22,7 +22,7 @@ const InsertConvention = () => {
   const [conventionEndTime, setConventionEndTime] = useState("");
   const [conventionTime, setConventionTime] = useState("");
   const [conventionStart, setConventionStart] = useState("");
-  const [conventionEnd, setConventionEnd] = useState("");
+  const [checkDate, setConventionEnd] = useState("");
 
   const titleRef = useRef(null);
   const contentRef = useRef(null);
@@ -30,14 +30,18 @@ const InsertConvention = () => {
   const timeRef = useRef(null);
   const limitRef = useRef(null);
   const priceRef = useRef(null);
+  const imgRef = useRef(null);
   
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [formType]);
-
+  
   useEffect(() => {
     setConventionTime(conventionStartTime+" ~ "+conventionEndTime);
   }, [conventionStartTime, conventionEndTime]);
+
+
+  
 
 
   const writeTest = () => {
@@ -52,8 +56,14 @@ const InsertConvention = () => {
     timeRef.current.classList.remove("invalid");
     limitRef.current.classList.remove("invalid");
     priceRef.current.classList.remove("invalid");
+    imgRef.current.classList.remove("invalid");
     contentRef.current.classList.remove("invalid");
     contentRef.current.textContent = "";
+
+    if(!showImage || !image){
+      imgRef.current.classList.add("invalid");
+      isTest = false;
+    }
     
     if(!titleReg.test(conventionTitle) || conventionTitle.trim() === ""){
       //박람회 제목 테스트
@@ -71,7 +81,7 @@ const InsertConvention = () => {
       isTest = false;
     }
 
-    const isDate = compareDate();
+    const isDate = compareDate(checkDate);
     if(!isDate){
       dateRef.current.classList.add("invalid");
       isTest = false;
@@ -83,17 +93,28 @@ const InsertConvention = () => {
       timeRef.current.classList.add("invalid");
       isTest = false;
     }
+    
+    const getToday = new Date();
+    const year = getToday.getFullYear();
+    const month = String(getToday.getMonth() + 1).padStart(2, '0');
+    const day = String(getToday.getDate()).padStart(2, '0');
+    const today = `${year}-${month}-${day}`;
+    const checkToday = compareDate(today);
+    if(checkToday){
+      dateRef.current.classList.add("invalid");
+      isTest = false;
+    }
     // 정원이 하루마다인지 총인지 알아야 할 듯
     // 일단 숫자인지 아닌지 체크부터
-    if(isNaN(conventionLimit)){
+    if(isNaN(conventionLimit) || conventionLimit > 10000 || conventionLimit === ""){
       // 일단 숫자가 아니면 입력이 안 되긴하는데 혹시 모르니까 체크
-      setConventionLimit(100);
+      // setConventionLimit(100);
       limitRef.current.classList.add("invalid");
       isTest = false;
     }
     
-    if(isNaN(conventionPrice)){
-      setConventionPrice(100000);
+    if(isNaN(conventionPrice) || conventionPrice === ""){
+      // setConventionPrice(100000);
       priceRef.current.classList.add("invalid");
       isTest = false;
     }
@@ -110,7 +131,7 @@ const InsertConvention = () => {
     form.append("conventionContent",conventionContent);
     form.append("conventionTime",conventionTime);
     form.append("conventionStart", conventionStart);
-    form.append("conventionEnd", conventionEnd);
+    form.append("conventionEnd", checkDate);
     form.append("conventionPrice", conventionPrice);
     form.append("conventionLimit", conventionLimit);
     form.append("imgStyle", imgStyle);
@@ -126,11 +147,12 @@ const InsertConvention = () => {
   }
 
   
-  const compareDate = () => {
+  const compareDate = (date) => {
     // 날짜 비교
-    if(conventionStart === "" || conventionEnd === "") return false;
+    const checkDate = date;
+    if(conventionStart === "" || checkDate === "") return false;
     const startDate = new Date(conventionStart);
-    const endDate = new Date(conventionEnd);
+    const endDate = new Date(checkDate);
     
     if(startDate <= endDate){
       return true
@@ -168,7 +190,7 @@ const InsertConvention = () => {
           <WriteForm imgStyle={imgStyle} setImgStyle={setImgStyle} 
           conventionTitle={conventionTitle} setConventionTitle={setConventionTitle} 
           conventionStart={conventionStart} setConventionStart={setConventionStart} 
-          conventionEnd={conventionEnd} setConventionEnd={setConventionEnd} 
+          conventionEnd={checkDate} setConventionEnd={setConventionEnd} 
           conventionContent={conventionContent} setConventionContent={setConventionContent}
           image={image} setImage={setImage}
           conventionPrice={conventionPrice} setConventionPrice={setConventionPrice}
@@ -178,7 +200,7 @@ const InsertConvention = () => {
           conventionTime={conventionTime} setConventionTime={setConventionTime}
           showImage={showImage} setShowImage={setShowImage}
           titleRef={titleRef} contentRef={contentRef} timeRef={timeRef} dateRef={dateRef}
-          limitRef={limitRef} priceRef={priceRef}
+          limitRef={limitRef} priceRef={priceRef} imgRef={imgRef}
           /> 
 
           <div>
@@ -187,7 +209,7 @@ const InsertConvention = () => {
         </>
           :
           <Preview imgStyle={imgStyle} conventionTitle={conventionTitle} conventionContent={conventionContent} 
-          conventionStart={conventionStart} conventionEnd={conventionEnd}
+          conventionStart={conventionStart} conventionEnd={checkDate}
           conventionPrice={conventionPrice} conventionLimit={conventionLimit}
           conventionTime={conventionTime} showImage={showImage}
           />

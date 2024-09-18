@@ -39,7 +39,8 @@ const WriteForm = (props) => {
     timeRef, 
     dateRef, 
     limitRef, 
-    priceRef
+    priceRef,
+    imgRef
   } = props;
   
     
@@ -71,11 +72,12 @@ const WriteForm = (props) => {
     <>
       <div className="convention-img">
         {showImage ? 
-        <img src={showImage} onClick={() => {
+        <img src={showImage} ref={imgRef} onClick={() => {
           imageRef.current.click();
         }}/>
         : 
-        <img src="d" onClick={() => {
+        // 나중에 수정할때 또 삼항연산자 써서 해줘야 함 (showImage 말고 db에서 가져온 src정보)
+        <img src="/image/default_img.png" ref={imgRef} onClick={() => {
           imageRef.current.click();
         }}/>}
         

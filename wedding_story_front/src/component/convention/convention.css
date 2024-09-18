@@ -233,11 +233,11 @@ input[type="number"] {
 .main-info-zone>.main-info-title{
     min-height: 15%;
     height: auto;
-    max-height: 55%;
-    margin-top: 10%;
-    /* overflow: hidden; */
+    max-height: 50%;
+    margin-top: 20px;
     word-wrap: break-word;
     word-break: break-all;
+    overflow: hidden;
 }
 .main-info-zone>.main-info-date{
     height: 15%;
@@ -316,6 +316,8 @@ input[type="number"] {
     align-content: center;
     word-wrap: break-word;
     word-break: break-all;
+    max-height: 15%;
+    overflow: hidden;
 }
 .back-inner-img-zone>.back-info-title>.back-title{
     padding: 0px 10px;
@@ -363,4 +365,8 @@ input[type="number"] {
 /* 인풋검사 */
 .invalid{
     color: red;
+}
+
+img.invalid{
+    border: 1px solid red;
 }

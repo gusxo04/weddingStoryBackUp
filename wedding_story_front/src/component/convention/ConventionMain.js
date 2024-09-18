@@ -2,6 +2,8 @@ import axios from "axios";
 import "./convention.css";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ConventionPreviewBack from "./ConventionPreviewBack";
+import ConventionPreviewMain from "./ConventionPreviewMain";
 
 
 const ConventionMain = () => {
@@ -41,7 +43,7 @@ const ConventionMain = () => {
         ""} */}
         {Object.keys(convention).length > 0 ? 
         endDate > 0 ?
-        (startDate > 0 ? <Link to="/test">신청하기</Link> : "박람회 있지만 신청 불가능") 
+        (startDate > 0 ? <ShowConvention convention={convention} type={true} /> : <ShowConvention convention={convention} type={false} />) 
         : 
         <EmptyConvention navigate={navigate} />
         :
@@ -61,6 +63,25 @@ const EmptyConvention = (props) => {
       <button className="locate" onClick={() => {
           navigate(-1);
         }}>돌아가기</button>
+    </div>
+  )
+}
+
+const ShowConvention = (props) => {
+
+  const {
+    convention,
+    type
+  } = props;
+
+  
+  return (
+    <div className="convention-preview-wrap">
+      {convention.imgStyle === 1 ? 
+      <ConventionPreviewBack {...convention} />
+      : 
+      <ConventionPreviewMain {...convention} />
+      }
     </div>
   )
 }
