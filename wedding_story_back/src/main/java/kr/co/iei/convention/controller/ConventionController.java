@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
 import kr.co.iei.convention.model.service.ConventionService;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -80,7 +81,7 @@ public class ConventionController {
     }
     
     @PostMapping("/pay")
-    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute ) {
+    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {
 
         return ResponseEntity.ok(true);
     }
