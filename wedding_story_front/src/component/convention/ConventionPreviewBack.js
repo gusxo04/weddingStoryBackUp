@@ -16,7 +16,7 @@ const ConventionPreviewBack = (props) => {
     conventionImg
   } = props;
 
-  console.log(props);
+  // console.log(props);
   
   return (
     <div className="back-main-wrap">
