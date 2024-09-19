@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.convention.model.dao.ConventionDao;
 import kr.co.iei.convention.model.dto.ConventionDTO;
+import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 
 @Service
 public class ConventionService {
@@ -48,5 +51,37 @@ public class ConventionService {
         // 아니 이거 안 해도 되는건데 뭐임..1시간 가까이 개고생했네
         boolean result = conventionDao.insertConvention(convention);
         return result;
+    }
+
+    public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay) {
+        //티켓 코드 생성
+        Random random = new Random();
+        conventionMember.setTicketCode("");
+        for(int i = 0; i < 30; i++){
+            int randomType = random.nextInt(3);
+            if(randomType == 0){
+                String randomCode = String.valueOf((char)(random.nextInt(26)+97));
+                conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
+            }
+            else if(randomType == 1){
+                String randomCode = String.valueOf((char)(random.nextInt(26)+65));
+                conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
+            }
+            else if(randomType == 2){
+                String randomCode = random.nextInt(10) + "";
+                conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
+            }
+        }
+        // 이거 두 개는 테스트 데이터임
+        conventionMember.setMemberNo(2);
+        memberPay.setMemberNo(2);
+
+        int result = conventionDao.insertConventionMember(conventionMember);
+        if(result > 0){
+            memberPay.setTicketNo(conventionMember.getTicketNo());
+            result += conventionDao.insertMemberPay(memberPay);
+        }
+        
+        return result == 1;
     }
 }

@@ -19,7 +19,7 @@ const ConventionMain = () => {
   const [noticeEmail, setNoticeEmail] = useState("");
   const changeEmail = (e) => {
     setNoticeEmail(e.target.value);
-    setFullNoticeEmail(e.target.value + lastEmail);
+    setFullNoticeEmail(e.target.value +"@"+lastEmail);
   }
 
   const [lastEmail, setLastEmail] = useState("naver.com");
@@ -111,6 +111,9 @@ const EmptyConvention = (props) => {
     </div>
   )
 }
+
+
+
 
 const ShowConvention = (props) => {
 
@@ -218,12 +221,15 @@ const ShowConvention = (props) => {
         // 회원번호 / 회원 알림이메일 / 구매 금액 / 박람회 번호 / merchant_uid
         const form = new FormData();
         // form.append("memberNo")
-        form.append("memberEmail", fullNoticeEmail);
-        form.append("payPrice", convention.conventionPrice);
         form.append("conventionNo", convention.conventionNo);
-        form.append("merchant_uid", rsp.merchant_uid);
+        form.append("memberEmail", fullNoticeEmail);
+
+        form.append("merchantUid", rsp.merchant_uid);
+        form.append("payPrice", convention.conventionPrice);
+        form.append("progressDate", selectDate);
+        form.append("progressTime", convention.conventionTime);
         
-        axios.post(`${backServer}/convention/buy`)
+        axios.post(`${backServer}/convention/buy`, form)
         .then(res => {
           console.log(res)
         })
@@ -241,7 +247,6 @@ const ShowConvention = (props) => {
     
     
   }
-
 
   
   return (

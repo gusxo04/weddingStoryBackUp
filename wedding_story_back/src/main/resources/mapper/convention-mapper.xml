@@ -31,4 +31,15 @@
         insert into convention values(convention_seq.nextval,#{conventionTitle},#{conventionContent},#{conventionImg},#{conventionStart},#{conventionEnd},#{conventionTime},sysdate,#{conventionPrice},#{conventionLimit},#{imgStyle})
     </insert>
 
+    <insert id="insertConventionMember">
+        insert into convention_member values(convention_member_seq.nextval, #{conventionNo}, #{memberNo}, #{ticketCode}, #{memberEmail})
+        <selectKey resultType="int" keyProperty="ticketNo" order="AFTER">
+            select max(ticket_no) from convention_member
+        </selectKey>
+    </insert>
+
+    <insert id="insertMemberPay">
+        insert into member_pay values(member_pay_seq.nextval, #{memberNo}, null, #{ticketNo}, sysdate, #{progressDate}, #{progressTime}, #{payPrice}, 0, #{merchantUid})
+    </insert>
+
 </mapper>
