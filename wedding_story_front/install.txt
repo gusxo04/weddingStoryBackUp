@@ -13,3 +13,6 @@ npm install @toast-ui/react-editor --force
 2024-09-18 오후 8:41
 npm install chart.js --force
 
+김도엽
+2024-09-19 오후 2:43
+npm i react-select --force
