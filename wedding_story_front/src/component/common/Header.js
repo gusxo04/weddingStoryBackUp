@@ -18,11 +18,11 @@ const Header = () => {
         <div className="header-nav">
           <ul className="nav-main">
             <li className="nav-suv">
-              <span class="material-icons">menu</span>
+              <span className="material-icons">menu</span>
               <Link to="#">My Wedding</Link>
             </li>
             <li>
-              <Link to="#">홈</Link>
+              <Link to="/">홈</Link>
             </li>
             <li>
               <Link to="#">웨딩홀</Link>
@@ -31,7 +31,7 @@ const Header = () => {
               <Link to="#">스드메</Link>
             </li>
             <li>
-              <Link to="#">박람회</Link>
+              <Link to="/convention">박람회</Link>
             </li>
           </ul>
         </div>
