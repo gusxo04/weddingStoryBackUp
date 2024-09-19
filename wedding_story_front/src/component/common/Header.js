@@ -5,12 +5,36 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-        <Link to="/convention">박람회임</Link>
-        <span> | </span>
-        <Link to="/product/list">게시글</Link>
-        <span> | </span>
-        <Link to="/admin">관리자</Link>
-        <span> | </span>
+        <div className="header-link">
+          <Link to="#">로그인</Link>
+          <span>|</span>
+          <Link to="#">회원가입</Link>
+          <span>|</span>
+          <Link to="#">고객센터</Link>
+        </div>
+        <div className="header-logo">
+          <img src="../../../public/image/main_logo.png" />
+        </div>
+        <div className="header-nav">
+          <ul className="nav-main">
+            <li className="nav-suv">
+              <span class="material-icons">menu</span>
+              <Link to="#">My Wedding</Link>
+            </li>
+            <li>
+              <Link to="#">홈</Link>
+            </li>
+            <li>
+              <Link to="#">웨딩홀</Link>
+            </li>
+            <li>
+              <Link to="#">스드메</Link>
+            </li>
+            <li>
+              <Link to="#">박람회</Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </header>
   );
