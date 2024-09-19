@@ -11,6 +11,11 @@ import Footer from "./component/common/Footer";
 import ProductMain from "./component/product/ProductMain";
 import Admin from "./component/admin/Admin";
 import Sales from "./component/admin/Sales";
+import MemberControll from "./component/admin/MemberControll";
+import CompanyControll from "./component/admin/CompanyControll";
+import Advertisement from "./component/admin/Advertisement";
+import Question from "./component/admin/Question";
+import AdminControll from "./component/admin/AdminControll";
 
 function App() {
   return (
@@ -25,6 +30,11 @@ function App() {
           <Route path="/product/*" element={<ProductMain />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/sales" element={<Sales />} />
+          <Route path="/memberControll" element={<MemberControll />} />
+          <Route path="/companyControll" element={<CompanyControll />} />
+          <Route path="/advertisement" element={<Advertisement />} />
+          <Route path="/question" element={<Question />} />
+          <Route path="/adminControll" element={<AdminControll />} />
         </Routes>
       </main>
 
