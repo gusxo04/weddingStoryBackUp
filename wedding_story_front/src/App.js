@@ -20,16 +20,25 @@ import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
 
 function App() {
-  const [path, setPath] = useState(0); // (예시)(0) -> 홈 화면 헤더 (1) -> 업체 화면 헤더  (2) -> 관리자 화면 헤더 --dy
   const location = useLocation();
+  const [path, setPath] = useState(() => {
+    // 로컬 스토리지에서 초기값을 가져옴
+    const savedPath = localStorage.getItem("path");
+    return savedPath ? Number(savedPath) : null; // 저장된 값이 있으면 숫자로 변환
+  });
+
   useEffect(() => {
+    // 경로에 따라 path 값을 업데이트하고 로컬 스토리지에 저장
     if (location.pathname === "/company") {
       setPath(1); //주소가 /company로 변경시 path 를 (1)로 변경 --dy
+      localStorage.setItem("path", 1); //로컬 스토리지에 저장
     } else if (location.pathname === "/") {
       setPath(0); //주소가 /로 변경시 path 를 (0)로 변경 --dy
+      localStorage.setItem("path", 0); //로컬 스토리지에 저장
     }
   }, [location.pathname]); //location.pathname 이 변경되면 렌더링 다시 시작 --dy
 
+  console.log(path);
   return (
     <div className="wrap">
       {path === 0 ? <Header /> : path === 1 ? <CompanyHeader /> : null}
@@ -42,10 +51,10 @@ function App() {
           <Route path="/product/*" element={<ProductMain />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/sales" element={<Sales />} />
-          <Route path="/company" element={<CompanyMain />} />
+          <Route path="/company/*" element={<CompanyMain />} />
         </Routes>
       </main>
-      <Footer />
+      {path === 1 ? null : <Footer />}
     </div>
   );
 }

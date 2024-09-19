@@ -1,0 +1,23 @@
+.company-wrap {
+  display: flex;
+}
+.side-info {
+  width: 310px;
+  height: 300px;
+  border: 1px solid black;
+  margin-left: 50px;
+  margin-top: 100px;
+}
+
+/*---Join--------------------------------------------------------*/
+.join-wrap {
+  width: 1200px;
+  height: 800px;
+  border: 1px solid #ccc;
+  margin: 0 auto;
+}
+.company-input-wrap > label {
+  display: inline-block;
+  width: 150px;
+  text-align: center;
+}
