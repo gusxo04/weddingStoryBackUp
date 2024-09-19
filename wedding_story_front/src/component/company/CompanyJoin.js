@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import "./company.css";
+import Example from "../utils/ReactTagInput";
 
 // 시간 option 만들기 - 시(hour)
 let openHour = [];
@@ -130,7 +131,7 @@ const CompanyJoin = () => {
             </div>
             <div className="company-input-wrap">
               <label htmlFor="keyword">키워드</label>
-              <KeyWord setCompany={setCompany} />
+              <Example />
             </div>
           </div>
         </div>

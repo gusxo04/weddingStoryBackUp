@@ -16,3 +16,7 @@ npm install chart.js --force
 김도엽
 2024-09-19 오후 2:43
 npm i react-select --force
+
+김도엽
+2024-09-19 오후 06:11
+npm i react-tag-input-component  --force
