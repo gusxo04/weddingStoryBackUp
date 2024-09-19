@@ -15,12 +15,9 @@ const Admin = () => {
       <a>|</a>
       <Link to="/sales">매출</Link>
       <a>|</a>
-      <a>|</a>
       <Link to="/sales">공지사항</Link>
       <a>|</a>
-      <a>|</a>
       <Link to="/question">Q&A</Link>
-      <a>|</a>
       <a>|</a>
       <Link to="/adminControll">관리자</Link>
       <a>|</a>
