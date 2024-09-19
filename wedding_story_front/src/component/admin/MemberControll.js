@@ -8,13 +8,20 @@ const MemberControll = () => {
     axios
       .get(`${backServer}/admin/member`)
       .then((res) => {
-        console.log(res);
-        setMemberList(res.data.memberList);
+        console.log(res.data);
+        if (res.data) {
+          setMemberList(Object.values(res.data));
+        } else {
+          console.error("멤버 없음");
+          setMemberList([]);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+        console.log("조회 에러");
+        setMemberList([]);
       });
-  });
+  }, []);
   return (
     <div className="member-controll-wrap">
       <div className="page-title">
@@ -35,15 +42,19 @@ const MemberControll = () => {
             </tr>
           </thead>
           <tbody>
-            {memberList.map((member, index) => {
-              return (
+            {memberList.length > 0 ? (
+              memberList.map((member, index) => (
                 <MemberItem
                   key={"member-" + index}
                   member={member}
                   index={index}
                 />
-              );
-            })}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8">회원이 없습니다.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -52,5 +63,26 @@ const MemberControll = () => {
 };
 const MemberItem = (props) => {
   const member = props.member;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  return (
+    <tr className="userInfo">
+      <td>{member.memberNo}</td>
+      <td>{member.memberId}</td>
+      <td>{member.memberName}</td>
+      <td>{member.memberPhone}</td>
+      <td>{member.memberMail}</td>
+      <td>{member.memberGender}</td>
+      <td>{member.memberCode}</td>
+      <td>
+        <input
+          type="checkbox"
+          id={`deleteMember-${props.index}`}
+          name="deleteMember"
+          checked
+        />
+        <label htmlFor={`deleteMember-${props.index}`}></label>
+      </td>
+    </tr>
+  );
 };
 export default MemberControll;

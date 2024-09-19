@@ -18,7 +18,7 @@ const Header = () => {
         <div className="header-nav">
           <ul className="nav-main">
             <li className="nav-suv">
-              <span class="material-icons">menu</span>
+              <span className="material-icons">menu</span>
               <Link to="#">My Wedding</Link>
             </li>
             <li>

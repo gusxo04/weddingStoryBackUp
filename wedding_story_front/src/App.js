@@ -43,6 +43,11 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/sales" element={<Sales />} />
           <Route path="/company" element={<CompanyMain />} />
+          <Route path="/memberControll" element={<MemberControll />} />
+          <Route path="/companyControll" element={<CompanyControll />} />
+          <Route path="/advertisement" element={<Advertisement />} />
+          <Route path="/question" element={<Question />} />
+          <Route path="/adminControll" element={<AdminControll />} />
         </Routes>
       </main>
       <Footer />
