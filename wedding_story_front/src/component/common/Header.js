@@ -11,6 +11,8 @@ const Header = () => {
         <span> | </span>
         <Link to="/admin">관리자</Link>
         <span> | </span>
+        <Link to="/company">업체</Link>
+        <span> | </span>
       </div>
     </header>
   );
