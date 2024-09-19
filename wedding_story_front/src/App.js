@@ -50,7 +50,7 @@ function App() {
           <Route path="/adminControll" element={<AdminControll />} />
         </Routes>
       </main>
-      <Footer />
+      {path === 0 ? <Footer /> : null}
     </div>
   );
 }
