@@ -19,6 +19,7 @@ import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
 import AdminHeader from "./component/common/AdminHeader";
+import Board from "./component/admin/Board";
 
 function App() {
   const location = useLocation();

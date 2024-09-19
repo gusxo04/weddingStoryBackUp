@@ -12,7 +12,7 @@ const AdminHeader = () => {
       <div className="header-c-content">
         <ul>
           <li>
-            <Link to="#" className="nav-item">
+            <Link to="/memberControll" className="nav-item">
               <div>
                 <span class="material-icons">account_box</span>
               </div>
@@ -20,7 +20,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="#" className="nav-item">
+            <Link to="/companyControll" className="nav-item">
               <div>
                 <span class="material-icons">business</span>
               </div>
@@ -29,7 +29,7 @@ const AdminHeader = () => {
           </li>
 
           <li>
-            <Link to="#" className="nav-item">
+            <Link to="/advertisement" className="nav-item">
               <div>
                 <span class="material-icons">campaign</span>
               </div>
@@ -37,7 +37,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="#" className="nav-item">
+            <Link to="/sales" className="nav-item">
               <div>
                 <span class="material-icons">local_atm</span>
               </div>
@@ -45,7 +45,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="#" className="nav-item">
+            <Link to="/board/list" className="nav-item">
               <div>
                 <span class="material-icons">notifications_active</span>
               </div>
@@ -53,7 +53,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="#" className="nav-item">
+            <Link to="/question" className="nav-item">
               <div>
                 <span class="material-icons">help_center</span>
               </div>
@@ -61,7 +61,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="#" className="nav-item">
+            <Link to="/adminControll" className="nav-item">
               <div>
                 <span class="material-icons">settings</span>
               </div>
