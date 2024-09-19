@@ -18,6 +18,7 @@ import Question from "./component/admin/Question";
 import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
+import AdminHeader from "./component/common/AdminHeader";
 
 function App() {
   const [path, setPath] = useState(0); // (예시)(0) -> 홈 화면 헤더 (1) -> 업체 화면 헤더  (2) -> 관리자 화면 헤더 --dy
@@ -27,12 +28,20 @@ function App() {
       setPath(1); //주소가 /company로 변경시 path 를 (1)로 변경 --dy
     } else if (location.pathname === "/") {
       setPath(0); //주소가 /로 변경시 path 를 (0)로 변경 --dy
+    } else if (location.pathname === "/admin") {
+      setPath(2);
     }
   }, [location.pathname]); //location.pathname 이 변경되면 렌더링 다시 시작 --dy
 
   return (
     <div className="wrap">
-      {path === 0 ? <Header /> : path === 1 ? <CompanyHeader /> : null}
+      {path === 0 ? (
+        <Header />
+      ) : path === 1 ? (
+        <CompanyHeader />
+      ) : (
+        <AdminHeader />
+      )}
       {/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
       <main className="content-wrap">
         <Routes>
