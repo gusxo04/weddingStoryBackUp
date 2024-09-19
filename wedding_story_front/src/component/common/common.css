@@ -9,11 +9,10 @@
   justify-content: center;
   width: 100%;
   height: 200px;
-  background-color: aliceblue;
+  border-bottom: 1px solid #c9c9c9;
 }
 
 .header-content {
-  background-color: antiquewhite;
   width: 1200px;
   height: 100%;
 }
@@ -23,6 +22,7 @@
   height: 10%;
   gap: 20px;
   font-size: 12px;
+  padding-top: 10px;
 }
 .header-link > a:hover {
   font-weight: 700;
@@ -32,8 +32,15 @@
   justify-content: center;
   height: 70%;
 }
-.header-logo > img {
+.header-logo > div {
   width: 40%;
+  height: 80%;
+  margin-top: 20px;
+}
+.header-logo > div > img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
 .header-nav {
   display: flex;
@@ -44,7 +51,13 @@
   gap: 100px;
 }
 .nav-main > li:hover {
-  font-weight: 700;
+  font-weight: 900;
+  border-bottom: 2px solid var(--main1);
+}
+.nav-suv {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .content-wrap {
@@ -55,8 +68,50 @@
   /* justify-content: center; */
 }
 
-footer {
+.footer {
+  display: flex;
+  justify-content: center;
   width: 100%;
-  height: 100px;
-  background-color: #ddd;
+  height: 150px;
+  border-top: 1px solid #c9c9c9;
+}
+.footer-content {
+  width: 1200px;
+  height: 100%;
+}
+.footer-content > div {
+  padding-top: 15px;
+  display: flex;
+  gap: 15px;
+}
+.footer-logo {
+  width: 150px;
+  height: 30px;
+}
+.footer-logo > img {
+  max-width: 100%;
+}
+.footer-link > ul {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  padding-top: 5px;
+}
+.footer-info > p {
+  font-size: 12px;
+  color: #808080;
+  padding-left: 20px;
+}
+.footer-cs {
+  display: flex;
+  justify-content: space-between;
+}
+.footer-cs > p {
+  font-size: 14px;
+  padding-left: 20px;
+}
+.cs-link {
+  display: flex;
+  gap: 10px;
+  padding-right: 20px;
 }

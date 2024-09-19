@@ -13,7 +13,9 @@ const Header = () => {
           <Link to="#">고객센터</Link>
         </div>
         <div className="header-logo">
-          <img src="../../../public/image/main_logo.png" />
+          <div>
+            <img src="/image/main_logo.png" />
+          </div>
         </div>
         <div className="header-nav">
           <ul className="nav-main">
