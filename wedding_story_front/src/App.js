@@ -19,6 +19,7 @@ import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
 import Counsel from "./component/marriageCounseling/Counsel";
+import AdminHeader from "./component/common/AdminHeader";
 
 function App() {
   const location = useLocation();
@@ -36,13 +37,21 @@ function App() {
     } else if (location.pathname === "/") {
       setPath(0); //주소가 /로 변경시 path 를 (0)로 변경 --dy
       localStorage.setItem("path", 0); //로컬 스토리지에 저장
+    } else if (location.pathname === "/admin") {
+      setPath(2);
     }
   }, [location.pathname]); //location.pathname 이 변경되면 렌더링 다시 시작 --dy
 
   console.log(path);
   return (
     <div className="wrap">
-      {path === 0 ? <Header /> : path === 1 ? <CompanyHeader /> : null}
+      {path === 0 ? (
+        <Header />
+      ) : path === 1 ? (
+        <CompanyHeader />
+      ) : (
+        <AdminHeader />
+      )}
       {/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
       <main className="content-wrap">
         <Routes>
