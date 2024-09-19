@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,6 +58,7 @@ public class ConventionController {
         map.put("endDate", afterEnd);
         //startDate는 현재 서버 날짜랑 박람회 시작날짜를 뺀 거
         //endDate는 현재 서버 날짜랑박람회 종료날짜를 뺀 거
+
         return ResponseEntity.ok(map);
     }
 
@@ -80,10 +82,13 @@ public class ConventionController {
         return ResponseEntity.ok(result);
     }
     
-    @PostMapping("/pay")
+    @PostMapping("/buy")
     public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {
-
-        return ResponseEntity.ok(true);
+        boolean result = conventionService.conventionMemberPay(conventionMember, memberPay);
+        
+        System.out.println(conventionMember); //넘어온 데이터 -> memberNo, memberEmail(알림받을)
+        System.out.println(memberPay);        //넘어온 데이터 -> progressDate, payPrice, merchantUid
+        return ResponseEntity.ok(result);
     }
     
 
