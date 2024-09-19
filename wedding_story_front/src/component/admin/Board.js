@@ -3,7 +3,7 @@ import BoardList from "./BoardList";
 import BoardWrite from "./BoardWrite";
 import BoardView from "./BoardView";
 import BoardUpdate from "./BoardUpdate";
-
+import "./board.css";
 const Board = () => {
   return (
     <Routes>

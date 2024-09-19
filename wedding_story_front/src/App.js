@@ -34,6 +34,7 @@ function App() {
       localStorage.setItem("path", 0); //로컬 스토리지에 저장
     } else if (location.pathname === "/admin/main") {
       setPath(2);
+      localStorage.setItem("path", 2); //로컬 스토리지에 저장
     }
   }, [location.pathname]); //location.pathname 이 변경되면 렌더링 다시 시작 --dy
 
