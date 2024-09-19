@@ -29,10 +29,27 @@ li {
   --hover2: #b5b5b5;
 }
 
-input, textarea{
-    outline: none;
+select {
+  outline: none;
+}
+input,
+textarea {
+  outline: none;
 }
 
-select{
-    outline: none;
+@font-face {
+  font-family: ns-l;
+  src: url(/public/font/NotoSansKR-Light.ttf);
+}
+@font-face {
+  font-family: ns-r;
+  src: url(/public/font/NotoSansKR-Regular.ttf);
+}
+@font-face {
+  font-family: ns-b;
+  src: url(/public/font/NotoSansKR-Bold.ttf);
+}
+@font-face {
+  font-family: ns-black;
+  src: url(/public/font/NotoSansKR-Black.ttf);
 }
