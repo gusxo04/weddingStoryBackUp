@@ -21,7 +21,7 @@ const Admin = () => {
       <a>|</a>
       <Link to="/adminControll">관리자</Link>
       <a>|</a>
-      <Link to="/board/boardlist">공지사항</Link>
+      <Link to="/board/list">공지사항</Link>
       <a>|</a>
     </div>
   );

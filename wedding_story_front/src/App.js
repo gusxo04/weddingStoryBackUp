@@ -58,7 +58,7 @@ function App() {
           <Route path="/advertisement" element={<Advertisement />} />
           <Route path="/question" element={<Question />} />
           <Route path="/adminControll" element={<AdminControll />} />
-          <Route path="/board" element={<Board />} />
+          <Route path="/board/*" element={<Board />} />
           <Route path="/company/*" element={<CompanyMain />} />
         </Routes>
       </main>
