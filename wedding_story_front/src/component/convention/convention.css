@@ -135,11 +135,14 @@
 #convention-email-last{
     width: auto;
     max-width: 20%;
-    height: 30%;
+    height: 40%;
     border: none;
     border-bottom: 1px solid #ccc;
     background-color: transparent;
     font-size: 16px;
+}
+#convention-email-last>option{
+/* input이랑 select 높이 맞추기 */
 }
 
 .convention-date-msg{
