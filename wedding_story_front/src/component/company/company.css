@@ -21,3 +21,43 @@
   width: 150px;
   text-align: center;
 }
+.company-select-wrap {
+  display: flex;
+}
+.company-select-wrap > label {
+  width: 150px;
+  text-align: center;
+  margin: auto 0;
+}
+.company-select-wrap > span {
+  text-align: center;
+  font-size: 30px;
+  line-height: 30px;
+  margin: 0 10px;
+}
+.time-select > div {
+  min-width: 200px;
+  width: 200px;
+  margin: auto 0;
+}
+.category-select > div {
+  min-width: 200px;
+  width: 200px;
+}
+.checkbox {
+  display: inline;
+}
+.keyWord {
+  margin: 0 5px;
+  font-size: 18px;
+}
+.material-icons {
+  font-size: 16px;
+  cursor: pointer;
+}
+.keyword > label {
+  display: inline-block;
+}
+.key_word_contain {
+  display: flex;
+}
