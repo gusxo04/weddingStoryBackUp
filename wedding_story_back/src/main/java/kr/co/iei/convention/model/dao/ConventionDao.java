@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.convention.model.dto.ConventionDTO;
+import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 
 @Mapper
 public interface ConventionDao {
@@ -18,6 +20,10 @@ public interface ConventionDao {
     List selectConventionSeat(int i);
 
     boolean insertConvention(ConventionDTO convention);
+
+    int insertConventionMember(ConventionMemberDTO conventionMember);
+
+    int insertMemberPay(MemberPayDTO memberPay);
 
 
 

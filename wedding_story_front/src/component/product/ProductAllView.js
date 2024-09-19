@@ -2,7 +2,7 @@ import { useRecoilValue } from "recoil";
 import Counsel from "../marriageCounseling/Counsel";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PagiNavi";
 
 const ProductAllView = () => {
@@ -27,12 +27,21 @@ const ProductAllView = () => {
     <section className="board-list">
       <div className="page-title">
         <ul className="name-title">
-          <li>웨딩홀</li>
-          <li>스튜디오</li>
-          <li>드레스</li>
-          <li>메이크업</li>
-          <li>예복</li>
-          <li>예물</li>
+          <li>
+            <Link to="/product/pay">스튜디오</Link>
+          </li>
+          <li>
+            <Link to="#">드레스</Link>
+          </li>
+          <li>
+            <Link to="#">메이크업</Link>
+          </li>
+          <li>
+            <Link to="#">예복</Link>
+          </li>
+          <li>
+            <Link to="#">예물</Link>
+          </li>
         </ul>
       </div>
 
@@ -58,14 +67,14 @@ const BoardItem = (props) => {
     <li
       className="posting-item"
       onClick={() => {
-        navigate(`/board/view/${board.boardNo}`);
+        navigate(`/product/list/${board.boardNo}`);
       }}
     >
       <div>
         <img
           src={
             board.boardThumb
-              ? `${backServer}/board/thumb/${board.boardThumb}`
+              ? `${backServer}/product/thumb/${board.boardThumb}`
               : "/image/default_img.png"
           }
         />
