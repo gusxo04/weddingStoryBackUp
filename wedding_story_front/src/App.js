@@ -18,6 +18,7 @@ import Question from "./component/admin/Question";
 import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
+import Counsel from "./component/marriageCounseling/Counsel";
 import AdminHeader from "./component/common/AdminHeader";
 import Board from "./component/admin/Board";
 
@@ -59,6 +60,7 @@ function App() {
           <Route path="/test" element={<ConventionLayout />} />
           <Route path="/newConvention" element={<InsertConvention />} />
           <Route path="/product/*" element={<ProductMain />} />
+          <Route path="/marriageCounseling/*" element={<Counsel />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/sales" element={<Sales />} />
           <Route path="/company" element={<CompanyMain />} />
