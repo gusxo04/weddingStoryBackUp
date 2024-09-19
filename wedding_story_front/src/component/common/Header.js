@@ -27,10 +27,10 @@ const Header = () => {
               <Link to="#">홈</Link>
             </li>
             <li>
-              <Link to="#">웨딩홀</Link>
+              <Link to="/marriageCounseling/counsel">웨딩홀</Link>
             </li>
             <li>
-              <Link to="#">스드메</Link>
+              <Link to="/product/list">스드메</Link>
             </li>
             <li>
               <Link to="#">박람회</Link>
