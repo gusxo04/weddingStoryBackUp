@@ -16,7 +16,7 @@ const AdminHeader = () => {
           <li>
             <Link to="/admin/memberControll" className="nav-item">
               <div>
-                <span class="material-icons">account_box</span>
+                <span className="material-icons">account_box</span>
               </div>
               <span>회원관리</span>
             </Link>
@@ -24,7 +24,7 @@ const AdminHeader = () => {
           <li>
             <Link to="/admin/companyControll" className="nav-item">
               <div>
-                <span class="material-icons">business</span>
+                <span className="material-icons">business</span>
               </div>
               <span>업체관리</span>
             </Link>
@@ -33,7 +33,7 @@ const AdminHeader = () => {
           <li>
             <Link to="/admin/advertisement" className="nav-item">
               <div>
-                <span class="material-icons">campaign</span>
+                <span className="material-icons">campaign</span>
               </div>
               <span>광고관리</span>
             </Link>
@@ -41,7 +41,7 @@ const AdminHeader = () => {
           <li>
             <Link to="/admin/sales" className="nav-item">
               <div>
-                <span class="material-icons">local_atm</span>
+                <span className="material-icons">local_atm</span>
               </div>
               <span>매출관리</span>
             </Link>
@@ -49,7 +49,7 @@ const AdminHeader = () => {
           <li>
             <Link to="/admin/board/list" className="nav-item">
               <div>
-                <span class="material-icons">notifications_active</span>
+                <span className="material-icons">notifications_active</span>
               </div>
               <span>공지사항</span>
             </Link>
@@ -57,7 +57,7 @@ const AdminHeader = () => {
           <li>
             <Link to="/admin/question" className="nav-item">
               <div>
-                <span class="material-icons">help_center</span>
+                <span className="material-icons">help_center</span>
               </div>
               <span>Q&A</span>
             </Link>
@@ -65,7 +65,7 @@ const AdminHeader = () => {
           <li>
             <Link to="/admin/adminControll" className="nav-item">
               <div>
-                <span class="material-icons">settings</span>
+                <span className="material-icons">settings</span>
               </div>
               <span>사용자관리</span>
             </Link>
