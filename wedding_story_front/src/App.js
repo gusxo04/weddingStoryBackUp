@@ -60,7 +60,7 @@ function App() {
           <Route path="/company/*" element={<CompanyMain />} />
         </Routes>
       </main>
-      {path === 1 ? null : <Footer />}
+      {path === 0 ? <Footer /> : null}
     </div>
   );
 }
