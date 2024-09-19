@@ -1,32 +1,35 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  color: #202020;
 }
 
-body{
-    font-size: 16px;
-    line-height: 1.5;
+body {
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-a{
-    text-decoration: none;
-    cursor: pointer;
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
-button{
-    cursor: pointer;
+button {
+  cursor: pointer;
 }
 
-ul, li{
-    list-style-type: none;
+ul,
+li {
+  list-style-type: none;
 }
 
 :root {
-    --main1 : #C19975;
-    --main2 :#DCE4E9;
-    --hover1 :#bddaed;
-    --hover2 :#b5b5b5;
+  --main1: #c19975;
+  --main2: #dce4e9;
+  --hover1: #bddaed;
+  --hover2: #b5b5b5;
 }
 
-input, textarea{
-    outline: none;
+input,
+textarea {
+  outline: none;
 }
