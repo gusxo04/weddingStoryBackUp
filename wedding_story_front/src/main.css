@@ -30,3 +30,7 @@ ul, li{
 input, textarea{
     outline: none;
 }
+
+select{
+    outline: none;
+}
