@@ -1,0 +1,76 @@
+.counsel-wrap {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--main2);
+  text-align: center;
+  width: 400px;
+  height: 800px;
+  margin: 0 auto;
+  align-self: center;
+}
+.title-name {
+  padding: 30px;
+  text-align: center;
+  font-family: ns-b;
+  font-size: 20px;
+  color: var(--main1);
+}
+.material-icons {
+  margin-right: 100%;
+}
+.btn {
+  border: 1px solid var(--main3);
+  background-color: #c1d0db;
+  color: #fff;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  font-family: ns-b;
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+.btn:hover {
+  background-color: rgba(101, 146, 254, 0.9);
+  cursor: pointer;
+}
+.input-wrap {
+  padding: 15px 30px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  border-left: 20px;
+}
+.input-title {
+  text-align: left;
+  font-size: 15px;
+  font-family: ns-b;
+}
+.input-item {
+  text-align: left;
+}
+.input-item > input {
+  font-size: 16px;
+  padding: 8px 0px;
+  width: 330px;
+  border-radius: 5px;
+}
+.check {
+  display: flex;
+  padding: 5px;
+}
+.check > p {
+  font-family: ns-b;
+}
+.check > input {
+  width: 20px;
+}
+textarea {
+  width: 300px;
+  height: 100px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.consol-button {
+  padding-top: 100px;
+}

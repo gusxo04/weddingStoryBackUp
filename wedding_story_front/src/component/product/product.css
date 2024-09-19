@@ -1,0 +1,45 @@
+.board-list {
+  width: 100%;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: var(--main2);
+  height: 100%;
+  margin: 0 auto;
+  align-self: center;
+  align-items: center;
+}
+.page-title {
+  padding: 30px 30px;
+  font-family: ns-b;
+  justify-content: center;
+}
+.page-title > ul {
+  display: flex;
+  align-items: center;
+}
+.page-title > ul > li {
+  padding-right: 10px;
+  position: relative;
+}
+.name-title > :hover {
+  color: var(--main1);
+  cursor: pointer;
+}
+
+.pagination {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pay-wrap {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--main2);
+  text-align: center;
+  width: 400px;
+  height: 800px;
+  margin: 0 auto;
+  align-self: center;
+}

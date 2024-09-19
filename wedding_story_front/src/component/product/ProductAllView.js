@@ -1,20 +1,84 @@
-const ProductAllView = () => {
-  return(
-    <div className="product-list">
-      <div className="page-title">
-        <table>
-          <tr>
-            <th>스튜디오</th>
-            <th>메이크업</th>
-            <th>드레스</th>
-            <th>예복</th>
-            <th>본식</th>
-          </tr>
-        </table>
-      </div>
-    </div>
+import { useRecoilValue } from "recoil";
+import Counsel from "../marriageCounseling/Counsel";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import PageNavi from "../utils/PagiNavi";
 
-  )
+const ProductAllView = () => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [boardList, setBoarList] = useState([]);
+  const [reqPage, setReqPage] = useState(1);
+  const [pi, setPi] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/list/${reqPage}`)
+      .then((res) => {
+        console.log(res);
+        setBoarList(res.data.list); //게시물
+        setPi(res.data.pi); //페이지넘버링
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [reqPage]);
+  return (
+    <section className="board-list">
+      <div className="page-title">
+        <ul className="name-title">
+          <li>웨딩홀</li>
+          <li>스튜디오</li>
+          <li>드레스</li>
+          <li>메이크업</li>
+          <li>예복</li>
+          <li>예물</li>
+        </ul>
+      </div>
+
+      <div className="board-list-wrap">
+        <ul className="posting-wrap">
+          {boardList.map((board, i) => {
+            return <BoardItem key={"board-" + i} board={board} />;
+          })}
+        </ul>
+      </div>
+      <div className="board-paging-wrap">
+        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+      </div>
+    </section>
+  );
+};
+
+const BoardItem = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const board = props.board;
+  const navigate = useNavigate();
+  return (
+    <li
+      className="posting-item"
+      onClick={() => {
+        navigate(`/board/view/${board.boardNo}`);
+      }}
+    >
+      <div>
+        <img
+          src={
+            board.boardThumb
+              ? `${backServer}/board/thumb/${board.boardThumb}`
+              : "/image/default_img.png"
+          }
+        />
+      </div>
+      <div className="posting-info">
+        <div className="posting-title">{board.boardTitle}</div>
+        <div className="posting-sub-info">
+          <span>{board.boardWriter}</span>
+          <span>{board.boardDate}</span>
+        </div>
+      </div>
+    </li>
+  );
 };
 
 export default ProductAllView;
