@@ -17,6 +17,7 @@ const Counsel = () => {
     consultTitle: "",
     consultWriter: "",
   });
+  const [isDateUndefined, setIsDateUndefined] = useState(false);
   const [consultWriter, setConsultWriter] = useState();
   const changeMember = (e) => {
     const name = e.target.name;
@@ -35,6 +36,31 @@ const Counsel = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const tomorrow = () => {
+    //date객체 생성
+    const date = new Date();
+    //date 객체에서 현재년도를 구한다.
+    const year = date.getFullYear();
+    //date 객체에서 현재 월을 구한다.(getMonth는 0부터 시작하기 때문에 +1를 해준다.)
+    let month = date.getMonth() + 1;
+    //date 객체에서 오늘 날짜를 구한다.
+    const today = date.getDate();
+    //오늘 날짜에 +1을 하여 내일 날짜를 구한다.
+    let tomorrow = today + 1;
+    //해당월의 마지막 날이면?
+    //date객체에서 마지막 날을 구해 오늘 날짜와 같은지 비교한다.
+    if (new Date(year, month, 0) === today) {
+      //다음달로 넘기기 위해 +2를 한다.(month는 0부터 시작하기 때문에 이번달을 구할 때 +1,다음달은+2)
+      month = date.getMonth() + 2;
+      //오늘날짜 - (오늘날짜-1)을 한 날짜로 변경(31일이면 30을 빼 1이 남도록 한다, 월의 1일)
+      tomorrow = date.getDate() - (date.getDate() - 1);
+    }
+    return (
+      `${year}-` +
+      (month > 9 ? `${month}-` : `0${month}-`) +
+      (tomorrow > 9 ? tomorrow : `0${tomorrow}`)
+    );
   };
   return (
     <section className="counsel-wrap">
@@ -83,6 +109,7 @@ const Counsel = () => {
             <div className="input-item">
               <input
                 type="date"
+                min={tomorrow() || ""}
                 name="reservation"
                 id="reservation"
                 value={consult.reservation}
@@ -90,14 +117,18 @@ const Counsel = () => {
               ></input>
               <div className="check">
                 <p>미정</p>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  checked={isDateUndefined}
+                  onChange={() => setIsDateUndefined(!isDateUndefined)}
+                ></input>
               </div>
             </div>
           </div>
         </div>
         <div className="input-wrap">
           <div className="input-title">
-            <label htmlFor="consultTitle">신청제목</label>
+            <label htmlFor="consultTitle">상담제목</label>
           </div>
           <div className="input-item">
             <input
@@ -111,7 +142,7 @@ const Counsel = () => {
         </div>
         <div className="input-wrap">
           <div className="input-title">
-            <label htmlFor="consultWriter">신청내용</label>
+            <label htmlFor="consultWriter">상담내용</label>
           </div>
           <div className="input-item">
             <textarea className="consultWriter" id="consultWriter"></textarea>
@@ -120,7 +151,7 @@ const Counsel = () => {
       </div>
       <div className="consol-button">
         <button type="submit" className="btn">
-          신청하기
+          상담신청하기
         </button>
       </div>
     </section>
