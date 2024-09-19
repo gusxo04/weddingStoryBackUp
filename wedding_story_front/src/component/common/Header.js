@@ -8,14 +8,16 @@ const Header = () => {
         <div className="header-link">
           <Link to="#">로그인</Link>
           <span>|</span>
-          <Link to="#">회원가입</Link>
+          <Link to="/join/agree">회원가입</Link>
           <span>|</span>
           <Link to="#">고객센터</Link>
         </div>
         <div className="header-logo">
-          <div>
-            <img src="/image/main_logo.png" />
-          </div>
+          <Link to="/">
+            <div className="header-img">
+              <img src="/image/main_logo.png" />
+            </div>
+          </Link>
         </div>
         <div className="header-nav">
           <ul className="nav-main">
