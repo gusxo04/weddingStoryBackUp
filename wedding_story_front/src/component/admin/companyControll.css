@@ -1,0 +1,37 @@
+.company-controll-wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+.tbl {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.tbl thead tr {
+  background-color: #c19975;
+  color: #ffffff;
+  text-align: center;
+}
+.tbl th,
+.tbl td {
+  padding: 12px 15px;
+}
+
+.tbl tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.tbl tbody tr:last-of-type {
+  border-bottom: 2px solid #c19975;
+}
+
+.tbl tbody tr.active-row {
+  font-weight: bold;
+  color: #dce4e9;
+}
+.userInfo {
+  text-align: center;
+}

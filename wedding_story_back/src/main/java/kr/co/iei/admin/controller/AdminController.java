@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.iei.admin.model.dto.TestCompanyDTO;
 import kr.co.iei.admin.model.dto.TestMemberDTO;
 import kr.co.iei.admin.model.service.AdminService;
 import kr.co.iei.util.FileUtils;
@@ -39,5 +40,14 @@ public class AdminController {
         memberList.put("3", new TestMemberDTO(3, "user03", "이영희", "010-1111-1111", "lee@example.com", "여", "003"));
         
         return memberList;
+    }
+    @GetMapping("/company")
+    public Map<String, Object> getCompanyList() {
+    	Map<String, Object> companyList = new HashMap<>();
+    	
+    	companyList.put("1", new TestCompanyDTO("code", "업체1", "웨딩홀", "010-1111-1111", "mail@Mail.com", 1));
+    	companyList.put("2", new TestCompanyDTO("code", "업체2", "드레스", "010-1111-1111", "mail@Mail.com", 1));
+    	companyList.put("3", new TestCompanyDTO("code", "업체3", "촬영", "010-1111-1111", "mail@Mail.com", 1));
+    	return companyList;
     }
 }

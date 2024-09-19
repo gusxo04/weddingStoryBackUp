@@ -18,6 +18,7 @@ import Question from "./component/admin/Question";
 import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
+import Board from "./component/admin/Board";
 
 function App() {
   const [path, setPath] = useState(0); // (예시)(0) -> 홈 화면 헤더 (1) -> 업체 화면 헤더  (2) -> 관리자 화면 헤더 --dy
@@ -48,6 +49,7 @@ function App() {
           <Route path="/advertisement" element={<Advertisement />} />
           <Route path="/question" element={<Question />} />
           <Route path="/adminControll" element={<AdminControll />} />
+          <Route path="/board" element={<Board />} />
         </Routes>
       </main>
       <Footer />
