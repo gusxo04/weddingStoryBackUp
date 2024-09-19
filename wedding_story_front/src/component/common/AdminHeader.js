@@ -5,14 +5,16 @@ const AdminHeader = () => {
   return (
     <header className="header-c">
       <div className="header-c-logo">
-        <div className="header-a-mainlogo">
-          <img src="/image/main_logo.png"></img>
-        </div>
+        <Link to="/admin/adminMain" className="nav-item">
+          <div className="header-a-mainlogo">
+            <img src="/image/main_logo.png"></img>
+          </div>
+        </Link>
       </div>
       <div className="header-c-content">
         <ul>
           <li>
-            <Link to="/memberControll" className="nav-item">
+            <Link to="/admin/memberControll" className="nav-item">
               <div>
                 <span class="material-icons">account_box</span>
               </div>
@@ -20,7 +22,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="/companyControll" className="nav-item">
+            <Link to="/admin/companyControll" className="nav-item">
               <div>
                 <span class="material-icons">business</span>
               </div>
@@ -29,7 +31,7 @@ const AdminHeader = () => {
           </li>
 
           <li>
-            <Link to="/advertisement" className="nav-item">
+            <Link to="/admin/advertisement" className="nav-item">
               <div>
                 <span class="material-icons">campaign</span>
               </div>
@@ -37,7 +39,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="/sales" className="nav-item">
+            <Link to="/admin/sales" className="nav-item">
               <div>
                 <span class="material-icons">local_atm</span>
               </div>
@@ -45,7 +47,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="/board/list" className="nav-item">
+            <Link to="/admin/board/list" className="nav-item">
               <div>
                 <span class="material-icons">notifications_active</span>
               </div>
@@ -53,7 +55,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="/question" className="nav-item">
+            <Link to="/admin/question" className="nav-item">
               <div>
                 <span class="material-icons">help_center</span>
               </div>
@@ -61,7 +63,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="/adminControll" className="nav-item">
+            <Link to="/admin/adminControll" className="nav-item">
               <div>
                 <span class="material-icons">settings</span>
               </div>

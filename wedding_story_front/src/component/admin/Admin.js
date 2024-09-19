@@ -1,28 +1,26 @@
-import axios from "axios";
 import "./sales.css";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Sales from "./Sales";
+import MemberControll from "./MemberControll";
+import CompanyControll from "./CompanyControll";
+import Advertisement from "./Advertisement";
+import Question from "./Question";
+import AdminControll from "./AdminControll";
+import Board from "./Board";
+import { Route, Routes, useLocation } from "react-router-dom";
+import AdminMain from "./AdminMain";
 const Admin = () => {
   return (
     <div>
-      <h3>관리자 페이지</h3>
-      <a>|</a>
-      <Link to="/memberControll">회원</Link>
-      <a>|</a>
-      <Link to="/companyControll">업체</Link>
-      <a>|</a>
-      <Link to="/advertisement">광고</Link>
-      <a>|</a>
-      <Link to="/sales">매출</Link>
-      <a>|</a>
-      <Link to="/sales">공지사항</Link>
-      <a>|</a>
-      <Link to="/question">Q&A</Link>
-      <a>|</a>
-      <Link to="/adminControll">관리자</Link>
-      <a>|</a>
-      <Link to="/board/list">공지사항</Link>
-      <a>|</a>
+      <Routes>
+        <Route path="sales" element={<Sales />} />
+        <Route path="memberControll" element={<MemberControll />} />
+        <Route path="companyControll" element={<CompanyControll />} />
+        <Route path="advertisement" element={<Advertisement />} />
+        <Route path="question" element={<Question />} />
+        <Route path="adminControll" element={<AdminControll />} />
+        <Route path="board/*" element={<Board />} />
+        <Route path="adminMain" element={<AdminMain />} />
+      </Routes>
     </div>
   );
 };

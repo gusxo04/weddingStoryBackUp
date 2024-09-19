@@ -10,17 +10,11 @@ import InsertConvention from "./component/convention/InsertConvention";
 import Footer from "./component/common/Footer";
 import ProductMain from "./component/product/ProductMain";
 import Admin from "./component/admin/Admin";
-import Sales from "./component/admin/Sales";
-import MemberControll from "./component/admin/MemberControll";
-import CompanyControll from "./component/admin/CompanyControll";
-import Advertisement from "./component/admin/Advertisement";
-import Question from "./component/admin/Question";
 import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
 import Counsel from "./component/marriageCounseling/Counsel";
 import AdminHeader from "./component/common/AdminHeader";
-import Board from "./component/admin/Board";
 
 function App() {
   const location = useLocation();
@@ -38,7 +32,7 @@ function App() {
     } else if (location.pathname === "/") {
       setPath(0); //주소가 /로 변경시 path 를 (0)로 변경 --dy
       localStorage.setItem("path", 0); //로컬 스토리지에 저장
-    } else if (location.pathname === "/admin") {
+    } else if (location.pathname === "/admin/main") {
       setPath(2);
     }
   }, [location.pathname]); //location.pathname 이 변경되면 렌더링 다시 시작 --dy
@@ -61,15 +55,8 @@ function App() {
           <Route path="/newConvention" element={<InsertConvention />} />
           <Route path="/product/*" element={<ProductMain />} />
           <Route path="/marriageCounseling/*" element={<Counsel />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/sales" element={<Sales />} />
+          <Route path="/admin/*" element={<Admin />} />
           <Route path="/company" element={<CompanyMain />} />
-          <Route path="/memberControll" element={<MemberControll />} />
-          <Route path="/companyControll" element={<CompanyControll />} />
-          <Route path="/advertisement" element={<Advertisement />} />
-          <Route path="/question" element={<Question />} />
-          <Route path="/adminControll" element={<AdminControll />} />
-          <Route path="/board/*" element={<Board />} />
           <Route path="/company/*" element={<CompanyMain />} />
         </Routes>
       </main>
