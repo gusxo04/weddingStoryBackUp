@@ -2,19 +2,18 @@ import React, { useState } from "react";
 import { TagsInput } from "react-tag-input-component";
 
 const Example = () => {
-  const [selected, setSelected] = useState(["papaya"]);
+  const [selected, setSelected] = useState(["예시"]);
 
   return (
     <div>
-      <h1>Add Fruits</h1>
       <pre>{JSON.stringify(selected)}</pre>
       <TagsInput
         value={selected}
         onChange={setSelected}
         name="fruits"
-        placeHolder="enter fruits"
+        placeHolder="입력후 엔터"
       />
-      <em>press enter or comma to add new tag</em>
+      <em>엔터를 입력하여 새로운 태그를 추가하세요.</em>
     </div>
   );
 };

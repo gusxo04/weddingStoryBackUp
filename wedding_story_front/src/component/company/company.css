@@ -10,11 +10,43 @@
 }
 
 /*---Join--------------------------------------------------------*/
-.join-wrap {
+.company-join-wrap {
   width: 1200px;
-  height: 800px;
   border: 1px solid #ccc;
-  margin: 0 auto;
+  margin: 50px 90px;
+}
+.company-title {
+  font-size: 30px;
+  margin: 20px 0px;
+  padding-left: 100px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+}
+.company-section {
+  display: flex;
+  justify-content: center;
+}
+.thumbnail-zone {
+  width: 400px;
+  height: 400px;
+}
+
+.company-thumbnail {
+  width: 350px;
+  height: 350px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  display: block;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+.company-thumbnail + span {
+  padding-left: 170px;
+}
+.company-input-wrap {
+  margin: 20px 0px;
+  font-size: 16px;
 }
 .company-input-wrap > label {
   display: inline-block;
@@ -23,6 +55,7 @@
 }
 .company-select-wrap {
   display: flex;
+  margin: 20px 0px;
 }
 .company-select-wrap > label {
   width: 150px;
@@ -55,9 +88,58 @@
   font-size: 16px;
   cursor: pointer;
 }
-.keyword > label {
-  display: inline-block;
+.keyWord-wrap {
+  width: 1000px;
+  margin: 0 auto;
 }
-.key_word_contain {
+.company-input-wrap > input {
+  height: 30px;
+  width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.company-input-wrap > #companyTel {
+  width: 100px;
+}
+.company-input-wrap > #companyTel + span {
+  margin: 0px 20px;
+}
+.company-input-wrap > #companyAddr + button {
+  margin-left: 10px;
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding: 6px 30px;
+  border-radius: 15px;
+  font-weight: 600;
+}
+.checkbox > input {
+  margin-right: 15px;
+  margin-left: 4px;
+}
+.introduction-wrap > div,
+textarea {
+  margin-left: 100px;
+  margin-top: 10px;
+}
+.introduction-wrap > textarea {
+  resize: none;
+  width: 1000px;
+  height: 70px;
+  font-size: 17px;
+  padding: 8px;
+  border-color: #ccc;
+}
+.btn-zone {
+  margin: 20px;
   display: flex;
+  justify-content: center;
+}
+.btn-zone > button {
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding: 15px 30px;
+  border-radius: 15px;
+  font-weight: 600;
 }
