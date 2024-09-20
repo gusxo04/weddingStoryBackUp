@@ -21,6 +21,9 @@ npm i react-select --force
 2024-09-19 오후 06:11
 npm i react-tag-input-component  --force
 
+정현태
+2024-09-20 오전 10:25
+npm install react-kakao-maps --force
 김준석
 2024-09-20 오후 12:09
 npm install react-icons --force

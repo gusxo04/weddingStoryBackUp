@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import CompanyJoin from "./CompanyJoin";
+import CompanyJoin from "./CompanyJoinFrm";
 import "./company.css";
 
 const CompanyMain = () => {

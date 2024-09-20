@@ -114,15 +114,16 @@
     cursor: pointer;
 }
 .convention-email-input-wrap{
-    width: 100%;
+    width: 70%;
     height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
+    align-self: center;
 }
-.convention-email-input-wrap>.convention-email-input{
-    width: 20%;
-    height: 25%;
+.convention-email-input-wrap>.email-first-input-wrap>.convention-email-input{
+    width: 85%;
+    /* height: 25%; */
     border: none;
     border-bottom: 1px solid #ccc;
     background-color: transparent;
@@ -130,17 +131,32 @@
     padding: 0 5px;
 }
 .convention-email-input-wrap>span{
-    margin: 0 10px;
+    /* margin: 0 10px; */
 }
 #convention-email-last{
-    width: auto;
-    max-width: 20%;
-    height: 40%;
+    /* width: auto; */
+    /* max-width: 20%; */
+    /* height: 40%; */
     border: none;
     border-bottom: 1px solid #ccc;
     background-color: transparent;
     font-size: 16px;
 }
+.convention-email-input-wrap>.email-first-input-wrap{
+    width: 45%;
+    display: flex;
+    justify-content: center;
+}
+.convention-email-input-wrap>.email-mid-wrap{
+    width: 5%;
+}
+
+.convention-email-input-wrap>.email-last-input-wrap{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+}
+
 #convention-email-last>option{
 /* input이랑 select 높이 맞추기 */
 }
@@ -230,6 +246,23 @@
     
 }
 
+/* 부스보기 css */
+.convention-show-layout-wrap{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.convention-show-layout-container{
+    width: 70%;
+    height: 80%;
+    position: fixed;
+    background-color: white;
+}
 
 /* InsertConvention css */
 .insert-convention-container{
@@ -321,7 +354,7 @@
     margin-top: 10px;
 }
 
-.input-wrap{
+.convention-info-wrap>.input-wrap{
     width: 70%;
     height: 7vh;
     /* background-color: aquamarine; */
