@@ -46,3 +46,23 @@
 .pay-button {
   padding-top: 100px;
 }
+
+/*리뷰css*/
+.review-wrap {
+  margin: 0 auto;
+  padding: 20px;
+}
+.title {
+  text-align: center;
+}
+.title > h3 {
+  color: var(--main1);
+}
+.content {
+  border-radius: 10px;
+  height: 800px;
+  padding-left: 500px;
+  background-color: var(--main2);
+}
+
+/*상세css*/
