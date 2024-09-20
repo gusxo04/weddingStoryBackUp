@@ -16,6 +16,7 @@ const NoticeList = () => {
       .then((res) => {
         console.log(res.data);
         setNoticeList(res.data.list);
+        setPi(res.data.pi);
       })
       .catch((err) => {
         console.log(err);
@@ -29,8 +30,10 @@ const NoticeList = () => {
           <h1>공지사항</h1>
         </div>
         <div className="notice-list-wrap">
-          <div className="write-btn">
-            <Link to="/notice/write">글쓰기</Link>
+          <div className="write-btn-wrap">
+            <div className="write-btn">
+              <Link to="/admin/notice/write">글쓰기</Link>
+            </div>
           </div>
           <ul className="posting-wrap">
             {noticeList.map((notice, i) => {
