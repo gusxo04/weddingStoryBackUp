@@ -86,10 +86,10 @@ const WriteForm = (props) => {
         <input type="file" ref={imageRef} accept="image/*" style={{display:"none"}} onChange={changeImage} />
       </div>
       <div className="convention-img-type">
-        <button className={imgStyle === 0 ? "selected" : ""} onClick={() => {
-          setImgStyle(0);
+        <button className={imgStyle === 2 ? "selected" : ""} onClick={() => {
+          setImgStyle(2);
         }}>메인이미지 이미지로 변경</button>
-        <button className={imgStyle === 0 ? "" : "selected"} onClick={() => {
+        <button className={imgStyle === 2 ? "" : "selected"} onClick={() => {
           setImgStyle(1);
         }}>백그라운드 이미지로 변경</button>
       </div>

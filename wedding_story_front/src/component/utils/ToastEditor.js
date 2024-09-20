@@ -32,7 +32,7 @@ const ToastEditor = (props) => {
       {type === 1 ? 
       <Editor ref={editorRef} initialValue={boardContent} initialEditType="wysiwyg" 
       language="ko-KR" height="600px" onChange={changeValue} 
-      toolbarItems={toolbarItems}
+      toolbarItems={toolbarItems} autofocus={false}
       />
 
       : 

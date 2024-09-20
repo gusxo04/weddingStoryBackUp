@@ -44,6 +44,7 @@ public class ConventionController {
     public ResponseEntity<Map> conventionMain() {
         LocalDate date = LocalDate.now();
         ConventionDTO convention = conventionService.getTime();
+        if(convention == null) return ResponseEntity.ok(null);
         LocalDate startDate = convention.getConventionStart().toLocalDate();
         LocalDate endDate = convention.getConventionEnd().toLocalDate();
         // 만약에 시작날짜랑 현재 날짜랑 뺐을때 0이면 사전 예약 불가니까 신청 버튼 없애야 하고
@@ -51,7 +52,7 @@ public class ConventionController {
         // 그리고 종료날짜가 지나면 메인에서 없애야 함 (종료 날짜에서 종료시간이 지나도 없애는 건 힘드니까 다음날 없애는 걸로)
         long beforeStart = ChronoUnit.DAYS.between(date, startDate);
         long afterEnd = ChronoUnit.DAYS.between(date, endDate);
-
+        
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("convention", convention);
         map.put("startDate", beforeStart);
@@ -78,6 +79,7 @@ public class ConventionController {
             String filepath = fileUtils.upload(savepath, image);
             convention.setConventionImg(filepath);
         }
+
         boolean result = conventionService.insertConvention(convention);
         return ResponseEntity.ok(result);
     }

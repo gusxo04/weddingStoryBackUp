@@ -114,7 +114,7 @@
     cursor: pointer;
 }
 .convention-email-input-wrap{
-    width: 70%;
+    width: 60%;
     height: 40%;
     display: flex;
     justify-content: center;
@@ -122,7 +122,7 @@
     align-self: center;
 }
 .convention-email-input-wrap>.email-first-input-wrap>.convention-email-input{
-    width: 85%;
+    width: 70%;
     /* height: 25%; */
     border: none;
     border-bottom: 1px solid #ccc;
@@ -145,16 +145,18 @@
 .convention-email-input-wrap>.email-first-input-wrap{
     width: 45%;
     display: flex;
-    justify-content: center;
+    justify-content: end;
 }
 .convention-email-input-wrap>.email-mid-wrap{
     width: 5%;
+    display: flex;
+    justify-content: center;
 }
 
 .convention-email-input-wrap>.email-last-input-wrap{
     width: 25%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
 }
 
 #convention-email-last>option{

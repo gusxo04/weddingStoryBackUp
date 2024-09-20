@@ -8,6 +8,7 @@ import ConventionLocate from "../utils/ConventionLocate";
 import BuyTicket from "./BuyTicket";
 import ShowLayout from "./ShowLayout";
 import ConventionLayout from "../utils/ConventionLayout";
+import Swal from "sweetalert2";
 
 
 const ConventionMain = () => {
@@ -41,16 +42,19 @@ const ConventionMain = () => {
   useEffect(() => {
     axios.get(`${backServer}/convention`)
     .then(res => {
-      // console.log(res);
+      console.log(res);
+      if(!res.data) return;
       setConvention(res.data.convention);
       setStartDate(res.data.startDate);
       setEndDate(res.data.endDate);
+
     })
     .catch(err => {
       console.error(err); 
     })
   }, []);
 
+  
   let testStartDate = new Date(convention.conventionStart);
   let testEndDate = new Date(convention.conventionEnd);
 
@@ -144,6 +148,24 @@ const ShowConvention = (props) => {
   
   const closeAlert = (e, pass) => {
     if(pass || e.target.id === "convention-close-screen"){
+      if(e.target.className === "convention-member-alert-wrap"){
+
+        Swal.fire({
+          title:"박람회 티켓 결제",
+          text : "결제를 취소하시겠습니까?",
+          showCancelButton : true,
+          cancelButtonText : "계속하기",
+          cancelButtonColor : "var(--main2)",
+          confirmButtonText : "결제취소",
+          confirmButtonColor : "var(--main1)",
+          reverseButtons : true
+        }).then((data) => {
+          if(data.isConfirmed){
+            setAlertType(0);
+          }
+        })
+        return false;
+      }
       setAlertType(0);
     }
   }
