@@ -40,7 +40,6 @@ const Header = () => {
           </ul>
         </div>
       </div>
-      <div className="header-content"></div>
     </header>
   );
 };

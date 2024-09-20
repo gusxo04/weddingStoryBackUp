@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.admin.model.dao.NoticeDao">
+
+	<select id="totalCount" resultType="int">
+		select count(*) from notice
+	</select>
+	<select id="selectNoticeList" resultType="notice">
+		select * from
+			(select rownum as rnum, b.* from
+				(select
+					notice_no,
+					notice_title,
+					notice_thumb,
+					notice_writer,
+					notice_date
+				from notice order by notice_no desc) b)
+		where rnum between #{start} and #{end}
+	</select>
+</mapper>

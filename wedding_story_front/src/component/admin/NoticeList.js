@@ -4,18 +4,18 @@ import PageNavi from "../utils/PagiNavi";
 import { useRecoilValue } from "recoil";
 import { Link, useNavigate } from "react-router-dom";
 
-const BoardList = () => {
+const NoticeList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [boardList, setBoardList] = useState([]);
+  const [noticeList, setNoticeList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
+  const userState = 0;
   useEffect(() => {
     axios
-      .get(`${backServer}/board/list/${reqPage}`)
+      .get(`${backServer}/notice/list/${reqPage}/${userState}`)
       .then((res) => {
-        console.log(res);
-        setBoardList(res.data.list);
-        setPi(res.data.pi);
+        console.log(res.data);
+        setNoticeList(res.data.list);
       })
       .catch((err) => {
         console.log(err);
@@ -24,53 +24,54 @@ const BoardList = () => {
 
   return (
     <>
-      <div className="board-wrap">
-        <div className="page-title">자유게시판</div>
-        <div className="write-btn">
-          <Link to="/board/write">글쓰기</Link>
+      <div className="notice-wrap">
+        <div className="page-title">
+          <h1>공지사항</h1>
         </div>
-        <div className="board-list-wrap">
+        <div className="notice-list-wrap">
+          <div className="write-btn">
+            <Link to="/notice/write">글쓰기</Link>
+          </div>
           <ul className="posting-wrap">
-            {boardList.map((board, i) => {
-              return <BoardItem key={"board-" + i} board={board} />;
+            {noticeList.map((notice, i) => {
+              return <NoticeItem key={"notice-" + i} notice={notice} />;
             })}
           </ul>
         </div>
-        <div className="board-paging-wrap">
+        <div className="notice-paging-wrap">
           <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
         </div>
       </div>
     </>
   );
 };
-const BoardItem = (props) => {
+const NoticeItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const board = props.board;
+  const notice = props.notice;
   const navigate = useNavigate();
   return (
     <li
       className="posting-item"
       onClick={() => {
-        navigate(`/board/view/${board.boardNo}`);
+        navigate(`/notice/view/${notice.noticeNo}`);
       }}
     >
       <div className="posting-img">
         <img
           src={
-            board.boardThumb
-              ? `${backServer}/board/thumb/${board.boardThumb}`
+            notice.noticeThumb
+              ? `${backServer}/notice/thumb/${notice.noticeThumb}`
               : "/image/default_img.png"
           }
         />
       </div>
       <div className="posting-info">
-        <div className="posting-title">{board.boardTitle}</div>
+        <div className="posting-title">{notice.noticeTitle}</div>
         <div className="posting-sub-info">
-          <span>{board.boardWriter}</span>
-          <span>{board.boardDate}</span>
+          <span>{notice.noticeDate}</span>
         </div>
       </div>
     </li>
   );
 };
-export default BoardList;
+export default NoticeList;
