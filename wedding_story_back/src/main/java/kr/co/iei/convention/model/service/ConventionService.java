@@ -76,12 +76,19 @@ public class ConventionService {
         conventionMember.setMemberNo(2);
         memberPay.setMemberNo(2);
 
+        // 혹시 티켓코드가 겹칠 수 있으니까 먼저 조회해서 없는지 있는지 판단 후 insert 해야함
+        // 
+        
         int result = conventionDao.insertConventionMember(conventionMember);
         if(result > 0){
             memberPay.setTicketNo(conventionMember.getTicketNo());
             result += conventionDao.insertMemberPay(memberPay);
         }
-        
-        return result == 1;
+
+        return result == 2;
     }
+
+
+
+
 }
