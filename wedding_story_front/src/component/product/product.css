@@ -4,27 +4,31 @@
   padding: 30px;
   border-radius: 10px;
   background-color: var(--main2);
-  height: 100%;
   margin: 0 auto;
   align-self: center;
-  align-items: center;
 }
-.page-title {
+.board-list > .page-title {
   padding: 30px 30px;
   font-family: ns-b;
   justify-content: center;
 }
-.page-title > ul {
+
+.board-list > .page-title > ul {
   display: flex;
-  align-items: center;
+  text-align: center;
 }
-.page-title > ul > li {
+
+.board-list > .page-title > ul > li {
   padding-right: 10px;
 }
-.name-title > :hover {
-  color: var(--main1);
-  cursor: pointer;
+.board-list > .page-title > .name-title {
+  padding-left: 42%;
 }
+.board-list > .page-title > .name-title > :hover {
+  cursor: pointer;
+  color: var(--main1);
+}
+
 /*페이지 내비*/
 .pagination {
   list-style-type: none;
@@ -32,6 +36,7 @@
   justify-content: center;
   align-items: center;
 }
+
 /*결제css*/
 .pay-wrap {
   padding: 20px;
@@ -52,17 +57,41 @@
   margin: 0 auto;
   padding: 20px;
 }
-.title {
+.review-wrap > .title {
   text-align: center;
 }
-.title > h3 {
+.review-wrap > .title > h3 {
   color: var(--main1);
 }
-.content {
+.review-wrap > .content {
   border-radius: 10px;
   height: 800px;
   padding-left: 500px;
   background-color: var(--main2);
+}
+
+.review-button {
+  padding-top: 20px;
+}
+.review-button > .btn {
+  width: 950px;
+  height: 50px;
+  border: 1px solid var(--main1);
+}
+
+/*별점*/
+.rating-stars path {
+  fill: rgb(216, 216, 216);
+}
+
+.rating-star-over path {
+  cursor: pointer;
+  fill: var(--main1);
+}
+
+.rating-star-out path {
+  cursor: pointer;
+  fill: rgb(216, 216, 216);
 }
 
 /*상세css*/
