@@ -3,46 +3,56 @@ import UseCondition from "../utils/UseCondition";
 import PersonalPolicy from "../utils/PersonalPolicy";
 import MarketingConsent from "../utils/MarketingConsent";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const JoinAgree = () => {
+const JoinAgree = (props) => {
   const navigate = useNavigate();
+  const setNowPath = props.setNowPath;
+
   const [isClickedAll, setIsClickedAll] = useState(false);
   const [isClicked1, setIsClicked1] = useState(false);
   const [isClicked2, setIsClicked2] = useState(false);
   const [isClicked3, setIsClicked3] = useState(false);
   const checkAgreeAll = () => {
-    if (isClicked1 && isClicked2 && isClicked3) {
-      setIsClickedAll(!isClickedAll);
-    } else {
-      setIsClickedAll(!isClickedAll);
-      setIsClicked1(!isClickedAll);
-      setIsClicked2(!isClickedAll);
-      setIsClicked3(!isClickedAll);
-    }
+    setIsClickedAll(!isClickedAll);
+    setIsClicked1(!isClickedAll);
+    setIsClicked2(!isClickedAll);
+    setIsClicked3(!isClickedAll);
   };
   const checkAgree1 = () => {
     setIsClicked1(!isClicked1);
     if (isClickedAll) {
       setIsClickedAll(!isClicked1);
+    } else if (!isClickedAll && isClicked2 && isClicked3) {
+      setIsClickedAll("true");
     }
   };
   const checkAgree2 = () => {
     setIsClicked2(!isClicked2);
     if (isClickedAll) {
       setIsClickedAll(!isClicked2);
+    } else if (!isClickedAll && isClicked1 && isClicked3) {
+      setIsClickedAll(true);
     }
   };
   const checkAgree3 = () => {
     setIsClicked3(!isClicked3);
     if (isClickedAll) {
       setIsClickedAll(!isClicked3);
+    } else if (!isClickedAll && isClicked1 && isClicked2) {
+      setIsClickedAll(true);
     }
   };
   const nextPage = () => {
     if (isClickedAll || isClicked1 & isClicked2) {
-      navigate("/join/info");
+      setNowPath("type");
+      navigate("/join/type");
     } else {
+      Swal.fire({
+        text: "필수 약관에 동의해주세요.",
+        icon: "info",
+      });
     }
   };
   return (

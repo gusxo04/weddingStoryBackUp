@@ -14,7 +14,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
-    "react-select": "^5.8.0",
+    "react-select": "^5.8.1",
     "react-tag-input-component": "^2.0.2",
     "recoil": "^0.7.7",
     "sweetalert2": "^11.14.0",
