@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PagiNavi";
 
-const ProductAllView = () => {
+const ProductAllList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [boardList, setBoarList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
@@ -31,7 +31,7 @@ const ProductAllView = () => {
             <Link to="/product/pay">스튜디오</Link>
           </li>
           <li>
-            <Link to="#">드레스</Link>
+            <Link to="/product/review">드레스</Link>
           </li>
           <li>
             <Link to="#">메이크업</Link>
@@ -90,4 +90,4 @@ const BoardItem = (props) => {
   );
 };
 
-export default ProductAllView;
+export default ProductAllList;
