@@ -31,6 +31,7 @@ const CompanyJoinFrm = () => {
     companyName: "",
     companyTel: "",
     companyAddr: "",
+    companyInfo: "",
     companyCategory: "",
     startTime: "",
     endTime: "",
@@ -219,6 +220,10 @@ const CompanyJoinFrm = () => {
       <div className="introduction-wrap">
         <div>소개글</div>
         <textarea
+          value={company.companyInfo}
+          onChange={(e) => {
+            setCompany({ ...company, companyInfo: e.target.value });
+          }}
           maxLength={100}
           placeholder="업체 소개글 100자 이내로 작성 부탁"
         ></textarea>
