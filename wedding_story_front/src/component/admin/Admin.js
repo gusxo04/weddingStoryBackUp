@@ -5,7 +5,7 @@ import CompanyControll from "./CompanyControll";
 import Advertisement from "./Advertisement";
 import Question from "./Question";
 import AdminControll from "./AdminControll";
-import Board from "./Board";
+import Notice from "./Notice";
 import { Route, Routes, useLocation } from "react-router-dom";
 import AdminMain from "./AdminMain";
 const Admin = () => {
@@ -18,7 +18,7 @@ const Admin = () => {
         <Route path="advertisement" element={<Advertisement />} />
         <Route path="question" element={<Question />} />
         <Route path="adminControll" element={<AdminControll />} />
-        <Route path="board/*" element={<Board />} />
+        <Route path="notice/*" element={<Notice />} />
         <Route path="adminMain" element={<AdminMain />} />
       </Routes>
     </div>

@@ -39,7 +39,6 @@ function App() {
     }
   }, [location.pathname]); //location.pathname 이 변경되면 렌더링 다시 시작 --dy
 
-  console.log(path);
   return (
     <div className="wrap">
       {path === 0 ? (
