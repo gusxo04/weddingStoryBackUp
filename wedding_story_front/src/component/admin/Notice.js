@@ -9,7 +9,7 @@ const Notice = () => {
     <Routes>
       <Route path="list" element={<NoticeList />} />
       <Route path="write" element={<NoticeWrite />} />
-      <Route path="view/:noticeNo" element={<noticeView />} />
+      <Route path="view/:noticeNo" element={<NoticeView />} />
       <Route path="update/:noticeNo" element={<NoticeUpdate />} />
     </Routes>
   );

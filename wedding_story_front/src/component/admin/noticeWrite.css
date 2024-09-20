@@ -1,0 +1,10 @@
+.notice-write-wrap {
+  border: 1px solid #ddd;
+  border-top: none;
+  margin: 0 auto;
+  height: 878px;
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
