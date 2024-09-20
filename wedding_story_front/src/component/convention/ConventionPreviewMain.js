@@ -16,7 +16,6 @@ const ConventionPreviewMain = (props) => {
     showImage,
   } = props;
 
-  console.log(conventionImg);
 
   return (
     <>

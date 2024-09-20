@@ -12,7 +12,7 @@ const InsertConvention = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [formType, setFormType] = useState(true);
-  const [imgStyle, setImgStyle] = useState(0);
+  const [imgStyle, setImgStyle] = useState(2);
   
   const [conventionTitle, setConventionTitle] = useState("");
   const [conventionContent, setConventionContent] = useState("");
@@ -33,10 +33,7 @@ const InsertConvention = () => {
   const limitRef = useRef(null);
   const priceRef = useRef(null);
   const imgRef = useRef(null);
-  
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [formType]);
+
   
   useEffect(() => {
     setConventionTime(conventionStartTime+" ~ "+conventionEndTime);
