@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 const JoinAgree = (props) => {
   const navigate = useNavigate();
   const setNowPath = props.setNowPath;
+  setNowPath("agree");
 
   const [isClickedAll, setIsClickedAll] = useState(false);
   const [isClicked1, setIsClicked1] = useState(false);
@@ -105,7 +106,7 @@ const JoinAgree = (props) => {
           </label>
           <input type="checkbox" id="check"></input>
           <div>
-            <span style={{ color: "red" }}>[ 필수 ]</span>
+            <span style={{ color: "#CD5151" }}>[ 필수 ]</span>
             <span>웨딩 스토리 이용약관</span>
           </div>
         </div>
@@ -138,7 +139,7 @@ const JoinAgree = (props) => {
           </label>
           <input type="checkbox" id="check"></input>
           <div>
-            <span style={{ color: "red" }}>[ 필수 ]</span>
+            <span style={{ color: "#CD5151" }}>[ 필수 ]</span>
             <span>개인 정보 수집 및 이용</span>
           </div>
         </div>
@@ -171,7 +172,7 @@ const JoinAgree = (props) => {
           </label>
           <input type="checkbox" id="check"></input>
           <div>
-            <span style={{ color: "blue" }}>[ 선택 ]</span>
+            <span style={{ color: "#5351CD" }}>[ 선택 ]</span>
             <span>마케팅 활용 동의</span>
           </div>
         </div>
