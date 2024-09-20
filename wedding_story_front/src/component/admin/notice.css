@@ -1,13 +1,16 @@
 .notice-wrap {
-  border: 1px solid black;
+  border: 1px solid #ddd;
   border-top: none;
   margin: 0 auto;
+  height: 878px;
   width: 1200px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .page-title {
   text-align: center;
-  display: inline-block;
 }
 
 .write-btn {
@@ -17,16 +20,20 @@
   text-align: center;
   width: 10%;
   border: none;
-  border-radius: 15px;
+  border-radius: 3px;
   background-color: var(--main1);
   font-size: 16px;
   font-weight: 600;
 }
+.write-btn-wrap {
+  display: flex;
+  justify-content: right;
+}
 
 .notice-list-wrap {
-  border: 1px solid black;
   width: 90%;
   margin: 0 auto;
+  padding-bottom: 50px;
 }
 
 .posting-wrap {
@@ -50,4 +57,24 @@
 .posting-info {
   display: flex;
   flex-direction: column; /* Keep the title and sub-info stacked */
+}
+.posting-wrap > li {
+  border-bottom: 1px solid #dddddd;
+}
+.pageNUm {
+  cursor: pointer;
+}
+.notice-paging-wrap > ul > li > .page-item {
+  cursor: pointer;
+  margin: 10px;
+}
+.notice-paging-wrap > ul > li > .active-page {
+  font-weight: bolder;
+}
+.notice-paging-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
