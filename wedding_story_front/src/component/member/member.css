@@ -114,7 +114,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 150px;
+  margin: 15px 0;
+}
+.type-dec .material-icons {
+  font-size: 150px;
 }
 .type-btn {
   display: flex;
