@@ -42,7 +42,7 @@ const ConventionMain = () => {
   useEffect(() => {
     axios.get(`${backServer}/convention`)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       if(!res.data) return;
       setConvention(res.data.convention);
       setStartDate(res.data.startDate);
@@ -148,7 +148,7 @@ const ShowConvention = (props) => {
   
   const closeAlert = (e, pass) => {
     if(pass || e.target.id === "convention-close-screen"){
-      if(e.target.className === "convention-member-alert-wrap"){
+      if(e === 1 || e.target.className === "convention-member-alert-wrap"){
 
         Swal.fire({
           title:"박람회 티켓 결제",
@@ -158,7 +158,10 @@ const ShowConvention = (props) => {
           cancelButtonColor : "var(--main2)",
           confirmButtonText : "결제취소",
           confirmButtonColor : "var(--main1)",
-          reverseButtons : true
+          // reverseButtons : true
+          // willOpen: () => {
+          //   document.body.style.overflow = 'visible';
+          // },
         }).then((data) => {
           if(data.isConfirmed){
             setAlertType(0);
@@ -198,10 +201,19 @@ const ShowConvention = (props) => {
   }, []);
 
 
-
   
-
+  
+  // 나중에 다른걸로 대체 (swal 띄우면 스크롤 사라지는거 때매 alert창이 뜨면 스크롤을 사라지게 만듦)
   const [alertType, setAlertType] = useState(0);
+  // const body = document.querySelector("body");
+  // if(alertType !== 0){
+  //   body.style.paddingLeft = '17px';
+  //   body.style = "overflow: hidden";
+  // }
+  // else{
+  //   body.style.paddingRight = "0px"
+  //   body.style = "overflow: auto";
+  // }
 
   return (
     <div className="convention-preview-wrap">

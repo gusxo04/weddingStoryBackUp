@@ -145,7 +145,7 @@ const BuyTicket = (props) => {
 
         <div className="convention-btn-wrap">
           <button className="convention-cancel-btn" onClick={() => {
-            closeAlert(null,true); 
+            closeAlert(1,true); 
           }}>취소</button>
           <button className="convention-submit-btn" onClick={submit}>결제</button>
         </div>

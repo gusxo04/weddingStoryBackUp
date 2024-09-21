@@ -13,6 +13,55 @@
     margin-top: 5%;
 }
 
+.convention-layout-wrap+.convention-preview-info-wrap{
+    margin-top: 50px;
+}
+
+@media (max-width: 1199px) {
+    .convention-layout-container {
+        width: 800px;
+        height: 45vh;
+    }
+    .layout-a, .layout-c {
+        width: 250px;
+    }
+    .layout-b {
+        width: 300px;
+    }
+}
+
+@media (max-width: 767px) {
+    .convention-layout-container {
+        width: 600px;
+        height: 35vh;
+    }
+    .layout-a, .layout-c {
+        width: 180px;
+    }
+    .layout-b {
+        width: 240px;
+    }
+    .convention-layout-wrap+.convention-preview-info-wrap{
+        margin-top: 100px;
+    }
+}
+@media (max-width: 500px) {
+    .convention-layout-container {
+        width: 400px;
+        height: 25vh;
+    }
+    .layout-a, .layout-c {
+        width: 120px;
+    }
+    .layout-b {
+        width: 180px;
+    }
+    .convention-layout-wrap+.convention-preview-info-wrap{
+        margin-top: 150px;
+    }
+}
+
+
 .layout{
     display: flex;
     height: 100%;
@@ -22,17 +71,20 @@
 
 .layout-a, .layout-c{
     width: 300px;
-    background-color: rgb(189, 255, 233);
+    /* background-color: rgb(189, 255, 233); */
     /* flex-direction: column; */
 }
+
 .layout-b{
     width: 360px;
-    background-color: rgb(159, 159, 255);
+    /* background-color: rgb(159, 159, 255); */
 }
+
 
 
 .layout .seat2,.layout .seat3,.layout .seat6,.layout .seat7{
     margin-top: 10%;
+    border-bottom: none;
 }
 
 /* .layout .seatB4,.layout .seatB5,.layout .seatB6,.layout .seatB7, */
@@ -40,17 +92,25 @@
 {
     margin-bottom: 10%;
 }
+.layout .seatB:nth-child(n+2):not(:nth-child(4n+1)) {
+    /* 스타일을 적용합니다. */
+    border-left: none;
+  }
+
 
 
 
 
 .seat{
-    width: 80px;
+    /* width: 80px; */
+    width: 23%;
     border: 1px solid black;
     /* height: 80px; */
+    cursor: pointer;
 }
 .seatA, .seatC{
-    margin: 0px 20px;
+    /* margin: 0px 20px; */
+    margin: 0px 6%;
     /* flex-basis: calc(35% - 10px); */
 }
 

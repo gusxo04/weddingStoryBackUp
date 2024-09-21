@@ -22,7 +22,7 @@ const ConventionLocate = (props) => {
     };
 
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
+    
     // 마커 표시
     const markerPosition = new kakao.maps.LatLng(wayLat, wayLng);
     const marker = new kakao.maps.Marker({
@@ -32,6 +32,7 @@ const ConventionLocate = (props) => {
 
     // 주소 얻기
     const geocoder = new kakao.maps.services.Geocoder();
+    
 
     
     // 위경도 객체

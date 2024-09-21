@@ -102,9 +102,11 @@ const WriteForm = (props) => {
             <span ref={titleRef}>박람회 제목</span>
           </div>
           <div className="input-zone">
-            <input type="text" value={conventionTitle} onChange={(e) => {
-              setConventionTitle(e.target.value); 
-            }} />
+            <div className="convention-input-container">
+              <input type="text" value={conventionTitle} onChange={(e) => {
+                setConventionTitle(e.target.value); 
+              }} />
+            </div>
           </div>
         </div>
 
@@ -113,32 +115,49 @@ const WriteForm = (props) => {
             <span ref={dateRef}>박람회 일정</span>
           </div>
           <div className="input-zone">
+            <div className="convention-input-container">
 
-            <input type="date" className="start-date" value={conventionStart} onChange={(e) => {
-              setConventionStart(e.target.value);
-            }} />
-            <span>~</span>
-            <input type="date" className="end-date" value={conventionEnd} onChange={(e) => {
-              setConventionEnd(e.target.value);
-            }} />
+              <div className="start-date-container convention-date-container">
+                <input type="date" className="start-date" value={conventionStart} onChange={(e) => {
+                  setConventionStart(e.target.value);
+                }} />
+              </div>
+
+              <div className="mid-date-container">
+                <span>~</span>
+              </div>
+
+              <div className="end-date-container convention-date-container">
+                <input type="date" className="end-date" value={conventionEnd} onChange={(e) => {
+                  setConventionEnd(e.target.value);
+                }} />
+              </div>
+            </div>
 
           </div>
         </div>
-
 
         <div className="input-wrap">
           <div className="input-info">
             <span ref={timeRef}>박람회 시간</span>
           </div>
           <div className="input-zone">
-            <input type="time" value={conventionStartTime} onChange={(e) => {
-              setConventionStartTime(e.target.value); 
-              
-            }} />
-            <span>~</span>
-            <input type="time" value={conventionEndTime} onChange={(e) => {
-              setConventionEndTime(e.target.value); 
-            }} />
+            <div className="convention-input-container">
+              <div className="start-date-container convention-date-container">
+                <input type="time" value={conventionStartTime} onChange={(e) => {
+                  setConventionStartTime(e.target.value); 
+                  
+                }} />
+              </div>
+              <div className="mid-date-container">
+                <span>~</span>
+              </div>
+              <div className="end-date-container convention-date-container">
+                <input type="time" value={conventionEndTime} onChange={(e) => {
+                  setConventionEndTime(e.target.value); 
+                }} />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -148,11 +167,13 @@ const WriteForm = (props) => {
             <span ref={limitRef}>박람회 정원</span>
           </div>
           <div className="input-zone">
-            <input type="type" value={conventionLimit} onChange={(e) => {
-              if(!isNaN(e.target.value) ){
-                setConventionLimit(e.target.value); 
-              }
-            }} />
+            <div className="convention-input-container">
+              <input type="type" value={conventionLimit} onChange={(e) => {
+                if(!isNaN(e.target.value) ){
+                  setConventionLimit(e.target.value); 
+                }
+              }} />
+            </div>
           </div>
         </div>
 
@@ -161,11 +182,13 @@ const WriteForm = (props) => {
             <span ref={priceRef}>박람회 가격</span>
           </div>
           <div className="input-zone">
-            <input type="type" value={conventionPrice} onChange={(e) => {
-              if(!isNaN(e.target.value) ){
-                setConventionPrice(e.target.value); 
-              }
-            }} />
+            <div className="convention-input-container">
+              <input type="type" value={conventionPrice} onChange={(e) => {
+                if(!isNaN(e.target.value) ){
+                  setConventionPrice(e.target.value); 
+                }
+              }} />
+            </div>
           </div>
         </div>
 
