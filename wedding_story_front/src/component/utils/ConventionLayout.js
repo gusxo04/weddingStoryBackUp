@@ -13,7 +13,7 @@ const ConventionLayout = () => {
     // 나중에 업체인지 조건걸기
     axios.get(`${backServer}/convention/layout`)
     .then(res => {
-      // console.log(res);
+      console.log(res);
       setASeat(res.data.line0);
       setBSeat(res.data.line1);
       setCSeat(res.data.line2);

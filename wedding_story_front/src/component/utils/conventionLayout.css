@@ -117,3 +117,7 @@
 .layout .seatB{
     /* flex-basis: calc(25% - 10px); */
 }
+
+.problem{
+    background-color: #ccc;
+}

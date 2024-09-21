@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import ToastEditor from "../utils/ToastEditor";
 import axios from "axios";
+
 
 
 const WriteForm = (props) => {
@@ -20,7 +21,7 @@ const WriteForm = (props) => {
     setConventionEnd,
     conventionContent,
     setConventionContent,
-    image,
+    // image,
     setImage,
     conventionImg,
     conventionPrice,
@@ -31,8 +32,8 @@ const WriteForm = (props) => {
     setConventionStartTime,
     conventionEndTime,
     setConventionEndTime,
-    conventionTime,
-    setConventionTime,
+    // conventionTime,
+    // setConventionTime,
     showImage,
     setShowImage,
     titleRef,
@@ -44,6 +45,9 @@ const WriteForm = (props) => {
     imgRef
   } = props;
   
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
   
 
   const changeImage = (e) => {

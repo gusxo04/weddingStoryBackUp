@@ -16,6 +16,7 @@ import CompanyMain from "./component/company/CompanyMain";
 import Counsel from "./component/marriageCounseling/Counsel";
 import AdminHeader from "./component/common/AdminHeader";
 import Join from "./component/member/Join";
+import ConventionLobby from "./component/convention/ConventionLobby";
 
 function App() {
   const location = useLocation();
@@ -52,9 +53,8 @@ function App() {
       <main className="content-wrap">
         <Routes>
           <Route path="/join/*" element={<Join />} />
-          <Route path="/convention" element={<ConventionMain />} />
-          <Route path="/test" element={<ConventionLayout />} />
-          <Route path="/newConvention" element={<InsertConvention />} />
+          <Route path="/convention/*" element={<ConventionLobby />} />
+          {/* <Route path="/test" element={<ConventionLayout />} /> */}
           <Route path="/product/*" element={<ProductMain />} />
           <Route path="/marriageCounseling/*" element={<Counsel />} />
           <Route path="/admin/*" element={<Admin />} />

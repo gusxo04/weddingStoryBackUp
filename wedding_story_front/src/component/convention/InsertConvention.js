@@ -192,12 +192,12 @@ const InsertConvention = () => {
           conventionStart={conventionStart} setConventionStart={setConventionStart} 
           conventionEnd={checkDate} setConventionEnd={setConventionEnd} 
           conventionContent={conventionContent} setConventionContent={setConventionContent}
-          image={image} setImage={setImage}
+          setImage={setImage}
           conventionPrice={conventionPrice} setConventionPrice={setConventionPrice}
           conventionLimit={conventionLimit} setConventionLimit={setConventionLimit}
           conventionStartTime={conventionStartTime} setConventionStartTime={setConventionStartTime}
           conventionEndTime={conventionEndTime} setConventionEndTime={setConventionEndTime}
-          conventionTime={conventionTime} setConventionTime={setConventionTime}
+          // conventionTime={conventionTime} setConventionTime={setConventionTime}
           showImage={showImage} setShowImage={setShowImage}
           titleRef={titleRef} contentRef={contentRef} timeRef={timeRef} dateRef={dateRef}
           limitRef={limitRef} priceRef={priceRef} imgRef={imgRef}
