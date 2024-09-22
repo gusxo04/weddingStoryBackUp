@@ -24,7 +24,7 @@ const InsertConvention = () => {
   const [conventionEndTime, setConventionEndTime] = useState("");
   const [conventionTime, setConventionTime] = useState("");
   const [conventionStart, setConventionStart] = useState("");
-  const [checkDate, setConventionEnd] = useState("");
+  const [conventionEnd, setConventionEnd] = useState("");
 
   const titleRef = useRef(null);
   const contentRef = useRef(null);
@@ -80,7 +80,7 @@ const InsertConvention = () => {
       isTest = false;
     }
 
-    const isDate = compareDate(checkDate);
+    const isDate = compareDate(conventionEnd);
     if(!isDate){
       dateRef.current.classList.add("invalid");
       isTest = false;
@@ -130,7 +130,7 @@ const InsertConvention = () => {
     form.append("conventionContent",conventionContent);
     form.append("conventionTime",conventionTime);
     form.append("conventionStart", conventionStart);
-    form.append("conventionEnd", checkDate);
+    form.append("conventionEnd", conventionEnd);
     form.append("conventionPrice", conventionPrice);
     form.append("conventionLimit", conventionLimit);
     form.append("imgStyle", imgStyle);
@@ -149,10 +149,10 @@ const InsertConvention = () => {
   
   const compareDate = (date) => {
     // 날짜 비교
-    const checkDate = date;
-    if(conventionStart === "" || checkDate === "") return false;
+    const conventionEnd = date;
+    if(conventionStart === "" || conventionEnd === "") return false;
     const startDate = new Date(conventionStart);
-    const endDate = new Date(checkDate);
+    const endDate = new Date(conventionEnd);
     
     if(startDate <= endDate){
       return true
@@ -190,7 +190,7 @@ const InsertConvention = () => {
           <WriteForm imgStyle={imgStyle} setImgStyle={setImgStyle} 
           conventionTitle={conventionTitle} setConventionTitle={setConventionTitle} 
           conventionStart={conventionStart} setConventionStart={setConventionStart} 
-          conventionEnd={checkDate} setConventionEnd={setConventionEnd} 
+          conventionEnd={conventionEnd} setConventionEnd={setConventionEnd} 
           conventionContent={conventionContent} setConventionContent={setConventionContent}
           setImage={setImage}
           conventionPrice={conventionPrice} setConventionPrice={setConventionPrice}
@@ -200,7 +200,7 @@ const InsertConvention = () => {
           // conventionTime={conventionTime} setConventionTime={setConventionTime}
           showImage={showImage} setShowImage={setShowImage}
           titleRef={titleRef} contentRef={contentRef} timeRef={timeRef} dateRef={dateRef}
-          limitRef={limitRef} priceRef={priceRef} imgRef={imgRef}
+          limitRef={limitRef} priceRef={priceRef} imgRef={imgRef} writeType={1}
           /> 
 
           <div className="write-btn-zone">
@@ -209,7 +209,7 @@ const InsertConvention = () => {
         </>
           :
           <Preview imgStyle={imgStyle} conventionTitle={conventionTitle} conventionContent={conventionContent} 
-          conventionStart={conventionStart} conventionEnd={checkDate}
+          conventionStart={conventionStart} conventionEnd={conventionEnd}
           conventionPrice={conventionPrice} conventionLimit={conventionLimit}
           conventionTime={conventionTime} showImage={showImage}
           />

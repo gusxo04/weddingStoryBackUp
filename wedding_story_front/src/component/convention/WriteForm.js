@@ -42,13 +42,13 @@ const WriteForm = (props) => {
     dateRef, 
     limitRef, 
     priceRef,
-    imgRef
+    imgRef,
+    writeType,
   } = props;
   
   useEffect(() => {
     window.scrollTo(0,0);
   }, []);
-  
 
   const changeImage = (e) => {
     const files = e.currentTarget.files;
@@ -80,7 +80,9 @@ const WriteForm = (props) => {
         }}/>
         :
         conventionImg ? 
-        <img src={`${backServer}/convention/image/${conventionImg}`} ref={imgRef} />
+        <img src={`${backServer}/convention/image/${conventionImg}`} ref={imgRef} onClick={() => {
+          imageRef.current.click();
+        }} />
         :
         // 나중에 수정할때 또 삼항연산자 써서 해줘야 함 (showImage 말고 db에서 가져온 src정보)
         <img src="/image/default_img.png" ref={imgRef} onClick={() => {
@@ -199,8 +201,8 @@ const WriteForm = (props) => {
         <div className="input-msg">
           <span ref={contentRef}></span>
         </div>
-
-        <ToastEditor boardContent={conventionContent} setBoardContent={setConventionContent} type={1} />
+        
+        <ToastEditor boardContent={conventionContent} setBoardContent={setConventionContent} type={1} writeType={writeType} />
       </div>
         {/* type 1은 convention에서 작성이라는 뜻 (convention에서 textarea쓸 때는 파일이나 이런건 업로드 안 할거임) */}
       

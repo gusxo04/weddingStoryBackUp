@@ -127,7 +127,7 @@ const ShowConvention = (props) => {
             setAlertType(3);
           }}>박람회 신청</button> */}
           <button onClick={() => {
-            navigate("/convention/update");
+            navigate("/convention/update/"+convention.conventionNo);
           }}>박람회 수정</button>
 
           {/* 일반유저면 신청 / 업체면 부스 등록 / 관리자면 수정 */}

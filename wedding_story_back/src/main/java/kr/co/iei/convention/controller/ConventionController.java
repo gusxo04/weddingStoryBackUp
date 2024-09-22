@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,7 @@ import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin("*")
@@ -44,7 +44,9 @@ public class ConventionController {
     public ResponseEntity<Map> conventionMain() {
         LocalDate date = LocalDate.now();
         ConventionDTO convention = conventionService.getTime();
-        if(convention == null) return ResponseEntity.ok(null);
+        if (convention == null) {
+            return ResponseEntity.ok(null);
+        }
         LocalDate startDate = convention.getConventionStart().toLocalDate();
         LocalDate endDate = convention.getConventionEnd().toLocalDate();
         // 만약에 시작날짜랑 현재 날짜랑 뺐을때 0이면 사전 예약 불가니까 신청 버튼 없애야 하고
@@ -52,7 +54,7 @@ public class ConventionController {
         // 그리고 종료날짜가 지나면 메인에서 없애야 함 (종료 날짜에서 종료시간이 지나도 없애는 건 힘드니까 다음날 없애는 걸로)
         long beforeStart = ChronoUnit.DAYS.between(date, startDate);
         long afterEnd = ChronoUnit.DAYS.between(date, endDate);
-        
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("convention", convention);
         map.put("startDate", beforeStart);
@@ -64,7 +66,7 @@ public class ConventionController {
     }
 
     @GetMapping("/layout")
-    public ResponseEntity<Map> getMethodName() {
+    public ResponseEntity<Map> layput() {
         Map map = conventionService.selectConventionSeat();
         return ResponseEntity.ok(map);
 
@@ -74,8 +76,8 @@ public class ConventionController {
     public ResponseEntity<Boolean> writeConvention(@ModelAttribute ConventionDTO convention, @ModelAttribute MultipartFile image) {
         // System.out.println(convention);
         // System.out.println(image);
-        if(image != null){
-            String savepath = root+"/convention/";
+        if (image != null) {
+            String savepath = root + "/convention/";
             String filepath = fileUtils.upload(savepath, image);
             convention.setConventionImg(filepath);
         }
@@ -83,15 +85,20 @@ public class ConventionController {
         boolean result = conventionService.insertConvention(convention);
         return ResponseEntity.ok(result);
     }
-    
+
     @PostMapping("/buy")
     public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {
         boolean result = conventionService.conventionMemberPay(conventionMember, memberPay);
-        
+
         System.out.println(conventionMember); //넘어온 데이터 -> memberNo, memberEmail(알림받을)
         System.out.println(memberPay);        //넘어온 데이터 -> progressDate, payPrice, merchantUid
         return ResponseEntity.ok(result);
     }
-    
+
+    @GetMapping("/{conventionNo}")
+    public ResponseEntity<ConventionDTO> getConvention(@PathVariable int conventionNo) {
+        ConventionDTO conventionDTO = conventionService.selectOneConvention(conventionNo);
+        return ResponseEntity.ok(conventionDTO);
+    }
 
 }

@@ -1,8 +1,5 @@
 package kr.co.iei.convention.model.dto;
 
-
-
-
 import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
@@ -14,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="convention")
+@Alias(value = "convention")
 public class ConventionDTO {
 
     private int conventionNo;

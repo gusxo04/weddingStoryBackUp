@@ -42,4 +42,8 @@
         insert into member_pay values(member_pay_seq.nextval, #{memberNo}, null, #{ticketNo}, sysdate, #{progressDate}, #{progressTime}, #{payPrice}, 0, #{merchantUid})
     </insert>
 
+    <select id="selectOneConvention" resultType="convention">
+        select * from convention where convention_no = #{conventionNo}
+    </select>
+
 </mapper>

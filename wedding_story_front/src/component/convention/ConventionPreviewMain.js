@@ -33,23 +33,23 @@ const ConventionPreviewMain = (props) => {
 
         <div className="main-info-zone">
           <div className="main-info-title">
-            <h2>{conventionTitle}</h2>
+            <h1>{conventionTitle}</h1>
           </div>
 
           <div className="main-info-date">
-            <div>일정 : {conventionStart} ~ {conventionEnd}</div>
+            <div><span style={{fontWeight:"600"}} >일정</span> : <span className="main-info-inner-span" style={{fontWeight:"400"}} >{conventionStart} ~ {conventionEnd}</span></div>
           </div>
 
           <div className="main-info-time">
-            <div>시간 : {conventionTime}</div>
+            <div><span style={{fontWeight:"600"}} >시간</span> : <span className="main-info-inner-span" style={{fontWeight:"400"}} >{conventionTime}</span></div>
           </div>
           
           <div className="main-info-price">
-            <div>가격 : {conventionPrice}원</div>
+            <div><span style={{fontWeight:"600"}} >가격</span> : <span className="main-info-inner-span" style={{fontWeight:"400"}} >{conventionPrice}원</span></div>
           </div>
 
           <div className="main-info-limit">
-            <div>정원 : {conventionLimit}명</div>
+            <div><span style={{fontWeight:"600"}} >정원</span> : <span className="main-info-inner-span" style={{fontWeight:"400"}} >{conventionLimit}명</span></div>
           </div>
 
         </div>

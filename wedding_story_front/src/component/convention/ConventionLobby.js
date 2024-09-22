@@ -9,7 +9,7 @@ const ConventionLobby = () => {
 
       <Route path="main" element={<ConventionMain />} />
       <Route path="write" element={<InsertConvention />} />
-      <Route path="update" element={<UpdateConvention />} />
+      <Route path="update/:conventionNo" element={<UpdateConvention />} />
 
     </Routes>
   )
