@@ -8,7 +8,7 @@ const ToastEditor = (props) => {
   // 키 값만 boardContent, setBoardcontent로 맞춰주면 됨
   // type은 적을 필요 없음 (1인 경우는 박람회에서 쓰는 경우임)
   const {
-    boardContent, setBoardContent,
+    boardContent, setBoardContent, writeType
   } = props;
 
   let type = props.type
@@ -30,10 +30,13 @@ const ToastEditor = (props) => {
   return (
     <div className="editor-wrap">
       {type === 1 ? 
+      writeType === 1 || (writeType === 2 && boardContent !== "") ?
       <Editor ref={editorRef} initialValue={boardContent} initialEditType="wysiwyg" 
       language="ko-KR" height="600px" onChange={changeValue} 
-      toolbarItems={toolbarItems}
+      toolbarItems={toolbarItems} autofocus={false}
       />
+      :
+      ""
 
       : 
       <Editor ref={editorRef} initialValue={boardContent} initialEditType="wysiwyg" 

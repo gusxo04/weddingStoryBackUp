@@ -88,6 +88,15 @@ public class ConventionService {
         return result == 2;
     }
 
+    public ConventionDTO selectOneConvention(int conventionNo) {
+        return conventionDao.selectOneConvention(conventionNo);
+    }
+
+    public boolean updateConvention(ConventionDTO convention) {
+        return conventionDao.updateConvention(convention);
+        
+    }
+
 
 
 

@@ -1,5 +1,4 @@
 import { useRecoilValue } from "recoil";
-import Counsel from "../marriageCounseling/Counsel";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";

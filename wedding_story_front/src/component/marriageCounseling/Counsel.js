@@ -23,7 +23,7 @@ const Counsel = () => {
     const name = e.target.name;
     setMember({ ...member, [name]: e.target.value });
   };
-  const changeConsult = () => {
+  const chageConsult = () => {
     setconsult({});
   };
   const reservation = () => {
@@ -63,7 +63,7 @@ const Counsel = () => {
     );
   };
   return (
-    <section className="counsel-wrap">
+    <section className="counselt-wrap">
       <div className="title-name">상담신청</div>
       <form
         onSubmit={(e) => {
@@ -72,89 +72,88 @@ const Counsel = () => {
         }}
       ></form>
       <span className="material-icons">arrow_back</span>
-      <div className="counsel-content">
-        <div className="counsel">
-          <div className="coolinput">
-            <label for="input" className="text">
-              이름
-            </label>
+      <div className="counselt-content">
+        <div className="input-wrap">
+          <div className="input-title">
+            <label htmlFor="memberName">이름</label>
+          </div>
+          <div className="input-item">
             <input
-              className="input"
-              name="memberName"
               type="text"
-              placeholder="Write here..."
+              name="memberName"
+              id="memberName"
               value={member.memberName}
               onChange={changeMember}
-            />
+            ></input>
           </div>
-          <div className="coolinput">
-            <label for="input" className="text">
-              전화번호
-            </label>
+        </div>
+        <div className="input-wrap">
+          <div className="input-title">
+            <label htmlFor="memberPhone">전화번호</label>
+          </div>
+          <div className="input-item">
             <input
-              className="input"
-              name="memberPhone"
               type="text"
-              placeholder="Write here..."
+              name="memberPhone"
+              id="memberPhone"
               value={member.memberPhone}
               onChange={changeMember}
-            />
-          </div>
-
-          <div className="inline">
-            <div className="coolinput_1">
-              <label for="input" className="text">
-                예식예정일
-              </label>
-              <input
-                className="input"
-                type="date"
-                name="reservation"
-                min={tomorrow() || ""}
-                value={consult.reservation}
-                onChange={changeConsult}
-              />
-            </div>
-
-            <div className="coolinput_1">
-              <label for="input" className="text">
-                미정
-              </label>
-              <input
-                className="input"
-                type="checkbox"
-                checked={isDateUndefined}
-                onChange={() => setIsDateUndefined(!isDateUndefined)}
-              />
-            </div>
+            ></input>
           </div>
         </div>
-        <div className="coolinput">
-          <label for="input" className="text">
-            상담제목
-          </label>
-          <input
-            className="input"
-            name="consultTitle"
-            type="text"
-            placeholder="Write here..."
-            value={consult.consultTitle}
-            onChange={changeConsult}
-          />
+        <div className="input-wrap">
+          <div className="input-title">
+            <label htmlFor="reservation">예식예정일</label>
+          </div>
+          <div className="input-item">
+            <input
+              type="date"
+              min={tomorrow() || ""}
+              name="reservation"
+              id="reservation"
+              value={consult.reservation}
+              onChange={chageConsult}
+            ></input>
+          </div>
+          <div className="input-item">
+            <div className="input-title">
+              <label>미정</label>
+            </div>
+            <input
+              type="checkbox"
+              checked={isDateUndefined}
+              onChange={() => setIsDateUndefined(!isDateUndefined)}
+            ></input>
+          </div>
         </div>
-        <div className="coolinput">
-          <label for="input" className="text">
-            상담내용
-          </label>
-          <textarea
-            className="input"
-            name="consultWriter"
-            type="text"
-            placeholder="Write here..."
-            value={consult.consultWriter}
-            onChange={changeConsult}
-          />
+
+        <div className="input-wrap">
+          <div className="input-title">
+            <label htmlFor="consultTitle">상담제목</label>
+          </div>
+          <div className="input-item">
+            <input
+              type="text"
+              name="consultTitle"
+              id="consultTitle"
+              value={consult.consultTitle}
+              onChange={chageConsult}
+            ></input>
+          </div>
         </div>
+        <div className="input-wrap">
+          <div className="input-title">
+            <label htmlFor="consultWriter">상담내용</label>
+          </div>
+          <div className="input-item">
+            <textarea className="consultWriter" id="consultWriter"></textarea>
+          </div>
+        </div>
+      </div>
+      <div className="consolt-button">
+        <button type="submit" className="btn">
+          상담신청하기
+        </button>
       </div>
     </section>
   );

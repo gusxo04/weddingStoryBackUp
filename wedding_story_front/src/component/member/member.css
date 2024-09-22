@@ -1,10 +1,11 @@
 .join-wrap {
+  height: 100%;
   display: flex;
   justify-content: center;
   border: none;
 }
 .join-wrap-content {
-  width: 100%;
+  width: 1200px;
 }
 .join-wrap-content > div {
   display: flex;
@@ -97,6 +98,9 @@
   width: 100%;
   text-align: center;
 }
+.join-type p {
+  font-size: 15px;
+}
 .type-dec {
   display: flex;
   justify-content: center;
@@ -119,17 +123,156 @@
 }
 .type-dec .material-icons {
   font-size: 150px;
+  cursor: auto;
 }
 .type-btn {
   display: flex;
   justify-content: center;
 }
 .type-btn > button {
-  margin: 20px 0;
+  margin: 25px 0 30px 0;
   width: 80%;
   height: 45px;
   border: none;
   border-radius: 10px;
   background-color: var(--main2);
   font-weight: 900;
+}
+.join-info-wrap {
+  width: 70%;
+}
+.join-info-wrap > form {
+  margin: 50px 0;
+}
+.join-info-wrap > form > div {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 8%;
+}
+.join-info1 {
+  width: 40%;
+}
+.join-info2 {
+  width: 50%;
+}
+.join-infobox {
+  margin-bottom: 40px;
+}
+.join-inputbox,
+.join-inputbox1,
+.join-inputbox2 {
+  margin-top: 5px;
+}
+.join-inputbox > input {
+  width: 300px;
+  border: none;
+  border-bottom: 1.5px solid #c9c9c9;
+  padding: 7px;
+  font-size: 16px;
+}
+
+.join-labelbox {
+  display: flex;
+}
+.join-labelbox > div {
+  width: 35%;
+  margin: 10px 10px;
+}
+.join-labelbox > div > label {
+  border: 1px solid #c9c9c9;
+  border-radius: 10px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.join-inputbox > input::placeholder {
+  color: #c9c9c9;
+  font-weight: 100;
+  opacity: 0.7;
+}
+.join-labelbox > div > label > input {
+  display: none;
+}
+.join-labelbox .backGray {
+  background-color: var(--main2);
+}
+
+.joinLine2 {
+  border-top: 1px solid #c9c9c9;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.join-partnerInfobox > h4 {
+  font-size: 15px;
+}
+.join-partnerInfobox > p {
+  font-size: 10.5px;
+}
+.join-partnerInfo {
+  display: flex;
+  gap: 88px;
+  margin-top: 20px;
+}
+.join-info-wrap > div {
+  margin-top: 15px;
+}
+.join-btn2 {
+  width: 100%;
+}
+.join-btn2 > div {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.join-btn2 > div > button {
+  width: 70%;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--main2);
+  font-weight: 900;
+}
+.hiddenCheck {
+  display: none;
+}
+.showCheck {
+  display: block;
+  color: red;
+  font-size: 12px;
+}
+
+.join-success-wrap {
+  width: 70%;
+}
+.join-success-wrap > div {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+.join-successLogo {
+  width: 250px;
+}
+.join-successLogo > img {
+  width: 100%;
+}
+.join-successWord1 {
+  text-align: center;
+  line-height: 50px;
+}
+.join-movePage {
+  gap: 30px;
+}
+.join-movePage button {
+  width: 150px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--main2);
+}
+.join-movePage > :last-child > button {
+  background-color: #fff;
+  border: 2px solid var(--main2);
 }

@@ -25,6 +25,10 @@ public interface ConventionDao {
 
     int insertMemberPay(MemberPayDTO memberPay);
 
+    ConventionDTO selectOneConvention(int conventionNo);
+
+    boolean updateConvention(ConventionDTO convention);
+
 
 
 }

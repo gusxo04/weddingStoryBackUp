@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Select from "react-select";
 import "./company.css";
 import Example from "../utils/ReactTagInput";
+import DaumPost from "../utils/DaumPost";
 
 // 시간 option 만들기 - 시(hour)
 let openHour = [];
@@ -30,34 +31,63 @@ const CompanyJoinFrm = () => {
     companyName: "",
     companyTel: "",
     companyAddr: "",
+    companyInfo: "",
     companyCategory: "",
     startTime: "",
     endTime: "",
     dayOff: "",
     keyWord: "",
   });
-  const [selectOption, setSelectOption] = useState(null);
-  const [timeValue, setTimeValue] = useState("");
-  const [category, setCategory] = useState(null);
+
   const selectOptions = [
-    { value: "웨딩홀", label: "웨딩홀" },
-    { value: "스튜디오", label: "스튜디오" },
-    { value: "드레스", label: "드레스" },
-    { value: "메이크업", label: "메이크업" },
-    { value: "예복", label: "예복" },
-    { value: "본식", label: "본식" },
+    { value: 0, label: "웨딩홀" },
+    { value: 1, label: "스튜디오" },
+    { value: 2, label: "드레스" },
+    { value: 3, label: "메이크업" },
+    { value: 4, label: "예복" },
+    { value: 5, label: "본식" },
   ];
   const changeValue = (e) => {
     const name = e.target.name;
     setCompany({ ...company, [name]: e.target.value });
     console.log(company);
   };
-  const push = (e) => {
-    const pushTel = { ...company.companyTel };
-    pushTel.push(e.target.value);
-    setCompany(pushTel);
-    console.log(company.companyTel);
+  const tel1Ref = useRef();
+  const tel2Ref = useRef();
+  const tel3Ref = useRef();
+
+  const changeTel = () => {
+    const tel1 = tel1Ref.current.value;
+    const tel2 = tel2Ref.current.value;
+    const tel3 = tel3Ref.current.value;
+    const combinedTel = `${tel1}-${tel2}-${tel3}`; /*tel1-tel2-tel3 의형식대로 값을 모두 합침*/
+
+    setCompany((prevCompany) => ({
+      /*prevCompany는 매개변수로 다른 문자가 와도 상관은 없음 */
+      ...prevCompany /*... -> 이것은 스프레드 문법으로 company를 전체 복사함*/,
+      companyTel: combinedTel /*companyTel에 들어갈 값은 000-0000-0000형식*/,
+    }));
+
+    // 여기서 추가적인 처리 (예: 서버로 데이터 전송) 가능
+    console.log(company);
   };
+  const handleTelInput = (e, ref) => {
+    const value = e.target.value;
+    // 숫자만 허용
+    if (/^\d*$/.test(value) || value === "") {
+      ref.current.value = value;
+      changeTel(); // 전화번호 업데이트
+    } else {
+      ref.current.value = value.replace(/\D/g, ""); // 숫자가 아닌 문자는 제거
+    }
+  };
+
+  const [address, setAddress] = useState({
+    //이메일 주소를 담기위한 state
+    address: "",
+    detailAddress: "",
+  });
+
   return (
     <div className="company-join-wrap">
       <div className="company-title">업체 등록</div>
@@ -87,42 +117,55 @@ const CompanyJoinFrm = () => {
               <input
                 type="text"
                 id="companyTel"
-                name="companyTel"
-                value={company.companyTel}
-                onChange={changeValue}
-              ></input>
+                ref={tel1Ref}
+                onChange={(e) => handleTelInput(e, tel1Ref)}
+                maxLength={3}
+              />
               <span>-</span>
               <input
                 type="text"
                 id="companyTel"
-                name="companyTel"
-                value={company.companyTel}
-                onChange={changeValue}
-              ></input>
+                ref={tel2Ref}
+                onChange={(e) => handleTelInput(e, tel2Ref)}
+                maxLength={4}
+              />
               <span>-</span>
               <input
                 type="text"
                 id="companyTel"
-                name="companyTel"
-                value={company.companyTel}
-                onChange={changeValue}
-              ></input>
+                ref={tel3Ref}
+                onChange={(e) => handleTelInput(e, tel3Ref)}
+                maxLength={4}
+              />
             </div>
             <div className="company-input-wrap">
               <label htmlFor="companyAddr">업체주소</label>
-              <input type="text" id="companyAddr" readOnly></input>
-              <button>검색</button>
+              <input
+                type="text"
+                id="companyAddr"
+                defaultValue={address.address}
+                readOnly
+              ></input>
+              <DaumPost address={address} setAddress={setAddress} />
             </div>
             <div className="company-input-wrap">
               <label htmlFor="companyAddr-detail">상세주소</label>
-              <input type="text" id="companyAddr-detail"></input>
-              <input type="text" id="companyAddr" name="companyAddr"></input>
+              <input
+                type="text"
+                id="companyAddr-detail"
+                value={address.detailAddress}
+                onChange={(e) => {
+                  setAddress({ ...address, detailAddress: e.target.value });
+                }}
+              ></input>
             </div>
             <div className="company-select-wrap">
               <label htmlFor="open-time">영업시간</label>
               <div className="time-select" id="open-time">
                 <Select
-                  onChange={(e) => setTimeValue(e.value)}
+                  onChange={(e) =>
+                    setCompany({ ...company, startTime: e.value })
+                  }
                   placeholder="시간을 선택하세요."
                   options={openHour}
                 />
@@ -130,7 +173,7 @@ const CompanyJoinFrm = () => {
               <span>~</span>
               <div className="time-select">
                 <Select
-                  onChange={(e) => setTimeValue(e.value)}
+                  onChange={(e) => setCompany({ ...company, endTime: e.value })}
                   placeholder="시간을 선택하세요."
                   options={closeHour}
                 />
@@ -140,7 +183,9 @@ const CompanyJoinFrm = () => {
               <label htmlFor="category">카테고리</label>
               <div className="category-select" id="category">
                 <Select
-                  onChange={(e) => setCategory(e.value)}
+                  onChange={(e) => {
+                    setCompany({ ...company, companyCategory: e.value });
+                  }}
                   placeholder="카테고리"
                   options={selectOptions}
                 />
@@ -175,6 +220,10 @@ const CompanyJoinFrm = () => {
       <div className="introduction-wrap">
         <div>소개글</div>
         <textarea
+          value={company.companyInfo}
+          onChange={(e) => {
+            setCompany({ ...company, companyInfo: e.target.value });
+          }}
           maxLength={100}
           placeholder="업체 소개글 100자 이내로 작성 부탁"
         ></textarea>

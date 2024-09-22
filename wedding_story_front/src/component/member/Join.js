@@ -3,7 +3,9 @@ import "./member.css";
 import JoinAgree from "./JoinAgree";
 import JoinType from "./JoinType";
 import { useState } from "react";
-
+import JoinCompany from "./JoinCompany";
+import JoinMember from "./JoinMember";
+import JoinSuccess from "./JoinSuccess";
 const Join = () => {
   const [nowPath, setNowPath] = useState("agree");
 
@@ -42,6 +44,18 @@ const Join = () => {
               element={<JoinAgree setNowPath={setNowPath} />}
             />
             <Route path="type" element={<JoinType setNowPath={setNowPath} />} />
+            <Route
+              path="joinMember"
+              element={<JoinMember setNowPath={setNowPath} />}
+            />
+            <Route
+              path="joinCompany"
+              element={<JoinCompany setNowPath={setNowPath} />}
+            />
+            <Route
+              path="success"
+              element={<JoinSuccess setNowPath={setNowPath} />}
+            />
           </Routes>
         </div>
       </div>

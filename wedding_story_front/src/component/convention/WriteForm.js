@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import ToastEditor from "../utils/ToastEditor";
 import axios from "axios";
+
 
 
 const WriteForm = (props) => {
@@ -20,7 +21,7 @@ const WriteForm = (props) => {
     setConventionEnd,
     conventionContent,
     setConventionContent,
-    image,
+    // image,
     setImage,
     conventionImg,
     conventionPrice,
@@ -31,8 +32,8 @@ const WriteForm = (props) => {
     setConventionStartTime,
     conventionEndTime,
     setConventionEndTime,
-    conventionTime,
-    setConventionTime,
+    // conventionTime,
+    // setConventionTime,
     showImage,
     setShowImage,
     titleRef,
@@ -41,10 +42,13 @@ const WriteForm = (props) => {
     dateRef, 
     limitRef, 
     priceRef,
-    imgRef
+    imgRef,
+    writeType,
   } = props;
   
-  
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   const changeImage = (e) => {
     const files = e.currentTarget.files;
@@ -76,7 +80,9 @@ const WriteForm = (props) => {
         }}/>
         :
         conventionImg ? 
-        <img src={`${backServer}/convention/image/${conventionImg}`} ref={imgRef} />
+        <img src={`${backServer}/convention/image/${conventionImg}`} ref={imgRef} onClick={() => {
+          imageRef.current.click();
+        }} />
         :
         // 나중에 수정할때 또 삼항연산자 써서 해줘야 함 (showImage 말고 db에서 가져온 src정보)
         <img src="/image/default_img.png" ref={imgRef} onClick={() => {
@@ -86,10 +92,10 @@ const WriteForm = (props) => {
         <input type="file" ref={imageRef} accept="image/*" style={{display:"none"}} onChange={changeImage} />
       </div>
       <div className="convention-img-type">
-        <button className={imgStyle === 0 ? "selected" : ""} onClick={() => {
-          setImgStyle(0);
+        <button className={imgStyle === 2 ? "selected" : ""} onClick={() => {
+          setImgStyle(2);
         }}>메인이미지 이미지로 변경</button>
-        <button className={imgStyle === 0 ? "" : "selected"} onClick={() => {
+        <button className={imgStyle === 2 ? "" : "selected"} onClick={() => {
           setImgStyle(1);
         }}>백그라운드 이미지로 변경</button>
       </div>
@@ -102,9 +108,11 @@ const WriteForm = (props) => {
             <span ref={titleRef}>박람회 제목</span>
           </div>
           <div className="input-zone">
-            <input type="text" value={conventionTitle} onChange={(e) => {
-              setConventionTitle(e.target.value); 
-            }} />
+            <div className="convention-input-container">
+              <input type="text" value={conventionTitle} onChange={(e) => {
+                setConventionTitle(e.target.value); 
+              }} />
+            </div>
           </div>
         </div>
 
@@ -113,32 +121,49 @@ const WriteForm = (props) => {
             <span ref={dateRef}>박람회 일정</span>
           </div>
           <div className="input-zone">
+            <div className="convention-input-container">
 
-            <input type="date" className="start-date" value={conventionStart} onChange={(e) => {
-              setConventionStart(e.target.value);
-            }} />
-            <span>~</span>
-            <input type="date" className="end-date" value={conventionEnd} onChange={(e) => {
-              setConventionEnd(e.target.value);
-            }} />
+              <div className="start-date-container convention-date-container">
+                <input type="date" className="start-date" value={conventionStart} onChange={(e) => {
+                  setConventionStart(e.target.value);
+                }} />
+              </div>
+
+              <div className="mid-date-container">
+                <span>~</span>
+              </div>
+
+              <div className="end-date-container convention-date-container">
+                <input type="date" className="end-date" value={conventionEnd} onChange={(e) => {
+                  setConventionEnd(e.target.value);
+                }} />
+              </div>
+            </div>
 
           </div>
         </div>
-
 
         <div className="input-wrap">
           <div className="input-info">
             <span ref={timeRef}>박람회 시간</span>
           </div>
           <div className="input-zone">
-            <input type="time" value={conventionStartTime} onChange={(e) => {
-              setConventionStartTime(e.target.value); 
-              
-            }} />
-            <span>~</span>
-            <input type="time" value={conventionEndTime} onChange={(e) => {
-              setConventionEndTime(e.target.value); 
-            }} />
+            <div className="convention-input-container">
+              <div className="start-date-container convention-date-container">
+                <input type="time" value={conventionStartTime} onChange={(e) => {
+                  setConventionStartTime(e.target.value); 
+                  
+                }} />
+              </div>
+              <div className="mid-date-container">
+                <span>~</span>
+              </div>
+              <div className="end-date-container convention-date-container">
+                <input type="time" value={conventionEndTime} onChange={(e) => {
+                  setConventionEndTime(e.target.value); 
+                }} />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -148,11 +173,13 @@ const WriteForm = (props) => {
             <span ref={limitRef}>박람회 정원</span>
           </div>
           <div className="input-zone">
-            <input type="type" value={conventionLimit} onChange={(e) => {
-              if(!isNaN(e.target.value) ){
-                setConventionLimit(e.target.value); 
-              }
-            }} />
+            <div className="convention-input-container">
+              <input type="type" value={conventionLimit} onChange={(e) => {
+                if(!isNaN(e.target.value) ){
+                  setConventionLimit(e.target.value); 
+                }
+              }} />
+            </div>
           </div>
         </div>
 
@@ -161,19 +188,21 @@ const WriteForm = (props) => {
             <span ref={priceRef}>박람회 가격</span>
           </div>
           <div className="input-zone">
-            <input type="type" value={conventionPrice} onChange={(e) => {
-              if(!isNaN(e.target.value) ){
-                setConventionPrice(e.target.value); 
-              }
-            }} />
+            <div className="convention-input-container">
+              <input type="type" value={conventionPrice} onChange={(e) => {
+                if(!isNaN(e.target.value) ){
+                  setConventionPrice(e.target.value); 
+                }
+              }} />
+            </div>
           </div>
         </div>
 
         <div className="input-msg">
           <span ref={contentRef}></span>
         </div>
-
-        <ToastEditor boardContent={conventionContent} setBoardContent={setConventionContent} type={1} />
+        
+        <ToastEditor boardContent={conventionContent} setBoardContent={setConventionContent} type={1} writeType={writeType} />
       </div>
         {/* type 1은 convention에서 작성이라는 뜻 (convention에서 textarea쓸 때는 파일이나 이런건 업로드 안 할거임) */}
       
