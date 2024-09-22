@@ -30,8 +30,8 @@ public class NoticeController {
     
     @GetMapping(value = "/list/{reqPage}/{userState}")
     public ResponseEntity<Map> list (@PathVariable int reqPage, @PathVariable int userState){
-    	System.out.println("reqPage : "+reqPage);
-    	System.out.println("userState"+userState);
+//    	System.out.println("reqPage : "+reqPage);
+//    	System.out.println("userState"+userState);
     	Map map = noticeService.selectNoticeList(reqPage, userState);
     	return ResponseEntity.ok(map);
     }
