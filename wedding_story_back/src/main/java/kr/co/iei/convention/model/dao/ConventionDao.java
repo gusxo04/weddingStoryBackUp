@@ -27,6 +27,8 @@ public interface ConventionDao {
 
     ConventionDTO selectOneConvention(int conventionNo);
 
+    boolean updateConvention(ConventionDTO convention);
+
 
 
 }

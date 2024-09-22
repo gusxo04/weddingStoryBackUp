@@ -46,4 +46,8 @@
         select * from convention where convention_no = #{conventionNo}
     </select>
 
+    <update id="updateConvention">
+        update convention set convention_title = #{conventionTitle}, convention_content = #{conventionContent}, convention_img = #{conventionImg}, convention_time = #{conventionTime}, img_style = #{imgStyle} where convention_no = #{conventionNo}
+    </update>
+
 </mapper>

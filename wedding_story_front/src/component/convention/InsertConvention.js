@@ -123,7 +123,7 @@ const InsertConvention = () => {
 
 
   const write = () => {
-    compareTime();
+    // compareTime();
     // 여러 검사 후 form 보내야함 (안 그러면 렌더링 되기전에 form 보내서 시간같은거는 공백으로 들어감)
     const form = new FormData();
     form.append("conventionTitle",conventionTitle);
@@ -139,7 +139,7 @@ const InsertConvention = () => {
     axios.post(`${backServer}/convention/write`,form)
     .then(res => {
       console.log(res);
-      navigate("/convention");
+      navigate("/convention/main");
     })
     .catch(err => {
       console.error(err); 

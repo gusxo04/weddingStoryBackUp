@@ -92,6 +92,11 @@ public class ConventionService {
         return conventionDao.selectOneConvention(conventionNo);
     }
 
+    public boolean updateConvention(ConventionDTO convention) {
+        return conventionDao.updateConvention(convention);
+        
+    }
+
 
 
 

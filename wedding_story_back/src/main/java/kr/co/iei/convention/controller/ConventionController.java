@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,4 +102,17 @@ public class ConventionController {
         return ResponseEntity.ok(conventionDTO);
     }
 
+
+    @PatchMapping("/update")
+    public ResponseEntity<Boolean> updateConvention(@ModelAttribute ConventionDTO convention, @ModelAttribute MultipartFile image){
+        
+        if (image != null) {
+            String savepath = root + "/convention/";
+            String filepath = fileUtils.upload(savepath, image);
+            convention.setConventionImg(filepath);
+        }
+        boolean result = conventionService.updateConvention(convention);
+        return ResponseEntity.ok(result);
+    }
+    
 }
