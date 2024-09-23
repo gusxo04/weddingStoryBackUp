@@ -7,4 +7,6 @@ public interface MemberDao {
 
 	int checkId(String checkId);
 
+	int checkCode(String checkCode);
+
 }
