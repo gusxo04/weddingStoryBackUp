@@ -235,11 +235,10 @@
   background-color: var(--main2);
   font-weight: 900;
 }
-.hiddenCheck {
-  display: none;
+.joinValid {
+  font-size: 12px;
 }
-.showCheck {
-  display: block;
+.joinInvalid {
   color: red;
   font-size: 12px;
 }

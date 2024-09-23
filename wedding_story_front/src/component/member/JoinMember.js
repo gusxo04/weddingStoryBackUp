@@ -8,6 +8,7 @@ const JoinMember = (props) => {
   const setNowPath = props.setNowPath;
   setNowPath("info");
   const [member, setMember] = useState({
+    memberType: "1",
     memberId: "",
     memberPw: "",
     memberGender: "",
@@ -20,38 +21,39 @@ const JoinMember = (props) => {
   const [isValidId, setIsValidId] = useState(true);
   const [isValidPw, setIsValidPw] = useState(true);
 
-  const [IdCheck, setIdCheck] = useState(0);
+  const [idCheck, setIdCheck] = useState(0);
   const [PwCheck, setPwCheck] = useState(0);
 
   const changeInput = (e) => {
     const { name, value } = e.target;
     setMember({ ...member, [name]: value });
   };
-  const confirmId = (e) => {
-    const confirmId = e.target.value;
+  const checkId = (e) => {
+    const checkId = e.target.value;
     const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,20}$/;
-    setIsValidId(idRegex.test(confirmId));
+    setIsValidId(idRegex.test(checkId));
     {
       /*isIdCheck 0은 미기재,1은 정규표현식 부적합,2은 아이디 중복,3은 사용가능 */
     }
+    if (!isValidId) {
+      setIdCheck(1);
+    }
     if (isValidId) {
       axios
-        .get(`${backServer}/member/checkId`, confirmId)
+        .get(`${backServer}/member/checkId/` + checkId)
         .then((res) => {
-          if (res.date > 0) {
+          if (res.data > 0) {
             setIsValidId(false);
             setIdCheck(2);
           } else {
             setIdCheck(3);
           }
         })
-        .catch((err) => {});
-    }
-    if (!isValidId) {
-      setIdCheck(1);
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
-  console.log(isValidId);
 
   const [gender, setGender] = useState("");
   const [isPartner, setIsPartner] = useState("");
@@ -85,10 +87,20 @@ const JoinMember = (props) => {
                   id="memberId"
                   name="memberId"
                   onChange={changeInput}
-                  onBlur={confirmId}
+                  onBlur={checkId}
                 ></input>
-                <span className={`${isValidId ? "hiddenCheck" : "showCheck"}`}>
-                  아이디확인
+                <span
+                  className={`${idCheck === 3 ? "joinValid" : "joinInvalid"}`}
+                >
+                  {`${
+                    idCheck === 0
+                      ? ""
+                      : idCheck === 1
+                      ? "5~20자의 영문 대/소문자,숫자 조합으로 사용 가능합니다."
+                      : idCheck === 2
+                      ? "이미 사용중인 아이디입니다."
+                      : "사용 가능한 아이디입니다."
+                  }`}
                 </span>
               </div>
             </div>
