@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
@@ -60,8 +61,8 @@ public class ConventionController {
         map.put("convention", convention);
         map.put("startDate", beforeStart);
         map.put("endDate", afterEnd);
-        //startDate는 현재 서버 날짜랑 박람회 시작날짜를 뺀 거
-        //endDate는 현재 서버 날짜랑박람회 종료날짜를 뺀 거
+        // startDate는 현재 서버 날짜랑 박람회 시작날짜를 뺀 거
+        // endDate는 현재 서버 날짜랑박람회 종료날짜를 뺀 거
 
         return ResponseEntity.ok(map);
     }
@@ -74,7 +75,8 @@ public class ConventionController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity<Boolean> writeConvention(@ModelAttribute ConventionDTO convention, @ModelAttribute MultipartFile image) {
+    public ResponseEntity<Boolean> writeConvention(@ModelAttribute ConventionDTO convention,
+            @ModelAttribute MultipartFile image) {
         // System.out.println(convention);
         // System.out.println(image);
         if (image != null) {
@@ -88,11 +90,12 @@ public class ConventionController {
     }
 
     @PostMapping("/buy")
-    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {
+    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember,
+            @ModelAttribute MemberPayDTO memberPay) {
         boolean result = conventionService.conventionMemberPay(conventionMember, memberPay);
 
-        System.out.println(conventionMember); //넘어온 데이터 -> memberNo, memberEmail(알림받을)
-        System.out.println(memberPay);        //넘어온 데이터 -> progressDate, payPrice, merchantUid
+        System.out.println(conventionMember); // 넘어온 데이터 -> memberNo, memberEmail(알림받을)
+        System.out.println(memberPay); // 넘어온 데이터 -> progressDate, payPrice, merchantUid
         return ResponseEntity.ok(result);
     }
 
@@ -102,10 +105,10 @@ public class ConventionController {
         return ResponseEntity.ok(conventionDTO);
     }
 
-
     @PatchMapping("/update")
-    public ResponseEntity<Boolean> updateConvention(@ModelAttribute ConventionDTO convention, @ModelAttribute MultipartFile image){
-        
+    public ResponseEntity<Boolean> updateConvention(@ModelAttribute ConventionDTO convention,
+            @ModelAttribute MultipartFile image) {
+
         if (image != null) {
             String savepath = root + "/convention/";
             String filepath = fileUtils.upload(savepath, image);
@@ -114,5 +117,19 @@ public class ConventionController {
         boolean result = conventionService.updateConvention(convention);
         return ResponseEntity.ok(result);
     }
-    
+
+    @GetMapping("/payment/{memberNo}/{conventionNo}")
+    public ResponseEntity<MemberPayDTO> getPayment(@PathVariable int memberNo, @PathVariable int conventionNo) {
+        MemberPayDTO memberPay = conventionService.getPayment(memberNo, conventionNo);
+        return ResponseEntity.ok(memberPay);
+
+    }
+
+    @PostMapping("/refund")
+    public ResponseEntity<Boolean> refundConventionTicket(@RequestBody RefundRequest request) {
+        System.out.println(request); 
+        String result = conventionService.refundPayment(request);
+        return ResponseEntity.ok(true);
+    }
+
 }

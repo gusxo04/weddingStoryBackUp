@@ -74,7 +74,7 @@ const UpdateConvention = () => {
   }, [conventionStartTime, conventionEndTime]);
 
 
-  const writeTest = () => {
+  const updateTest = () => {
     let isTest = true;
     const titleReg = /^.{1,100}$/;
     const contentReg = /^.{1,1300}$/;
@@ -106,11 +106,12 @@ const UpdateConvention = () => {
       isTest = false;
     }
 
-    const isDate = compareDate(conventionEnd);
-    if(!isDate){
-      dateRef.current.classList.add("invalid");
-      isTest = false;
-    }
+    // const isDate = compareDate(conventionEnd);
+    // if(!isDate){
+    //   dateRef.current.classList.add("invalid");
+    //   isTest = false;
+    // }
+    // 일정 변경은 안 할 거라서 체크할 필요가 없음
 
     const isTime = compareTime();
     if(!isTime){
@@ -118,16 +119,16 @@ const UpdateConvention = () => {
       isTest = false;
     }
     
-    const getToday = new Date();
-    const year = getToday.getFullYear();
-    const month = String(getToday.getMonth() + 1).padStart(2, '0');
-    const day = String(getToday.getDate()).padStart(2, '0');
-    const today = `${year}-${month}-${day}`;
-    const checkToday = compareDate(today);
-    if(checkToday){
-      dateRef.current.classList.add("invalid");
-      isTest = false;
-    }
+    // const getToday = new Date();
+    // const year = getToday.getFullYear();
+    // const month = String(getToday.getMonth() + 1).padStart(2, '0');
+    // const day = String(getToday.getDate()).padStart(2, '0');
+    // const today = `${year}-${month}-${day}`;
+    // const checkToday = compareDate(today);
+    // if(checkToday){
+    //   dateRef.current.classList.add("invalid");
+    //   isTest = false;
+    // }
     if(isNaN(conventionLimit) || conventionLimit > 10000 || conventionLimit === ""){
       limitRef.current.classList.add("invalid");
       isTest = false;
@@ -224,7 +225,7 @@ const UpdateConvention = () => {
           /> 
 
           <div className="write-btn-zone">
-            <button onClick={writeTest}>박람회 수정</button>
+            <button onClick={updateTest}>박람회 수정</button>
           </div>
         </>
           :

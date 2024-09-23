@@ -29,6 +29,8 @@ public interface ConventionDao {
 
     boolean updateConvention(ConventionDTO convention);
 
+    MemberPayDTO selectPayment(int memberNo, int conventionNo);
+
 
 
 }

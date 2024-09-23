@@ -4,4 +4,7 @@
 	<select id="checkId" resultType="int">
 		select count(*) from member where member_Id=#{checkId}
 	</select>
+	<select id="checkCode" resultType="int">
+	select count(*) from member where company_no=#{checkCode}
+	</select>
 </mapper>

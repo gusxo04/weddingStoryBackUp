@@ -35,6 +35,16 @@ const ConventionMain = () => {
   const [fullNoticeEmail, setFullNoticeEmail] = useState("");
 
   const [showType, setShowType] = useState(true);
+
+
+  // const [payment, setPayment] = useState({
+  //   // merchantUid : "",
+  //   // payNo : 0,
+  //   // payPrice : 0,
+  //   // ticketNo : 0
+  // });
+  const [payment, setPayment] = useState(null);
+  
   
   const personalRef = useRef(null);
   const dateMsgRef = useRef(null);
@@ -48,14 +58,34 @@ const ConventionMain = () => {
       setConvention(res.data.convention);
       setStartDate(res.data.startDate);
       setEndDate(res.data.endDate);
+      // 지금 로그인한 유저가 박람회 티켓을 샀는지 안 샀는지도 조회해야 함
+      // 업체도 부스를 샀는지 안 샀는지 조회해야 해서 uef 따로 빼는게 나을듯
+      // 나중에 if로 업체인지 회원인지 조회후 axios 요청하기
+      // 지금은 회원꺼 먼저
+      axios.get(`${backServer}/convention/payment/${2}/${res.data.convention.conventionNo}`)
+      .then(res => {
+        console.log(res);
+        if(res.data){
+          setPayment({
+            merchantUid: res.data.merchantUid,
+            payNo: res.data.payNo,
+            payPrice: res.data.payPrice,
+            ticketNo: res.data.ticketNo
+          })
+        }
+      })
+      .catch(err => {
+        console.error(err); 
+      })
 
     })
     .catch(err => {
       console.error(err); 
     })
+
   }, []);
 
-  
+
   let testStartDate = new Date(convention.conventionStart);
   let testEndDate = new Date(convention.conventionEnd);
 
@@ -94,10 +124,11 @@ const ConventionMain = () => {
         ""} */}
         {Object.keys(convention).length > 0 ? 
         endDate > 0 ?
-        (startDate > 0 ? 
-          <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={true} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} />  
-          : 
-          <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} />) 
+        // (startDate > 0 ? 
+        //   <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={true} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} />  
+        //   : 
+        //   <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} />) 
+        <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={startDate > 0 ? true : false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} payment={payment} />
         : 
         <EmptyConvention navigate={navigate} />
         :
