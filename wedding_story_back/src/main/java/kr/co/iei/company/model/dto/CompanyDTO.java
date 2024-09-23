@@ -1,6 +1,6 @@
 package kr.co.iei.company.model.dto;
 
-import org.apache.ibatis.type.Alias;
+import org.apache.ibatis.type.Alias;	
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +21,6 @@ public class CompanyDTO {
 	private String startTime;
 	private String endTime;
 	private String companyEnrollDate;
-	private String[] dayOff;
+	private String dayOff;
+	private int companyRepot;
 }

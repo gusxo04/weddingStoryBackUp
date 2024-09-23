@@ -13,5 +13,5 @@ import lombok.Data;
 @Alias(value="keyWord")
 public class KeyWordDTO {
 	private String companyNo;
-	private String[] keyWord;
+	private String keyWord;
 }

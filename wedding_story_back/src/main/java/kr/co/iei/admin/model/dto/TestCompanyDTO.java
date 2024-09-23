@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="Testcompany")
+@Alias(value="TestCompany")
 public class TestCompanyDTO {
 	private String companyCode;
 	private String companyName;

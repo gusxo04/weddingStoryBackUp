@@ -2,9 +2,11 @@ import { useState } from "react";
 import CompanyJoinFrm from "./CompanyJoinFrm";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CompanyJoin = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [company, setCompany] = useState({
     companyName: "",
     companyTel: "",
@@ -37,7 +39,7 @@ const CompanyJoin = () => {
       form.append("startTime", company.startTime);
       form.append("endTime", company.endTime);
       if (thumbnail !== null) {
-        form.append("companyThumb", thumbnail);
+        form.append("thumbFile", thumbnail); //썸네일은 스프링에서 String 타입으로 받는게 아닌 multipartFile 로 받는다.
       } //썸네일 있는 경우에만 썸네일 append
       if (company.dayOff !== null) {
         for (let i = 0; i < company.dayOff.length; i++) {
@@ -57,6 +59,16 @@ const CompanyJoin = () => {
         })
         .then((res) => {
           console.log(res);
+          if (res.data === true) {
+            Swal.fire({
+              title: "등록성공",
+              text: "업체 등록에 성공하였습니다.",
+              icon: "success",
+              timer: 5000,
+            }).then(() => {
+              navigate("/company");
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
