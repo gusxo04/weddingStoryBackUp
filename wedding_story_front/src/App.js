@@ -13,7 +13,7 @@ import Admin from "./component/admin/Admin";
 import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
-import Counsel from "./component/marriageCounseling/Counsel";
+import Counsel from "./component/counseling/Counsel";
 import AdminHeader from "./component/common/AdminHeader";
 import Join from "./component/member/Join";
 import ConventionLobby from "./component/convention/ConventionLobby";
@@ -56,7 +56,7 @@ function App() {
           <Route path="/convention/*" element={<ConventionLobby />} />
           {/* <Route path="/test" element={<ConventionLayout />} /> */}
           <Route path="/product/*" element={<ProductMain />} />
-          <Route path="/marriageCounseling/*" element={<Counsel />} />
+          <Route path="/counseling/*" element={<Counsel />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/company" element={<CompanyMain />} />
           <Route path="/company/*" element={<CompanyMain />} />

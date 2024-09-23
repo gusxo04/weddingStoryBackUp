@@ -6,7 +6,7 @@ import PageNavi from "../utils/PagiNavi";
 
 const ProductAllList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [boardList, setBoarList] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
 
@@ -15,13 +15,14 @@ const ProductAllList = () => {
       .get(`${backServer}/product/list/${reqPage}`)
       .then((res) => {
         console.log(res);
-        setBoarList(res.data.list); //게시물
+        setProductList(res.data.list); //게시물
         setPi(res.data.pi); //페이지넘버링
       })
       .catch((err) => {
         console.log(err);
       });
   }, [reqPage]);
+
   return (
     <section className="board-list">
       <div className="page-title">
@@ -33,10 +34,10 @@ const ProductAllList = () => {
             <Link to="/product/review">드레스</Link>
           </li>
           <li>
-            <Link to="#">메이크업</Link>
+            <Link to="/counseling/counsel">메이크업</Link>
           </li>
           <li>
-            <Link to="#">예복</Link>
+            <Link to="/product/weddingHall">예복</Link>
           </li>
           <li>
             <Link to="#">예물</Link>
@@ -44,10 +45,10 @@ const ProductAllList = () => {
         </ul>
       </div>
 
-      <div className="board-list-wrap">
+      <div className="product-list-wrap">
         <ul className="posting-wrap">
-          {boardList.map((board, i) => {
-            return <BoardItem key={"board-" + i} board={board} />;
+          {productList.map((product, i) => {
+            return <BoardItem key={"product-" + i} product={product} />;
           })}
         </ul>
       </div>
@@ -60,29 +61,29 @@ const ProductAllList = () => {
 
 const BoardItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const board = props.board;
+  const product = props.product;
   const navigate = useNavigate();
   return (
     <li
       className="posting-item"
       onClick={() => {
-        navigate(`/product/list/${board.boardNo}`);
+        navigate(`/product/list/${product.priductNo}`);
       }}
     >
       <div>
         <img
           src={
-            board.boardThumb
-              ? `${backServer}/product/thumb/${board.boardThumb}`
+            product.productThumb
+              ? `${backServer}/product/thumb/${product.productThumb}`
               : "/image/default_img.png"
           }
         />
       </div>
       <div className="posting-info">
-        <div className="posting-title">{board.boardTitle}</div>
+        <div className="posting-title">{product.productTitle}</div>
         <div className="posting-sub-info">
-          <span>{board.boardWriter}</span>
-          <span>{board.boardDate}</span>
+          <span>{product.productWriter}</span>
+          <span>{product.productDate}</span>
         </div>
       </div>
     </li>

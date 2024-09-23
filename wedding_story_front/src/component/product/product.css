@@ -53,16 +53,24 @@
 }
 
 /*리뷰css*/
-.review-wrap {
-  margin: 0 auto;
-  padding: 20px;
+.review-wrap > img {
+  width: 300px;
+}
+
+.review-wrap > h2 {
+  color: var(--main1);
 }
 .review-wrap > .title {
   text-align: center;
+  padding-bottom: 200px;
 }
-.review-wrap > .title > h3 {
+.title > label {
   color: var(--main1);
 }
+.review-wrap > .title > textarea {
+  margin-left: 0;
+}
+
 .review-wrap > .content {
   border-radius: 10px;
   height: 800px;
@@ -72,26 +80,81 @@
 
 .review-button {
   padding-top: 20px;
+  padding-left: 50px;
 }
-.review-button > .btn {
-  width: 950px;
-  height: 50px;
-  border: 1px solid var(--main1);
-}
-
-/*별점*/
-.rating-stars path {
-  fill: rgb(216, 216, 216);
-}
-
-.rating-star-over path {
-  cursor: pointer;
-  fill: var(--main1);
-}
-
-.rating-star-out path {
-  cursor: pointer;
-  fill: rgb(216, 216, 216);
+.review-button > button {
+  width: 100px;
+  border: 1px solid #000;
+  background-color: #c19975;
+  color: #fff;
 }
 
 /*상세css*/
+
+/*웨딩홀예약*/
+.wedding-wrap {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--main2);
+  width: 500px;
+  margin: 0 auto;
+  align-self: center;
+}
+
+.wedding-wrap > .material-icons {
+  margin-right: 100%;
+}
+
+.wedding-wrap > .title-name {
+  padding: 30px;
+  text-align: center;
+  font-family: ns-b;
+  font-size: 20px;
+  color: var(--main1);
+}
+
+.wedding-content > .input-wrap {
+  padding: 15px 30px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  border-left: 20px;
+}
+
+.wedding-content > .input-wrap > .input-title > label {
+  text-align: left;
+  font-size: 17px;
+  color: var(--main1);
+  font-family: ns-b;
+}
+
+.wedding-content > .input-wrap > .input-item {
+  text-align: left;
+}
+
+.wedding-content > .input-wrap > .input-item > input {
+  font-size: 16px;
+  font-family: ns-b;
+  padding: 8px 0px;
+  width: 250px;
+  border: 2px var(--main1) solid;
+  border-radius: 5px;
+}
+
+.wedding-button > button {
+  border: 1px solid var(--main3);
+  background-color: #c1d0db;
+  color: #fff;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  font-family: ns-b;
+  text-align: center;
+  box-sizing: border-box;
+  width: 500px;
+}
+
+.wedding-button:hover {
+  background-color: rgba(101, 146, 254, 0.9);
+  cursor: pointer;
+}
