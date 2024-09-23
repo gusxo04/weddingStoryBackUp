@@ -6,6 +6,7 @@ import ConventionPreviewMain from "./ConventionPreviewMain";
 import BuyTicket from "./BuyTicket";
 import ConventionLocate from "../utils/ConventionLocate";
 import ConventionLayout from "../utils/ConventionLayout";
+import RefundTicket from "./RefundTicket";
 
 const ShowConvention = (props) => {
 
@@ -25,7 +26,9 @@ const ShowConvention = (props) => {
     fullNoticeEmail,
     setNoticeEmail,
     showType,
-    setShowType
+    setShowType,
+    startDate,
+    payment,
   } = props;
   
   const closeAlert = (e, pass) => {
@@ -56,7 +59,6 @@ const ShowConvention = (props) => {
     }
   }
 
-
   useEffect(() => {
     // 외부 스크립트 로드 함수
     const loadScript = (src, callback) => {
@@ -83,8 +85,6 @@ const ShowConvention = (props) => {
     };
   }, []);
 
-
-  
   
   // 나중에 다른걸로 대체 (swal 띄우면 스크롤 사라지는거 때매 alert창이 뜨면 스크롤을 사라지게 만듦)
   const [alertType, setAlertType] = useState(0);
@@ -122,13 +122,23 @@ const ShowConvention = (props) => {
  style={{width:"45%"}} */}
  {/* 업체면은 부스보기가 없으므로 convention-inner-preview-info div에 저 스타일을 추가 */}
         <div className="convention-inner-preview-info convention-buy-btn" >
-          {/* <button onClick={() => {
+          {startDate === 0 ? 
+          "" 
+          :
+          !payment ? 
+          <button onClick={() => {
             setNoticeEmail("");
             setAlertType(3);
-          }}>박람회 신청</button> */}
+          }}>박람회 신청</button>
+          :
           <button onClick={() => {
+            setAlertType(4);
+          }}>환불하기</button>
+          }
+
+          {/* <button onClick={() => {
             navigate("/convention/update/"+convention.conventionNo);
-          }}>박람회 수정</button>
+          }}>박람회 수정</button> */}
 
           {/* 일반유저면 신청 / 업체면 부스 등록 / 관리자면 수정 */}
         </div>
@@ -146,8 +156,10 @@ const ShowConvention = (props) => {
         conventionShowDate={conventionShowDate} setSelectDate={setSelectDate}
         personalMsgRef={personalMsgRef} personalRef={personalRef} selectDate={selectDate}
         convention={convention} fullNoticeEmail={fullNoticeEmail}
-
       />
+      :
+      alertType === 4 ? 
+      <RefundTicket closeAlert={closeAlert} payment={payment} />
       :
       ""
       }

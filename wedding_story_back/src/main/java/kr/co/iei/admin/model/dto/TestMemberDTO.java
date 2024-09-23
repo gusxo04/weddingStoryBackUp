@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="member")
+@Alias(value="testMember")
 public class TestMemberDTO {
 	private int memberNo;
     private String memberId;

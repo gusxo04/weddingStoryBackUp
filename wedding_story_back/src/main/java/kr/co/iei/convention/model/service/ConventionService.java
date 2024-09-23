@@ -2,20 +2,36 @@ package kr.co.iei.convention.model.service;
 
 
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
+import org.springframework.web.client.RestTemplate;
 
 import kr.co.iei.convention.model.dao.ConventionDao;
+import kr.co.iei.convention.model.dto.CancelRequest;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 
 @Service
@@ -23,6 +39,9 @@ public class ConventionService {
 
     @Autowired
     private ConventionDao conventionDao;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     public ConventionDTO getTime() {
         ConventionDTO conventionDate = conventionDao.getTime();
@@ -97,7 +116,100 @@ public class ConventionService {
         
     }
 
+    public MemberPayDTO getPayment(int memberNo, int conventionNo) {
+        return conventionDao.selectPayment(memberNo, conventionNo);
+    }
 
+    public String refundPayment(RefundRequest request) {
+        String accessToken = getAccessToken();
+        System.out.println("엑세스 토큰 : "+accessToken);
+        String result = cancelPayment(accessToken, request);
+        return result;
+    }
+
+    private String getAccessToken() {
+        // 토큰 발급받는 코드
+        String clientId = "0054761064210788";
+        String clientSecret = "kzLRR2Iatp4DqnWs05I1lb4JQvhSmFs1xhV8s9UJQa6DkoBvdhnZfwZzry3KgYHrNcXggHVxNdmTEitq";
+        
+        String tokenUrl = "https://api.iamport.kr/users/getToken";
+
+        String tokenRequest = "imp_key=" + clientId + "&imp_secret=" + clientSecret;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<String> entity = new HttpEntity<>(tokenRequest, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, entity, String.class);
+
+        String responseBody = response.getBody();
+        String accessToken = responseBody.substring(responseBody.indexOf("access_token\":\"") + 15, responseBody.indexOf("\",\"now"));
+        accessToken = accessToken.replaceAll("\"", "");
+        return accessToken;
+    }
+
+    private String cancelPayment(String accessToken, RefundRequest request) {
+        // 취소 요청을 하는 코드
+        // String cancelUrl = "https://api.iamport.kr/payments/cancel";
+        // String reason = "테스트 결제 취소";
+        
+        // String cancelRequest = "merchant_uid=" + request.getMerchantUid() + "&amount=" + request.getCancelRequestAmount() + "&reason=" + reason;
+        
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.setContentType(MediaType.APPLICATION_JSON);
+        // headers.set("Authorization", "Bearer " + accessToken);
+        
+        // HttpEntity<String> entity = new HttpEntity<>(cancelRequest, headers);
+        
+        // ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
+        
+        // String result = response.getBody();
+        // System.out.println("result 에여!! : "+result);
+        // return result;
+
+        // 취소 요청을 하는 코드
+        // String cancelUrl = "https://api.iamport.kr/payments/cancel";
+    
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.setContentType(MediaType.APPLICATION_JSON);
+        // headers.set("Authorization", "Bearer " + accessToken);
+        
+        // Map<String, Object> cancelRequest = new HashMap<>();
+        // cancelRequest.put("reason", request.getReason());
+        // // cancelRequest.put("imp_uid", request.getImpUid());
+        // cancelRequest.put("amount", request.getCancelRequestAmount());
+        // // cancelRequest.put("checksum", request.getCancelableAmount());
+        // HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
+        
+        // ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
+        
+        // String result = response.getBody();
+        // System.out.println("result 에여!! : "+result);
+        // return result;
+
+
+        System.out.println("추출한 액세스 토큰임 : "+accessToken);
+        String cancelUrl = "https://api.iamport.kr/payments/cancel";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(accessToken);
+
+        CancelRequest cancelRequest = new CancelRequest();
+        // cancelRequest.setReason(request.getReason());
+        cancelRequest.setAmount(request.getCancelRequestAmount());
+        cancelRequest.setMerchantUid(request.getMerchantUid());
+        System.out.println(cancelRequest);
+
+        HttpEntity<CancelRequest> entity = new HttpEntity<>(cancelRequest, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
+        System.out.println("response 에요!!! : "+response.getBody());
+        System.out.println("response 에요222 : "+response);
+        
+        return response.getBody();
+    }
 
 
 }

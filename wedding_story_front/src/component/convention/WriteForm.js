@@ -124,7 +124,7 @@ const WriteForm = (props) => {
             <div className="convention-input-container">
 
               <div className="start-date-container convention-date-container">
-                <input type="date" className="start-date" value={conventionStart} onChange={(e) => {
+                <input type="date" className="start-date" value={conventionStart} readOnly={writeType === 2 ? true : false} onChange={(e) => {
                   setConventionStart(e.target.value);
                 }} />
               </div>
@@ -134,7 +134,7 @@ const WriteForm = (props) => {
               </div>
 
               <div className="end-date-container convention-date-container">
-                <input type="date" className="end-date" value={conventionEnd} onChange={(e) => {
+                <input type="date" className="end-date" value={conventionEnd} readOnly={writeType === 2 ? true : false} onChange={(e) => {
                   setConventionEnd(e.target.value);
                 }} />
               </div>
@@ -174,7 +174,7 @@ const WriteForm = (props) => {
           </div>
           <div className="input-zone">
             <div className="convention-input-container">
-              <input type="type" value={conventionLimit} onChange={(e) => {
+              <input type="type" value={conventionLimit} readOnly={writeType === 2 ? true : false} onChange={(e) => {
                 if(!isNaN(e.target.value) ){
                   setConventionLimit(e.target.value); 
                 }
@@ -189,7 +189,7 @@ const WriteForm = (props) => {
           </div>
           <div className="input-zone">
             <div className="convention-input-container">
-              <input type="type" value={conventionPrice} onChange={(e) => {
+              <input type="type" value={conventionPrice} readOnly={writeType === 2 ? true : false} onChange={(e) => {
                 if(!isNaN(e.target.value) ){
                   setConventionPrice(e.target.value); 
                 }
