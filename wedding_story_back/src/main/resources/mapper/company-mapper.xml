@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="kr.co.iei.company.model.dao.companyDao">
-  <cache-ref namespace=""/>
+<mapper namespace="kr.co.iei.company.model.dao.CompanyDao">
+
+  
+  
+  <insert id="insertCompany">
+  	insert into company values(#{companyNo},#{companyCategory},#{companyName},#{companyTel},#{companyAddr},#{companyInfo},#{companyThumb},#{startTime},#{endTime},sysdate,#{dayOff},0)
+  </insert>
+
+	<insert id="insertKeyWord">
+		insert into company_keyword values(#{companyNo},#{keyWord})
+	</insert>
 </mapper>

@@ -99,6 +99,7 @@ const CompanyJoinFrm = (props) => {
       setThumbnail(null);
       setCompanyImg(null);
     }
+    console.log(thumbnail);
   };
   const [checkbox, setCheckbox] = useState([]);
   const checkboxChange = (e) => {
