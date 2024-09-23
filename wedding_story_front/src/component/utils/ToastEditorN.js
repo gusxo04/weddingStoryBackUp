@@ -13,9 +13,8 @@ const ToastEditorN = (props) => {
     const editorData = editorRef.current.getInstance().getHTML();
     setNoticeContent(editorData);
   };
-  console.log(noticeContent);
   const uploadImage = (file, callbackFunc) => {
-    //비동기요청으로 이미지파일을 업로드하고, 업로드된 파일의 경로를 결과로 받아옴
+    //비동기요청으로 이미지파일을 업로드하고, 업로드된 파일의 경로를 결과로 받아옴dhghfk
     const form = new FormData();
     form.append("image", file);
     axios
@@ -33,12 +32,13 @@ const ToastEditorN = (props) => {
         console.log(err);
       });
   };
+
   return (
     <div style={{ width: "100%", marginTop: "20px" }}>
       {type === 0 || (type === 1 && noticeContent !== "") ? (
         <Editor
           ref={editorRef}
-          initialValue={noticeContent}
+          initialValue={noticeContent} //초기값
           initialEditType="wysiwyg"
           language="ko-KR"
           height="600px"

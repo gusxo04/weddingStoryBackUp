@@ -10,8 +10,9 @@ const NoticeFrm = (props) => {
   const setThumbnail = props.setThumbnail;
   const noticeFile = props.noticeFile;
   const setNoticeFile = props.setNoticeFile;
-  const userState = props.userState;
-  const setUserState = props.setUserState;
+  const noticeVisible = props.noticeVisible;
+  const setNoticeVisible = props.setNoticeVisible;
+
   //수정인경우에 추가로 전송되는 데이터
   const noticeThumb = props.noticeThumb;
   const setNoticeThumb = props.setNoticeThumb;
@@ -19,6 +20,8 @@ const NoticeFrm = (props) => {
   const setFileList = props.setFileList;
   const delNoticeFileNo = props.delNoticeFileNo;
   const setDelNoticeFileNo = props.setDelNoticeFileNo;
+  const companyNo = props.companyNo;
+  const setCompanyNo = props.setCompanyNo;
 
   const thumbnailRef = useRef(null);
   //썸네일 미리보기용 state(데이터전송하지 않음)
@@ -42,8 +45,16 @@ const NoticeFrm = (props) => {
       setNoticeImg(null);
     }
   };
+
   //첨부파일 화면에 띄울 state
   const [showNoticeFile, setShowNoticeFile] = useState([]);
+
+  const setNoticeVisibleChange = (event) => {
+    const value = event.target.value;
+    console.log("value: " + value);
+    setNoticeVisible(value);
+  };
+
   //첨부파일 추가시 동작할 함수
   const addNoticeFile = (e) => {
     const files = e.currentTarget.files;
@@ -103,7 +114,7 @@ const NoticeFrm = (props) => {
                     id="noticeTitle"
                     name="noticeTitle"
                     value={noticeTitle}
-                    onChange={setNoticeTitle}
+                    onChange={(e) => setNoticeTitle(e.target.value)} // 수정된 부분
                   />
                 </div>
               </td>
@@ -117,7 +128,7 @@ const NoticeFrm = (props) => {
                     id="loginId"
                     name="loginId"
                     value={loginId}
-                    onChange={setLoginId}
+                    onChange={(e) => setLoginId(e.target.value)}
                   />
                 </div>
               </td>
@@ -135,6 +146,37 @@ const NoticeFrm = (props) => {
                 </div>
               </td>
             </tr>
+            <tr>
+              <th>공개여부</th>
+              <td className="left">
+                <div className="input-item">
+                  <select
+                    value={noticeVisible}
+                    onChange={setNoticeVisibleChange}
+                  >
+                    <option value={"1"}>모든업체</option>
+                    <option value={"2"}>특정업체</option>
+                    <option value={"3"}>관리자끼리만</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            {noticeVisible === "2" && ( // 특정 업체 선택 시 텍스트 입력 필드 표시
+              <tr>
+                <th>업체 코드</th>
+                <td className="left">
+                  <div className="input-item">
+                    <input
+                      type="text"
+                      value={companyNo}
+                      onChange={(e) => setCompanyNo(e.target.value)}
+                      placeholder="업체 코드 입력"
+                    />
+                  </div>
+                </td>
+              </tr>
+            )}
+
             <tr>
               <th>첨부파일 목록</th>
               <td>

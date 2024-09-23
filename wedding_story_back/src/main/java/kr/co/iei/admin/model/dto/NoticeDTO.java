@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value="notice")
 public class NoticeDTO {
-	private int noticeNo;
-	private int companyNo;
-	private String noticeTitle;
-	private String noticeContent;
+	private int noticeNo;//자동생성
+	private Integer companyNo;
+	private String noticeTitle;//받아야함
+	private String noticeContent;//받아야함
 	private String noticeDate;
-	private int noticeVisible;
+	private int noticeVisible;//받아야함
 	private String noticeThumb;
-	private String noticeWriter;
+	private String noticeWriter;//받아야함
 	private List<NoticeFileDTO> fileList;
 }

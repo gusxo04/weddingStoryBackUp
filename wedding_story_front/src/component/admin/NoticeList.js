@@ -56,7 +56,7 @@ const NoticeItem = (props) => {
     <li
       className="posting-item"
       onClick={() => {
-        navigate(`/notice/view/${notice.noticeNo}`);
+        navigate(`/admin/notice/view/${notice.noticeNo}`);
       }}
     >
       <div className="posting-img">
