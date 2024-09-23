@@ -1,138 +1,115 @@
 import { useState } from "react";
-// import { FaStar } from 'react-icons/fa'
-import { PiStarFill } from "react-icons/pi";
-import ToastEditor from "../utils/ToastEditor";
-import { useRecoilState } from "recoil";
-//import { loginIdState } from "../utils/RecoilData";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { FaStar } from "react-icons/fa";
 
 const ProductReview = () => {
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-  const navigate = useNavigate();
-  //글작성 시 전송할 데이터 선언
-  //const [loginId, setLoginId] = useRecoilState(loginIdState); //로그인한 회원아이디값(입력할게 아니기 때문에 state사용안함)
-  const [boardTitle, setBoardTitle] = useState(""); //사용자가 입력할 제목
-  const [thumbnail, setThumbnail] = useState(null); //썸네일은 첨부파일로 처리
-  const [boardContent, setBoardContent] = useState(""); //사용자가 입력할 내용
-  const [boardFile, setBoardFile] = useState([]); //첨부파일(여러개 일 수 있으므로 배열로 처리)
-  const inputTitle = (e) => {
-    setBoardTitle(e.target.value);
-  };
-  const writeBoard = () => {
-    if (boardTitle !== "" && boardContent !== "") {
-      const form = new FormData();
-      form.append("boardTitle", boardTitle);
-      form.append("boardContent", boardContent);
-      //form.append("boardWriter", loginId);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-      axios
-        .post(`${backServer}/product`, form, {
-          headers: {
-            contentType: "multipart/form-data",
-            processData: false,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          if (res.data) {
-            //navigate("/product/list");
-          } else {
-            Swal.fire({
-              title: "에러가 발생했습니다.",
-              text: "원인을 찾으세요.",
-              icon: "error",
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  const openPopup = () => {
+    setIsPopupOpen(true);
   };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
   return (
-    <div className="review-wrap">
-      <div className="title">
-        <h3>리뷰작성</h3>
-      </div>
-      <div className="content">
-        <label className="star">별점</label>
-        <RatingStar />
-        <section className="section board-content-wrap">
-          <div className="page-title">게시글 작성</div>
-          <form
-            className="board-write-frm"
-            onSubmit={(e) => {
-              e.preventDefault();
-              writeBoard();
-            }}
-          >
-            <div className="board-content-wrap">
-              <ToastEditor
-                boardContent={boardContent}
-                setBoardContent={setBoardContent}
-                type={0}
-              />
-            </div>
-            <div className="review-button">
-              <button type="submit" className="btn">
-                등록하기
-              </button>
-            </div>
-          </form>
-        </section>
-      </div>
+    <div>
+      <h1>리뷰 작성하기</h1>
+      <button onClick={openPopup}>리뷰 작성</button>
+      {isPopupOpen && <ReviewPopup onClose={closePopup} />}
     </div>
   );
 };
 
-{
-  /*별점  */
-}
-const RatingStar = () => {
-  const [isHover, setIsHover] = useState([false, false, false, false, false]);
-  const [score, setScore] = useState(-1);
-  let tempisHover = [false, false, false, false, false];
+const ReviewPopup = ({ onClose }) => {
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
 
-  const handleMouseOver = (index) => {
-    tempisHover = [false, false, false, false, false];
-    for (let i = 0; i < index + 1; i++) {
-      tempisHover[i] = true;
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
-    setIsHover(tempisHover);
   };
 
-  const handleMouseOut = () => {
-    tempisHover = [false, false, false, false, false];
-    for (let i = 0; i < score + 1; i++) {
-      tempisHover[i] = true;
-    }
-    setIsHover(tempisHover);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 리뷰 제출 로직 (API 호출 등)
+    console.log("Rating:", rating, "Review:", review, "Image:", image);
+    onClose();
   };
+  //별클릭시 클릭만큼 별색깔 바꾸기
 
-  const handleOnClick = (index) => {
-    setScore(index);
+  const renderStars = () => {
+    return [...Array(5)].map((_, index) => {
+      const starRating = index + 1;
+      return (
+        <FaStar
+          key={starRating}
+          onClick={() => setRating(starRating)}
+          style={{
+            cursor: "pointer",
+            color: starRating <= rating ? "gold" : "gray",
+            fontSize: "18px",
+          }}
+        />
+      );
+    });
   };
 
   return (
-    <>
-      <div className="rating-stars">
-        {[0, 1, 2, 3, 4].map((element, index) => (
-          <PiStarFill
-            className={
-              isHover[element] ? "rating-star-over" : "rating-star-out"
-            }
-            key={index}
-            size={16}
-            onMouseOver={() => handleMouseOver(index)}
-            onMouseOut={handleMouseOut}
-            onClick={() => handleOnClick(index)}
+    <div className="review-wrap" style={popupStyle}>
+      <img src="/image/main_logo.png" />
+      <h2>리뷰 작성</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="title">
+          <label>별점:</label>
+          <div>{renderStars()}</div>
+        </div>
+        <div className="title">
+          <label>리뷰:</label>
+          <textarea
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            required
           />
-        ))}
-      </div>
-    </>
+        </div>
+        <div className="title">
+          <label>이미지 업로드:</label>
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+          {imagePreview && (
+            <div>
+              <img
+                src={imagePreview}
+                alt="미리보기"
+                style={{ maxWidth: "100%", marginTop: "10px" }}
+              />
+            </div>
+          )}
+        </div>
+        <div className="review-button">
+          <button type="submit">제출</button>
+          <button type="button" onClick={onClose}>
+            닫기
+          </button>
+        </div>
+      </form>
+    </div>
   );
+};
+
+const popupStyle = {
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "white",
+  padding: "20px",
+  border: "1px solid #ccc",
+  zIndex: 1000,
 };
 
 export default ProductReview;
