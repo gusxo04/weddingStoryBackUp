@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const ProductWeddingHall = () => {
@@ -13,18 +13,54 @@ const ProductWeddingHall = () => {
     coronation: "",
     numberPeople: "",
   });
-  const changeMember = () => {};
-  const changeProduct = () => {};
-  const payWedding = () => {}; //결제가격 if문써서 완성시키기
 
-  axios
-    .get(`${backServer}/product`)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const [halls, setHalls] = useState([]);
+
+  useEffect(() => {
+    // Fetch wedding hall data from the API
+    axios
+      .get(`${backServer}/halls`) // Adjust this endpoint as necessary
+      .then((res) => {
+        setHalls(res.data); // Assuming the response data is an array of halls
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [backServer]);
+
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [backServer]);
+
+  const changeMember = (e) => {
+    const { name, value } = e.target;
+    setMember((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const changeProduct = (e) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const payWedding = () => {
+    const perPersonFee = 50000; // 일인식비
+    const rentalFee = parseFloat(product.coronation) || 0; // 대관료
+    const numberOfPeople = parseInt(product.numberPeople) || 0; // 인원수
+
+    const total = rentalFee + (perPersonFee * numberOfPeople); 
+
+    return(
+      <div className="total-pay">결제 가격: {total.toLocaleString()} 원</div>
+    ) 
+  };
 
   return (
     <section className="wedding-wrap">
@@ -67,13 +103,19 @@ const ProductWeddingHall = () => {
               <label htmlFor="productName">웨딩홀정보</label>
             </div>
             <div className="input-item">
-              <input
-                type="text"
+              <select
                 name="productName"
                 id="productName"
                 value={product.productName}
                 onChange={changeProduct}
-              />
+              >
+                <option value="">웨딩홀 선택</option>
+                {halls.map((hall) => (
+                  <option key={hall.id} value={hall.name}>
+                    {hall.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="input-wrap">
@@ -89,22 +131,31 @@ const ProductWeddingHall = () => {
                 onChange={changeProduct}
               />
             </div>
+            <div className="rental-fee">
+            </div>
           </div>
           <div className="input-wrap">
             <div className="input-title">
               <label htmlFor="numberPeople">보증인원</label>
             </div>
             <div className="input-item">
-              <input
-                type="text"
+              <select
                 name="numberPeople"
                 id="numberPeople"
                 value={product.numberPeople}
                 onChange={changeProduct}
-              />
+                >
+                <option value="">선택하세요</option>
+                <option value="100">100명</option>
+                <option value="200">200명</option>
+                <option value="300">300명</option>
+              </select>
             </div>
           </div>
-          <div className="pay">{payWedding()}</div>
+          <div className="pay">
+            <strong>현재 대관료: {product.coronation ? `${parseFloat(product.coronation).toLocaleString()} 원` : "0 원"}</strong>
+            {payWedding()}
+          </div>
         </div>
         <div className="wedding-button">
           <button type="submit">웨딩홀 예약하기</button>
