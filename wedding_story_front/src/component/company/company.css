@@ -14,6 +14,7 @@
   width: 1200px;
   border: 1px solid #ccc;
   margin: 50px 90px;
+  margin-top: 90px;
 }
 .company-title {
   font-size: 30px;
@@ -40,6 +41,11 @@
   margin-top: 20px;
   margin-left: 20px;
   margin-bottom: 10px;
+
+  overflow: hidden; /* 이미지가 div 밖으로 나가지 않도록 설정 */
+  display: flex; /* Flexbox 활성화 (선택 사항) */
+  justify-content: center; /* 중앙 정렬 (선택 사항) */
+  align-items: center; /* 수직 중앙 정렬 (선택 사항) */
 }
 .company-thumbnail + span {
   padding-left: 170px;
@@ -117,6 +123,9 @@
   margin-right: 15px;
   margin-left: 4px;
 }
+.introduction-wrap {
+  margin-bottom: 50px;
+}
 .introduction-wrap > div,
 textarea {
   margin-left: 100px;
@@ -142,4 +151,9 @@ textarea {
   padding: 15px 30px;
   border-radius: 15px;
   font-weight: 600;
+}
+
+img {
+  max-width: 100%; /* div의 너비를 초과하지 않도록 설정 */
+  height: 100%; /* div의 높이를 초과하지 않도록 설정 */
 }

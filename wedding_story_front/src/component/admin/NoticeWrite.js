@@ -3,8 +3,9 @@ import "./noticeWrite.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NoticeFrm from "./NoticeFrm";
-import ToastEditor from "../utils/ToastEditor";
 import ToastEditorN from "../utils/ToastEditorN";
+import axios from "axios";
+import Swal from "sweetalert2";
 const NoticeWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
@@ -15,11 +16,59 @@ const NoticeWrite = () => {
   const [thumbnail, setThumbnail] = useState(null); //썸네일은 첨부파일로 처리
   const [noticeContent, setNoticeContent] = useState(""); //사용자가 입력할 내용
   const [noticeFile, setNoticeFile] = useState([]); //첨부파일(여러개일 수 있으므로 배열로 처리)
-  const [userState, setUserState] = useState(""); //공개여부 1 모든업체 2 특정업체 3 관리자끼리만
-  const inputTitle = (e) => {
-    setNoticeTitle(e.target.value);
+  const [noticeVisible, setNoticeVisible] = useState(1); //공개여부 1 모든업체 2 특정업체 3 관리자끼리만
+  const [companyNo, setCompanyNo] = useState(0); //특정 업체 대상으로 공개 시 회사 코드 입력
+
+  const writeNotice = () => {
+    console.log("-------------");
+    console.log("noticeWriter" + loginId);
+    console.log("noticeTitle" + noticeTitle);
+    console.log("noticeContent" + noticeContent);
+    console.log("companyNo" + companyNo);
+    console.log("thumbnail" + thumbnail);
+    console.log("noticeFile" + noticeFile);
+    console.log("noticeVisible" + noticeVisible);
+    console.log("-------------");
+
+    if (noticeTitle !== "" && noticeContent !== "") {
+      const form = new FormData();
+      form.append("noticeTitle", noticeTitle);
+      form.append("noticeContent", noticeContent);
+      form.append("noticeWriter", loginId);
+
+      form.append("companyNo", companyNo);
+      form.append("noticeVisible", noticeVisible);
+      //썸네일이 첨부된 경우에만 추가
+      if (thumbnail !== null) {
+        form.append("thumbnail", thumbnail);
+      }
+      //첨부파일도 추가한 경우에만 추가(첨부파일은 여러개가 같은 name으로 전송)
+      for (let i = 0; i < noticeFile.length; i++) {
+        form.append("noticeFile", noticeFile[i]);
+      }
+      axios
+        .post(`${backServer}/notice`, form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
+        .then((res) => {
+          if (res.data) {
+            navigate("/admin/notice/list");
+          } else {
+            Swal.fire({
+              title: "에러가 발생했습니다.",
+              text: "원인을 찾으세요",
+              icon: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
-  const writeNotice = () => {};
   return (
     <>
       <div className="notice-write-wrap">
@@ -37,13 +86,15 @@ const NoticeWrite = () => {
             loginId={loginId}
             setLoginId={setLoginId}
             noticeTitle={noticeTitle}
-            setNoticeTitle={inputTitle}
+            setNoticeTitle={setNoticeTitle}
             thumbnail={thumbnail}
             setThumbnail={setThumbnail}
             noticeFile={noticeFile}
             setNoticeFile={setNoticeFile}
-            userState={userState}
-            setUserState={setUserState}
+            noticeVisible={noticeVisible}
+            setNoticeVisible={setNoticeVisible}
+            companyNo={companyNo}
+            setCompanyNo={setCompanyNo}
           />
           <div className="notice-content-wrap">
             <ToastEditorN

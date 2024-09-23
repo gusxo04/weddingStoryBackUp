@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TagsInput } from "react-tag-input-component";
 
-const Example = () => {
+const Example = (props) => {
   const [selected, setSelected] = useState(["예시"]);
-
+  const company = props.company;
+  const setCompany = props.setCompany;
+  useEffect(() => {
+    setCompany({ ...company, keyWord: selected });
+    console.log(company);
+  }, [selected]);
+  //selected 값이 변한때마다 company.keyWord 값에 복사
   return (
     <div>
       <pre>{JSON.stringify(selected)}</pre>

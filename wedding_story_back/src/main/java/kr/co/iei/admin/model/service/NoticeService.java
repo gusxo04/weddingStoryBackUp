@@ -6,8 +6,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.admin.model.dao.NoticeDao;
+import kr.co.iei.admin.model.dto.NoticeDTO;
+import kr.co.iei.admin.model.dto.NoticeFileDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -60,5 +63,20 @@ public class NoticeService {
 			map.put("pi", pi);
 		}
 		return null;
+	}
+	
+	@Transactional
+	public int insertNotice(NoticeDTO notice, List<NoticeFileDTO> noticeFileList) {
+		int result = noticeDao.insertNotice(notice);
+		for(NoticeFileDTO noticeFile : noticeFileList) {
+			noticeFile.setNoticeNo(notice.getNoticeNo());
+			result += noticeDao.insertNoticeFile(noticeFile);
+		}
+		return result;
+	}
+
+	public NoticeDTO selectOneNotice(int noticeNo) {
+		NoticeDTO notice = noticeDao.selectOneNotice(noticeNo);
+		return notice;
 	}
 }

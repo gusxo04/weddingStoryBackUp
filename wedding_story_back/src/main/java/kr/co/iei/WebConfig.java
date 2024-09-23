@@ -12,11 +12,14 @@ public class WebConfig implements WebMvcConfigurer{
     private String root;
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		
-																	// 박람회 사진은 convention 안에 있고 요청하려면 /convention/image/**로
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {											// 박람회 사진은 convention 안에 있고 요청하려면 /convention/image/**로
         registry.addResourceHandler("/convention/image/**")
         .addResourceLocations("file:///"+root+"/convention/");
+        
+        registry.addResourceHandler("/editor/**")
+        .addResourceLocations("file:///"+root+"/editor/");
+        registry.addResourceHandler("/notice/thumb/**")
+        .addResourceLocations("file:///"+root+"/notice/thumb/");
 		
 	}
 

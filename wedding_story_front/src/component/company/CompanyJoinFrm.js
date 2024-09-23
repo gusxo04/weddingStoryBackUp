@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import "./company.css";
 import Example from "../utils/ReactTagInput";
@@ -26,18 +26,11 @@ for (let i = 16; i < 25; i++) {
   closeHour.push(op);
 } //출처: https://anerim.tistory.com/213 [디발자 뚝딱:티스토리]
 
-const CompanyJoinFrm = () => {
-  const [company, setCompany] = useState({
-    companyName: "",
-    companyTel: "",
-    companyAddr: "",
-    companyInfo: "",
-    companyCategory: "",
-    startTime: "",
-    endTime: "",
-    dayOff: "",
-    keyWord: "",
-  });
+const CompanyJoinFrm = (props) => {
+  const company = props.company;
+  const setCompany = props.setCompany;
+  const thumbnail = props.thumbnail;
+  const setThumbnail = props.setThumbnail;
 
   const selectOptions = [
     { value: 0, label: "웨딩홀" },
@@ -47,10 +40,10 @@ const CompanyJoinFrm = () => {
     { value: 4, label: "예복" },
     { value: 5, label: "본식" },
   ];
+
   const changeValue = (e) => {
     const name = e.target.name;
     setCompany({ ...company, [name]: e.target.value });
-    console.log(company);
   };
   const tel1Ref = useRef();
   const tel2Ref = useRef();
@@ -69,7 +62,6 @@ const CompanyJoinFrm = () => {
     }));
 
     // 여기서 추가적인 처리 (예: 서버로 데이터 전송) 가능
-    console.log(company);
   };
   const handleTelInput = (e, ref) => {
     const value = e.target.value;
@@ -83,17 +75,92 @@ const CompanyJoinFrm = () => {
   };
 
   const [address, setAddress] = useState({
-    //이메일 주소를 담기위한 state
+    //주소를 담기위한 state
     address: "",
     detailAddress: "",
   });
+  const thumbnailRef = useRef(null);
+  const [CompanyImg, setCompanyImg] = useState(null);
+  //미리보기용 이미지 전송 x
+
+  const changeThumbnail = (e) => {
+    //요소들이 겹쳐있는 상태에서 해당 요소를 선택할 때는 currentTarget(target을 사용하면 여러요소가 한번에 선택)
+    const files = e.currentTarget.files;
+    if (files.length !== 0 && files[0] !== 0) {
+      //썸네일 파일 객체를 글작성 시 전송하기 위한 값 저장
+      setThumbnail(files[0]);
+      //화면에 썸네일 미리보기
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onloadend = () => {
+        setCompanyImg(reader.result);
+      };
+    } else {
+      setThumbnail(null);
+      setCompanyImg(null);
+    }
+  };
+  const [checkbox, setCheckbox] = useState([]);
+  const checkboxChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      // 체크된 경우
+      setCompany((prevCompany) => ({
+        ...prevCompany,
+        dayOff: [...prevCompany.dayOff, value],
+      }));
+    } else {
+      // 체크 해제된 경우
+      setCompany((prevCompany) => ({
+        ...prevCompany,
+        dayOff: prevCompany.dayOff.filter((item) => item !== value),
+      }));
+    }
+  };
+
+  useEffect(() => {
+    const addrAll = `${address.address} ${address.detailAddress}`.trim();
+    setCompany((prevCompany) => ({ ...prevCompany, companyAddr: addrAll }));
+  }, [address.address, address.detailAddress]);
 
   return (
     <div className="company-join-wrap">
       <div className="company-title">업체 등록</div>
       <section className="company-section">
         <div className="thumbnail-zone">
-          <div className="company-thumbnail"></div>
+          <div className="company-thumbnail">
+            {CompanyImg ? (
+              <img
+                onClick={() => {
+                  thumbnailRef.current.click();
+                }}
+                src={CompanyImg}
+              />
+            ) : (
+              //  : boardThumb ? (
+              //   // <img
+              //   //   src={`${backServer}/company/thumb/${boardThumb}`}
+              //   //   onClick={() => {
+              //   //     thumbnailRef.current.click();
+              //   //   }}
+              //   // />
+              // )
+              <img
+                onClick={() => {
+                  thumbnailRef.current.click();
+                }}
+                src="/image/default_img.png"
+              ></img>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={changeThumbnail}
+              ref={thumbnailRef}
+            ></input>
+          </div>
           <span>대표 사진</span>
         </div>
         <div className="main-content">
@@ -195,19 +262,54 @@ const CompanyJoinFrm = () => {
               <label htmlFor="company-closed-days">업체 휴무일</label>
               <div className="checkbox" id="company-closed-day">
                 <label htmlFor="monday">월</label>
-                <input type="checkbox" id="monday" value="월"></input>
+                <input
+                  type="checkbox"
+                  id="monday"
+                  value="월"
+                  onChange={checkboxChange}
+                ></input>
                 <label htmlFor="tuesday">화</label>
-                <input type="checkbox" id="tuesday" value="화"></input>
+                <input
+                  type="checkbox"
+                  id="tuesday"
+                  value="화"
+                  onChange={checkboxChange}
+                ></input>
                 <label htmlFor="wednesday">수</label>
-                <input type="checkbox" id="wednesday" value="수"></input>
+                <input
+                  type="checkbox"
+                  id="wednesday"
+                  value="수"
+                  onChange={checkboxChange}
+                ></input>
                 <label htmlFor="thursday">목</label>
-                <input type="checkbox" id="thursday" value="목"></input>
+                <input
+                  type="checkbox"
+                  id="thursday"
+                  value="목"
+                  onChange={checkboxChange}
+                ></input>
                 <label htmlFor="friday">금</label>
-                <input type="checkbox" id="friday" value="금"></input>
+                <input
+                  type="checkbox"
+                  id="friday"
+                  value="금"
+                  onChange={checkboxChange}
+                ></input>
                 <label htmlFor="saturday">토</label>
-                <input type="checkbox" id="saturday" value="토"></input>
+                <input
+                  type="checkbox"
+                  id="saturday"
+                  value="토"
+                  onChange={checkboxChange}
+                ></input>
                 <label htmlFor="sunday">일</label>
-                <input type="checkbox" id="sunday" value="일"></input>
+                <input
+                  type="checkbox"
+                  id="sunday"
+                  value="일"
+                  onChange={checkboxChange}
+                ></input>
               </div>
             </div>
           </div>
@@ -215,7 +317,7 @@ const CompanyJoinFrm = () => {
       </section>
       <div className="keyWord-wrap">
         <label htmlFor="keyword">키워드</label>
-        <Example />
+        <Example company={company} setCompany={setCompany} />
       </div>
       <div className="introduction-wrap">
         <div>소개글</div>
@@ -227,9 +329,6 @@ const CompanyJoinFrm = () => {
           maxLength={100}
           placeholder="업체 소개글 100자 이내로 작성 부탁"
         ></textarea>
-      </div>
-      <div className="btn-zone">
-        <button>등록 하기</button>
       </div>
     </div>
   );

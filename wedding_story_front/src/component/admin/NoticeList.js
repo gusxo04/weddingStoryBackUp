@@ -14,12 +14,12 @@ const NoticeList = () => {
     axios
       .get(`${backServer}/notice/list/${reqPage}/${userState}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setNoticeList(res.data.list);
         setPi(res.data.pi);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [reqPage]);
 
@@ -56,7 +56,7 @@ const NoticeItem = (props) => {
     <li
       className="posting-item"
       onClick={() => {
-        navigate(`/notice/view/${notice.noticeNo}`);
+        navigate(`/admin/notice/view/${notice.noticeNo}`);
       }}
     >
       <div className="posting-img">
