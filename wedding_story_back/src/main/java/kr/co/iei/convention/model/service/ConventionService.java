@@ -150,43 +150,6 @@ public class ConventionService {
     }
 
     private String cancelPayment(String accessToken, RefundRequest request) {
-        // 취소 요청을 하는 코드
-        // String cancelUrl = "https://api.iamport.kr/payments/cancel";
-        // String reason = "테스트 결제 취소";
-        
-        // String cancelRequest = "merchant_uid=" + request.getMerchantUid() + "&amount=" + request.getCancelRequestAmount() + "&reason=" + reason;
-        
-        // HttpHeaders headers = new HttpHeaders();
-        // headers.setContentType(MediaType.APPLICATION_JSON);
-        // headers.set("Authorization", "Bearer " + accessToken);
-        
-        // HttpEntity<String> entity = new HttpEntity<>(cancelRequest, headers);
-        
-        // ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
-        
-        // String result = response.getBody();
-        // System.out.println("result 에여!! : "+result);
-        // return result;
-
-        // 취소 요청을 하는 코드
-        // String cancelUrl = "https://api.iamport.kr/payments/cancel";
-    
-        // HttpHeaders headers = new HttpHeaders();
-        // headers.setContentType(MediaType.APPLICATION_JSON);
-        // headers.set("Authorization", "Bearer " + accessToken);
-        
-        // Map<String, Object> cancelRequest = new HashMap<>();
-        // cancelRequest.put("reason", request.getReason());
-        // // cancelRequest.put("imp_uid", request.getImpUid());
-        // cancelRequest.put("amount", request.getCancelRequestAmount());
-        // // cancelRequest.put("checksum", request.getCancelableAmount());
-        // HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
-        
-        // ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
-        
-        // String result = response.getBody();
-        // System.out.println("result 에여!! : "+result);
-        // return result;
 
 
         System.out.println("추출한 액세스 토큰임 : "+accessToken);
@@ -199,7 +162,7 @@ public class ConventionService {
         CancelRequest cancelRequest = new CancelRequest();
         // cancelRequest.setReason(request.getReason());
         cancelRequest.setAmount(request.getCancelRequestAmount());
-        cancelRequest.setMerchantUid(request.getMerchantUid());
+        cancelRequest.setMerchant_uid(request.getMerchantUid());
         System.out.println(cancelRequest);
 
         HttpEntity<CancelRequest> entity = new HttpEntity<>(cancelRequest, headers);

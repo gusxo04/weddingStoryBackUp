@@ -11,6 +11,6 @@ public class CancelRequest {
 
 	private String reason;
     private int amount;
-    private String merchantUid;
+    private String merchant_uid;
     private String checksum;
 }
