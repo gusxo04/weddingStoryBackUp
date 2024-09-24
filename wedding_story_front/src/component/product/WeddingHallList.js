@@ -1,10 +1,9 @@
-import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PagiNavi";
 
-const ProductAllList = () => {
+const WeddingHallList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
@@ -12,7 +11,7 @@ const ProductAllList = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/list/${reqPage}`)
+      .get(`${backServer}/product/hallList/${reqPage}`)
       .then((res) => {
         console.log(res);
         setProductList(res.data.list); //게시물
@@ -26,23 +25,7 @@ const ProductAllList = () => {
   return (
     <section className="board-list">
       <div className="page-title">
-        <ul className="name-title">
-          <li>
-            <Link to="/product/info">스튜디오</Link>
-          </li>
-          <li>
-            <Link to="/product/review">드레스</Link>
-          </li>
-          <li>
-            <Link to="/counseling/counsel">메이크업</Link>
-          </li>
-          <li>
-            <Link to="/product/weddingHall">예복</Link>
-          </li>
-          <li>
-            <Link to="#">예물</Link>
-          </li>
-        </ul>
+        <div className="title-name">웨딩홀</div>
       </div>
 
       <div className="product-list-wrap">
@@ -67,7 +50,7 @@ const BoardItem = (props) => {
     <li
       className="posting-item"
       onClick={() => {
-        navigate(`/product/list/${product.productNo}`);
+        navigate(`/product/list/${product.priductNo}`);
       }}
     >
       <div>
@@ -80,9 +63,6 @@ const BoardItem = (props) => {
         />
       </div>
       <div className="posting-info">
-        <div className="favirite">
-          <span className="material-icons-outlined">favorite</span>
-        </div>
         <div className="posting-title">{product.productTitle}</div>
         <div className="posting-sub-info">
           <span>{product.productWriter}</span>
@@ -93,4 +73,4 @@ const BoardItem = (props) => {
   );
 };
 
-export default ProductAllList;
+export default WeddingHallList;

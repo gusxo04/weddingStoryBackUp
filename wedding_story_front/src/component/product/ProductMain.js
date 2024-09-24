@@ -6,6 +6,7 @@ import ProductReview from "./ProductReview";
 import ProductAllList from "./ProductAllList";
 import ProductInfo from "./ProductInfo";
 import ProductWeddingHall from "./ProductWeddingHall";
+import WeddingHallList from "./WeddingHallList";
 const ProductMain = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ const ProductMain = () => {
       <Route path="review" element={<ProductReview />} />
       <Route path="info" element={<ProductInfo />} />
       <Route path="weddingHall" element={<ProductWeddingHall />} />
+      <Route path="hallList" element={<WeddingHallList />} />
     </Routes>
   );
 };
