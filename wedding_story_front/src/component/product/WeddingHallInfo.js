@@ -2,6 +2,7 @@ import { Viewer } from "@toast-ui/react-editor";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import ReviewForm from "../utils/ReviewFrom";
 
 const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -97,6 +98,7 @@ const WeddingHallInfo = () => {
           ) : (
             <p>리뷰가 없습니다.</p>
           )}
+          <ReviewForm/>
         </div>
         <br />
         <div className="product-faq">
@@ -113,5 +115,6 @@ const WeddingHallInfo = () => {
     </section>
   );
 };
+
 
 export default WeddingHallInfo;
