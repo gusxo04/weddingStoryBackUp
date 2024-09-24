@@ -12,4 +12,6 @@ public interface CompanyDao {
 
 	int insertKeyWord(KeyWordDTO keyWord);
 
+	CompanyDTO selectCompanyInfo();
+
 }

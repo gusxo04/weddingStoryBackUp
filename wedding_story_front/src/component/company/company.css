@@ -103,6 +103,7 @@
   width: 400px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding-left: 10px;
 }
 .company-input-wrap > #companyTel {
   width: 100px;
