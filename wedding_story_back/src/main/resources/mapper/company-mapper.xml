@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.company.model.dao.CompanyDao">
-
-  
-  
   <insert id="insertCompany">
   	insert into company values(#{companyNo},#{companyCategory},#{companyName},#{companyTel},#{companyAddr},#{companyInfo},#{companyThumb},#{startTime},#{endTime},sysdate,#{dayOff},0)
   </insert>
@@ -34,7 +31,11 @@
 					company_report	
 				from company order by company_name)m)
 		where rnum between #{start} and #{end}
+		</select>
+		
 	<select id="selectCompanyInfo" resultType="company">
 		select * from company join company_keyword on company.company_no = company_keyword.company_no
 	</select>
 </mapper>
+
+  
