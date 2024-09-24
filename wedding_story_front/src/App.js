@@ -17,6 +17,7 @@ import Counsel from "./component/counseling/Counsel";
 import AdminHeader from "./component/common/AdminHeader";
 import Join from "./component/member/Join";
 import ConventionLobby from "./component/convention/ConventionLobby";
+import Login from "./component/member/Login";
 
 function App() {
   const location = useLocation();
@@ -52,6 +53,7 @@ function App() {
       {/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
       <main className="content-wrap">
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/join/*" element={<Join />} />
           <Route path="/convention/*" element={<ConventionLobby />} />
           {/* <Route path="/test" element={<ConventionLayout />} /> */}

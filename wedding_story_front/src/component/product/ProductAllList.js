@@ -34,13 +34,13 @@ const ProductAllList = () => {
             <Link to="/product/review">드레스</Link>
           </li>
           <li>
-            <Link to="/counseling/counsel">메이크업</Link>
+            <Link to="/product/reviewUpdate">메이크업</Link>
           </li>
           <li>
-            <Link to="/product/weddingHall">예복</Link>
+            <Link to="/product/hallInfo">예복</Link>
           </li>
           <li>
-            <Link to="#">예물</Link>
+            <Link to="#">본식</Link>
           </li>
         </ul>
       </div>

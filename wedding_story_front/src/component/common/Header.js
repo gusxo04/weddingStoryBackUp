@@ -6,7 +6,7 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         <div className="header-link">
-          <Link to="#">로그인</Link>
+          <Link to="/login">로그인</Link>
           <span>|</span>
           <Link to="/join/agree">회원가입</Link>
           <span>|</span>

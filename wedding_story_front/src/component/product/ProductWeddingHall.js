@@ -52,6 +52,7 @@ const ProductWeddingHall = () => {
 
   const payWedding = () => {
     const perPersonFee = parseFloat(product.diningRoom); // 일인식비
+
     const rentalFee = parseFloat(product.coronation) || 0; // 대관료
     const numberOfPeople = parseInt(product.numberPeople) || 0; // 인원수
 
@@ -66,7 +67,7 @@ const ProductWeddingHall = () => {
 
   return (
     <section className="wedding-wrap">
-      <div className="title-name">웨딩홀예약</div>
+      <div className="title-name">웨딩홀 예약</div>
       <form>
         <Link to="/">
           <span className="material-icons">arrow_back</span>
@@ -159,6 +160,12 @@ const ProductWeddingHall = () => {
               대관료:{" "}
               {product.coronation
                 ? `${parseFloat(product.coronation).toLocaleString()} 원`
+                : "0 원"}
+            </h3>
+            <h3>
+              인당 식비:{" "}
+              {product.diningRoom
+                ? `${parseFloat(product.diningRoom).toLocaleString()} 원`
                 : "0 원"}
             </h3>
             {payWedding()}

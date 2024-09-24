@@ -2,10 +2,9 @@ import { Viewer } from "@toast-ui/react-editor";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
-// Assuming you have necessary imports for Viewer and any other components
+import ReviewForm from "../utils/ReviewFrom";
 
-const ProductInfo = () => {
+const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const boardNo = params.boardNo;
@@ -29,7 +28,7 @@ const ProductInfo = () => {
   return (
     <section className="product-view-wrap">
       <div className="product-title">
-        <h3>{board.productName}상세보기</h3>
+        <h3>웨딩홀 상세보기</h3>
       </div>
       <div className="product-view-content">
         <div className="product-view-info">
@@ -75,7 +74,7 @@ const ProductInfo = () => {
             <Link to="/counseling/counsel">상담하기</Link>
           </button>
           <button type="button" className="btn">
-            <Link to="/product/pay">결제하기</Link>
+            <Link to="/product/weddingHall">예약하기</Link>
           </button>
         </div>
         <div className="product-content-wrap">
@@ -99,6 +98,7 @@ const ProductInfo = () => {
           ) : (
             <p>리뷰가 없습니다.</p>
           )}
+          <ReviewForm/>
         </div>
         <br />
         <div className="product-faq">
@@ -106,9 +106,9 @@ const ProductInfo = () => {
         </div>
         <br />
         <div className="product-map-view">
-          {/* Assuming you have a Map component to display the company location */}
+          {/* 회사 위치를 표시하는 지도 구성 요소가 있다고 가정합니다. */}
           <h3>회사 위치</h3>
-          {/* Placeholder for map component; integrate your Map API here */}
+          {/* 지도 구성 요소에 대한 자리 표시자입니다. 여기에 지도 API를 통합하세요 */}
           {/* <MapComponent location={board.companyLocation} /> */}
         </div>
       </div>
@@ -116,40 +116,5 @@ const ProductInfo = () => {
   );
 };
 
-//첨부파일
-const FileItem = ({ file }) => {
-  const backServer = process.env.REACT_APP_BACK_SERVER;
 
-  const filedown = () => {
-    axios
-      .get(`${backServer}/board/file/${file.boardFileNo}`, {
-        responseType: "blob",
-      })
-      .then((res) => {
-        const blob = new Blob([res.data]);
-        const fileObjectUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = fileObjectUrl;
-        link.style.display = "none";
-        link.download = file.filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(fileObjectUrl);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  return (
-    <div className="board-file">
-      <span className="material-icons file-icon" onClick={filedown}>
-        file_download
-      </span>
-      <span className="file-name">{file.filename}</span>
-    </div>
-  );
-};
-
-export default ProductInfo;
+export default WeddingHallInfo;
