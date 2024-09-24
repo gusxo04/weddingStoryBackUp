@@ -1,58 +1,83 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductReview from "./ProductReview";
+import { FaStar } from "react-icons/fa";
+import ReviewForm from "../utils/ReviewFrom";
 
-const ProductReviewUpdate = ({ existingReview, onDelete }) => {
+const ProductReviewUpdate = () => {
+  const [reviews, setReviews] = useState([]);
+  const [currentReview, setCurrentReview] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [reviewText, setReviewText] = useState(existingReview);
 
-  const openPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);
-
-  const handleReviewChange = (event) => {
-    setReviewText(event.target.value);
+  const handleOpenPopup = () => {
+    setCurrentReview(null); // Reset currentReview for new review
+    setIsPopupOpen(true);
   };
 
-  const handleSave = () => {
-    // Save the updated review logic here
-    console.log("리뷰가 수정되었습니다:", reviewText);
-    closePopup();
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    setCurrentReview(null);
+  };
+
+  const handleReviewSubmit = (reviewData) => {
+    if (currentReview) {
+      // 리뷰 수정
+      setReviews((prev) =>
+        prev.map((review) =>
+          review.id === currentReview.id ? { ...review, ...reviewData } : review
+        )
+      );
+    } else {
+      // 새 리뷰 추가
+      setReviews((prev) => [
+        ...prev,
+        { id: Date.now(), ...reviewData },
+      ]);
+    }
+    handleClosePopup(); // Close popup after submission
+  };
+
+  const handleEditReview = (review) => {
+    setCurrentReview(review);
+    setIsPopupOpen(true);
+  };
+
+  const handleDeleteReview = (id) => {
+    setReviews((prev) => prev.filter((review) => review.id !== id));
   };
 
   return (
-    <div className="review-wrap">
-      <h1>리뷰 수정하기</h1>
-      <button onClick={openPopup}>수정하기</button>
-      <button onClick={onDelete}>삭제하기</button>
-      {isPopupOpen && (
-        <ReviewPopup
-          onClose={closePopup}
-          reviewText={reviewText}
-          onReviewChange={handleReviewChange}
-          onSave={handleSave}
-        />
+    <div className="product-reviews">
+      <h3>리뷰</h3>
+      <button onClick={handleOpenPopup}>리뷰 작성</button>
+      {reviews.length > 0 ? (
+        reviews.map((review) => (
+          <div key={review.id} className="review-item">
+            <div className="review-rating">
+              {Array.from({ length: 5 }, (_, index) => (
+                <FaStar
+                  key={index}
+                  style={{
+                    color: index < review.rating ? "gold" : "gray",
+                    fontSize: "24px",
+                  }}
+                />
+              ))}
+              <span>{` ${review.rating} / 5`}</span>
+            </div>
+            <div className="review-text">{review.review}</div>
+            <button onClick={() => handleEditReview(review)}>수정</button>
+            <button onClick={() => handleDeleteReview(review.id)}>삭제</button>
+          </div>
+        ))
+      ) : (
+        <p>리뷰가 없습니다.</p>
       )}
-    </div>
-  );
-};
-
-const popupStyle = {
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  backgroundColor: "white",
-  padding: "20px",
-  border: "1px solid #ccc",
-  zIndex: 1000,
-};
-
-const ReviewPopup = ({ onClose, reviewText, onReviewChange, onSave }) => {
-  return (
-    <div className="popup" style={popupStyle}>
-      <h2>리뷰 수정</h2>
-      <textarea value={reviewText} onChange={onReviewChange} />
-      <button onClick={onSave}>저장</button>
-      <button onClick={onClose}>취소</button>
+      <ReviewForm
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        onSubmit={handleReviewSubmit}
+        initialData={currentReview} // Pass currentReview data for editing
+      />
     </div>
   );
 };
