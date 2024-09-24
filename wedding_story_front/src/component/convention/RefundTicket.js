@@ -8,7 +8,8 @@ const RefundTicket = (props) => {
     closeAlert,
     payment,
   } = props;
-
+  
+  
   class CancelPay extends React.Component {
     cancelPay = () => {
       axios({
@@ -18,6 +19,7 @@ const RefundTicket = (props) => {
           "Content-Type": "application/json",
         },
         data: {
+          ticketNo : payment.ticketNo,
           merchantUid: payment.merchantUid, // 주문번호
           cancelRequestAmount: payment.payPrice, // 환불금액
           reason: "테스트", // 환불사유
