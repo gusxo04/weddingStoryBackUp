@@ -23,4 +23,5 @@ public class CompanyDTO {
 	private String companyEnrollDate;
 	private String dayOff;
 	private int companyRepot;
+	private String keyWord;
 }

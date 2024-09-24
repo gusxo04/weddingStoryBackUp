@@ -23,4 +23,10 @@ public class CompanyService {
 			
 		return resultTotal;
 	}
+
+	public CompanyDTO selectCompanyInfo() {
+		CompanyDTO company = companyDao.selectCompanyInfo();
+			
+		return company;
+	}
 }

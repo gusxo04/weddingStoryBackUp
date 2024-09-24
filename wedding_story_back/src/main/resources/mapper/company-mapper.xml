@@ -11,4 +11,8 @@
 	<insert id="insertKeyWord">
 		insert into company_keyword values(#{companyNo},#{keyWord})
 	</insert>
+	
+	<select id="selectCompanyInfo" resultType="company">
+		select * from company join company_keyword on company.company_no = company_keyword.company_no
+	</select>
 </mapper>
