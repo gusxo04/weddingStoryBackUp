@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import "./common.css";
+import { useState } from "react";
 
 const CompanyHeader = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // 드롭다운을 토글하는 함수
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen); // 클릭 시 상태를 반전
+  };
   return (
     <header className="header-c">
       <div className="header-c-logo">
@@ -57,13 +64,37 @@ const CompanyHeader = () => {
               <span>매출관리</span>
             </Link>
           </li>
-          <li>
-            <Link to="/company/join" className="nav-item">
+          <li className="info-menu" onClick={toggleDropdown}>
+            <Link to="#" className="nav-item">
               <div>
                 <span className="material-icons">settings</span>
               </div>
               <span>사용자관리</span>
             </Link>
+            {isDropdownOpen && (
+              <ul className="down-menu-bar" style={{}}>
+                <li>
+                  <Link to="/company/Info" className="down-menu">
+                    내 업체 정보
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/company/Join" className="down-menu">
+                    업체 등록
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/company/Info" className="down-menu">
+                    내 업체 정보
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/company/Info" className="down-menu">
+                    내 업체 정보
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
         </ul>
       </div>

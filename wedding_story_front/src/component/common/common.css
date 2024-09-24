@@ -117,6 +117,23 @@
   font-size: 30px;
 }
 
+/*----업체 사용자메뉴 다운메뉴바 추가 2024-09-24 오전10:09 김도엽--------------------------------------------*/
+.info-menu {
+  display: flex;
+  justify-content: space-around;
+}
+.down-menu-bar {
+  position: absolute;
+  margin-top: 66px;
+}
+.down-menu-bar > li {
+  font-size: 20px;
+  padding: 5px 0px;
+  background-color: var(--main2);
+  width: 200px;
+  text-align: center;
+}
+
 .content-wrap {
   /* width: 100%; */
   flex-grow: 1;
