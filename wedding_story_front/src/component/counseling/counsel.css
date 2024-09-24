@@ -2,8 +2,8 @@
 .counselt-wrap {
   padding: 20px;
   border-radius: 10px;
-  background-color: var(--main2);
-  width: 500px;
+  border: 1px var(--main1) solid;
+  width: 380px;
   margin: 0 auto;
   align-self: center;
 }
@@ -26,6 +26,10 @@
   border-left: 20px;
 }
 
+.counselt-content > .input-wrap > .input-title {
+  padding-right: 30px;
+}
+
 .counselt-content > .input-wrap > .input-title > label {
   text-align: left;
   font-size: 17px;
@@ -40,8 +44,8 @@
   font-size: 16px;
   font-family: ns-b;
   padding: 8px 0px;
-  width: 250px;
-  border: 2px var(--main1) solid;
+  width: 300px;
+  border: 1px var(--main1) solid;
   border-radius: 5px;
 }
 
@@ -57,12 +61,16 @@
   font-family: ns-b;
 }
 .counselt-content > .input-date > .input-item > input {
-  width: 120px;
   font-size: 16px;
   font-family: ns-b;
   padding: 8px 0px;
-  border: 2px var(--main1) solid;
+  border: 1px var(--main1) solid;
   border-radius: 5px;
+}
+
+.input-item > input[type="checkbox"] {
+  width: 40px;
+  height: 40px;
 }
 
 .counselt-content > .input-wrap > .input-item > textarea {
@@ -70,15 +78,13 @@
   border-radius: 8px;
   resize: none;
   margin-left: 0;
-  width: 300px;
+  width: 270px;
   height: 100px;
-  border: 2px var(--main1) solid;
+  border: 1px var(--main1) solid;
 }
 
 .btn {
-  border: 1px solid var(--main3);
-  background-color: #c1d0db;
-  color: #fff;
+  border: 1px solid #fff;
   padding: 10px 25px;
   font-size: 16px;
   border: none;
@@ -88,6 +94,7 @@
   width: 100%;
 }
 .btn:hover {
-  background-color: rgba(101, 146, 254, 0.9);
+  background-color: var(--main1);
+  color: #fff;
   cursor: pointer;
 }
