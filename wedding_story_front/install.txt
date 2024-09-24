@@ -35,3 +35,8 @@ npm install react-daum-postcode --force
 정현태
 2024-09-20 오후 05:12
 npm install sweetalert2
+
+김도엽
+2024-09-24 오후 04:53
+npm install react-slick --save --force
+npm install slick-carousel --save --force
