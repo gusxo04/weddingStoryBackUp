@@ -89,8 +89,6 @@ const JoinCompany = (props) => {
   };
   const checkEmail = () => {
     const checkEmail = member.memberEmail;
-    console.log(checkEmail);
-
     const idRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     {
       /*checkEmail 0은 미기재,1은 정규표현식 부적합,2은 이메일 인증,3은 이메일 인증 부적합 */
@@ -100,7 +98,15 @@ const JoinCompany = (props) => {
     } else if (!idRegex.test(checkEmail)) {
       setEmailCheck(1);
     } else if (idRegex.test(checkEmail)) {
-      setEmailCheck(2);
+      axios
+        .get(`${backServer}/member/checkEmail/` + checkEmail)
+        .then((res) => {
+          console.log(res.data);
+          setEmailCheck(2);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   const checkCode = () => {
@@ -151,7 +157,6 @@ const JoinCompany = (props) => {
         console.log(err);
       });
   };
-  console.log(member);
 
   return (
     <div className="join-info-wrap">

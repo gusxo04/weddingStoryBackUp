@@ -23,16 +23,22 @@ const JoinMember = (props) => {
   const [rePwCheck, setReRwCheck] = useState(0);
   const [emailCheck, setEmailCheck] = useState(0);
   const [phoneCheck, setPhoneCheck] = useState(0);
+  const [emailCode, setEmailCode] = useState("");
+  const [inputCode, setInputCode] = useState("");
+  const [codeCheck, setCodeCheck] = useState(0);
 
   const changeInput = (e) => {
     const { name, value } = e.target;
     setMember({ ...member, [name]: value });
   };
+  const changeInputCode = (e) => {
+    setInputCode(e.target.value);
+  };
   const checkId = (e) => {
     const checkId = e.target.value;
     const idRegex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
     {
-      /*checkId 0은 미기재,1은 정규표현식 부적합,2은 아이디 중복,3은 사용가능 */
+      /*idCheck 0은 미기재,1은 정규표현식 부적합,2은 아이디 중복,3은 사용가능 */
     }
     if (checkId === "") {
       setIdCheck(0);
@@ -58,7 +64,7 @@ const JoinMember = (props) => {
     const idRegex =
       /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?\/])[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?\/]{8,20}$/;
     {
-      /*checkPw 0은 미기재,1은 정규표현식 부적합,2은 사용가능 */
+      /*pwCheck 0은 미기재,1은 정규표현식 부적합,2은 사용가능 */
     }
     if (checkPw === "") {
       setPwCheck(0);
@@ -70,6 +76,9 @@ const JoinMember = (props) => {
   };
   const recheckPw = (e) => {
     const recheckPw = e.target.value;
+    {
+      /*repwCheck 0은 미기재,1은 불일치,2은 일치 */
+    }
     if (member.memberPw !== recheckPw) {
       setReRwCheck(1);
     } else if (member.memberPw === recheckPw) {
@@ -79,6 +88,9 @@ const JoinMember = (props) => {
   const checkPhone = (e) => {
     const checkPhone = e.target.value;
     const phoneRegex = /^\d{3}-\d{4}-\d{4}$/;
+    {
+      /*phoneCheck 0은 미기재,1은 정규표현식 부적합,2은 사용가능 */
+    }
     if (checkPhone === "") {
       setPhoneCheck(0);
     } else if (!phoneRegex.test(checkPhone)) {
@@ -89,11 +101,9 @@ const JoinMember = (props) => {
   };
   const checkEmail = () => {
     const checkEmail = member.memberEmail;
-    console.log(checkEmail);
-
     const idRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     {
-      /*checkEmail 0은 미기재,1은 정규표현식 부적합,2은 이메일 인증,3은 이메일 인증 부적합 */
+      /*emailCheck 0은 미기재,1은 정규표현식 부적합,2은 이메일 인증 */
     }
     if (checkEmail === "") {
       setEmailCheck(0);
@@ -101,9 +111,26 @@ const JoinMember = (props) => {
       setEmailCheck(1);
     } else if (idRegex.test(checkEmail)) {
       setEmailCheck(2);
+      axios
+        .get(`${backServer}/member/checkEmail/` + checkEmail)
+        .then((res) => {
+          setEmailCode(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
-  console.log(emailCheck);
+  const checkEmailCode = () => {
+    {
+      /*codeCheck 0은 미기재,1은 일치,2은 불일치 */
+    }
+    if (inputCode === emailCode) {
+      setCodeCheck(1);
+    } else if (inputCode !== emailCheck) {
+      setCodeCheck(2);
+    }
+  };
 
   const [gender, setGender] = useState("");
   const [isPartner, setIsPartner] = useState("");
@@ -120,18 +147,31 @@ const JoinMember = (props) => {
   };
   const checkPartner2 = () => {
     setIsPartner("아니오");
+    setMember({ ...member, partnerId: "", partnerName: "" });
   };
   const nextPage = () => {
-    console.log(member);
-    axios
-      .post(`${backServer}/member/join`, member)
-      .then((res) => {
-        console.log(res.data);
-        navigate("/join/success");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (
+      idCheck === 3 &&
+      pwCheck === 2 &&
+      rePwCheck === 2 &&
+      phoneCheck === 2 &&
+      emailCheck === 2 &&
+      codeCheck === 1 &&
+      member.memberGender !== null &&
+      isPartner === "네"
+        ? member.partnerId !== null && member.partnerName !== null
+        : member.partnerId === null && member.partnerName === null
+    ) {
+      axios
+        .post(`${backServer}/member/join`, member)
+        .then((res) => {
+          console.log(res.data);
+          navigate("/join/success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   return (
     <div className="join-info-wrap">
@@ -288,7 +328,7 @@ const JoinMember = (props) => {
               <div>
                 <span
                   className={`${
-                    emailCheck === 3 ? "joinValid" : "joinInvalid"
+                    emailCheck === 2 ? "joinValid" : "joinInvalid"
                   }`}
                 >
                   {`${
@@ -296,9 +336,7 @@ const JoinMember = (props) => {
                       ? ""
                       : emailCheck === 1
                       ? "이메일 형식에 맞추어 기입해 주세요."
-                      : emailCheck === 2
-                      ? "인증번호를 이메일로 전송했습니다."
-                      : "사용 가능한 아이디입니다."
+                      : "인증번호를 이메일로 전송했습니다."
                   }`}
                 </span>
               </div>
@@ -307,8 +345,27 @@ const JoinMember = (props) => {
                   emailCheck === 2 ? "" : " hiddenInput"
                 }`}
               >
-                <input type="text"></input>
-                <button type="button">확인</button>
+                <input
+                  type="text"
+                  name="emailCode"
+                  onChange={changeInputCode}
+                ></input>
+                <button type="button" onClick={checkEmailCode}>
+                  확인
+                </button>
+              </div>
+              <div>
+                <span
+                  className={`${codeCheck === 1 ? "joinValid" : "joinInvalid"}`}
+                >
+                  {`${
+                    codeCheck === 0
+                      ? ""
+                      : codeCheck === 1
+                      ? "인증이 완료되었습니다."
+                      : "인증 코드를 다시 확인해주세요."
+                  }`}
+                </span>
               </div>
             </div>
             <div className="join-partnerInfobox">
