@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const CompanyInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [company, setCompany] = useState({}); //DB에서 조회한 데이터가 들어갈 state
-
+  console.log(`${backServer}/company/thumb/${company.companyThumb}`);
   useEffect(() => {
     axios
       .get(`${backServer}/company`)
@@ -39,8 +39,8 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="companyCode"
-                value={company.companyNo}
-                readOnly
+                defaultValue={company.companyNo}
+                readOnly={true}
               ></input>
             </div>
             <div className="company-input-wrap">
@@ -48,8 +48,8 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="companyName"
-                value={company.companyName}
-                readOnly
+                defaultValue={company.companyName}
+                readOnly={true}
               ></input>
             </div>
             <div className="company-input-wrap">
@@ -57,8 +57,8 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="companyTelNum"
-                value={company.companyTel}
-                readOnly
+                defaultValue={company.companyTel}
+                readOnly={true}
               ></input>
             </div>
             <div className="company-input-wrap">
@@ -66,8 +66,8 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="companyAddr"
-                value={company.companyAddr}
-                readOnly
+                defaultValue={company.companyAddr}
+                readOnly={true}
               ></input>
             </div>
             <div className="company-input-wrap">
@@ -76,16 +76,16 @@ const CompanyInfo = () => {
                 type="text"
                 className="start-time"
                 id="start-time"
-                value={company.startTime}
-                readOnly
+                defaultValue={company.startTime}
+                readOnly={true}
               ></input>
               <span className="and">~</span>
               <input
                 type="text"
                 className="end-time "
                 id="end-time"
-                value={company.endTime}
-                readOnly
+                defaultValue={company.endTime}
+                readOnly={true}
               ></input>
             </div>
             <div className="company-input-wrap">
@@ -93,7 +93,7 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="companyCategory"
-                value={
+                defaultValue={
                   company.companyCategory === 0
                     ? "웨딩홀"
                     : company.companyCategory === 1
@@ -106,9 +106,9 @@ const CompanyInfo = () => {
                     ? "예복"
                     : company.companyCategory === 5
                     ? "본식"
-                    : null
+                    : ""
                 }
-                readOnly
+                readOnly={true}
               ></input>
             </div>
             <div className="company-input-wrap">
@@ -116,8 +116,8 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="dayOff"
-                value={company.dayOff}
-                readOnly
+                defaultValue={company.dayOff}
+                readOnly={true}
               ></input>
             </div>
             <div className="company-input-wrap">
@@ -125,8 +125,8 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="companyKeyWord"
-                value={company.keyWord}
-                readOnly
+                defaultValue={company.keyWord}
+                readOnly={true}
               ></input>
             </div>
           </div>
@@ -134,7 +134,7 @@ const CompanyInfo = () => {
       </section>
       <div className="introduction-wrap">
         <div>소개글</div>
-        <textarea value={company.companyInfo} readOnly></textarea>
+        <textarea defaultValue={company.companyInfo} readOnly={true}></textarea>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import CompanyJoin from "./CompanyJoin";
 import "./company.css";
 import CompanyInfo from "./CompanyInfo";
+import CompanyProduct from "./CompanyProduct";
 
 const CompanyMain = () => {
   return (
@@ -15,6 +16,7 @@ const CompanyMain = () => {
         <Routes>
           <Route path="join" element={<CompanyJoin />} />
           <Route path="info" element={<CompanyInfo />} />
+          <Route path="product" element={<CompanyProduct />} />
         </Routes>
       </section>
     </div>
