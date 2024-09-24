@@ -31,4 +31,16 @@
 	<select id="selectCompanyContainList" resultType="member">
 		select * from member where company_no=#{companyNo}
 	</select>
+	<select id="checkLastMemberCode" resultType="int">
+		SELECT MAX(SUBSTR((member_code), 2, 4)) FROM member
+	</select>
+	<select id="checkLastCompanyNo" resultType="int">
+		SELECT MAX(SUBSTR((company_no), 2, 4)) FROM COMPANY
+	</select>
+	<select id="checkPartnerCode" resultType="String">
+		select member_code from member where member_id=#{partnerId}
+	</select>
+	<insert id="insertMember">
+	insert into member values(member_seq.nextval,#{companyNo},#{memberCode},#{memberType},#{memberId},#{memberPw},#{memberName},#{memberGender},#{memberPhone},#{memberEmail},#{partnerName},to_char(sysdate,'yyyy-mm-dd'),#{partnerId})
+	</insert>
 </mapper>

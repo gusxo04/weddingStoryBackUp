@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class MemberDTO {
 	
 	private int memberNo;
-	private String companyCode;
+	private String companyNo;
 	private String memberCode;
 	private int memberType;
 	private String memberId;
@@ -25,6 +25,6 @@ public class MemberDTO {
 	private String memberPhone;
 	private String memberEmail;
 	private String partnerName;
-	private String partnerPhone;
+	private String partnerId;
 	private Date enrollDate;
 }

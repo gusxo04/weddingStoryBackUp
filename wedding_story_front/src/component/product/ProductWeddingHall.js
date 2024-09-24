@@ -12,14 +12,15 @@ const ProductWeddingHall = () => {
     productName: "",
     coronation: "",
     numberPeople: "",
+    diningRoom: "",
   });
 
   const [halls, setHalls] = useState([]);
 
   useEffect(() => {
-    // Fetch wedding hall data from the API
+    // 웨딩홀 map api
     axios
-      .get(`${backServer}/halls`) // Adjust this endpoint as necessary
+      .get(`${backServer}/halls`) // 필요에 따라 이 끝점을 조정하세요.
       .then((res) => {
         setHalls(res.data); // Assuming the response data is an array of halls
       })
@@ -27,7 +28,6 @@ const ProductWeddingHall = () => {
         console.log(err);
       });
   }, [backServer]);
-
 
   useEffect(() => {
     axios
@@ -51,15 +51,17 @@ const ProductWeddingHall = () => {
   };
 
   const payWedding = () => {
-    const perPersonFee = 50000; // 일인식비
+    const perPersonFee = parseFloat(product.diningRoom); // 일인식비
     const rentalFee = parseFloat(product.coronation) || 0; // 대관료
     const numberOfPeople = parseInt(product.numberPeople) || 0; // 인원수
 
-    const total = rentalFee + (perPersonFee * numberOfPeople); 
+    const total = rentalFee + perPersonFee * numberOfPeople;
 
-    return(
-      <div className="total-pay">결제 가격: {total.toLocaleString()} 원</div>
-    ) 
+    return (
+      <div className="total-pay">
+        <h3>총 예상비용: {total.toLocaleString()} 원</h3>
+      </div>
+    );
   };
 
   return (
@@ -131,8 +133,7 @@ const ProductWeddingHall = () => {
                 onChange={changeProduct}
               />
             </div>
-            <div className="rental-fee">
-            </div>
+            <div className="rental-fee"></div>
           </div>
           <div className="input-wrap">
             <div className="input-title">
@@ -144,16 +145,22 @@ const ProductWeddingHall = () => {
                 id="numberPeople"
                 value={product.numberPeople}
                 onChange={changeProduct}
-                >
+              >
                 <option value="">선택하세요</option>
                 <option value="100">100명</option>
                 <option value="200">200명</option>
                 <option value="300">300명</option>
+                <option value="400">400명</option>
               </select>
             </div>
           </div>
           <div className="pay">
-            <strong>현재 대관료: {product.coronation ? `${parseFloat(product.coronation).toLocaleString()} 원` : "0 원"}</strong>
+            <h3>
+              대관료:{" "}
+              {product.coronation
+                ? `${parseFloat(product.coronation).toLocaleString()} 원`
+                : "0 원"}
+            </h3>
             {payWedding()}
           </div>
         </div>

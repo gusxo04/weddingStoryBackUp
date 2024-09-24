@@ -31,4 +31,5 @@ public class CompanyDTO {
 	//업체 멤버 조회
 	private List<MemberDTO> memberList;
 	
+	private String keyWord;
 }

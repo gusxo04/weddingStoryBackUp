@@ -2,7 +2,7 @@
   display: flex;
 }
 .side-info {
-  width: 310px;
+  min-width: 310px;
   height: 300px;
   border: 1px solid black;
   margin-left: 50px;
@@ -103,6 +103,7 @@
   width: 400px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding-left: 10px;
 }
 .company-input-wrap > #companyTel {
   width: 100px;
@@ -156,4 +157,25 @@ textarea {
 .company-thumbnail > img {
   max-width: 100%; /* div의 너비를 초과하지 않도록 설정 */
   height: 100%; /* div의 높이를 초과하지 않도록 설정 */
+}
+
+/*----Info-----------------------------------------------*/
+.company-info-wrap {
+  width: 1200px;
+  border: 1px solid #ccc;
+  margin: 50px 90px;
+  margin-top: 90px;
+}
+.company-info-input-zone {
+  padding-left: 65px;
+}
+
+.company-input-wrap > #start-time,
+#end-time {
+  width: 174px;
+}
+.company-input-wrap > .and {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0px 20px;
 }

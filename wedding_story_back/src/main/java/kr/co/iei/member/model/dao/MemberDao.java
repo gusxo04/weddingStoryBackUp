@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.util.PageInfo;
+import kr.co.iei.member.model.dto.MemberDTO;
 
 @Mapper
 public interface MemberDao {
@@ -22,5 +23,12 @@ public interface MemberDao {
 
 
 	
+	int checkLastMemberCode();
+
+	int checkLastCompanyNo();
+
+	int insertMember(MemberDTO member);
+
+	String checkPartnerCode(String partnerId);
 
 }

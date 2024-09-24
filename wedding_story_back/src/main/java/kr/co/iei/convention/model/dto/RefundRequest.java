@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class RefundRequest {
 
+	private int ticketNo;
 	private String merchantUid;
     private int cancelRequestAmount;
     private String reason;

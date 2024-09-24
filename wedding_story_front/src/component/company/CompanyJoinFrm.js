@@ -10,8 +10,8 @@ for (let i = 8; i < 13; i++) {
   let op = {};
 
   // 시간을 00시로 나타내기 위해
-  op.value = ("0" + i).slice(-2);
-  op.label = ("0" + i).slice(-2) + "시";
+  op.value = ("0" + i).slice(-2) + ":00 시";
+  op.label = ("0" + i).slice(-2) + ":00 시";
 
   openHour.push(op);
 }
@@ -20,8 +20,8 @@ for (let i = 16; i < 25; i++) {
   let op = {};
 
   // 시간을 00시로 나타내기 위해
-  op.value = ("0" + i).slice(-2);
-  op.label = ("0" + i).slice(-2) + "시";
+  op.value = ("0" + i).slice(-2) + ":00 시";
+  op.label = ("0" + i).slice(-2) + ":00 시";
 
   closeHour.push(op);
 } //출처: https://anerim.tistory.com/213 [디발자 뚝딱:티스토리]

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ProductReview = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -91,7 +92,9 @@ const ReviewPopup = ({ onClose }) => {
           )}
         </div>
         <div className="review-button">
-          <button type="submit">제출</button>
+          <button type="submit">
+            <Link to="/product/info">제출</Link>
+          </button>
           <button type="button" onClick={onClose}>
             닫기
           </button>

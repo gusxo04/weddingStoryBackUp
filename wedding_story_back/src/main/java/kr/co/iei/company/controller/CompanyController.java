@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,22 +38,29 @@ public class CompanyController {
 		
 		
 		if(thumbFile != null) {
-			String savepath = root+"/board/thumb/";
-			String filepath = fileUtil.upload(savepath, thumbFile);
-			company.setCompanyThumb(filepath);
+			String savepath = root+"/company/thumb/";					//경로 등록
+			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
+			System.out.println(filepath);
+			company.setCompanyThumb(filepath); 						//company에 추가
 		}
-		String exam = "b1232";
+		String exam = "b1222";		//업체코드 발급전 임시적으로 사용
 		company.setCompanyNo(exam);
 		keyWord.setCompanyNo(exam);
-		System.out.println(company);
-		System.out.println(keyWord);
+		System.out.println(company); // 데이터 정상적으로 들어오는지 확인
+		System.out.println(keyWord); // 데이터 정상적으로 들어오는지 확인
 		
 		
 		int result = companyService.insertCompany(company,keyWord);
 		
-		
-		
 		return ResponseEntity.ok(result == 2);
 	}
+	
+	@GetMapping
+	public ResponseEntity<CompanyDTO> selectCompanyInfo(){
+		CompanyDTO company = companyService.selectCompanyInfo();
+		
+		return ResponseEntity.ok(company);
+	}
+	
 	
 }

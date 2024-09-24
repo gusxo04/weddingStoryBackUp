@@ -23,10 +23,13 @@
 }
 .board-list > .page-title > .name-title {
   padding-left: 42%;
+  margin: 0 auto;
 }
-.board-list > .page-title > .name-title > :hover {
+.name-title :hover {
+  color: #c19975;
+  font-family: ns_b;
+  font-size: 15px;
   cursor: pointer;
-  color: var(--main1);
 }
 
 /*페이지 내비*/
@@ -90,13 +93,92 @@
 }
 
 /*상세css*/
+.product-view-wrap {
+  width: 900px;
+  padding: 30px;
+  margin: 0 auto;
+  text-align: center;
+}
+.product-title > h3 {
+  color: #c19975;
+  font-size: 20px;
+  font-family: ns_b;
+}
 
+.product-thumbnail > img {
+  width: 300px;
+  height: 300px;
+}
+
+.product-tbl {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+}
+
+.product-tbl th,
+.product-tbl td {
+  padding: 12px 15px;
+}
+
+.product-tbl tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.product-tbl tbody tr:last-of-type {
+  border-bottom: 2px solid #c19975;
+}
+
+.product-view-content {
+  padding: 5%;
+}
+
+.product-view-info {
+  display: flex;
+}
+
+.product-view-preview {
+  padding-top: 5%;
+  padding-left: 13%;
+}
+.product-view-preview > .prduct-report {
+  text-align: end;
+}
+.product-report > h5 {
+  color: red;
+}
+.product-content-wrap {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-reviews {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-faq {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-map-view {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-btn-zone {
+  display: flex;
+  padding-bottom: 5%;
+}
 /*웨딩홀예약*/
 .wedding-wrap {
   padding: 20px;
   border-radius: 10px;
-  background-color: var(--main2);
-  width: 500px;
+  border: 1px var(--main1) solid;
+  width: 360px;
   margin: 0 auto;
   align-self: center;
 }
@@ -134,27 +216,39 @@
 
 .wedding-content > .input-wrap > .input-item > input {
   font-size: 16px;
-  font-family: ns-b;
   padding: 8px 0px;
   width: 250px;
-  border: 2px var(--main1) solid;
+  border: 1px var(--main1) solid;
+  border-radius: 5px;
+}
+.wedding-content > .input-wrap > .input-item > select {
+  font-size: 16px;
+  padding: 8px 0px;
+  width: 250px;
+  border: 1px var(--main1) solid;
   border-radius: 5px;
 }
 
+.wedding-content > .pay {
+  text-align: end;
+}
+.total-pay > h3 {
+  color: red;
+}
+
 .wedding-button > button {
-  border: 1px solid var(--main3);
-  background-color: #c1d0db;
-  color: #fff;
+  border: 1px solid #fff;
   padding: 10px 25px;
   font-size: 16px;
   border: none;
   font-family: ns-b;
   text-align: center;
   box-sizing: border-box;
-  width: 500px;
+  width: 100%;
 }
 
-.wedding-button:hover {
-  background-color: rgba(101, 146, 254, 0.9);
+.wedding-button > button:hover {
+  background-color: var(--main1);
+  color: #fff;
   cursor: pointer;
 }

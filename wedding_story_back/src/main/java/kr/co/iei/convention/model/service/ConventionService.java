@@ -2,30 +2,28 @@ package kr.co.iei.convention.model.service;
 
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.net.ssl.HttpsURLConnection;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
+
 import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.iei.convention.model.dao.ConventionDao;
 import kr.co.iei.convention.model.dto.CancelRequest;
@@ -72,6 +70,7 @@ public class ConventionService {
         return result;
     }
 
+    @Transactional
     public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay) {
         //티켓 코드 생성
         Random random = new Random();
@@ -111,6 +110,7 @@ public class ConventionService {
         return conventionDao.selectOneConvention(conventionNo);
     }
 
+    @Transactional
     public boolean updateConvention(ConventionDTO convention) {
         return conventionDao.updateConvention(convention);
         
@@ -120,11 +120,17 @@ public class ConventionService {
         return conventionDao.selectPayment(memberNo, conventionNo);
     }
 
-    public String refundPayment(RefundRequest request) {
+    @Transactional
+    public Boolean refundPayment(RefundRequest request) {
         String accessToken = getAccessToken();
-        System.out.println("엑세스 토큰 : "+accessToken);
-        String result = cancelPayment(accessToken, request);
-        return result;
+        String code = cancelPayment(accessToken, request);
+        int result = -2;
+        if(code.equals("0")){
+            result = conventionDao.updateMemberPayKind(request);
+            result += conventionDao.deleteConventionMember(request);
+            result += conventionDao.updateMemberPay(request); 
+        }
+        return result == 3;
     }
 
     private String getAccessToken() {
@@ -144,34 +150,57 @@ public class ConventionService {
         ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, entity, String.class);
 
         String responseBody = response.getBody();
-        String accessToken = responseBody.substring(responseBody.indexOf("access_token\":\"") + 15, responseBody.indexOf("\",\"now"));
-        accessToken = accessToken.replaceAll("\"", "");
+        System.out.println("token test"+responseBody);
+        ObjectMapper om = new ObjectMapper();
+        String accessToken = "";
+        try {
+            JsonNode jsonNode = om.readTree(responseBody);
+            JsonNode responseObject = jsonNode.get("response");
+            accessToken = responseObject.get("access_token").asText();
+            System.out.println("파싱 토큰임 : "+accessToken);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // String accessToken = responseBody.substring(responseBody.indexOf("access_token\":\"") + 15, responseBody.indexOf("\",\"now"));
+        // accessToken = accessToken.replaceAll("\"", "");
         return accessToken;
     }
 
     private String cancelPayment(String accessToken, RefundRequest request) {
 
 
-        System.out.println("추출한 액세스 토큰임 : "+accessToken);
         String cancelUrl = "https://api.iamport.kr/payments/cancel";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(accessToken);
 
-        CancelRequest cancelRequest = new CancelRequest();
+        // CancelRequest cancelRequest = new CancelRequest();
         // cancelRequest.setReason(request.getReason());
-        cancelRequest.setAmount(request.getCancelRequestAmount());
-        cancelRequest.setMerchant_uid(request.getMerchantUid());
-        System.out.println(cancelRequest);
+        // cancelRequest.setAmount(request.getCancelRequestAmount());
+        // cancelRequest.setMerchant_uid(request.getMerchantUid());
 
-        HttpEntity<CancelRequest> entity = new HttpEntity<>(cancelRequest, headers);
+        Map<String, Object> cancelRequest = new HashMap<>();
+        cancelRequest.put("merchant_uid", request.getMerchantUid());
+        cancelRequest.put("amount", request.getCancelRequestAmount());
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
         System.out.println("response 에요!!! : "+response.getBody());
-        System.out.println("response 에요222 : "+response);
+        ObjectMapper om = new ObjectMapper();
+        String code = "-1";
+		try {
+            JsonNode json = om.readTree(response.getBody());
+            code = json.get("code").asText();
+		} catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println("code : "+code);
         
-        return response.getBody();
+        return code;
     }
 
 

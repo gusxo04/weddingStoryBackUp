@@ -128,8 +128,8 @@ public class ConventionController {
     @PostMapping("/refund")
     public ResponseEntity<Boolean> refundConventionTicket(@RequestBody RefundRequest request) {
         System.out.println(request); 
-        String result = conventionService.refundPayment(request);
-        return ResponseEntity.ok(true);
+        Boolean result = conventionService.refundPayment(request);
+        return ResponseEntity.ok(result);
     }
 
 }

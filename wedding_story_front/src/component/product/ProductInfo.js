@@ -3,18 +3,20 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
+// Assuming you have necessary imports for Viewer and any other components
 
 const ProductInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const boardNo = params.boardNo;
+  const [product, setProduct] = useState();
   const [board, setBoard] = useState({});
-  //const [loginId, setLoginId] = useRecoilState(loginIdState);
-  const [loginId, setLoginId] = useRecoilState();
+  //const [loginId, setLoginId] = useRecoilState();
   const navigator = useNavigate();
+
   useEffect(() => {
     axios
-      .get(`${backServer}/board/boardNo/${boardNo}`)
+      .get(`${backServer}/product/boardNo/${boardNo}`)
       .then((res) => {
         console.log(res);
         setBoard(res.data);
@@ -22,133 +24,125 @@ const ProductInfo = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  const deleteBoard = () => {
-    axios
-      .delete(`${backServer}/board/${board.boardNo}`)
-      .then((res) => {
-        console.log(res);
-        if (res.data === 1) {
-          navigator("/board/list");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  }, [boardNo, backServer]);
 
   return (
-    <section className="section board-view-wrap">
-      <div className="page-title">게시글</div>
-      <div className="board-view-content">
-        <div className="board-view-info">
-          <div className="board-thumbnail">
+    <section className="product-view-wrap">
+      <div className="product-title">
+        <h3>{board.productName}상세보기</h3>
+      </div>
+      <div className="product-view-content">
+        <div className="product-view-info">
+          <div className="product-thumbnail">
             <img
               src={
                 board.boardThumb
                   ? `${backServer}/board/thumb/${board.boardThumb}`
                   : "/image/default_img.png"
               }
-            ></img>
+              alt={board.boardTitle}
+            />
           </div>
-          <div className="board-view-preview">
-            <table className="tbl">
+          <div className="product-view-preview">
+            <div className="prduct-report">
+              <Link>
+                <h5>신고하기</h5>
+              </Link>
+            </div>
+            <table className="product-tbl">
               <tbody>
                 <tr>
-                  <td className="left" colSpan={4}>
-                    {board.boardTitle}
-                  </td>
+                  <th style={{ width: "20%" }}>회사명</th>
+                  <td style={{ width: "30%" }}>{board.companyName}</td>
                 </tr>
                 <tr>
                   <th style={{ width: "20%" }}>작성자</th>
                   <td style={{ width: "30%" }}>{board.boardWriter}</td>
+                </tr>
+                <tr>
                   <th style={{ width: "20%" }}>작성일</th>
                   <td style={{ width: "30%" }}>{board.boardDate}</td>
                 </tr>
+                <tr>
+                  <th style={{ width: "20%" }}>가격</th>
+                  <td colSpan={4}>{board.productPrice}원</td>
+                </tr>
               </tbody>
             </table>
-            <p className="file-title">첨부파일</p>
-            <div className="file-zone">
-              {board.fileList
-                ? board.fileList.map((file, i) => {
-                    return <FileItem key={"file-" + i} file={file} />;
-                  })
-                : ""}
-            </div>
           </div>
         </div>
-        {/**
-        * html로 저장된 데이터를 화면에 띄울때는 {}문법이 아니라 속성을 이용해서 표현
-        <div
-          className="board-content-wrap"
-          dangerouslySetInnerHTML={{ __html: board.boardContent }}
-        ></div>
-        */}
-        <div className="board-content-wrap">
+        <div className="product-btn-zone">
+          <button type="button" className="btn">
+            <Link to="/counseling/counsel">상담하기</Link>
+          </button>
+          <button type="button" className="btn">
+            <Link to="/product/pay">결제하기</Link>
+          </button>
+        </div>
+        <div className="product-content-wrap">
+          <h3>상세보기</h3>
           {board.boardContent ? (
             <Viewer initialValue={board.boardContent} />
           ) : (
             ""
           )}
         </div>
-        {loginId === board.boardWriter ? (
-          <div className="view-btn-zone">
-            <Link
-              to={`/board/update/${board.boardNo}`}
-              className="btn-primary lg"
-            >
-              수정
-            </Link>
-            <button
-              type="button"
-              className="btn-secondary lg"
-              onClick={deleteBoard}
-            >
-              삭제
-            </button>
-          </div>
-        ) : (
-          ""
-        )}
+        <br />
+        <div className="product-reviews">
+          <h3>리뷰</h3>
+          {board.reviews && board.reviews.length > 0 ? (
+            board.reviews.map((review, index) => (
+              <div key={index} className="review-item">
+                <div className="review-rating">⭐️ {review.rating} / 5</div>
+                <div className="review-text">{review.comment}</div>
+              </div>
+            ))
+          ) : (
+            <p>리뷰가 없습니다.</p>
+          )}
+        </div>
+        <br />
+        <div className="product-faq">
+          <h3>FAQ</h3>
+        </div>
+        <br />
+        <div className="product-map-view">
+          {/* Assuming you have a Map component to display the company location */}
+          <h3>회사 위치</h3>
+          {/* Placeholder for map component; integrate your Map API here */}
+          {/* <MapComponent location={board.companyLocation} /> */}
+        </div>
       </div>
     </section>
   );
 };
 
-const FileItem = (props) => {
-  const file = props.file;
+//첨부파일
+const FileItem = ({ file }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+
   const filedown = () => {
     axios
       .get(`${backServer}/board/file/${file.boardFileNo}`, {
-        //axios는 기본적으로 응답을 json으로 처리
-        //현재요청은 일반적인 json타입의 응답을 받을게 아니라 파일을 받아야함
-        //일반적인 json으로는 처리가 불가능->파일로 결과를 받는 설정
         responseType: "blob",
       })
       .then((res) => {
-        console.log(res);
-        //서버에서 받은 데이터를 자바스크립트의 Blob객체로 변환
         const blob = new Blob([res.data]);
-        //blob데이터를 이용해서 데이터 객체 url생성(다운로드할수 있는 링크)
         const fileObjectUrl = window.URL.createObjectURL(blob);
-
-        //데이터를 다운로드할 링크 생성
         const link = document.createElement("a");
         link.href = fileObjectUrl;
         link.style.display = "none";
-        //다운로드할 파일명 지정
         link.download = file.filename;
-        //파일이랑 연결한 a태그를 문서에 포함
         document.body.appendChild(link);
-        link.click(); //추가한 a태그를 클릭해서 다운로드
-        link.remove(); //다운로드 후 a태그 삭제
-        window.URL.revokeObjectURL(fileObjectUrl); //파일링크 삭제
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(fileObjectUrl);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <div className="board-file">
       <span className="material-icons file-icon" onClick={filedown}>

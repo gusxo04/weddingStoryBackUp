@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 
 @Mapper
@@ -30,6 +31,12 @@ public interface ConventionDao {
     boolean updateConvention(ConventionDTO convention);
 
     MemberPayDTO selectPayment(int memberNo, int conventionNo);
+
+    int updateMemberPay(RefundRequest request);
+
+    int deleteConventionMember(RefundRequest request);
+
+    int updateMemberPayKind(RefundRequest request);
 
 
 
