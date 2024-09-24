@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.service.MemberService;
-import kr.co.iei.util.EmailSender;
+//import kr.co.iei.util.EmailSender;
 
 @CrossOrigin("*")
 @RestController
