@@ -4,13 +4,19 @@ import axios from "axios";
 const CompanyControll = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [companyList, setCompanyList] = useState([]);
+  const [pi, setPi] = useState({});
+  const [reqPage, setReqPage] = useState(1);
+  const [seeInfo, setSeeInfo] = useState(0);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [deleteCompany, setDeleteCompany] = useState([]);
   useEffect(() => {
     axios
-      .get(`${backServer}/admin/company`)
+      .get(`${backServer}/admin/company/${reqPage}`)
       .then((res) => {
         console.log(res.data);
         if (res.data) {
-          setCompanyList(Object.values(res.data));
+          setCompanyList(Object.values(res.data.list));
+          setPi(res.data.pi);
         } else {
           console.error("업체 없음");
           setCompanyList([]);
@@ -31,7 +37,7 @@ const CompanyControll = () => {
         <table className="tbl">
           <thead>
             <tr>
-              <th style={{ width: "10%" }}>업체코드</th>
+              <th style={{ width: "10%" }}>업체번호</th>
               <th style={{ width: "15%" }}>업체명</th>
               <th style={{ width: "10%" }}>카테고리</th>
               <th style={{ width: "20%" }}>업체 전화번호</th>
@@ -65,12 +71,19 @@ const CompanyItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   return (
     <tr className="userInfo">
-      <td>{company.companyCode}</td>
+      <td>{company.companyNo}</td>
       <td>{company.companyName}</td>
       <td>{company.Category}</td>
-      <td>{company.companyPhone}</td>
-      <td>{company.companyMail}</td>
+      <td>{company.companyTel}</td>
+      <td>{company.companyAddr}</td>
       <td>{company.companyReport}</td>
+      <td>{company.memberNo}</td>
+      <td>{company.memberId}</td>
+      <td>{company.memberName}</td>
+      <td>{company.memberPhone}</td>
+      <td>{company.memberEmail}</td>
+      <td>{company.memberGender}</td>
+      <td>{company.memberCode}</td>
       <td>
         <input
           type="checkbox"

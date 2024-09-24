@@ -11,4 +11,28 @@
 	<insert id="insertKeyWord">
 		insert into company_keyword values(#{companyNo},#{keyWord})
 	</insert>
+	
+	<select id="adminTotalCount" resultType="int">
+		select count(*) from company
+	</select>
+	
+	<select id="getCompanyList" resultType="company">
+		select * from
+			(select rownum as rnum, m.* from
+				(select
+					company_no,
+					company_category,
+					company_name,
+					company_tel,
+					company_addr,
+					company_info,
+					company_thumb,
+					start_time,
+					end_time,
+					company_enroll_date,
+					day_off,
+					company_report	
+				from company order by company_name)m)
+		where rnum between #{start} and #{end}
+	</select>
 </mapper>

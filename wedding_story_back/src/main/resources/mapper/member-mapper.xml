@@ -7,4 +7,28 @@
 	<select id="checkCode" resultType="int">
 	select count(*) from member where company_no=#{checkCode}
 	</select>
+	
+	<select id="adminTotalCount" resultType="int">
+		select count(*) from member where member_type=1
+	</select>
+	
+	<select id="getMemberList" resultType="member">
+		select * from
+			(select rownum as rnum, m.* from
+				(select
+					member_no,
+					member_code,
+					member_id,
+					member_pw,
+					member_name,
+					member_gender,
+					member_phone,
+					member_email	
+				from member order by member_name)m)
+		where rnum between #{start} and #{end}
+	</select>
+	
+	<select id="selectCompanyContainList" resultType="member">
+		select * from member where company_no=#{companyNo}
+	</select>
 </mapper>

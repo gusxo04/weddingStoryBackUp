@@ -1,7 +1,10 @@
 package kr.co.iei.company.model.dto;
 
-import org.apache.ibatis.type.Alias;	
+import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
+import kr.co.iei.member.model.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +26,9 @@ public class CompanyDTO {
 	private String companyEnrollDate;
 	private String dayOff;
 	private int companyRepot;
+	
+	
+	//업체 멤버 조회
+	private List<MemberDTO> memberList;
+	
 }

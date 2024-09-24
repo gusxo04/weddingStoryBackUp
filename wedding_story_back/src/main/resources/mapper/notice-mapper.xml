@@ -43,9 +43,11 @@
 			notice_date
 		from notice where notice_no=#{noticeNo}
 	</select>
+	
 	<select id="selectOneNoticeFile" resultType="noticeFile">
 		select * from notice_file where notice_no=#{noticeNo}
 	</select>
+		
 	<resultMap type="notice" id="getNotice">
 		<result column="notice_no" property="noticeNo"/>
 		<result column="company_no" property="companyNo"/>
