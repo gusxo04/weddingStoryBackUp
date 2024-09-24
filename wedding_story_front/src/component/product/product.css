@@ -8,8 +8,8 @@
   align-self: center;
 }
 .board-list > .page-title {
-  padding: 30px 30px;
-  font-family: ns-b;
+  padding: 30px;
+  font-size: 17px;
   justify-content: center;
 }
 
@@ -27,8 +27,6 @@
 }
 .name-title :hover {
   color: #c19975;
-  font-family: ns_b;
-  font-size: 15px;
   cursor: pointer;
 }
 
@@ -104,7 +102,9 @@
   font-size: 20px;
   font-family: ns_b;
 }
-
+.product-back > .material-icons {
+  text-align: left;
+}
 .product-thumbnail > img {
   width: 300px;
   height: 300px;
@@ -144,11 +144,10 @@
   padding-left: 13%;
 }
 .product-view-preview > .prduct-report {
-  text-align: end;
+  display: flex;
+  padding-left: 74%;
 }
-.product-report > h5 {
-  color: red;
-}
+
 .product-content-wrap {
   border-top: 1px solid #c19975;
   border-bottom: 1px solid #c19975;
