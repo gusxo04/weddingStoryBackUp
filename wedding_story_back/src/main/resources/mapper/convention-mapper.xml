@@ -59,15 +59,27 @@
     </select>
 
     <update id="updateMemberPayKind">
-        update member_pay set kind = 2 where ticket_no = #{ticketNo}
+        update member_pay set kind = 2 where ticket_no = #{ticketNo} and member_no = #{memberNo}
     </update>
 
     <delete id="deleteConventionMember">
-        delete from convention_member where ticket_no = #{ticketNo}
+        delete from convention_member where ticket_no = #{ticketNo} and member_no = #{memberNo}
     </delete>
 
     <update id="updateMemberPay">
-        update member_pay set progress = 2 where merchant_uid = #{merchantUid}
+        update member_pay set progress = 2 where merchant_uid = #{merchantUid} and member_no = #{memberNo}
     </update>
+
+    <select id="selectConventionCommentList" resultType="conventionComment">
+        select * from convention_comment where convention_no = #{conventionNo} and convention_comment_ref is null order by 1 desc
+    </select>
+
+    <select id="selectConventionReCommentList" resultType="conventionComment">
+        select * from convention_comment where convention_no = #{conventionNo} and convention_comment_ref is not null order by 1 desc
+    </select>
+
+    <insert id="insertConventionComment">
+        insert into convention_comment values(convention_comment_seq.nextval, #{memberNo}, #{conventionNo}, #{conventionCommentContent}, 0, sysdate, null)
+    </insert>
 
 </mapper>
