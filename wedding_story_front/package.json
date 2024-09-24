@@ -18,8 +18,10 @@
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.1",
+    "react-slick": "^0.30.2",
     "react-tag-input-component": "^2.0.2",
     "recoil": "^0.7.7",
+    "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.14.0",
     "web-vitals": "^2.1.4",
     "wedding_story_front": "file:"
