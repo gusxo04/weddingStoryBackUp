@@ -150,6 +150,18 @@ const JoinMember = (props) => {
     setMember({ ...member, partnerId: "", partnerName: "" });
   };
   const nextPage = () => {
+    console.log(member);
+    console.log(idCheck);
+    console.log(pwCheck);
+    console.log(rePwCheck);
+    console.log(phoneCheck);
+    console.log(emailCheck);
+    console.log(codeCheck);
+    console.log(member.memberGender);
+    console.log(isPartner);
+    console.log(member.partnerId);
+    console.log(member.partnerName);
+
     if (
       idCheck === 3 &&
       pwCheck === 2 &&
@@ -157,10 +169,7 @@ const JoinMember = (props) => {
       phoneCheck === 2 &&
       emailCheck === 2 &&
       codeCheck === 1 &&
-      member.memberGender !== null &&
-      isPartner === "네"
-        ? member.partnerId !== null && member.partnerName !== null
-        : member.partnerId === null && member.partnerName === null
+      member.memberGender !== null
     ) {
       axios
         .post(`${backServer}/member/join`, member)

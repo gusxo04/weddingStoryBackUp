@@ -43,4 +43,7 @@
 	<insert id="insertMember">
 	insert into member values(member_seq.nextval,#{companyNo},#{memberCode},#{memberType},#{memberId},#{memberPw},#{memberName},#{memberGender},#{memberPhone},#{memberEmail},#{partnerName},to_char(sysdate,'yyyy-mm-dd'),#{partnerId})
 	</insert>
+	<update id="updateMember">
+	update member set partner_name=#{memberName},partner_id=#{memberId} where member_id=#{partnerId}
+	</update>
 </mapper>
