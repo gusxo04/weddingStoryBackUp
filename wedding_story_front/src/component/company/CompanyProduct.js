@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import ToastEditor from "../utils/ToastEditor";
-import UnevenSetsFinite from "../utils/UnevenSetsFinite";
 
 const CompanyProduct = () => {
   const [product, setProduct] = useState({
@@ -172,9 +171,7 @@ const CompanyProduct = () => {
           </div>
         </div>
       </section>
-      <div className="carousel-zone">
-        <UnevenSetsFinite />
-      </div>
+      <div className="carousel-zone"></div>
       <div className="editor-zone">
         <ToastEditor />
       </div>
