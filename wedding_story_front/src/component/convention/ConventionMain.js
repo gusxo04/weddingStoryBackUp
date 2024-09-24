@@ -3,19 +3,16 @@ import "./convention.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ShowConvention from "./ShowConvention";
-import ConventionPreviewBack from "./ConventionPreviewBack";
-import ConventionPreviewMain from "./ConventionPreviewMain";
-import ConventionLocate from "../utils/ConventionLocate";
-import BuyTicket from "./BuyTicket";
-import ShowLayout from "./ShowLayout";
-import ConventionLayout from "../utils/ConventionLayout";
-import Swal from "sweetalert2";
+
 
 
 const ConventionMain = () => {
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+
+  // const [memberNoState, setMemberNoState] = useRecoilState(2);
+  const [memberNoState, setMemberNoState] = useState(2);
 
   const [convention, setConvention] = useState({});
   const [startDate, setStartDate] = useState(null);
@@ -35,6 +32,7 @@ const ConventionMain = () => {
   const [fullNoticeEmail, setFullNoticeEmail] = useState("");
 
   const [showType, setShowType] = useState(true);
+  const [isPayment, setIsPayment] = useState(true);
 
 
   // const [payment, setPayment] = useState({
@@ -62,9 +60,9 @@ const ConventionMain = () => {
       // 업체도 부스를 샀는지 안 샀는지 조회해야 해서 uef 따로 빼는게 나을듯
       // 나중에 if로 업체인지 회원인지 조회후 axios 요청하기
       // 지금은 회원꺼 먼저
-      axios.get(`${backServer}/convention/payment/${2}/${res.data.convention.conventionNo}`)
+      axios.get(`${backServer}/convention/payment/${memberNoState}/${res.data.convention.conventionNo}`)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if(res.data){
           setPayment({
             merchantUid: res.data.merchantUid,
@@ -72,6 +70,9 @@ const ConventionMain = () => {
             payPrice: res.data.payPrice,
             ticketNo: res.data.ticketNo
           })
+        }
+        else{
+          setPayment(null);
         }
       })
       .catch(err => {
@@ -83,7 +84,7 @@ const ConventionMain = () => {
       console.error(err); 
     })
 
-  }, []);
+  }, [isPayment]);
 
 
   let testStartDate = new Date(convention.conventionStart);
@@ -128,7 +129,7 @@ const ConventionMain = () => {
         //   <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={true} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} />  
         //   : 
         //   <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} />) 
-        <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={startDate > 0 ? true : false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} payment={payment} />
+        <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={startDate > 0 ? true : false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} payment={payment} isPayment={isPayment} setIsPayment={setIsPayment} />
         : 
         <EmptyConvention navigate={navigate} />
         :
@@ -137,7 +138,6 @@ const ConventionMain = () => {
     </div>
   )
 }
-
 
 
 //박람회가 없을 경우
@@ -154,16 +154,4 @@ const EmptyConvention = (props) => {
   )
 }
 
-
-
-
-
-
-
-
-
-
-
-
 export default ConventionMain
-

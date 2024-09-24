@@ -1,6 +1,7 @@
 package kr.co.iei.convention.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -25,4 +26,9 @@ public class ConventionDTO {
     private int conventionPrice;
     private int conventionLimit;
     private int imgStyle;
+    
+    // 댓글 답글
+    private List<ConventionCommentDTO> commentList;
+    
+    private List<ConventionCommentDTO> reCommentList;
 }

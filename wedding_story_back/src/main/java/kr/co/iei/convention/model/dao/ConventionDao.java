@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.convention.model.dto.ConventionCommentDTO;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
@@ -37,6 +38,12 @@ public interface ConventionDao {
     int deleteConventionMember(RefundRequest request);
 
     int updateMemberPayKind(RefundRequest request);
+
+    int insertConventionComment(ConventionCommentDTO conventionComment);
+
+    List selectConventionCommentList(int conventionNo);
+
+    List selectConventionReCommentList(int conventionNo);
 
 
 

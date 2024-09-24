@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class RefundRequest {
 
+    private int memberNo;
 	private int ticketNo;
 	private String merchantUid;
-    private int cancelRequestAmount;
+    private int cancelRequestAmount; //환불 가격임
     private String reason;
-    private String refundHolder;
-    private String refundBank;
-    private String refundAccount;
+    // private String refundHolder;
+    // private String refundBank;
+    // private String refundAccount;
 }

@@ -3,6 +3,7 @@ package kr.co.iei.convention.controller;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.convention.model.dto.ConventionCommentDTO;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
@@ -90,8 +92,7 @@ public class ConventionController {
     }
 
     @PostMapping("/buy")
-    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember,
-            @ModelAttribute MemberPayDTO memberPay) {
+    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {
         boolean result = conventionService.conventionMemberPay(conventionMember, memberPay);
 
         System.out.println(conventionMember); // 넘어온 데이터 -> memberNo, memberEmail(알림받을)
@@ -127,9 +128,27 @@ public class ConventionController {
 
     @PostMapping("/refund")
     public ResponseEntity<Boolean> refundConventionTicket(@RequestBody RefundRequest request) {
-        System.out.println(request); 
+        // System.out.println(request); 
         Boolean result = conventionService.refundPayment(request);
         return ResponseEntity.ok(result);
     }
+
+
+    // 박람회 댓글 조회
+    @GetMapping("/comment/{conventionNo}")
+    public ResponseEntity<Map> getConventionComment(@PathVariable int conventionNo) {
+        Map<String, List> map = conventionService.selectConventionComments(conventionNo);
+        return ResponseEntity.ok(map);
+    }
+    
+    
+    //박람회 댓글 작성
+    @PostMapping("/comment")
+    public ResponseEntity<Boolean> writeComment(@ModelAttribute ConventionCommentDTO conventionComment) {
+        Boolean result = conventionService.insertconventionComment(conventionComment);
+        
+        return ResponseEntity.ok(result);
+    }
+    
 
 }
