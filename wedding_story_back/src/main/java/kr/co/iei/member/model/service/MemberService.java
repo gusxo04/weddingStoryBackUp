@@ -74,9 +74,9 @@ public class MemberService {
 	public LoginMemberDTO loginMember(MemberDTO member) {
 		MemberDTO m = memberDao.searchPw(member.getMemberId());
 		 if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
-			 String accessToken = jwtUtil.createAccessToken(m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
-			 String refreshToken = jwtUtil.createRefreshToken(m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
-			 LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
+			 String accessToken = jwtUtil.createAccessToken(m.getMemberNo() ,m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
+			 String refreshToken = jwtUtil.createRefreshToken(m.getMemberNo() ,m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
+			 LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken,m.getMemberNo(), m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
 			 return loginMember;
 		 }else {
 			return null; 
@@ -86,18 +86,15 @@ public class MemberService {
 	public LoginMemberDTO refresh(String token) {
 		try {
 			LoginMemberDTO loginMember = jwtUtil.checkToken(token);
-			String accessToken = jwtUtil.createAccessToken(loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
-			String refreshToken = jwtUtil.createRefreshToken(loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
+			String accessToken = jwtUtil.createAccessToken(loginMember.getMemberNo(), loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
+			String refreshToken = jwtUtil.createRefreshToken(loginMember.getMemberNo(),loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
 			loginMember.setAccessToken(accessToken);
 			loginMember.setRefreshToken(refreshToken);
 			return loginMember;
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
-	public MemberDTO selectMember(int memberNo) {
-		// TODO Auto-generated method stub
 		return null;
-		 
 	}
 
 }

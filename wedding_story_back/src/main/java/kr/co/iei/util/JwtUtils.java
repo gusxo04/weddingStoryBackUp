@@ -23,7 +23,7 @@ public class JwtUtils {
     @Value("${jwt.expire-hour-refresh}")
     public int expireHourRefresh;
 
-    public String createAccessToken(String memberId, int memberType, String memberCode, String companyNo){
+    public String createAccessToken(int memberNo, String memberId, int memberType, String memberCode, String companyNo){
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
         Calendar c = Calendar.getInstance();
         Date startTime = c.getTime();
@@ -33,7 +33,8 @@ public class JwtUtils {
         String token = Jwts.builder()                               
                             .issuedAt(startTime)                  
                             .expiration(expireTime)               
-                            .signWith(key)                          
+                            .signWith(key)    
+                            .claim("memberNo", memberNo)
                             .claim("memberId", memberId)       
                             .claim("memberType", memberType)
                             .claim("memberCode", memberCode)
@@ -42,7 +43,7 @@ public class JwtUtils {
         return token;
     }
 
-    public String createRefreshToken(String memberId, int memberType,String memberCode, String companyNo){
+    public String createRefreshToken(int memberNo, String memberId, int memberType,String memberCode, String companyNo){
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
         Calendar c = Calendar.getInstance();
         Date startTime = c.getTime();
@@ -52,7 +53,8 @@ public class JwtUtils {
         String token = Jwts.builder()                            
                             .issuedAt(startTime)                  
                             .expiration(expireTime)              
-                            .signWith(key)                         
+                            .signWith(key)     
+                            .claim("memberNo", memberNo)
                             .claim("memberId", memberId)      
                             .claim("memberType", memberType)
                             .claim("memberCode", memberCode)
@@ -68,11 +70,13 @@ public class JwtUtils {
                                     .build()
                                    .parse(token)
                                     .getPayload();
+        int memberNo = (int)claims.get("memberNo");
         String memberId = (String)claims.get("memberId");
         int memberType = (int)claims.get("memberType");
         String memberCode = (String)claims.get("memberCode");
         String companyNo = (String)claims.get("companyNo");
         LoginMemberDTO loginMember = new LoginMemberDTO();
+        loginMember.setMemberNo(memberNo);
         loginMember.setMemberId(memberId);
         loginMember.setMemberType(memberType);
         loginMember.setMemberCode(memberCode);

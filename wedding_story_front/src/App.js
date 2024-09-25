@@ -21,26 +21,28 @@ import Login from "./component/member/Login";
 import {
   companyNoState,
   loginIdState,
+  loginNoState,
   memberCodeState,
   memberTypeState,
 } from "./component/utils/RecoilData";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [loginNo, setLoginNo] = useRecoilState(loginNoState);
   const [loginId, setLoginId] = useRecoilState(loginIdState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  console.error("잘못된 데이터가 들어왔습니다")
   const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
-
+  
   const refreshLogin = () => {
     const refreshToken = window.localStorage.getItem("refreshToken");
-    console.log(refreshToken);
     if (refreshToken !== null) {
       axios.defaults.headers.common["Authorization"] = refreshToken;
       axios
         .post(`${backServer}/member/refresh`)
         .then((res) => {
-          console.log(res);
+          setLoginNo(res.data.memberNo);
           setLoginId(res.data.memberId);
           setMemberType(res.data.memberType);
           setMemberCode(res.data.memberCode);
@@ -50,6 +52,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          setLoginNo(0);
           setLoginId("");
           setMemberType(-1);
           setMemberCode("");
@@ -67,7 +70,6 @@ function App() {
     return savedPath ? Number(savedPath) : null; // 저장된 값이 있으면 숫자로 변환
   });
   */
-
   useEffect(() => {
     refreshLogin();
   });

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class LoginMemberDTO {
 	private String accessToken;
 	private String refreshToken;
+	private int memberNo;
 	private String memberId;
 	private int memberType;
 	private String memberCode;

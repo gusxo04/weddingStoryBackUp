@@ -3,7 +3,6 @@ import "./common.css";
 
 const Footer = () => {
   const uri = window.location.pathname;
-  console.log(uri);
   return (
     <>
       {uri.startsWith("/company") ? (

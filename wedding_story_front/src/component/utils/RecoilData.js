@@ -8,6 +8,10 @@ import { atom, selector } from "recoil";
 //외부에서 특정 데이터를 통한 특정 연산결과를 도출하고싶으면 selector
 
 //로그인한 아이디를 저장하는 저장소
+const loginNoState = atom({
+  key: "loginNoState",
+  default: 0,
+});
 const loginIdState = atom({
   key: "loginIdState",
   default: "",
@@ -32,6 +36,7 @@ const isLoginState = selector({
   key: "isLoginState",
   get: (state) => {
     //매개변수 state는 recoil 저장된 데이터를 불러오기 위한 객체
+    const loginNo = state.get(loginNoState);
     //미리 만들어진 LoginIdState의 값 가져옴
     const loginId = state.get(loginIdState);
     //미리 만들어진 memberTypeState의 값 가져옴
@@ -48,6 +53,7 @@ const isLoginState = selector({
 });
 
 export {
+  loginNoState,
   loginIdState,
   memberTypeState,
   memberCodeState,

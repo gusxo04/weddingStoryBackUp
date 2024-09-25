@@ -1,13 +1,14 @@
 import axios from "axios";
 import "./conventionComment.css";
 import { useRecoilState } from "recoil";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
+import { loginNoState } from "../utils/RecoilData";
 
 const ConventionComment = (props) => {
 
-  // const [memberNoState, setMemberNoState] = useRecoilState();
-  const [memberNoState, setMemberNoState] = useState(1);
-  
+  const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
+  // const [memberNoState, setMemberNoState] = useState(1);
+  console.log(memberNoState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const {
     convention,
@@ -108,6 +109,11 @@ const writeCheck = () => {
 }
 
 const Comment = (props) => {
+
+  const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
+  const [reCommentBtnType, setReCommentBtnType] = useState(true);
+  const reCommentRef = useRef(null);
+  
   const{
     c,
     comment,
@@ -115,6 +121,18 @@ const Comment = (props) => {
     getReComment,
     isOpenReComment,
   } = props;
+
+  const reCommentBtn = () => {
+    console.log(c.conventionCommentNo);
+    setReCommentBtnType(false);
+    reCommentRef.current.style.display = "block";
+  }
+  
+  const cancelReCommentBtn = () => {
+    console.log(c.conventionCommentNo);
+    setReCommentBtnType(true);
+    reCommentRef.current.style.display = "none";
+  }
 
   return (
     <div className="convention-comment">
@@ -132,11 +150,18 @@ const Comment = (props) => {
 
         <div className="convention-comment-header-zone-child2">
           <div className="convention-comment-edit">
+            {c.memberNo === memberNoState ? 
             <span className="cursor-p">수정</span>
+            : 
+            ""}
           </div>
 
           <div className="convention-comment-delete">
+          {c.memberNo === memberNoState ? 
             <span className="cursor-p">삭제</span>
+            :
+            ""
+          }
           </div>
         </div>
       </div>
@@ -147,7 +172,7 @@ const Comment = (props) => {
 
       <div className="convention-comment-reply-container">
         <div className="convention-comment-reply">
-          <span className="cursor-p">답글</span>
+          <span className="cursor-p" onClick={reCommentBtnType ? reCommentBtn : cancelReCommentBtn}>답글</span>
         </div>
 
         {c.reCommentCount !== 0 ? 
@@ -160,6 +185,10 @@ const Comment = (props) => {
         ""}
 
 
+      </div>
+
+      <div className="convention-comment-write-reply-container" style={{display:"none"}} ref={reCommentRef}>
+        <input type="text" />
       </div>
 
       {c.reCommentCount !== 0 ? 
@@ -178,6 +207,12 @@ const Comment = (props) => {
 
 const ReComment = (props) => {
 
+  const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
+  const [reCommentBtnType, setReCommentBtnType] = useState(true);
+  const reCommentRef = useRef(null);
+
+  
+  
   const {
     comment,
     c,
@@ -187,7 +222,17 @@ const ReComment = (props) => {
   return (
     <>
       {comment.reCommentList?.map((rc,index) => {
-
+        const reCommentBtn = () => {
+          console.log();
+          setReCommentBtnType(false);
+          reCommentRef.current.style.display = "block";
+        }
+        
+        const cancelReCommentBtn = (e) => {
+          console.log(rc.conventionCommentNo);
+          setReCommentBtnType(true);
+          reCommentRef.current.style.display = "none";
+        }
         return (
           <Fragment key={"reComment"+index}>
             {c.conventionCommentNo === rc.conventionCommentRef ? 
@@ -195,31 +240,43 @@ const ReComment = (props) => {
               <div className="convention-reComment-header-zone-container">
                 <div className="convention-reComment-header-zone-child1">
                   <div className="convention-reComment-writer">
-                    <span>{c.memberId}</span>
+                    <span>{rc.memberId}</span>
                   </div>
 
                   <div className="convention-reComment-date">
-                    <span>{c.conventionCommentDate.substring(0,16)}</span>
+                    <span>{rc.conventionCommentDate.substring(0,16)}</span>
                   </div>
                 </div>
 
                 <div className="convention-reComment-header-zone-child2">
                   <div className="convention-reComment-edit">
+                  {rc.memberNo === memberNoState ? 
                     <span className="cursor-p">수정</span>
+                    :
+                    ""
+                  }
                   </div>
 
                   <div className="convention-reComment-delete">
+                  {rc.memberNo === memberNoState ? 
                     <span className="cursor-p">삭제</span>
+                    :
+                    ""
+                  }
                   </div>
                 </div>
               </div>
 
               <div className="convention-reComment-content-zone-container">
-                <span>{c.conventionCommentContent}</span>
+                <span>{rc.conventionCommentContent}</span>
               </div>
 
               <div className="convention-reComment-reply">
-                <span className="cursor-p">답글</span>
+                <span className="cursor-p" onClick={reCommentBtnType ? reCommentBtn : cancelReCommentBtn}>답글</span>
+              </div>
+
+              <div className="convention-reComment-write-reply-container" style={{display:"none"}} ref={reCommentRef}>
+                <input type="text" />
               </div>
               
             </div>

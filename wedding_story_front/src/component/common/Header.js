@@ -5,6 +5,7 @@ import {
   companyNoState,
   isLoginState,
   loginIdState,
+  loginNoState,
   memberCodeState,
   memberTypeState,
 } from "../utils/RecoilData";
@@ -14,7 +15,6 @@ import AdminHeader from "./AdminHeader";
 
 const Header = () => {
   const uri = window.location.pathname;
-  console.log(uri);
   return (
     <>
       {uri.startsWith("/company") ? (
@@ -70,9 +70,10 @@ const HeaderLink = () => {
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
   const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  const [loginNo, setLoginNo] = useRecoilState(loginNoState);
   const isLogin = useRecoilValue(isLoginState);
-  console.log(isLogin);
   const logout = () => {
+    setLoginNo(0);
     setLoginId("");
     setMemberType(-1);
     setMemberCode("");

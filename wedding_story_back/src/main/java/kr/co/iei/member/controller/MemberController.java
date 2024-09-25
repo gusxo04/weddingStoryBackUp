@@ -82,7 +82,6 @@ public class MemberController {
 	}
 	@PostMapping(value="/login")
 	public ResponseEntity<LoginMemberDTO> loginMember(@RequestBody MemberDTO member){
-		System.out.println(member);
 		 LoginMemberDTO loginMember = memberService.loginMember(member);
 		if(loginMember != null) {
 			return ResponseEntity.ok(loginMember);
