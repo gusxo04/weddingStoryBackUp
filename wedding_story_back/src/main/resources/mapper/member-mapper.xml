@@ -49,7 +49,7 @@
 	</select>
 	<insert id="insertMember">
 		insert into member
-		values(member_seq.nextval,#{companyNo},#{memberCode},#{memberType},#{memberId},#{memberPw},#{memberName},#{memberGender},#{memberPhone},#{memberEmail},#{partnerName},to_char(sysdate,'yyyy-mm-dd'),#{partnerId})
+		values(member_seq.nextval,#{companyNo},#{memberCode},#{memberType},#{memberId},#{memberPw},#{memberName},#{memberGender},#{memberPhone},#{memberEmail},#{partnerName},to_char(sysdate,'yyyy-mm-dd'),#{partnerId},#{companyBusinessNo})
 	</insert>
 	<update id="updateMember">
 		update member set partner_name=#{memberName},partner_id=#{memberId} where
@@ -65,5 +65,8 @@
 	</update>
 	<select id="searchPw" resultType="member">
 		select * from member where member_id=#{memberId}
+	</select>
+	<select id="checkBusinessNo" resultType="String">
+		select company_no from member where company_business_no=#{companyBusinessNo}
 	</select>
 </mapper>

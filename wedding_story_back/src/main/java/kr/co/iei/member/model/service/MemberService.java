@@ -37,7 +37,17 @@ public class MemberService {
 		member.setMemberPw(encPw);
 		
 		if(member.getMemberType() ==2) {
-			result = memberDao.insertMember(member);
+			if(member.getCompanyBusinessNo() != null) {
+				String companyCode = memberDao.checkBusinessNo(member.getCompanyBusinessNo());
+				if(companyCode !=null) {
+					member.setCompanyNo(companyCode);
+					result = memberDao.insertMember(member);
+				}else {
+					result = memberDao.insertMember(member);
+				}
+			}else {
+				result = memberDao.insertMember(member);
+			}
 		}else if(member.getMemberType()==1) {
 			if(member.getPartnerId()==null) {
 				int lastMemberCode = memberDao.checkLastMemberCode();
@@ -94,7 +104,6 @@ public class MemberService {
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
-		
 		return null;
 	}
 }
