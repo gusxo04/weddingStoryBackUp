@@ -19,17 +19,5 @@ public class ProductService {
 	@Autowired
 	private PageUtil pageUtil;
 	
-	public Map selectProductList(int reqPage) {
-		 //게시물 조회 및 페이징에 필요한 데이터를 모두 취합
-		int numPerPage = 12;		//한 페이지당 게시물 수
-		int pageNaviSize = 5; 		//페이지내비 길이
-		int totalCount = productDao.totalCount();	//전체 게시물 수
-		//페이징에 필요한 값들을 연산해서 객체로 리턴받음
-		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list = productDao.selectProductList(pi);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("pi", pi);
-		return map;
-	}
+	
 }

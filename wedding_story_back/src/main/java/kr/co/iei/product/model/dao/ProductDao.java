@@ -9,8 +9,5 @@ import kr.co.iei.util.PageInfo;
 @Mapper
 public interface ProductDao {
 
-	int totalCount();
-
-	List selectProductList(PageInfo pi);
 
 }
