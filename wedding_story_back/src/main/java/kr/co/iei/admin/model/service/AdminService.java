@@ -16,12 +16,16 @@ import kr.co.iei.util.PageUtil;
 
 @Service
 public class AdminService {
+	
 	@Autowired
 	private AdminDao adminDao;
+	
 	@Autowired
 	private MemberDao memberDao;
+	
 	@Autowired
 	private CompanyDao companyDao;
+	
 	@Autowired
 	private PageUtil pageUtil;
 
