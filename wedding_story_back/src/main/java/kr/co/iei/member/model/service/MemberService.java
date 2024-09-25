@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.member.model.dao.MemberDao;
+import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.util.JwtUtils;
 
 @Service
 public class MemberService {
@@ -14,6 +16,8 @@ public class MemberService {
 	private MemberDao memberDao;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private JwtUtils jwtUtil;
 
 	public int checkId(String checkId) {
 		int result = memberDao.checkId(checkId);
@@ -65,6 +69,32 @@ public class MemberService {
 			result = memberDao.insertMember(member);
 		}
 		return result;
+	}
+
+	public LoginMemberDTO loginMember(MemberDTO member) {
+		MemberDTO m = memberDao.searchPw(member.getMemberId());
+		 if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
+			 String accessToken = jwtUtil.createAccessToken(m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
+			 String refreshToken = jwtUtil.createRefreshToken(m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
+			 LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberId(), m.getMemberType(), m.getMemberCode(), m.getCompanyNo());
+			 return loginMember;
+		 }else {
+			return null; 
+		 }
+	}
+
+	public LoginMemberDTO refresh(String token) {
+		try {
+			LoginMemberDTO loginMember = jwtUtil.checkToken(token);
+			String accessToken = jwtUtil.createAccessToken(loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
+			String refreshToken = jwtUtil.createRefreshToken(loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
+			loginMember.setAccessToken(accessToken);
+			loginMember.setRefreshToken(refreshToken);
+			return loginMember;
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 
 }

@@ -205,7 +205,6 @@ public class ConventionService {
     }
 
     public Map<String, List> selectConventionComments(int conventionNo) {
-        System.out.println("SDsdds");
         List commentList = conventionDao.selectConventionCommentList(conventionNo);
         List reCommentList = conventionDao.selectConventionReCommentList(conventionNo);
         Map<String, List> commentMap = new HashMap<>();

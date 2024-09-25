@@ -1,6 +1,6 @@
 .convention-comment-wrap{
   width: 100%;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
   /* height: 500px; */
   display: flex;
   align-items: center;
@@ -56,6 +56,58 @@
 .convention-comment-list-wrap{
   width: 80%;
   height: 500px;
-  background-color: #ccc;
+  /* background-color: #ccc; */
   margin-top: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
 }
+
+.convention-comment{
+  width: 100%;
+  /* height: 100px; */
+  border: 1px solid #ccc;
+  margin-bottom: 16px;
+  /* background-color: rgb(127, 174, 255); */
+}
+
+.convention-comment>.convention-comment-header-zone-container{
+  width: 100%;
+  height: 30%;
+  margin-bottom: 5px;
+  /* background-color: aquamarine; */
+  display: flex;
+}
+
+.convention-comment>.convention-comment-header-zone-container>.convention-comment-header-zone-child1{
+  width: 80%;
+  /* background-color: beige; */
+  display: flex;
+  gap: 20px;
+}
+.convention-comment>.convention-comment-header-zone-container>.convention-comment-header-zone-child2{
+  width: 20%;
+  /* background-color: blue; */
+}
+
+.convention-comment>.convention-comment-content-zone-container{
+  /* background-color: #bbb; */
+  width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+
+/* 답글 디자인 */
+.convention-reComment-container{
+  margin-left: 2vw;
+  background-color: aliceblue;
+}
+
+.convention-reComment-container>.convention-reComment{
+  
+}
+
+
+
+
+

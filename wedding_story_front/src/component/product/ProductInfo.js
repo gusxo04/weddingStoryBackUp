@@ -8,39 +8,39 @@ import { useRecoilState } from "recoil";
 const ProductInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
-  const boardNo = params.boardNo;
-  const [product, setProduct] = useState();
-  const [board, setBoard] = useState({});
+  const productNo = params.productNo;
+  const [product, setProduct] = useState({});
+  const [productComment, setProductComment] = useState({});
   //const [loginId, setLoginId] = useRecoilState();
   const navigator = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/boardNo/${boardNo}`)
+      .get(`${backServer}/product/productNo/${productNo}`)
       .then((res) => {
         console.log(res);
-        setBoard(res.data);
+        setProduct(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [boardNo, backServer]);
+  }, [productNo, backServer]);
 
   return (
     <section className="product-view-wrap">
       <div className="product-title">
-        <h3>{board.productName}상세보기</h3>
+        <h3>{product.productName}상세보기</h3>
       </div>
       <div className="product-view-content">
         <div className="product-view-info">
           <div className="product-thumbnail">
             <img
               src={
-                board.boardThumb
-                  ? `${backServer}/board/thumb/${board.boardThumb}`
+                product.productThumb
+                  ? `${backServer}/product/thumb/${product.productThumb}`
                   : "/image/default_img.png"
               }
-              alt={board.boardTitle}
+              //alt={product.productTitle}
             />
           </div>
           <div className="product-view-preview">
@@ -56,15 +56,15 @@ const ProductInfo = () => {
               <tbody>
                 <tr>
                   <th style={{ width: "20%" }}>회사명</th>
-                  <td style={{ width: "30%" }}>{board.companyName}</td>
+                  <td style={{ width: "30%" }}>{product.companyName}</td>
                 </tr>
                 <tr>
-                  <th style={{ width: "20%" }}>작성자</th>
-                  <td style={{ width: "30%" }}>{board.boardWriter}</td>
+                  <th style={{ width: "20%" }}>상품명</th>
+                  <td style={{ width: "30%" }}>{product.productName}</td>
                 </tr>
                 <tr>
                   <th style={{ width: "20%" }}>가격</th>
-                  <td colSpan={4}>{board.productPrice}원</td>
+                  <td colSpan={4}>{product.productPrice}원</td>
                 </tr>
               </tbody>
             </table>
@@ -80,8 +80,8 @@ const ProductInfo = () => {
         </div>
         <div className="product-content-wrap">
           <h3>상세보기</h3>
-          {board.boardContent ? (
-            <Viewer initialValue={board.boardContent} />
+          {product.productContent ? (
+            <Viewer initialValue={product.productContent} />
           ) : (
             ""
           )}
@@ -89,11 +89,12 @@ const ProductInfo = () => {
         <br />
         <div className="product-reviews">
           <h3>리뷰</h3>
-          {board.reviews && board.reviews.length > 0 ? (
-            board.reviews.map((review, index) => (
+          {productComment.review && productComment.review.length > 0 ? (
+            productComment.review.map((review, index) => (
               <div key={index} className="review-item">
+                <div className="review-Date">{review.creationDate}</div>
                 <div className="review-rating">⭐️ {review.rating} / 5</div>
-                <div className="review-text">{review.comment}</div>
+                <div className="review-text">{review.review}</div>
               </div>
             ))
           ) : (
@@ -109,7 +110,7 @@ const ProductInfo = () => {
           {/* Assuming you have a Map component to display the company location */}
           <h3>회사 위치</h3>
           {/* Placeholder for map component; integrate your Map API here */}
-          {/* <MapComponent location={board.companyLocation} /> */}
+          {/* <MapComponent location={product.companyLocation} /> */}
         </div>
       </div>
     </section>
@@ -122,7 +123,7 @@ const FileItem = ({ file }) => {
 
   const filedown = () => {
     axios
-      .get(`${backServer}/board/file/${file.boardFileNo}`, {
+      .get(`${backServer}/product/file/${file.boardFileNo}`, {
         responseType: "blob",
       })
       .then((res) => {

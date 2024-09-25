@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const JoinCompany = (props) => {
   const setNowPath = props.setNowPath;
@@ -24,6 +25,7 @@ const JoinCompany = (props) => {
   const [phoneCheck, setPhoneCheck] = useState(0);
   const [emailCode, setEmailCode] = useState("");
   const [inputCode, setInputCode] = useState("");
+  const [emailcodeCheck, setEmailCodeCheck] = useState(0);
   const [codeCheck, setCodeCheck] = useState(0);
 
   const changeInput = (e) => {
@@ -125,9 +127,9 @@ const JoinCompany = (props) => {
       /*codeCheck 0은 미기재,1은 일치,2은 불일치 */
     }
     if (inputCode === emailCode) {
-      setCodeCheck(1);
+      setEmailCodeCheck(1);
     } else if (inputCode !== emailCheck) {
-      setCodeCheck(2);
+      setEmailCodeCheck(2);
     }
   };
   const checkCode = () => {
@@ -165,24 +167,31 @@ const JoinCompany = (props) => {
       rePwCheck === 2 &&
       phoneCheck === 2 &&
       emailCheck === 2 &&
-      codeCheck === 1 &&
+      emailcodeCheck === 1 &&
       member.memberGender !== null
     ) {
       axios
         .post(`${backServer}/member/join`, member)
         .then((res) => {
-          console.log(res.data);
           navigate("/join/success");
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire({
+            text: "입력한 값을 확인해 주세요.",
+            icon: "info",
+          });
         });
     }
   };
 
   return (
     <div className="join-info-wrap">
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <div>
           <div className="join-info1">
             <div className="join-infobox">
@@ -363,12 +372,14 @@ const JoinCompany = (props) => {
               </div>
               <div>
                 <span
-                  className={`${codeCheck === 1 ? "joinValid" : "joinInvalid"}`}
+                  className={`${
+                    emailcodeCheck === 1 ? "joinValid" : "joinInvalid"
+                  }`}
                 >
                   {`${
-                    codeCheck === 0
+                    emailcodeCheck === 0
                       ? ""
-                      : codeCheck === 1
+                      : emailcodeCheck === 1
                       ? "인증이 완료되었습니다."
                       : "인증 코드를 다시 확인해주세요."
                   }`}

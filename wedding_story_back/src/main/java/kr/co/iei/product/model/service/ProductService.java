@@ -19,7 +19,7 @@ public class ProductService {
 	@Autowired
 	private PageUtil pageUtil;
 	
-	public Map selectBoardList(int reqPage) {
+	public Map selectProductList(int reqPage) {
 		 //게시물 조회 및 페이징에 필요한 데이터를 모두 취합
 		int numPerPage = 12;		//한 페이지당 게시물 수
 		int pageNaviSize = 5; 		//페이지내비 길이

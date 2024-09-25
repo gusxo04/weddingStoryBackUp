@@ -9,10 +9,11 @@
 //import lombok.Data;
 //import lombok.NoArgsConstructor;
 //
+//
 //@NoArgsConstructor
 //@AllArgsConstructor
 //@Data
 //@Alias(value="admin")
 //public class AdminDTO {
-//멤버객체 생성 시 생성
+//
 //}

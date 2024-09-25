@@ -36,5 +36,6 @@ public interface MemberDao {
 	MemberDTO getPartner(int myNo, String myCode);
 
 	int delete(int memberNo);
+	MemberDTO searchPw(String memberId);
 
 }

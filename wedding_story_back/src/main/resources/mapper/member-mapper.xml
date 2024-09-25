@@ -63,4 +63,7 @@
 	<delete id="delete">
 		delete from member where member_no=#{memberNo}
 	</delete>
+	<select id="searchPw" resultType="member">
+		select * from member where member_id=#{memberId}
+	</select>
 </mapper>

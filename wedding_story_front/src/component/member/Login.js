@@ -1,7 +1,65 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./member.css";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import {
+  companyNoState,
+  loginIdState,
+  memberCodeState,
+  memberTypeState,
+} from "../utils/RecoilData";
 
 const Login = () => {
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  const navigate = useNavigate();
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [member, setMember] = useState({
+    memberId: "",
+    memberPw: "",
+  });
+  const changeInput = (e) => {
+    const name = e.target.name;
+    setMember({ ...member, [name]: e.target.value });
+  };
+  const login = () => {
+    if (member.memberId === "" || member.memberPw === "") {
+      Swal.fire({
+        text: "아이디 또는 패스워드를 확인해 주세요.",
+        icon: "info",
+      });
+      return;
+    }
+    axios
+      .post(`${backServer}/member/login`, member)
+      .then((res) => {
+        console.log(res.data);
+        setLoginId(res.data.memberId);
+        setMemberType(res.data.memberType);
+        setMemberCode(res.data.memberCode);
+        setCompanyNo(res.data.companyNo);
+        axios.defaults.headers.common["Authorization"] = res.data.accessToken;
+        window.localStorage.setItem("refreshToken", res.data.refreshToken);
+        if (res.data.memberType === 0) {
+          navigate("/admin");
+        } else if (res.data.memberType === 1) {
+          navigate("/");
+        } else if (res.data.memberType === 2) {
+          navigate("/company");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          text: "아이디 또는 패스워드를 확인해 주세요.",
+          icon: "info",
+        });
+      });
+  };
   return (
     <main className="login-wrap">
       <div className="login-wrap-content">
@@ -12,21 +70,42 @@ const Login = () => {
               <h1>로그인</h1>
             </div>
           </div>
-          <div className="login-inputbox">
-            <div>
-              <div className="login-input">
-                <input name="memberId" id="memberId" placeholder="아이디" />
-              </div>
-              <div className="login-input">
-                <input name="memberPw" id="memberPw" placeholder="비밀번호" />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              login();
+            }}
+          >
+            <div className="login-inputbox">
+              <div>
+                <div className="login-input">
+                  <input
+                    type="text"
+                    name="memberId"
+                    id="memberId"
+                    placeholder="아이디"
+                    onChange={changeInput}
+                    value={member.memberId}
+                  />
+                </div>
+                <div className="login-input">
+                  <input
+                    type="password"
+                    name="memberPw"
+                    id="memberPw"
+                    placeholder="비밀번호"
+                    onChange={changeInput}
+                    value={member.memberPw}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="login-button">
-            <div>
-              <button className="login-btn">LOGIN</button>
+            <div className="login-button">
+              <div>
+                <button className="login-btn">LOGIN</button>
+              </div>
             </div>
-          </div>
+          </form>
           <div className="login-linkBox">
             <Link to="/join/agree">회원가입</Link>
             <span>|</span>

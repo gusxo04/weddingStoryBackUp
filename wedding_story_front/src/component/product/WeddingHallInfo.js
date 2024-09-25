@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ReviewForm from "../utils/ReviewFrom";
+import { FaStar } from "react-icons/fa";
 
 const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -11,7 +12,35 @@ const WeddingHallInfo = () => {
   const [product, setProduct] = useState();
   const [board, setBoard] = useState({});
   //const [loginId, setLoginId] = useRecoilState();
+  const [reviews, setReviews] = useState([]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [currentReview, setCurrentReview] = useState(null);
   const navigator = useNavigate();
+
+  const handleOpenPopup = () => {
+    setCurrentReview(null); // Reset currentReview for new review
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    setCurrentReview(null);
+  };
+
+  const handleReviewSubmit = (reviewData) => {
+    if (currentReview) {
+      // 리뷰 수정
+      setReviews((prev) =>
+        prev.map((review) =>
+          review.id === currentReview.id ? { ...review, ...reviewData } : review
+        )
+      );
+    } else {
+      // 새 리뷰 추가
+      setReviews((prev) => [...prev, { id: Date.now(), ...reviewData }]);
+    }
+    handleClosePopup(); // Close popup after submission
+  };
 
   useEffect(() => {
     axios
@@ -88,17 +117,33 @@ const WeddingHallInfo = () => {
         <br />
         <div className="product-reviews">
           <h3>리뷰</h3>
-          {board.reviews && board.reviews.length > 0 ? (
-            board.reviews.map((review, index) => (
-              <div key={index} className="review-item">
-                <div className="review-rating">⭐️ {review.rating} / 5</div>
-                <div className="review-text">{review.comment}</div>
+          {reviews.length > 0 ? (
+            reviews.map((review) => (
+              <div key={review.id} className="review-item">
+                <div className="review-rating">
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <FaStar
+                      key={index}
+                      style={{
+                        color: index < review.rating ? "gold" : "gray",
+                        fontSize: "24px",
+                      }}
+                    />
+                  ))}
+                  <span>{` ${review.rating} / 5`}</span>
+                </div>
+                <div className="review-text">{review.review}</div>
               </div>
             ))
           ) : (
             <p>리뷰가 없습니다.</p>
           )}
-          <ReviewForm/>
+          <ReviewForm
+            isOpen={isPopupOpen}
+            onClose={handleClosePopup}
+            onSubmit={handleReviewSubmit}
+            initialData={currentReview}
+          />
         </div>
         <br />
         <div className="product-faq">
@@ -115,6 +160,5 @@ const WeddingHallInfo = () => {
     </section>
   );
 };
-
 
 export default WeddingHallInfo;
