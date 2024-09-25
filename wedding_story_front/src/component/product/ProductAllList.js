@@ -28,16 +28,16 @@ const ProductAllList = () => {
       <div className="page-title">
         <ul className="name-title">
           <li>
-            <Link to="/product/info">스튜디오</Link>
+            <Link to="/product/list">스튜디오</Link>
           </li>
           <li>
-            <Link to="/product/review">드레스</Link>
+            <Link to="/product/info">드레스</Link>
           </li>
           <li>
             <Link to="/product/reviewUpdate">메이크업</Link>
           </li>
           <li>
-            <Link to="/product/hallInfo">예복</Link>
+            <Link to="#">예복</Link>
           </li>
           <li>
             <Link to="#">본식</Link>
@@ -83,10 +83,9 @@ const BoardItem = (props) => {
         <div className="favirite">
           <span className="material-icons-outlined">favorite</span>
         </div>
-        <div className="posting-title">{product.productTitle}</div>
+        <div className="posting-title">{product.productName}</div>
         <div className="posting-sub-info">
-          <span>{product.productWriter}</span>
-          <span>{product.productDate}</span>
+          <span>{product.productPrice}</span>
         </div>
       </div>
     </li>
