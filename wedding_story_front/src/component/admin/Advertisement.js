@@ -1,8 +1,6 @@
+import { useState } from "react";
+
 const Advertisement = () => {
-  return (
-    <div>
-      <a>광고</a>
-    </div>
-  );
+  const [Advertisement, setAdvertisement] = useState([]);
 };
 export default Advertisement;

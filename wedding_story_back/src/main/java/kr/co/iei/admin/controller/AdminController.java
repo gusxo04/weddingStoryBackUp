@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.admin.model.service.AdminService;
+import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.FileUtils;
 
 @RestController
@@ -49,8 +51,30 @@ public class AdminController {
 //		companyList.put("1", new TestCompanyDTO("code", "업체1", "웨딩홀", "010-1111-1111", "mail@Mail.com", 1));
 //		companyList.put("2", new TestCompanyDTO("code", "업체2", "드레스", "010-1111-1111", "mail@Mail.com", 1));
 //		companyList.put("3", new TestCompanyDTO("code", "업체3", "촬영", "010-1111-1111", "mail@Mail.com", 1));
-		System.err.println("company 조회 시작, reqPage="+reqPage);                                                                                                                                                   
+//		System.err.println("company 조회 시작, reqPage="+reqPage);                                                                                                                                                   
 		Map map = adminService.getCompanyList(reqPage);
 		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping("/partner/{myNo}/{myCode}")
+	public ResponseEntity<MemberDTO> getPartner(@PathVariable int myNo, @PathVariable String myCode){
+//		System.err.println("내 번호"+myNo+"내 코드"+myCode);
+		MemberDTO partner = adminService.getPartner(myNo, myCode);
+//		System.err.println("partner member : "+partner);
+		return ResponseEntity.ok(partner);
+	}
+	@PostMapping("delete/{deleteMember}")
+	public int delete(@PathVariable List<Integer> deleteMember) {
+		System.err.println(deleteMember);
+		int result=0;
+		for(int memberNo : deleteMember) {
+//			System.err.println(memberNo);
+			int del = adminService.delete(memberNo);
+			if(del>0) {
+				System.err.println(memberNo+"삭제 성공");
+				result++;
+			}
+		}
+		return result;
 	}
 }

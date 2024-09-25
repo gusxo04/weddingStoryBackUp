@@ -2,6 +2,14 @@
   width: 1200px;
   margin: 0 auto;
 }
+.companyInfo-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
+  margin: 0 auto;
+  border-top: 1px solid #dddddd;
+  padding-top: 15px;
+}
 .tbl {
   border-collapse: collapse;
   margin: 25px 0;
@@ -34,4 +42,63 @@
 }
 .userInfo {
   text-align: center;
+}
+
+.tbl2 {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 600px;
+}
+
+.tbl2 tr th {
+  background-color: #c19975;
+  color: black;
+  text-align: center;
+}
+
+.tbl2 th,
+.tbl2 tr {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dddddd;
+  width: 200px;
+}
+.tbl2 td {
+  padding-left: 15px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.tbl2 tr:last-of-type {
+  border-bottom: 2px solid #c19975;
+}
+
+.company,
+.company-member {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.company-member {
+  margin-right: 0;
+}
+.tbl-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.tbl {
+  width: 100%;
+}
+.del-btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+.tbl-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }

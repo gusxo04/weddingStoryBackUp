@@ -2,48 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.member.model.dao.MemberDao">
 	<select id="checkId" resultType="int">
-		select count(*) from member where member_Id=#{checkId}
+		select count(*) from member
+		where member_Id=#{checkId}
 	</select>
 	<select id="checkCode" resultType="int">
-	select count(*) from member where company_no=#{checkCode}
+		select count(*) from member where company_no=#{checkCode}
 	</select>
-	
+
 	<select id="adminTotalCount" resultType="int">
-		select count(*) from member where member_type=1
+		select count(*) from
+		member where member_type=1
 	</select>
-	
+
 	<select id="getMemberList" resultType="member">
 		select * from
-			(select rownum as rnum, m.* from
-				(select
-					member_no,
-					member_code,
-					member_id,
-					member_pw,
-					member_name,
-					member_gender,
-					member_phone,
-					member_email	
-				from member order by member_name)m)
-		where rnum between #{start} and #{end}
+		(select rownum as rnum, m.* from
+		(select
+		member_no,
+		member_code,
+		member_id,
+		member_pw,
+		member_name,
+		member_gender,
+		member_phone,
+		member_email
+		from member where member_type=1 order by member_name)m)
+		where rnum between
+		#{start} and #{end}
 	</select>
-	
+
 	<select id="selectCompanyContainList" resultType="member">
-		select * from member where company_no=#{companyNo}
+		select * from
+		member where company_no=#{companyNo}
 	</select>
 	<select id="checkLastMemberCode" resultType="int">
-		SELECT MAX(SUBSTR((member_code), 2, 4)) FROM member
+		SELECT
+		MAX(SUBSTR((member_code), 2, 4)) FROM member
 	</select>
 	<select id="checkLastCompanyNo" resultType="int">
-		SELECT MAX(SUBSTR((company_no), 2, 4)) FROM COMPANY
+		SELECT
+		MAX(SUBSTR((company_no), 2, 4)) FROM COMPANY
 	</select>
 	<select id="checkPartnerCode" resultType="String">
-		select member_code from member where member_id=#{partnerId}
+		select member_code from
+		member where member_id=#{partnerId}
 	</select>
 	<insert id="insertMember">
-	insert into member values(member_seq.nextval,#{companyNo},#{memberCode},#{memberType},#{memberId},#{memberPw},#{memberName},#{memberGender},#{memberPhone},#{memberEmail},#{partnerName},to_char(sysdate,'yyyy-mm-dd'),#{partnerId})
+		insert into member
+		values(member_seq.nextval,#{companyNo},#{memberCode},#{memberType},#{memberId},#{memberPw},#{memberName},#{memberGender},#{memberPhone},#{memberEmail},#{partnerName},to_char(sysdate,'yyyy-mm-dd'),#{partnerId})
 	</insert>
 	<update id="updateMember">
-	update member set partner_name=#{memberName},partner_id=#{memberId} where member_id=#{partnerId}
+		update member set partner_name=#{memberName},partner_id=#{memberId} where
+		member_id=#{partnerId}
 	</update>
+	<select id="getPartner" resultType="member">
+		SELECT * FROM member
+		WHERE member_code = #{myCode}
+		AND member_no NOT IN (#{myNo})
+	</select>
+	<delete id="delete">
+		delete from member where member_no=#{memberNo}
+	</delete>
 </mapper>

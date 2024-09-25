@@ -11,6 +11,7 @@ import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.member.model.dao.MemberDao;
+import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -44,6 +45,7 @@ public class AdminService {
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
 		List<CompanyDTO> companyList = companyDao.getCompanyList(pi);
 		
+		
 		for(CompanyDTO company : companyList) {
 			List memberList = memberDao.selectCompanyContainList(company.getCompanyNo());
 			company.setMemberList(memberList);
@@ -54,4 +56,18 @@ public class AdminService {
 		map.put("pi", pi);
 		return map;
 	}
+
+	public MemberDTO getPartner(int myNo, String myCode) {
+		MemberDTO partner = memberDao.getPartner(myNo, myCode);
+		return partner;
+	}
+
+	public int delete(int memberNo) {
+		int del = memberDao.delete(memberNo);
+		return del;
+	}
+
+	
+
+	
 }

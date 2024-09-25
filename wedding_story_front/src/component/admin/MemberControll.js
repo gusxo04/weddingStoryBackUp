@@ -38,6 +38,23 @@ const MemberControll = () => {
     console.log(member);
     setSelectedMember(member);
   };
+  const delMem = () => {
+    if (deleteMember.length > 0) {
+      axios
+        .post(`${backServer}/admin/delete/${deleteMember}`)
+        .then((res) => {
+          console.log(res);
+          setDeleteMember([]);
+          setMemberList((prevList) =>
+            prevList.filter((member) => !deleteMember.includes(member.memberNo))
+          );
+        })
+        .catch((err) => {
+          console.log("회원탈퇴 실패");
+        });
+    }
+  };
+
   return (
     <div className="member-controll-wrap">
       <div className="page-title">
@@ -79,7 +96,9 @@ const MemberControll = () => {
           </tbody>
         </table>
         <div className="del-btn-wrap">
-          <button className="member-delBtn">회원 탈퇴</button>
+          <button className="member-delBtn" onClick={delMem}>
+            회원 탈퇴
+          </button>
         </div>
         <div style={{ marginTop: "30px", marginBottom: "30px" }}>
           <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
@@ -135,6 +154,34 @@ const MemberItem = (props) => {
 
 const MemberInfo = (props) => {
   const selectedMember = props.selectedMember;
+  const [partner, setPartner] = useState(null);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
+  useEffect(() => {
+    if (selectedMember) {
+      const myNo = selectedMember.memberNo;
+      const myCode = selectedMember.memberCode;
+      axios
+        .get(`${backServer}/admin/partner/${myNo}/${myCode}`)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data) {
+            setPartner(res.data);
+          } else {
+            console.error("파트너 없음");
+            setPartner(null);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          console.log("파트너 조회 에러");
+          setPartner(null);
+        });
+    } else {
+      setPartner(null);
+    }
+  }, [selectedMember]);
+
   return (
     <>
       <div className="memberInfo-wrap">
@@ -186,8 +233,8 @@ const MemberInfo = (props) => {
 
         <div className="partner">
           <h3>배우자 상세</h3>
-          {selectedMember === null ? (
-            <a>회원을 선택하세요</a>
+          {partner === null ? (
+            <a>배우자가 등록되지 않았습니다.</a>
           ) : (
             <table className="tbl2">
               <thead>
@@ -199,31 +246,31 @@ const MemberInfo = (props) => {
               <tbody>
                 <tr>
                   <th>회원번호</th>
-                  <td>{selectedMember.memberNo}</td>
+                  <td>{partner.memberNo}</td>
                 </tr>
                 <tr>
                   <th>아이디</th>
-                  <td>{selectedMember.memberId}</td>
+                  <td>{partner.memberId}</td>
                 </tr>
                 <tr>
                   <th>이름</th>
-                  <td>{selectedMember.memberName}</td>
+                  <td>{partner.memberName}</td>
                 </tr>
                 <tr>
                   <th>전화번호</th>
-                  <td>{selectedMember.memberPhone}</td>
+                  <td>{partner.memberPhone}</td>
                 </tr>
                 <tr>
                   <th>이메일</th>
-                  <td>{selectedMember.memberEmail}</td>
+                  <td>{partner.memberEmail}</td>
                 </tr>
                 <tr>
                   <th>성별</th>
-                  <td>{selectedMember.memberGender}</td>
+                  <td>{partner.memberGender}</td>
                 </tr>
                 <tr>
                   <th>회원코드</th>
-                  <td>{selectedMember.memberCode}</td>
+                  <td>{partner.memberCode}</td>
                 </tr>
               </tbody>
             </table>

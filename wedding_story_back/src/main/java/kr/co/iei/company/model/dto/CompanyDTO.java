@@ -25,7 +25,7 @@ public class CompanyDTO {
 	private String endTime;
 	private String companyEnrollDate;
 	private String dayOff;
-	private int companyRepot;
+	private int companyReport;
 	
 	
 	//업체 멤버 조회

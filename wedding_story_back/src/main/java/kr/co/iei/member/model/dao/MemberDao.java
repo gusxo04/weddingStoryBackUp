@@ -33,4 +33,8 @@ public interface MemberDao {
 
 	int updateMember(String partnerId, String memberName, String memberId);
 
+	MemberDTO getPartner(int myNo, String myCode);
+
+	int delete(int memberNo);
+
 }

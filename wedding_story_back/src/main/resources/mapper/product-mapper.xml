@@ -6,7 +6,7 @@
   		select count(*) from product where board_status=1
   	</select>
   
-  	<select id="selectProductList" resultType="board">
+  	<select id="selectProductList" resultType="product">
 		select * from
 			(select rownum as rnum, b.* from
     			(select 
