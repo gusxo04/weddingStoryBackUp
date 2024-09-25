@@ -17,6 +17,7 @@ const JoinCompany = (props) => {
     memberPhone: "",
     memberEmail: "",
     companyNo: "",
+    companyBusinessNo: "",
   });
   const [idCheck, setIdCheck] = useState(0);
   const [pwCheck, setPwCheck] = useState(0);
@@ -32,6 +33,8 @@ const JoinCompany = (props) => {
     const { name, value } = e.target;
     setMember({ ...member, [name]: value });
   };
+  console.log(member);
+
   const changeInputCode = (e) => {
     setInputCode(e.target.value);
   };
@@ -124,7 +127,7 @@ const JoinCompany = (props) => {
   };
   const checkEmailCode = () => {
     {
-      /*codeCheck 0은 미기재,1은 일치,2은 불일치 */
+      /*emailCodeCheck 0은 미기재,1은 일치,2은 불일치 */
     }
     if (inputCode === emailCode) {
       setEmailCodeCheck(1);
@@ -132,25 +135,37 @@ const JoinCompany = (props) => {
       setEmailCodeCheck(2);
     }
   };
+  console.log(emailCode);
   const checkCode = () => {
-    if (member.companyNo === "") {
-      setCodeCheck(0);
+    const checkCode = member.companyBusinessNo;
+    const codeRegex = /^\d{3}-\d{2}-\d{5}$/;
+    {
+      /*codeCheck 0은 미기재,1은 작성법 불일치,2은 유효하지않은 번호,3은 일치 */
     }
-    axios
-      .get(`${backServer}/member/checkCode/${member.companyNo}`)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data > 0) {
-          setCodeCheck(2);
-        } else {
-          setCodeCheck(1);
-          console.log("없음");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!codeRegex.test(checkCode)) {
+      setCodeCheck(1);
+    } else if (codeRegex.test(checkCode)) {
+      const cleanNumber = checkCode.replace(/[^0-9]/g, "");
+      const weight = [1, 3, 7, 1, 3, 7, 1, 3, 5]; // 가중치 배열
+      let sum = 0;
+
+      for (let i = 0; i < 9; i++) {
+        sum += cleanNumber[i] * weight[i];
+      }
+      sum += Math.floor((cleanNumber[8] * 5) / 10);
+      const checkDigit = (10 - (sum % 10)) % 10;
+      console.log(cleanNumber[9] * 1);
+      console.log(checkDigit);
+
+      if (cleanNumber[9] * 1 !== checkDigit) {
+        setCodeCheck(2);
+      } else if (cleanNumber[9] * 1 === checkDigit) {
+        setCodeCheck(3);
+      }
+    }
   };
+  console.log(codeCheck);
+
   const [gender, setGender] = useState("");
   const checkGender1 = () => {
     setGender("남");
@@ -161,6 +176,14 @@ const JoinCompany = (props) => {
     setMember({ ...member, memberGender: "여" });
   };
   const nextPage = () => {
+    console.log(idCheck);
+    console.log(pwCheck);
+    console.log(rePwCheck);
+    console.log(phoneCheck);
+    console.log(emailCheck);
+    console.log(emailcodeCheck);
+    console.log(codeCheck);
+
     if (
       idCheck === 3 &&
       pwCheck === 2 &&
@@ -168,6 +191,7 @@ const JoinCompany = (props) => {
       phoneCheck === 2 &&
       emailCheck === 2 &&
       emailcodeCheck === 1 &&
+      codeCheck === 3 &&
       member.memberGender !== null
     ) {
       axios
@@ -387,27 +411,31 @@ const JoinCompany = (props) => {
               </div>
             </div>
             <div className="join-infobox">
-              <label htmlFor="companyNo">소속 회사 코드</label>
-              <div className="join-inputbox">
+              <label htmlFor="companyBusinessNo">사업자 번호</label>
+              <div className="join-inputbox1">
                 <input
                   type="text"
-                  id="companyNo"
-                  name="companyNo"
-                  placeholder="신규 업체는 비워두세요."
+                  id="companyBusinessNo"
+                  name="companyBusinessNo"
+                  placeholder="000-00-00000"
                   onChange={changeInput}
-                  onBlur={checkCode}
                 ></input>
+                <button type="button" onClick={checkCode}>
+                  인증하기
+                </button>
               </div>
               <div>
                 <span
-                  className={`${codeCheck === 2 ? "joinValid" : "joinInvalid"}`}
+                  className={`${codeCheck === 3 ? "joinValid" : "joinInvalid"}`}
                 >
                   {`${
                     codeCheck === 0
                       ? ""
                       : codeCheck === 1
-                      ? "해당하는 업체가 존재하지 않습니다."
-                      : ""
+                      ? "올바른 형식으로 기입해 주세요."
+                      : codeCheck === 2
+                      ? "유효하지 않은 사업자 번호입니다."
+                      : "확인되었습니다."
                   }`}
                 </span>
               </div>

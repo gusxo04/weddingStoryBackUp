@@ -27,4 +27,5 @@ public class MemberDTO {
 	private String partnerName;
 	private String partnerId;
 	private Date enrollDate;
+	private String companyBusinessNo;
 }
