@@ -9,8 +9,26 @@ import {
   memberTypeState,
 } from "../utils/RecoilData";
 import axios from "axios";
+import CompanyHeader from "./CompanyHeader";
+import AdminHeader from "./AdminHeader";
 
 const Header = () => {
+  const uri = window.location.pathname;
+  console.log(uri);
+  return (
+    <>
+      {uri.startsWith("/company") ? (
+        <CompanyHeader />
+      ) : uri.startsWith("/admin") ? (
+        <AdminHeader />
+      ) : (
+        <MainHeader />
+      )}
+    </>
+  );
+};
+
+const MainHeader = () => {
   return (
     <header className="header">
       <div className="header-content">
@@ -46,7 +64,6 @@ const Header = () => {
     </header>
   );
 };
-export default Header;
 
 const HeaderLink = () => {
   const [loginId, setLoginId] = useRecoilState(loginIdState);
@@ -87,3 +104,5 @@ const HeaderLink = () => {
     </>
   );
 };
+
+export default Header;
