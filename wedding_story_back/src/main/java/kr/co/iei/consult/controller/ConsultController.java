@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.consult.model.service.ConsultService;
 import kr.co.iei.member.model.dto.MemberDTO;
-import kr.co.iei.member.model.service.MemberService;
+
 
 @RestController
 @CrossOrigin("*")
@@ -26,15 +26,6 @@ public class ConsultController {
 	@Autowired
 	private ConsultService consultService;
 	
-	@Autowired
-	private MemberService memberService;
-	
-	@GetMapping(value = "/member/{memberNo}")
-	public ResponseEntity<MemberDTO> selectMember(@PathVariable int memberNo){
-		MemberDTO member = memberService.selectMember(memberNo);
-		System.out.println(member);
-		return ResponseEntity.ok(member);
-	}
 	
 	@PostMapping
 	 public ResponseEntity<Integer> insertConsult(@ModelAttribute ConsultDTO consult, @ModelAttribute MemberDTO member) {

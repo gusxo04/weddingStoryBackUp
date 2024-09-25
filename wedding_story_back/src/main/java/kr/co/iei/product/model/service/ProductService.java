@@ -18,6 +18,18 @@ public class ProductService {
 	
 	@Autowired
 	private PageUtil pageUtil;
+
+	public Map getProductList(int reqPage) {
+		int numPerPage = 5;
+		int pageNaviSize = 4;
+		int totalCount = productDao.TotalCount();
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.getProductList(pi);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		return map;
+	}
 	
 	
 }

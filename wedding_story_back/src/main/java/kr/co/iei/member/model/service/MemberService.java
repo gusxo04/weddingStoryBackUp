@@ -94,10 +94,6 @@ public class MemberService {
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
-	public MemberDTO selectMember(int memberNo) {
-		// TODO Auto-generated method stub
 		return null;
-		 
 	}
-
 }
