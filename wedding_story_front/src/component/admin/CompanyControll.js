@@ -77,13 +77,13 @@ const CompanyItem = (props) => {
       <td>{company.companyTel}</td>
       <td>{company.companyAddr}</td>
       <td>{company.companyReport}</td>
-      <td>{company.memberNo}</td>
+      {/* <td>{company.memberNo}</td>
       <td>{company.memberId}</td>
       <td>{company.memberName}</td>
       <td>{company.memberPhone}</td>
       <td>{company.memberEmail}</td>
       <td>{company.memberGender}</td>
-      <td>{company.memberCode}</td>
+      <td>{company.memberCode}</td> */}
       <td>
         <input
           type="checkbox"
