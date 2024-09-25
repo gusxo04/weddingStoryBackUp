@@ -20,4 +20,6 @@ public interface CompanyDao {
 	List getCompanyList(PageInfo pi);
 	CompanyDTO selectCompanyInfo();
 
+	int deleteCom(String companyNo);
+
 }

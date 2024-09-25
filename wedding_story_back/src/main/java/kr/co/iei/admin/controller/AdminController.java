@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,6 +64,7 @@ public class AdminController {
 //		System.err.println("partner member : "+partner);
 		return ResponseEntity.ok(partner);
 	}
+	
 	@PostMapping("delete/{deleteMember}")
 	public int delete(@PathVariable List<Integer> deleteMember) {
 		System.err.println(deleteMember);
@@ -72,6 +74,21 @@ public class AdminController {
 			int del = adminService.delete(memberNo);
 			if(del>0) {
 				System.err.println(memberNo+"삭제 성공");
+				result++;
+			}
+		}
+		return result;
+	}
+	
+	@PostMapping("deleteCom/{deleteCompany}")
+	public int deleteCom(@PathVariable List<String> deleteCompany) {
+		System.err.println(deleteCompany);
+		int result=0;
+		for(String companyNo : deleteCompany) {
+//			System.err.println(memberNo);
+			int del = adminService.deleteCom(companyNo);
+			if(del>0) {
+				System.err.println(companyNo+"삭제 성공");
 				result++;
 			}
 		}

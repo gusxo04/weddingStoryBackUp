@@ -29,10 +29,31 @@ const CompanyControll = () => {
         setCompanyList([]);
       });
   }, [reqPage]);
-
+  useEffect(() => {
+    console.log(deleteCompany);
+  }, [deleteCompany]);
   const companyData = (company) => {
     console.log(company);
     setSelectedCompany(company);
+  };
+
+  const delCom = () => {
+    if (deleteCompany.length > 0) {
+      axios
+        .post(`${backServer}/admin/deleteCom/${deleteCompany}`)
+        .then((res) => {
+          console.log(res);
+          setDeleteCompany([]);
+          setCompanyList((prevList) =>
+            prevList.filter(
+              (company) => !deleteCompany.includes(company.companyNo)
+            )
+          );
+        })
+        .catch((err) => {
+          console.log("회원탈퇴 실패");
+        });
+    }
   };
   return (
     <div className="company-controll-wrap">
@@ -75,7 +96,9 @@ const CompanyControll = () => {
           </tbody>
         </table>
         <div className="del-btn-wrap">
-          <button className="member-delBtn">업체 탈퇴</button>
+          <button className="member-delBtn" onClick={delCom}>
+            업체 탈퇴
+          </button>
         </div>
         <div style={{ marginTop: "30px", marginBottom: "30px" }}>
           <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />

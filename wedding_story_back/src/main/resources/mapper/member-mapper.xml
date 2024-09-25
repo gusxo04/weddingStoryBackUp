@@ -60,9 +60,9 @@
 		WHERE member_code = #{myCode}
 		AND member_no NOT IN (#{myNo})
 	</select>
-	<delete id="delete">
-		delete from member where member_no=#{memberNo}
-	</delete>
+	<update id="delete">
+		update member set member_type=4 where member_no=#{memberNo}
+	</update>
 	<select id="searchPw" resultType="member">
 		select * from member where member_id=#{memberId}
 	</select>

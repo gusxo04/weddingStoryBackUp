@@ -52,6 +52,7 @@ public class AdminService {
 		
 		for(CompanyDTO company : companyList) {
 			List memberList = memberDao.selectCompanyContainList(company.getCompanyNo());
+//			System.err.println("사업자 조회를 위한 companyNo"+company.getCompanyNo());
 			company.setMemberList(memberList);
 		}
 		
@@ -70,6 +71,13 @@ public class AdminService {
 		int del = memberDao.delete(memberNo);
 		return del;
 	}
+
+	public int deleteCom(String companyNo) {
+		int del = companyDao.deleteCom(companyNo);
+		return del;
+	}
+
+	
 
 	
 
