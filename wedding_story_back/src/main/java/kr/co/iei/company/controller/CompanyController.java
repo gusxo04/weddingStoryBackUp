@@ -39,7 +39,9 @@ public class CompanyController {
 		
 		if(thumbFile != null) {
 			String savepath = root+"/company/thumb/";					//경로 등록
+			String productThumb = "";
 			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
+			
 			System.out.println(filepath);
 			company.setCompanyThumb(filepath); 						//company에 추가
 		}

@@ -7,7 +7,7 @@ const CompanyProduct = () => {
     productImg: "",
     productContent: "",
     productPrice: "",
-    productThumb: "",
+    productThumb: [],
     coronation: "",
     diningRoom: "",
     numberPeople: "",
@@ -43,6 +43,8 @@ const CompanyProduct = () => {
     }
   };
 
+  const [productThumbs, setProductThumbs] = useState([]);
+
   return (
     <div className="companyProduct-wrap">
       <div className="company-title">상품 등록</div>
@@ -70,6 +72,7 @@ const CompanyProduct = () => {
             accept="image/*"
             onChange={changeImg}
             ref={imageRef}
+            style={{ display: "none" }}
           ></input>
         </div>
         <div className="main-content">
@@ -171,7 +174,9 @@ const CompanyProduct = () => {
           </div>
         </div>
       </section>
-      <div className="carousel-zone"></div>
+      <div className="productThumb-zone">
+        <ThumbnailDiv productThumbs={productThumbs} />
+      </div>
       <div className="editor-zone">
         <ToastEditor />
       </div>
@@ -179,3 +184,106 @@ const CompanyProduct = () => {
   );
 };
 export default CompanyProduct;
+
+const ThumbnailDiv = (props) => {
+  const productThumbs = props.productThumbs;
+
+  const productRef1 = useRef();
+
+  const changeThumb = (e) => {
+    const files = e.currentTarget.files;
+    if (files.length !== 0 && files[0] !== 0) {
+    }
+  };
+
+  return (
+    <>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img
+            src={productThumbs}
+            onClick={() => {
+              productRef1.current.click();
+            }}
+          ></img>
+        ) : (
+          <img
+            src="/image/default_img.png"
+            onClick={() => {
+              productRef1.current.click();
+            }}
+          />
+        )}
+      </div>
+      <input
+        type="file"
+        accept="/image"
+        ref={productRef1}
+        onChange={changeThumb}
+      ></input>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+      <div className="productThumb">
+        {productThumbs === "" ? (
+          <img src={productThumbs}></img>
+        ) : (
+          <img src="/image/default_img.png" />
+        )}
+      </div>
+    </>
+  );
+};
