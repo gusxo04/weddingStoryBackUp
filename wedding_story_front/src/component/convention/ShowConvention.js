@@ -36,8 +36,9 @@ const ShowConvention = (props) => {
     setIsPayment,
   } = props;
 
-  const [commentContent, setCommentContent] = useState();
+  const [commentContent, setCommentContent] = useState("");
   const [comment, setComment] = useState([]);
+  const [addedComment, setAddedComment] = useState(true);
 
   useEffect(() => {
     // 댓글 조회하기 (박람회가 있을 경우에만 댓글 조회가 가능하기 때문에 showConvention 안에서 만들어도 됨)
@@ -49,17 +50,17 @@ const ShowConvention = (props) => {
     .catch(err => {
       console.error(err); 
     })
-  }, []);
+  }, [addedComment]);
 
   
   // setIsPayment로 결제나 환불하면 이 boolean 값을 반전시켜서 state값을 바꾸고
   // 그러면 useeffect가 다시 돌아서 데이터 조회를 알아서 다시 해옴
   const closeAlert = (e, pass) => {
-    if(pass || e.target.id === "convention-close-screen"){
+    if(pass || e.target?.id === "convention-close-screen"){
       if(e === 0) {
         setAlertType(0);
       }
-      else if(e === 1 || e.target.className === "convention-member-alert-wrap convention-refund-wrap"){
+      else if(e === 1 || e.target?.className === "convention-member-alert-wrap convention-refund-wrap"){
         Swal.fire({
           title : "박람회 환불",
           text : "티켓 환불을 취소하시겠습니까?",
@@ -211,6 +212,7 @@ const ShowConvention = (props) => {
       <ConventionComment convention={convention} 
       setCommentContent={setCommentContent} commentContent={commentContent} 
       comment={comment} setComment={setComment} 
+      addedComment={addedComment} setAddedComment={setAddedComment}
       />
     </div>
   )

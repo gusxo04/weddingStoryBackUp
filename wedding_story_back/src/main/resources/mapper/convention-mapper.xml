@@ -71,11 +71,18 @@
     </update>
 
     <select id="selectConventionCommentList" resultType="conventionComment">
-        select * from convention_comment where convention_no = #{conventionNo} and convention_comment_ref is null order by 1 desc
+        select cc.*,
+            (select member_id from member where member_no = cc.member_no) as member_id,
+            (select count(convention_comment_ref) from convention_comment where convention_comment_ref = cc.convention_comment_no ) as re_comment_count
+        from convention_comment cc 
+        where convention_no = #{conventionNo} and convention_comment_ref is null order by 1 desc
     </select>
 
     <select id="selectConventionReCommentList" resultType="conventionComment">
-        select * from convention_comment where convention_no = #{conventionNo} and convention_comment_ref is not null order by 1 desc
+        select cc.*,
+            (select member_id from member where member_no = cc.member_no) as member_id
+        from convention_comment cc 
+        where convention_no = #{conventionNo} and convention_comment_ref is not null order by 1 desc
     </select>
 
     <insert id="insertConventionComment">

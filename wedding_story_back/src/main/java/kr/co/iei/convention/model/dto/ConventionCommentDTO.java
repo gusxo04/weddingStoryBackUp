@@ -20,4 +20,8 @@ public class ConventionCommentDTO {
     private String conventionCommentDate;
     private int conventionCommentRef;
 
+    private String memberId;
+
+    private int reCommentCount;
+
 }
