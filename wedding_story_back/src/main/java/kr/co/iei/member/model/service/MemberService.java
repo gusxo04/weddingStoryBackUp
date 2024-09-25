@@ -94,7 +94,7 @@ public class MemberService {
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
+		
 		return null;
 	}
-
 }

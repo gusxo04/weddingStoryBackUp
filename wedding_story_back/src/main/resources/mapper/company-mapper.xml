@@ -28,14 +28,19 @@
 					end_time,
 					company_enroll_date,
 					day_off,
-					company_report	
-				from company order by company_name)m)
+					company_report,
+					company_state	
+				from company where company_state=1 order by company_name)m)
 		where rnum between #{start} and #{end}
 		</select>
 		
 	<select id="selectCompanyInfo" resultType="company">
 		select * from company join company_keyword on company.company_no = company_keyword.company_no
 	</select>
+	
+	<update id="deleteCom">
+		update company set company_state=2 where company_no=#{companyNo}
+	</update>
 </mapper>
 
   

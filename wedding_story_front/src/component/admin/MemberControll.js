@@ -232,7 +232,16 @@ const MemberInfo = (props) => {
         </div>
 
         <div className="partner">
-          <h3>배우자 상세</h3>
+          <h3>
+            파트너 상세
+            {partner === null ? (
+              <></>
+            ) : partner.memberType === 4 ? (
+              <span>(탈퇴한회원)</span>
+            ) : (
+              <span></span>
+            )}
+          </h3>
           {partner === null ? (
             <a>배우자가 등록되지 않았습니다.</a>
           ) : (

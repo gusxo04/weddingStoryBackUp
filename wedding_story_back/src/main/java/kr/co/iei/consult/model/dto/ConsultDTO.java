@@ -21,5 +21,5 @@ public class ConsultDTO {
 	private int contract;	//계약상태 (0:계약전,1:가계약,2:계약완료)
 	private Date reservation;	//예식예정일
 	private String consultTitle;	//상담제목
-	private String consultWriter;	//상담내용
+	private String consultWrite;	//상담내용
 }

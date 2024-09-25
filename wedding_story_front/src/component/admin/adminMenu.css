@@ -1,0 +1,21 @@
+.admin-menu {
+  border: 1px solid black;
+  display: inline;
+}
+
+.admin-menu-img {
+  border: 1px solid black;
+  width: 300px;
+  height: 100px;
+}
+.admin-menu-img img {
+  max-width: 10%; /* 부모 요소의 너비에 맞춰 이미지 크기를 조절 */
+  height: auto; /* 비율을 유지하면서 높이를 자동 조정 */
+}
+.admin-menu-wrap {
+  display: inline-block;
+}
+
+.admin-menu {
+  display: inline-block;
+}
