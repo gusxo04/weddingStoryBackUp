@@ -19,7 +19,7 @@ const Counsel = () => {
     consultTime: "",
     reservation: "",
     consultTitle: "",
-    consultWriter: "",
+    consultWrite: "",
   });
   const [isDateUndefined, setIsDateUndefined] = useState(false);
 
@@ -36,8 +36,11 @@ const Counsel = () => {
     axios
       .get(`${backServer}/member/memberNo/${memberNo}`)
       .then((res) => {
+        setMember({
+          memberName: res.data.memberName,
+          memberPhone: res.data.memberPhone,
+        });
         console.log(res);
-        //setMember(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +69,7 @@ const Counsel = () => {
     form.append("consultTime", consult.consultTime);
     form.append("reservation", consult.reservation);
     form.append("consultTitle", consult.consultTitle);
-    form.append("consultWriter", consult.consultWriter);
+    form.append("consultWrite", consult.consultWrite);
 
     axios
       .post(`${backServer}/consult`, form, {
@@ -203,14 +206,14 @@ const Counsel = () => {
           </div>
           <div className="input-wrap">
             <div className="input-title">
-              <label htmlFor="consultWriter">상담내용</label>
+              <label htmlFor="consultWrite">상담내용</label>
             </div>
             <div className="input-item">
               <textarea
-                className="consultWriter"
-                id="consultWriter"
-                name="consultWriter"
-                value={consult.consultWriter}
+                className="consultWrite"
+                id="consultWrite"
+                name="consultWrite"
+                value={consult.consultWrite}
                 onChange={changeConsult}
                 required
               />

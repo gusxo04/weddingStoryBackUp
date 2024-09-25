@@ -33,4 +33,10 @@ public class ProductController {
 	public String root;
 	
 	
+	@GetMapping("/product/{reqPage}")
+	public ResponseEntity<Map> getProductList(@PathVariable int reqPage) {
+		Map map = productService.getProductList(reqPage);
+		return ResponseEntity.ok(map);
+	}
+	
 }
