@@ -33,4 +33,6 @@ public interface MemberDao {
 
 	int updateMember(String partnerId, String memberName, String memberId);
 
+	MemberDTO searchPw(String memberId);
+
 }

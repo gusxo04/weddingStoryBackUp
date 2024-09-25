@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.util.EmailSender;
@@ -76,6 +78,26 @@ public class MemberController {
 			return ResponseEntity.ok(result);
 		}else {
 			return ResponseEntity.ok(0);
+		}
+	}
+	@PostMapping(value="/login")
+	public ResponseEntity<LoginMemberDTO> loginMember(@RequestBody MemberDTO member){
+		System.out.println(member);
+		 LoginMemberDTO loginMember = memberService.loginMember(member);
+		if(loginMember != null) {
+			return ResponseEntity.ok(loginMember);
+		}else{			
+			return ResponseEntity.status(404).build();
+		}
+	}
+	
+	@PostMapping(value="/refresh")
+	public ResponseEntity<LoginMemberDTO> refresh(@RequestHeader("Authorization") String token){
+		LoginMemberDTO loginMember = memberService.refresh(token);
+		if(loginMember != null) {
+			return ResponseEntity.ok(loginMember);
+		}else{			
+			return ResponseEntity.status(404).build();
 		}
 	}
 }

@@ -46,4 +46,7 @@
 	<update id="updateMember">
 	update member set partner_name=#{memberName},partner_id=#{memberId} where member_id=#{partnerId}
 	</update>
+	<select id="searchPw" resultType="member">
+		select * from member where member_id=#{memberId}
+	</select>
 </mapper>

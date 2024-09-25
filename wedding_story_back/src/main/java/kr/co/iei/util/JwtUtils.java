@@ -11,6 +11,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 //import kr.co.iei.member.model.dto.LoginMemberDTO;
+import kr.co.iei.member.model.dto.LoginMemberDTO;
 
 @Component
 public class JwtUtils {
@@ -22,7 +23,7 @@ public class JwtUtils {
     @Value("${jwt.expire-hour-refresh}")
     public int expireHourRefresh;
 
-    public String createAccessToken(String memberId, int memberType){
+    public String createAccessToken(String memberId, int memberType, String memberCode, String companyNo){
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
         Calendar c = Calendar.getInstance();
         Date startTime = c.getTime();
@@ -34,12 +35,14 @@ public class JwtUtils {
                             .expiration(expireTime)               
                             .signWith(key)                          
                             .claim("memberId", memberId)       
-                            .claim("memberType", memberType) 
+                            .claim("memberType", memberType)
+                            .claim("memberCode", memberCode)
+                            .claim("companyNo", companyNo)
                             .compact();                            
         return token;
     }
 
-    public String createRefreshToken(String memberId, int memberType){
+    public String createRefreshToken(String memberId, int memberType,String memberCode, String companyNo){
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
         Calendar c = Calendar.getInstance();
         Date startTime = c.getTime();
@@ -51,25 +54,31 @@ public class JwtUtils {
                             .expiration(expireTime)              
                             .signWith(key)                         
                             .claim("memberId", memberId)      
-                            .claim("memberType", memberType)  
+                            .claim("memberType", memberType)
+                            .claim("memberCode", memberCode)
+                            .claim("companyNo", companyNo)
                             .compact();                         
         return token;
     }
 
-//    public LoginMemberDTO checkToken(String token){
-//        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
-//        Claims claims = (Claims) Jwts.parser()             
-//                                    .verifyWith(key)     
-//                                    .build()
-//                                    .parse(token)
-//                                    .getPayload();
-//        String memberId = (String)claims.get("memberId");
-//        int memberType = (int)claims.get("memberType");
-//        LoginMemberDTO loginMember = new LoginMemberDTO();
-//        loginMember.setMemberId(memberId);
-//        loginMember.setMemberType(memberType);
-//        return loginMember;
-//    }
+    public LoginMemberDTO checkToken(String token){
+        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        Claims claims = (Claims) Jwts.parser()             
+                                    .verifyWith(key)     
+                                    .build()
+                                   .parse(token)
+                                    .getPayload();
+        String memberId = (String)claims.get("memberId");
+        int memberType = (int)claims.get("memberType");
+        String memberCode = (String)claims.get("memberCode");
+        String companyNo = (String)claims.get("companyNo");
+        LoginMemberDTO loginMember = new LoginMemberDTO();
+        loginMember.setMemberId(memberId);
+        loginMember.setMemberType(memberType);
+        loginMember.setMemberCode(memberCode);
+        loginMember.setCompanyNo(companyNo);
+        return loginMember;
+    }
     
     
 }

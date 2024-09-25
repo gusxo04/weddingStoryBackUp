@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const JoinMember = (props) => {
   const navigate = useNavigate();
@@ -174,17 +175,24 @@ const JoinMember = (props) => {
       axios
         .post(`${backServer}/member/join`, member)
         .then((res) => {
-          console.log(res.data);
           navigate("/join/success");
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire({
+            text: "입력한 값을 확인해 주세요.",
+            icon: "info",
+          });
         });
     }
   };
   return (
     <div className="join-info-wrap">
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <div>
           <div className="join-info1">
             <div className="join-infobox">
