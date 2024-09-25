@@ -7,7 +7,9 @@
   flex-direction: column;
 }
 
-
+.cursor-p{
+  cursor: pointer;
+}
 /* 댓글 작성 하는 곳 */
 .convention-comment-write-wrap{
   width: 80%;
@@ -55,38 +57,58 @@
 /* 댓글 보여주는 곳 */
 .convention-comment-list-wrap{
   width: 80%;
-  height: 500px;
+  /* height: 500px; */
   /* background-color: #ccc; */
   margin-top: 10px;
-  overflow: hidden;
-  overflow-y: scroll;
+  /* overflow: hidden; */
+  /* overflow-y: scroll; */
 }
 
 .convention-comment{
   width: 100%;
   /* height: 100px; */
-  border: 1px solid #ccc;
-  margin-bottom: 16px;
+  /* border: 1px solid #ccc; */
+  /* margin-bottom: 16px; */
+  padding: 10px 0px;
+  border-bottom: 1px solid #dedede;
   /* background-color: rgb(127, 174, 255); */
+}
+.convention-comment-show .convention-comment-list-zone:last-child>.convention-comment{
+  border-bottom: none;
 }
 
 .convention-comment>.convention-comment-header-zone-container{
   width: 100%;
-  height: 30%;
+  /* height: 30%; */
   margin-bottom: 5px;
   /* background-color: aquamarine; */
   display: flex;
 }
 
 .convention-comment>.convention-comment-header-zone-container>.convention-comment-header-zone-child1{
-  width: 80%;
+  width: 70%;
   /* background-color: beige; */
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+}
+.convention-comment>.convention-comment-header-zone-container>.convention-comment-header-zone-child1>.convention-comment-date{
+  margin-left: 2%;
 }
 .convention-comment>.convention-comment-header-zone-container>.convention-comment-header-zone-child2{
-  width: 20%;
+  width: 30%;
   /* background-color: blue; */
+  display: flex;
+  justify-content: flex-end;
+  /* gap: 10px; */
+  gap: 2%;
+}
+.convention-comment-header-zone-container>.convention-comment-header-zone-child2>div{
+  /* width: 50%; */
+  margin-right: 5%;
+  /* text-align: right; */
+}
+.convention-comment-header-zone-child2>div>button{
+  width: 35px;
 }
 
 .convention-comment>.convention-comment-content-zone-container{
@@ -94,18 +116,119 @@
   width: 100%;
   word-wrap: break-word;
   word-break: break-all;
+  /* background-color: black; */
 }
 
+.convention-comment-header-zone-child1>.convention-comment-date>span{
+  color: #989898;
+}
+.convention-comment-reply-container{
+  width: 100%;
+  /* background-color: aquamarine; */
+  display: flex;
+}
+.convention-comment-reply-container>.convention-comment-reply{
+  width: 4%;
+  text-align: center;
+  /* background-color: yellow; */
+}
+
+.convention-comment-reply-container>.convention-comment-more-btn-zone{
+  /* margin-top: 10px; */
+  width: 96%;
+  /* background-color: #8089d9; */
+}
+.convention-comment-more-btn-zone>#more-recomment-btn{
+  color: #8089d9;
+  font-weight: 500;
+}
+
+.convention-comment-reply-container{
+  width: 100%;
+  /* background-color: #7c7c7c; */
+  display: flex;
+  margin-top: 5px;
+  gap: 10px;
+}
+.convention-comment-reply-container>.convention-comment-reply>span{
+  color: #989898;
+}
 
 /* 답글 디자인 */
 .convention-reComment-container{
+  width: 100%;
   margin-left: 2vw;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
+  margin-top: 10px;
 }
 
-.convention-reComment-container>.convention-reComment{
-  
+.convention-reComment-container>.convention-reComment:last-child{
+  border-bottom: none;
 }
+.convention-reComment-container>.convention-reComment{
+  width: 100%;
+  /* border: 0.5px solid rgb(197, 197, 197); */
+  /* background-color: aqua; */
+  /* margin-bottom: 10px; */
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dedede;
+}
+
+.convention-reComment-container>.convention-reComment>.convention-reComment-header-zone-container{
+  width: 100%;
+  height: 30%;
+  /* background-color: #bbb; */
+  display: flex;
+}
+
+.convention-reComment>.convention-reComment-header-zone-container>.convention-reComment-header-zone-child1{
+  width: 70%;
+  display: flex;
+  gap: 15px;
+}
+
+.convention-reComment>.convention-reComment-header-zone-container>.convention-reComment-header-zone-child2{
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  /* gap: 30px; */
+  /* text-align: right; */
+  margin-right: 2vw;
+  gap: 2%;
+}
+.convention-reComment-header-zone-child2>div{
+  margin-right: 5%;
+}
+.convention-reComment-header-zone-child2>div>button{
+  width: 35px;
+}
+
+
+.convention-reComment-header-zone-container>.convention-reComment-header-zone-child1>.convention-reComment-date>span{
+  color: #989898;
+}
+
+
+.convention-reComment-header-zone-child2>.convention-comment-reply{
+
+}
+.convention-reComment>.convention-reComment-reply>span{
+  color: #989898;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
