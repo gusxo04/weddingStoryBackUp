@@ -24,6 +24,7 @@ import {
   memberCodeState,
   memberTypeState,
 } from "./component/utils/RecoilData";
+import AdminMenu from "./component/admin/AdminMenu";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -76,6 +77,7 @@ function App() {
     <div className="wrap">
       <Header />
       {/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
+      {memberType === 0 ? <AdminMenu /> : <></>}
       <main className="content-wrap">
         <Routes>
           <Route path="/login" element={<Login />} />
