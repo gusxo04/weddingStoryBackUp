@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +27,7 @@ public class MemberController {
 	
 	@GetMapping(value="/checkId/{checkId}")
 	public ResponseEntity<Integer> checkId(@PathVariable String checkId){
+		System.out.println(checkId);
 		int result = memberService.checkId(checkId);
 		if(result>0) {
 			return ResponseEntity.ok(result);
@@ -71,6 +70,7 @@ public class MemberController {
 	}
 	@PostMapping(value = "/join")
 	public ResponseEntity<Integer> insertMember(@RequestBody MemberDTO member){
+		System.out.println(member);
 		int result = memberService.insertMember(member);
 		if(result>0) {
 			return ResponseEntity.ok(result);

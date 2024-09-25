@@ -7,9 +7,12 @@ import BuyTicket from "./BuyTicket";
 import ConventionLocate from "../utils/ConventionLocate";
 import ConventionLayout from "../utils/ConventionLayout";
 import RefundTicket from "./RefundTicket";
+import ConventionComment from "./ConventionComment";
+import axios from "axios";
 
 const ShowConvention = (props) => {
 
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   // type이 true면 신청가능 false면 시작일 지나서 신청은 불가능
   const {
     convention,
@@ -29,12 +32,50 @@ const ShowConvention = (props) => {
     setShowType,
     startDate,
     payment,
+    isPayment,
+    setIsPayment,
   } = props;
+
+  const [commentContent, setCommentContent] = useState();
+  const [comment, setComment] = useState([]);
+
+  useEffect(() => {
+    // 댓글 조회하기 (박람회가 있을 경우에만 댓글 조회가 가능하기 때문에 showConvention 안에서 만들어도 됨)
+    axios.get(`${backServer}/convention/comment/${convention.conventionNo}`)
+    .then(res => {
+      // console.log(res.data);
+      setComment(res.data);
+    })
+    .catch(err => {
+      console.error(err); 
+    })
+  }, []);
+
   
+  // setIsPayment로 결제나 환불하면 이 boolean 값을 반전시켜서 state값을 바꾸고
+  // 그러면 useeffect가 다시 돌아서 데이터 조회를 알아서 다시 해옴
   const closeAlert = (e, pass) => {
     if(pass || e.target.id === "convention-close-screen"){
-      if(e === 1 || e.target.className === "convention-member-alert-wrap"){
-
+      if(e === 0) {
+        setAlertType(0);
+      }
+      else if(e === 1 || e.target.className === "convention-member-alert-wrap convention-refund-wrap"){
+        Swal.fire({
+          title : "박람회 환불",
+          text : "티켓 환불을 취소하시겠습니까?",
+          showCancelButton : true,
+          cancelButtonText : "계속하기",
+          cancelButtonColor : "var(--main2)",
+          confirmButtonText : "환불취소",
+          confirmButtonColor : "var(--main1)"
+        }).then((data) => {
+          if(data.isConfirmed){
+            setAlertType(0);
+          }
+        })
+        return false;
+      }
+      else if(e === 2 || e.target.className === "convention-member-alert-wrap"){
         Swal.fire({
           title:"박람회 티켓 결제",
           text : "결제를 취소하시겠습니까?",
@@ -55,6 +96,9 @@ const ShowConvention = (props) => {
         })
         return false;
       }
+      
+      
+      
       setAlertType(0);
     }
   }
@@ -155,16 +199,19 @@ const ShowConvention = (props) => {
         changeLastEmail={changeLastEmail} dateMsgRef={dateMsgRef}
         conventionShowDate={conventionShowDate} setSelectDate={setSelectDate}
         personalMsgRef={personalMsgRef} personalRef={personalRef} selectDate={selectDate}
-        convention={convention} fullNoticeEmail={fullNoticeEmail}
+        convention={convention} fullNoticeEmail={fullNoticeEmail} isPayment={isPayment} setIsPayment={setIsPayment}
       />
       :
       alertType === 4 ? 
-      <RefundTicket closeAlert={closeAlert} payment={payment} />
+      <RefundTicket closeAlert={closeAlert} payment={payment} isPayment={isPayment} setIsPayment={setIsPayment} />
       :
       ""
       }
 
-      
+      <ConventionComment convention={convention} 
+      setCommentContent={setCommentContent} commentContent={commentContent} 
+      comment={comment} setComment={setComment} 
+      />
     </div>
   )
 }

@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.iei.convention.model.dao.ConventionDao;
-import kr.co.iei.convention.model.dto.CancelRequest;
+import kr.co.iei.convention.model.dto.ConventionCommentDTO;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
@@ -41,6 +41,10 @@ public class ConventionService {
     @Autowired
     private RestTemplate restTemplate;
 
+
+    private final String restApi = "0054761064210788";
+    private final String restApiSecret = "kzLRR2Iatp4DqnWs05I1lb4JQvhSmFs1xhV8s9UJQa6DkoBvdhnZfwZzry3KgYHrNcXggHVxNdmTEitq";
+    
     public ConventionDTO getTime() {
         ConventionDTO conventionDate = conventionDao.getTime();
         return conventionDate;
@@ -90,9 +94,6 @@ public class ConventionService {
                 conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
             }
         }
-        // 이거 두 개는 테스트 데이터임
-        conventionMember.setMemberNo(2);
-        memberPay.setMemberNo(2);
 
         // 혹시 티켓코드가 겹칠 수 있으니까 먼저 조회해서 없는지 있는지 판단 후 insert 해야함
         // 
@@ -135,8 +136,8 @@ public class ConventionService {
 
     private String getAccessToken() {
         // 토큰 발급받는 코드
-        String clientId = "0054761064210788";
-        String clientSecret = "kzLRR2Iatp4DqnWs05I1lb4JQvhSmFs1xhV8s9UJQa6DkoBvdhnZfwZzry3KgYHrNcXggHVxNdmTEitq";
+        String clientId = restApi;
+        String clientSecret = restApiSecret;
         
         String tokenUrl = "https://api.iamport.kr/users/getToken";
 
@@ -202,6 +203,22 @@ public class ConventionService {
         
         return code;
     }
+
+    public Map<String, List> selectConventionComments(int conventionNo) {
+        System.out.println("SDsdds");
+        List commentList = conventionDao.selectConventionCommentList(conventionNo);
+        List reCommentList = conventionDao.selectConventionReCommentList(conventionNo);
+        Map<String, List> commentMap = new HashMap<>();
+        commentMap.put("commentList", commentList);
+        commentMap.put("reCommentList", reCommentList);
+        return commentMap;
+    }
+
+    public Boolean insertconventionComment(ConventionCommentDTO conventionComment) {
+        int result = conventionDao.insertConventionComment(conventionComment);
+        return result == 1;
+    }
+
 
 
 }

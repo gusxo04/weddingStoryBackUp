@@ -63,6 +63,7 @@
 }
 .convention-preview-info-wrap>.convention-inner-preview-info>button{
     width: 30%;
+    min-width: 75px;
     height: 40%;
     border: none;
     border-radius: 15px;
@@ -272,6 +273,24 @@
     background-color: white;
 }
 
+/* 환불 alert */
+.convention-refund-alert-wrap{
+    width: 50%;
+    height: 60%;
+    background-color:white;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.convention-refund-alert-wrap>#refund-btn{
+    width: 60px;
+    height: 50px;
+    align-self: center;
+}
+
+
 /* InsertConvention css */
 .insert-convention-container{
     display: flex;
@@ -469,7 +488,7 @@
         font-size: 13px;
     }
     .convention-preview-info-wrap>.convention-inner-preview-info>button{
-        font-size: 13px;
+        font-size: 12px;
     }
 }
 

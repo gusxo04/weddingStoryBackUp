@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
 
 const BuyTicket = (props) => {
 
@@ -18,9 +20,12 @@ const BuyTicket = (props) => {
     selectDate,
     fullNoticeEmail,
     convention,
-
+    isPayment,
+    setIsPayment,
   } = props;
 
+  // const [memberNoState, setMemberNoState] = useRecoilState(2);
+  const [memberNoState, setMemberNoState] = useState(2);
   
   const submit = () => {
     dateMsgRef.current.style.display = "none";
@@ -43,7 +48,7 @@ const BuyTicket = (props) => {
       pg: "html5_inicis.INIpayTest",
       pay_method: "card",
       merchant_uid: dateString,
-      name: "박람회 티켓 구매",
+      name: "박람회 티켓",
       amount: convention.conventionPrice,
       // 나중에 회원 DB 조회해서 다 넣기
       buyer_email: "test@portone.io",
@@ -58,7 +63,7 @@ const BuyTicket = (props) => {
         //줘야할 데이터
         // 회원번호 / 회원 알림이메일 / 구매 금액 / 박람회 번호 / merchant_uid
         const form = new FormData();
-        // form.append("memberNo")
+        form.append("memberNo", memberNoState);
         form.append("conventionNo", convention.conventionNo);
         form.append("memberEmail", fullNoticeEmail);
 
@@ -69,7 +74,30 @@ const BuyTicket = (props) => {
         
         axios.post(`${backServer}/convention/buy`, form)
         .then(res => {
-          console.log(res)
+          console.log(res);
+          if(res.data){
+            // 결제 성공시
+            setIsPayment(!isPayment);
+            Swal.fire({
+              title : "박람회 티켓",
+              text : "결제에 성공하셨습니다",
+              timer : 2500,
+              confirmButtonColor : "var(--main1)",
+              confirmButtonText : "확인",
+            })
+          }
+          // 근데 이거 나중에 true false를 리턴해서 체크하는게 아니라 정원수때문인지 뭔지도 이유 알려줘야 해서 바꿔야할 듯
+          else{
+            Swal.fire({
+              title : "박람회 티켓",
+              text : "잠시후 다시 시도해주세요",
+              timer : 2500,
+              confirmButtonColor : "var(--main1)",
+              confirmButtonText : "확인",
+            })
+          }
+
+          closeAlert(0, true);
         })
         .catch(err => {
           console.error(err); 
@@ -145,7 +173,7 @@ const BuyTicket = (props) => {
 
         <div className="convention-btn-wrap">
           <button className="convention-cancel-btn" onClick={() => {
-            closeAlert(1,true); 
+            closeAlert(2,true); 
           }}>취소</button>
           <button className="convention-submit-btn" onClick={submit}>결제</button>
         </div>

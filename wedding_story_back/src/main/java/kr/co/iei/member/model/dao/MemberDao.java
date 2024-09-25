@@ -31,4 +31,6 @@ public interface MemberDao {
 
 	String checkPartnerCode(String partnerId);
 
+	int updateMember(String partnerId, String memberName, String memberId);
+
 }
