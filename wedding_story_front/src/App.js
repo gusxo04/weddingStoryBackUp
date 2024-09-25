@@ -26,16 +26,17 @@ import {
   memberTypeState,
 } from "./component/utils/RecoilData";
 import AdminMenu from "./component/admin/AdminMenu";
+import MyPage from "./component/member/MyPage";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [loginNo, setLoginNo] = useRecoilState(loginNoState);
   const [loginId, setLoginId] = useRecoilState(loginIdState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  console.error("잘못된 데이터가 들어왔습니다")
+  console.error("잘못된 데이터가 들어왔습니다");
   const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
-  
+
   const refreshLogin = () => {
     const refreshToken = window.localStorage.getItem("refreshToken");
     if (refreshToken !== null) {
@@ -64,13 +65,6 @@ function App() {
     }
   };
   const location = useLocation();
-  /*
-  const [path, setPath] = useState(() => {
-    // 로컬 스토리지에서 초기값을 가져옴
-    const savedPath = localStorage.getItem("path");
-    return savedPath ? Number(savedPath) : null; // 저장된 값이 있으면 숫자로 변환
-  });
-  */
   useEffect(() => {
     refreshLogin();
   });
@@ -84,6 +78,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/join/*" element={<Join />} />
+          <Route path="/myPage/*" element={<MyPage />} />
           <Route path="/convention/*" element={<ConventionLobby />} />
           {/* <Route path="/test" element={<ConventionLayout />} /> */}
           <Route path="/product/*" element={<ProductMain />} />
