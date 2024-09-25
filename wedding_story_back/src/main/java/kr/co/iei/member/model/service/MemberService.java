@@ -97,6 +97,7 @@ public class MemberService {
 	public MemberDTO selectMember(int memberNo) {
 		// TODO Auto-generated method stub
 		return null;
+		 
 	}
 
 }
