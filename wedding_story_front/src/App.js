@@ -18,8 +18,47 @@ import AdminHeader from "./component/common/AdminHeader";
 import Join from "./component/member/Join";
 import ConventionLobby from "./component/convention/ConventionLobby";
 import Login from "./component/member/Login";
+import {
+  companyNoState,
+  loginIdState,
+  memberCodeState,
+  memberTypeState,
+} from "./component/utils/RecoilData";
 
 function App() {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+
+  const refreshLogin = () => {
+    const refreshToken = window.localStorage.getItem("refreshToken");
+    console.log(refreshToken);
+    if (refreshToken !== null) {
+      axios.defaults.headers.common["Authorization"] = refreshToken;
+      axios
+        .post(`${backServer}/member/refresh`)
+        .then((res) => {
+          console.log(res);
+          setLoginId(res.data.memberId);
+          setMemberType(res.data.memberType);
+          setMemberCode(res.data.memberCode);
+          setCompanyNo(res.data.companyNo);
+          axios.defaults.headers.common["Authorization"] = res.data.accessToken;
+          window.localStorage.setItem("refreshToken", res.data.refreshToken);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoginId("");
+          setMemberType(-1);
+          setMemberCode("");
+          setCompanyNo("");
+          delete axios.defaults.headers.common["Authorization"];
+          window.localStorage.removeItem("refreshToken");
+        });
+    }
+  };
   const location = useLocation();
   const [path, setPath] = useState(() => {
     // 로컬 스토리지에서 초기값을 가져옴
@@ -28,28 +67,30 @@ function App() {
   });
 
   useEffect(() => {
+    refreshLogin();
+  });
+  /*
     // 경로에 따라 path 값을 업데이트하고 로컬 스토리지에 저장
     if (location.pathname === "/company") {
-      setPath(1); //주소가 /company로 변경시 path 를 (1)로 변경 --dy
+      setPath(memberType); //주소가 /company로 변경시 path 를 (1)로 변경 --dy
       localStorage.setItem("path", 1); //로컬 스토리지에 저장
     } else if (location.pathname === "/") {
-      setPath(0); //주소가 /로 변경시 path 를 (0)로 변경 --dy
+      setPath(memberType); //주소가 /로 변경시 path 를 (0)로 변경 --dy
       localStorage.setItem("path", 0); //로컬 스토리지에 저장
     } else if (location.pathname === "/admin/main") {
-      setPath(2);
+      setPath(memberType);
       localStorage.setItem("path", 2); //로컬 스토리지에 저장
     }
   }, [location.pathname]); //location.pathname 이 변경되면 렌더링 다시 시작 --dy
+  */
 
   return (
     <div className="wrap">
-      {path === 0 ? (
-        <Header />
-      ) : path === 1 ? (
-        <CompanyHeader />
-      ) : (
-        <AdminHeader />
-      )}
+      <Routes>
+        <Route path="/" element={<Header />} />
+        <Route path="/company" element={<CompanyHeader />} />
+        <Route path="/admin" element={<AdminHeader />} />
+      </Routes>
       {/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
       <main className="content-wrap">
         <Routes>
