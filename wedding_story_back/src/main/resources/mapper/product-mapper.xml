@@ -13,9 +13,8 @@
         			product_no,
         			product_name,
         			product_thumb,
-        			product_img,
         			product_price
-    		from product where board_status=1 order by product_no desc) b)
+    		from product where product_status=1 order by product_no desc) b)
 		where rnum between #{start} and #{end}
 	</select>
   

@@ -23,5 +23,10 @@ public class ConsultController {
 	@Autowired
 	private ConsultService consultService;
 	
-	
+	@PostMapping(value = "consult")
+	 public ResponseEntity<Integer> insertConsult(@RequestBody ConsultDTO consult, @RequestBody MemberDTO member) {
+        int result = consultService.insertConsult(member);
+        return ResponseEntity.ok(result);
+    }
+    
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./counsel.css";
 import { useRecoilState } from "recoil";
@@ -93,6 +93,35 @@ const Counsel = () => {
                 value={member.memberPhone}
                 onChange={changeMember}
                 required
+              />
+            </div>
+          </div>
+          <div className="input-wrap">
+            <div className="input-title">
+              <label htmlFor="consult-date">상담날짜</label>
+            </div>
+            <div className="input-item">
+              <input
+                type="date"
+                min={tomorrow()}
+                name="consultDate"
+                id="consultDate"
+                value={consult.consultDate}
+                onChange={changeConsult}
+              />
+            </div>
+          </div>
+          <div className="input-wrap">
+            <div className="input-title">
+              <label htmlFor="consult-time">상담시간</label>
+            </div>
+            <div className="input-item">
+              <input
+                type="time"
+                name="consultTime"
+                id="consultTime"
+                value={consult.consultTime}
+                onChange={changeConsult}
               />
             </div>
           </div>
