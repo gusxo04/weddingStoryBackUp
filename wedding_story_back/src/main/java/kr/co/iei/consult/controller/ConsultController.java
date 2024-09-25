@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.consult.model.service.ConsultService;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.service.MemberService;
 
 @RestController
 @CrossOrigin("*")
@@ -23,9 +26,21 @@ public class ConsultController {
 	@Autowired
 	private ConsultService consultService;
 	
-	@PostMapping(value = "consult")
-	 public ResponseEntity<Integer> insertConsult(@RequestBody ConsultDTO consult, @RequestBody MemberDTO member) {
-        int result = consultService.insertConsult(member);
+	@Autowired
+	private MemberService memberService;
+	
+	@GetMapping(value = "/member/{memberNo}")
+	public ResponseEntity<MemberDTO> selectMember(@PathVariable int memberNo){
+		MemberDTO member = memberService.selectMember(memberNo);
+		System.out.println(member);
+		return ResponseEntity.ok(member);
+	}
+	
+	@PostMapping
+	 public ResponseEntity<Integer> insertConsult(@ModelAttribute ConsultDTO consult, @ModelAttribute MemberDTO member) {
+        int result = consultService.insertConsult(consult,member);
+        System.out.println(consult);
+        System.out.println(member);
         return ResponseEntity.ok(result);
     }
     

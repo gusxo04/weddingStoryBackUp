@@ -1,17 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./counsel.css";
 import { useRecoilState } from "recoil";
 
 const Counsel = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const params = useParams();
+  const memberNo = params.memberNo;
   const [member, setMember] = useState({
     memberName: "",
     memberPhone: "",
   });
+
   const [consult, setConsult] = useState({
+    consultDate: "",
+    consultTime: "",
     reservation: "",
     consultTitle: "",
     consultWriter: "",
@@ -27,31 +32,56 @@ const Counsel = () => {
     const { name, value } = e.target;
     setConsult({ ...consult, [name]: value });
   };
-
-  const handleReservation = (e) => {
-    e.preventDefault();
-    if (!isDateUndefined && !consult.reservation) {
-      alert("예식 예정일을 선택해주세요.");
-      return;
-    }
-
-    const requestData = {
-      ...consult,
-      ...member,
-      reservation: isDateUndefined ? "미정" : consult.reservation,
-    };
-
+  useEffect(() => {
     axios
-      .post(`${backServer}/consult`, requestData)
+      .get(`${backServer}/member/memberNo/${memberNo}`)
       .then((res) => {
         console.log(res);
-        navigate("/list"); // 성공적으로 제출 후 이동
+        //setMember(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // const handleReservation = (e) => {
+  //   e.preventDefault();
+  //   if (!isDateUndefined && !consult.reservation) {
+  //     alert("예식 예정일을 선택해주세요.");
+  //     return;
+  //   }
+  // };
+
+  const requestData = {
+    ...consult,
+    ...member,
+    reservation: isDateUndefined ? "미정" : consult.reservation,
+  };
+
+  const consultForm = () => {
+    const form = new FormData();
+    form.append("memberName", member.memberName);
+    form.append("memberPhone", member.memberPhone);
+    form.append("consultDate", consult.consultDate);
+    form.append("consultTime", consult.consultTime);
+    form.append("reservation", consult.reservation);
+    form.append("consultTitle", consult.consultTitle);
+    form.append("consultWriter", consult.consultWriter);
+
+    axios
+      .post(`${backServer}/consult`, form, {
+        headers: {
+          contentType: "multipart/form-data",
+          processData: false,
+        },
+      })
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => {
         console.error(err);
       });
   };
-
   const tomorrow = () => {
     const date = new Date();
     date.setDate(date.getDate() + 1);
@@ -61,7 +91,12 @@ const Counsel = () => {
   return (
     <section className="counselt-wrap">
       <div className="title-name">상담신청</div>
-      <form onSubmit={handleReservation}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          consultForm();
+        }}
+      >
         <Link to="/">
           <span className="material-icons">arrow_back</span>
         </Link>
