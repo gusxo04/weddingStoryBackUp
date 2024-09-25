@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin("*")
 @RequestMapping("/convention")
 public class ConventionController {
-
+    
     @Autowired
     private ConventionService conventionService;
 

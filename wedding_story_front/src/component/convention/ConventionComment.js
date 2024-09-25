@@ -126,13 +126,17 @@ const Comment = (props) => {
           </div>
 
           <div className="convention-comment-date">
-            <span>{c.conventionCommentDate}</span>
+            <span>{c.conventionCommentDate.substring(0,16)}</span>
           </div>
         </div>
 
         <div className="convention-comment-header-zone-child2">
-          <div className="convention-comment-reply">
-            <button>답글</button>
+          <div className="convention-comment-edit">
+            <span className="cursor-p">수정</span>
+          </div>
+
+          <div className="convention-comment-delete">
+            <span className="cursor-p">삭제</span>
           </div>
         </div>
       </div>
@@ -141,14 +145,28 @@ const Comment = (props) => {
         <span>{c.conventionCommentContent}</span>
       </div>
 
-      {c.reCommentCount !== 0 ? 
-      <div className="convention-comment-more-btn-zone">
-        <span style={{cursor:"pointer"}} onClick={() => {getReComment(index)}}  >답글 {c.reCommentCount}개 {isOpenReComment[index] ? "더보기" : "그만보기"}</span>
-        <div className="convention-reComment-container" style={{display : isOpenReComment[index] ? "block" : "none"}}>
-          <ReComment comment={comment} c={c} />
+      <div className="convention-comment-reply-container">
+        <div className="convention-comment-reply">
+          <span className="cursor-p">답글</span>
         </div>
+
+        {c.reCommentCount !== 0 ? 
+        <>
+          <div className="convention-comment-more-btn-zone">
+            <span id="more-recomment-btn" className="cursor-p" onClick={() => {getReComment(index)}}  >답글 {c.reCommentCount}개 {isOpenReComment[index] ? "그만보기" : "더보기"}</span>
+          </div>
+        </>
+        : 
+        ""}
+
+
       </div>
-      : 
+
+      {c.reCommentCount !== 0 ? 
+      <div className="convention-reComment-container" style={{display : isOpenReComment[index] ? "block" : "none"}}>
+        <ReComment comment={comment} c={c} />
+      </div>
+      :
       ""}
         
 
@@ -174,7 +192,36 @@ const ReComment = (props) => {
           <Fragment key={"reComment"+index}>
             {c.conventionCommentNo === rc.conventionCommentRef ? 
             <div className="convention-reComment">
-              <span>{rc.conventionCommentContent}</span>
+              <div className="convention-reComment-header-zone-container">
+                <div className="convention-reComment-header-zone-child1">
+                  <div className="convention-reComment-writer">
+                    <span>{c.memberId}</span>
+                  </div>
+
+                  <div className="convention-reComment-date">
+                    <span>{c.conventionCommentDate.substring(0,16)}</span>
+                  </div>
+                </div>
+
+                <div className="convention-reComment-header-zone-child2">
+                  <div className="convention-reComment-edit">
+                    <span className="cursor-p">수정</span>
+                  </div>
+
+                  <div className="convention-reComment-delete">
+                    <span className="cursor-p">삭제</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="convention-reComment-content-zone-container">
+                <span>{c.conventionCommentContent}</span>
+              </div>
+
+              <div className="convention-reComment-reply">
+                <span className="cursor-p">답글</span>
+              </div>
+              
             </div>
             : 
             ""
