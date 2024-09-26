@@ -106,4 +106,9 @@ public class MemberService {
 		}
 		return null;
 	}
+	public MemberDTO selectLoginMember(int memberNo) {
+		MemberDTO m = memberDao.selectLoginMember(memberNo);
+		m.setMemberPw(null);
+		return m;
+	}
 }

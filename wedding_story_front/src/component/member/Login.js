@@ -16,6 +16,7 @@ const Login = () => {
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
   const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  const [memberNo, setMemberNo] = useRecoilState(loginIdState);
   const navigate = useNavigate();
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [member, setMember] = useState({
@@ -42,6 +43,7 @@ const Login = () => {
         setMemberType(res.data.memberType);
         setMemberCode(res.data.memberCode);
         setCompanyNo(res.data.companyNo);
+        setMemberNo(res.data.memberNo);
         axios.defaults.headers.common["Authorization"] = res.data.accessToken;
         window.localStorage.setItem("refreshToken", res.data.refreshToken);
         if (res.data.memberType === 0) {

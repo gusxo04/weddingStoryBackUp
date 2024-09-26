@@ -1,16 +1,72 @@
 .mypage-wrap {
-  height: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   border: none;
+  background-color: rgba(220, 228, 233, 0.3);
 }
 .mypage-wrap-content {
   width: 1100px;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+.mypage-wrap-content > div > div {
+  padding: 20px;
+  box-sizing: border-box;
+}
+.mypage-wrap-left {
+  width: 25%;
+  margin-right: 20px;
+}
+.mypage-wrap-right {
+  width: 75%;
+}
+.mypage-wrap-left > div {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
+}
+.mypage-info-box {
+  margin-top: 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.mypage-menu-box {
+  margin-top: 10px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.mypage-menu-box-title {
+  padding-bottom: 20px;
+  font-size: 14px;
+}
+.mypage-menu-box-title > p {
+  color: #c9c9c9;
+}
+.mypage-menu {
+  line-height: 50px;
+  text-align: center;
+}
+.mypage-menu:hover {
+  background-color: var(--hover3);
+}
+.mypage-menu-box .here {
+  background-color: var(--main1);
+  color: #fff;
+}
+
+.mypage-wrap-right > div {
+  margin: 20px 0;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
 }
 .mypage-step {
   width: 100%;
   height: 100px;
-  border-bottom: 1px solid var(--hover3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,23 +81,71 @@
   width: 100%;
   display: flex;
 }
-.mypage-menu-box {
-  width: 20%;
+.mypage-content {
+  width: 100%;
 }
-.mypage-menu-box > div {
-  width: 80%;
+.mypage-info-wrap {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
 }
-.mypage-menu {
-  border: 2px solid var(--main1);
-  border-radius: 20px;
+.mypage-info-wrap table {
+  border-spacing: 0 30px;
+}
+.mypage-info-wrap thead td {
+  vertical-align: bottom;
+  color: #a0a0a0;
+}
+.mypage-partner-info td {
+  height: 50px;
+}
+.mypage-info-wrap tr {
+  border-spacing: 0 10px;
+}
+.mypage-info-wrap tbody th {
+  text-align: left;
+}
+.mypage-info-wrap tbody td {
+  border-bottom: 1px solid var(--main2);
+  padding: 5px 10px;
+}
+.mypage-info-wrap input {
+  width: 100%;
+  border: none;
+  font-size: 16px;
+}
+.mypage-info-password a {
   line-height: 35px;
+}
+.mypage-info-password div {
+  background-color: var(--main2);
+  height: 100%;
+  font-size: 14px;
   text-align: center;
-  margin: 20px 0;
+  border-radius: 10px;
+  border: 1px solid #c9c9c9;
 }
-.mypage-menu:hover {
-  background-color: var(--hover3);
+.mypage-labelbox {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
-.mypage-menu-box .here {
-  background-color: var(--main1);
-  color: #fff;
+.mypage-labelbox div {
+  width: 40%;
+  height: 35px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 10px;
+  border: 1px solid #c9c9c9;
+}
+.mypage-labelbox label {
+  width: 100%;
+  height: 100%;
+}
+.mypage-labelbox input {
+  display: none;
+}
+.mypage-labelbox .backGray {
+  background-color: var(--main2);
 }

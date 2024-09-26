@@ -99,4 +99,14 @@ public class MemberController {
 			return ResponseEntity.status(404).build();
 		}
 	}
+	@GetMapping(value="/selectLoginMember/{memberNo}")
+	public ResponseEntity<MemberDTO> selectLoginMember(@PathVariable int memberNo){
+		System.out.println(memberNo);
+		MemberDTO m  = new MemberDTO();
+		if(memberNo != 0) {
+			m = memberService.selectLoginMember(memberNo);	
+			return ResponseEntity.ok(m);
+		}
+		return ResponseEntity.ok(null);
+	}
 }
