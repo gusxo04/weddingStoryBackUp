@@ -41,4 +41,6 @@ public interface MemberDao {
 
 	String checkBusinessNo(String companyBusinessNo);
 
+	int updateCompanyNo(String companyNo, int memberNo);
+
 }

@@ -18,7 +18,7 @@ public interface CompanyDao {
 	int adminTotalCount();
 
 	List getCompanyList(PageInfo pi);
-	CompanyDTO selectCompanyInfo();
+	CompanyDTO selectCompanyInfo(String companyNo);
 
 	int deleteCom(String companyNo);
 

@@ -36,6 +36,8 @@ function App() {
   console.error("잘못된 데이터가 들어왔습니다");
   const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  console.log(companyNo);
+  console.log(memberType);
 
   const refreshLogin = () => {
     const refreshToken = window.localStorage.getItem("refreshToken");
@@ -84,7 +86,6 @@ function App() {
           <Route path="/product/*" element={<ProductMain />} />
           <Route path="/counseling/*" element={<Counsel />} />
           <Route path="/admin/*" element={<Admin />} />
-          <Route path="/company" element={<CompanyMain />} />
           <Route path="/company/*" element={<CompanyMain />} />
         </Routes>
       </main>

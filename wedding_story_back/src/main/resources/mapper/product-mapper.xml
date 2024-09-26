@@ -15,4 +15,7 @@
 		where rnum between #{start} and#{end}
   </select>
   
+  <insert id="insertProduct">
+  	insert into product values(product_seq.nextval,#{companyNo},#{productName},#{productImg},#{productContent},#{productPrice},#{productThumb},#{coronation},#{diningRoom},#{numberPeople})
+  </insert>
 </mapper>

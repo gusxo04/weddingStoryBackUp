@@ -69,4 +69,8 @@
 	<select id="checkBusinessNo" resultType="String">
 		select company_no from member where company_business_no=#{companyBusinessNo}
 	</select>
+	
+	<update id="updateCompanyNo">
+		update member set company_no = #{companyNo} where member_no = #{memberNo}
+	</update>
 </mapper>

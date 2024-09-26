@@ -1,19 +1,26 @@
 package kr.co.iei.company.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.company.model.service.CompanyService;
+import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.util.FileUtils;
 
 @CrossOrigin("*")
@@ -30,39 +37,63 @@ public class CompanyController {
 	public String root;
 	
 	
-	@PostMapping
-	public ResponseEntity<Boolean> insertCompany(@ModelAttribute CompanyDTO company,@ModelAttribute KeyWordDTO keyWord, @ModelAttribute MultipartFile thumbFile){
+	//업체 정보 등록
+	@PostMapping(value="/join")
+	public ResponseEntity<Boolean> insertCompany(@ModelAttribute CompanyDTO company,@ModelAttribute KeyWordDTO keyWord, @ModelAttribute MultipartFile thumbFile ,@ModelAttribute MemberDTO member){
 		//썸네일 파일은 String으로 받을수 없음 -> MultipartFile로 thumbFile라는 객체로 받은 후 
 		//아래 로직을 통해서 savepath 로 실제 저장장소경로를 등록해주고  fileUtil을 통해서 savepath(저장경로)에thumbFile(실제 파일)을 업로드 해주고 저장된 경로를 filepath리턴받는다.
 		//리턴받은 값을 company.CompanyThumb에 set 해준다. 
 		
-		
 		if(thumbFile != null) {
 			String savepath = root+"/company/thumb/";					//경로 등록
-			String productThumb = "";
 			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
-			
-			System.out.println(filepath);
 			company.setCompanyThumb(filepath); 						//company에 추가
 		}
-		String exam = "b1222";		//업체코드 발급전 임시적으로 사용
-		company.setCompanyNo(exam);
-		keyWord.setCompanyNo(exam);
-		System.out.println(company); // 데이터 정상적으로 들어오는지 확인
-		System.out.println(keyWord); // 데이터 정상적으로 들어오는지 확인
+		
+		System.out.println(company);
 		
 		
-		int result = companyService.insertCompany(company,keyWord);
+		int result = companyService.insertCompany(company,keyWord,member);
 		
-		return ResponseEntity.ok(result == 2);
+		return ResponseEntity.ok(result == 3);
 	}
 	
-	@GetMapping
-	public ResponseEntity<CompanyDTO> selectCompanyInfo(){
-		CompanyDTO company = companyService.selectCompanyInfo();
-		
-		return ResponseEntity.ok(company);
+	
+	//업체 정보 조회
+	@GetMapping(value="/{companyNo}")
+	public ResponseEntity<CompanyDTO> selectCompanyInfo(@PathVariable String companyNo){
+		System.out.println(companyNo);
+		CompanyDTO resultCompany = companyService.selectCompanyInfo(companyNo);
+		return ResponseEntity.ok(resultCompany);
 	}
 	
+	
+	//업체 상품 등록
+	@PostMapping(value="/product")
+	public ResponseEntity<Integer> insertProduct(@ModelAttribute ProductDTO product, @ModelAttribute MultipartFile thumbFile ,@ModelAttribute MultipartFile[] thumbnailFiles){
+		
+		if(thumbFile != null) {
+			String savepath = root+"/product/image/";					//경로 등록
+			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
+			product.setProductImg(filepath); 						//company에 추가
+		}
+		List list = new ArrayList();
+		if(thumbnailFiles != null) {
+		for(MultipartFile files : thumbnailFiles) {
+				String savepath = root+"/product/thumb/";
+				String filepath = fileUtil.upload(savepath, files);
+				list.add(filepath);
+			}
+		String thumbList = list.toString();
+		product.setProductThumb(thumbList);
+		}
+		//product.setCompanyNo(companyNo);
+		System.out.println(product);
+		int result = companyService.insertProduct(product);
+		
+		
+		return ResponseEntity.ok(result);
+	}
+
 	
 }
