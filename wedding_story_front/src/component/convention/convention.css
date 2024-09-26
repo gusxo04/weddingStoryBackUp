@@ -70,8 +70,9 @@
     border-radius: 15px;
     background-color: var(--main1);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     text-wrap: pretty;
+    color: white;
 }
 .convention-preview-info-wrap>.convention-inner-preview-info>button:hover{
     /* hover */

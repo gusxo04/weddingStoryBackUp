@@ -52,9 +52,9 @@
 
     <select id="selectPayment" resultType="memberPay">
         select pay_no, ticket_no, pay_price, merchant_uid
-            from member_pay where member_no = 2 and 
-            ticket_no = (select ticket_no from convention_member where convention_no = 41) and
-            sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = 41)
+            from member_pay where member_no = #{memberNo} and 
+            ticket_no = (select ticket_no from convention_member where convention_no = #{conventionNo}) and
+            sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = #{conventionNo})
             and progress = 0
     </select>
 

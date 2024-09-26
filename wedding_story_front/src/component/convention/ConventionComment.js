@@ -134,6 +134,8 @@ const Comment = (props) => {
   const [reCommentBtnType, setReCommentBtnType] = useState(true);
   const reCommentRef = useRef(null);
   const [reCommentContent, setReCommentContent] = useState("");
+
+  
   
   const{
     c,
@@ -230,6 +232,7 @@ const Comment = (props) => {
 
       <div className="convention-comment-content-zone-container">
         <span>{c.conventionCommentContent}</span>
+        <textarea id="edit-textarea" style={{display:"none"}}></textarea>
       </div>
 
       <div className="convention-comment-reply-container">
@@ -251,12 +254,12 @@ const Comment = (props) => {
 
       <div className="convention-comment-write-reply-container" style={{display:"none"}} ref={reCommentRef}>
         <div className="convention-comment-reply-textarea">
-          <textarea id="comment-textarea" value={reCommentContent} onChange={(e) => {
+          <textarea id="comment-textarea" spellCheck={false} value={reCommentContent} onChange={(e) => {
             setReCommentContent(e.target.value);
           }} ></textarea>
         </div>
         <div className="convention-comment-reply-write-btn">
-          <span onClick={reCommentWrite}>작성</span>
+          <button onClick={reCommentWrite}>작성</button>
         </div>
       </div>
 
@@ -396,12 +399,12 @@ const ReComment = (props) => {
 
         <div className="convention-reComment-write-reply-container" style={{display:"none"}} ref={reCommentRef}>
           <div className="convention-reComment-reply-textarea">
-            <textarea id="comment-textarea" value={reCommentContent} onChange={(e) => {
+            <textarea id="comment-textarea" spellCheck={false} placeholder="답글을 작성해주세요" value={reCommentContent} onChange={(e) => {
               setReCommentContent(e.target.value);
             }}></textarea>
           </div>
           <div className="convention-reComment-reply-write-btn">
-            <span onClick={reCommentWrite}>작성</span>
+            <button onClick={reCommentWrite}>작성</button>
           </div>
         </div>
         

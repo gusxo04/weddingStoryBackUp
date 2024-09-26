@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
+import { loginNoState } from "../utils/RecoilData";
 
 const BuyTicket = (props) => {
 
@@ -24,8 +25,8 @@ const BuyTicket = (props) => {
     setIsPayment,
   } = props;
 
-  // const [memberNoState, setMemberNoState] = useRecoilState(2);
-  const [memberNoState, setMemberNoState] = useState(2);
+  const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
+
   
   const submit = () => {
     dateMsgRef.current.style.display = "none";

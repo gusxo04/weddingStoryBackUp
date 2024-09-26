@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./common.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -28,6 +28,8 @@ const Header = () => {
   );
 };
 
+
+
 const MainHeader = () => {
   return (
     <header className="header">
@@ -44,7 +46,7 @@ const MainHeader = () => {
           <ul className="nav-main">
             <li className="nav-suv">
               <span className="material-icons">menu</span>
-              <Link to="/myPage">My Wedding</Link>
+              <NavLink to="/myPage">My Wedding</NavLink>
             </li>
             <li>
               <Link to="/">홈</Link>
