@@ -23,7 +23,10 @@ const MyInfo = (props) => {
         console.log(err);
       });
   }, [memberNo]);
-
+  const changeInput = (e) => {
+    const name = e.target.name;
+    setMember({ ...member, [name]: e.target.value });
+  };
   return (
     <div className="mypage-info-wrap">
       <table style={{ width: "97%" }}>
@@ -33,10 +36,22 @@ const MyInfo = (props) => {
         <tbody>
           <tr>
             <th style={{ width: "12%" }}>성함</th>
-            <td style={{ width: "33%" }}>{`${member.memberName}`}</td>
+            <td style={{ width: "33%" }}>
+              <input
+                name="memberName"
+                value={`${member.memberName}`}
+                onChange={changeInput}
+              ></input>
+            </td>
             <th style={{ width: "5%" }}></th>
             <th style={{ width: "14%" }}>전화번호</th>
-            <td style={{ width: "33%" }}>{`${member.memberPhone}`}</td>
+            <td style={{ width: "33%" }}>
+              <input
+                name="memberPhone"
+                value={`${member.memberPhone}`}
+                onChange={changeInput}
+              ></input>
+            </td>
           </tr>
           <tr>
             <th>아이디</th>
@@ -75,7 +90,13 @@ const MyInfo = (props) => {
             </th>
             <th></th>
             <th>이메일 주소</th>
-            <td>{`${member.memberEmail}`}</td>
+            <td>
+              <input
+                name="memberEmail"
+                value={`${member.memberEmail}`}
+                onChange={changeInput}
+              ></input>
+            </td>
           </tr>
         </tbody>
         <thead className="mypage-partner-info">
@@ -84,10 +105,22 @@ const MyInfo = (props) => {
         <tbody>
           <tr>
             <th>배우자 성함</th>
-            <td>{`${member.partnerName}`}</td>
+            <td>
+              <input
+                name="partnerName"
+                value={`${member.partnerName}`}
+                onChange={changeInput}
+              ></input>
+            </td>
             <th></th>
             <th>배우자 아이디</th>
-            <td>{`${member.partnerId}`}</td>
+            <td>
+              <input
+                name="partnerId"
+                value={`${member.partnerId}`}
+                onChange={changeInput}
+              ></input>
+            </td>
           </tr>
         </tbody>
       </table>

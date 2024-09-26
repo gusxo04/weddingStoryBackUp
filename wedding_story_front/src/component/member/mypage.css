@@ -109,6 +109,11 @@
   border-bottom: 1px solid var(--main2);
   padding: 5px 10px;
 }
+.mypage-info-wrap input {
+  width: 100%;
+  border: none;
+  font-size: 16px;
+}
 .mypage-info-password a {
   line-height: 35px;
 }
