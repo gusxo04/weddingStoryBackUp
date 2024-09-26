@@ -52,9 +52,9 @@
 
     <select id="selectPayment" resultType="memberPay">
         select pay_no, ticket_no, pay_price, merchant_uid
-            from member_pay where member_no = 2 and 
-            ticket_no = (select ticket_no from convention_member where convention_no = 41) and
-            sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = 41)
+            from member_pay where member_no = #{memberNo} and 
+            ticket_no = (select ticket_no from convention_member where convention_no = #{conventionNo}) and
+            sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = #{conventionNo})
             and progress = 0
     </select>
 
@@ -86,7 +86,25 @@
     </select>
 
     <insert id="insertConventionComment">
-        insert into convention_comment values(convention_comment_seq.nextval, #{memberNo}, #{conventionNo}, #{conventionCommentContent}, 0, sysdate, null)
+        insert into convention_comment values(convention_comment_seq.nextval, #{memberNo}, #{conventionNo}, #{conventionCommentContent}, 0, sysdate, 
+        <choose>
+            <when test="conventionCommentRef == 0">
+            null
+            </when>
+
+            <when test="conventionCommentRef != 0">
+            #{conventionCommentRef}
+            </when>
+        </choose>
+        )
     </insert>
+
+    <delete id="deleteConventionComment">
+        delete from convention_comment where convention_comment_no = #{conventionCommentNo}
+    </delete>
+
+    <update id="updateConventionComment">
+        update convention_comment set convention_comment_content = #{conventionCommentContent}, edit_type = 1 where convention_comment_no = #{conventionCommentNo}
+    </update>
 
 </mapper>

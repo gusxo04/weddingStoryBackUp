@@ -3,6 +3,8 @@ import "./convention.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ShowConvention from "./ShowConvention";
+import { loginNoState } from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
 
 
 
@@ -11,9 +13,8 @@ const ConventionMain = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
 
-  // const [memberNoState, setMemberNoState] = useRecoilState(2);
-  const [memberNoState, setMemberNoState] = useState(2);
-
+  const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
+  console.log(memberNoState);
   const [convention, setConvention] = useState({});
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -60,31 +61,33 @@ const ConventionMain = () => {
       // 업체도 부스를 샀는지 안 샀는지 조회해야 해서 uef 따로 빼는게 나을듯
       // 나중에 if로 업체인지 회원인지 조회후 axios 요청하기
       // 지금은 회원꺼 먼저
-      axios.get(`${backServer}/convention/payment/${memberNoState}/${res.data.convention.conventionNo}`)
-      .then(res => {
-        // console.log(res);
-        if(res.data){
-          setPayment({
-            merchantUid: res.data.merchantUid,
-            payNo: res.data.payNo,
-            payPrice: res.data.payPrice,
-            ticketNo: res.data.ticketNo
-          })
-        }
-        else{
-          setPayment(null);
-        }
-      })
-      .catch(err => {
-        console.error(err); 
-      })
+      if(memberNoState !== 0){
+        axios.get(`${backServer}/convention/payment/${memberNoState}/${res.data.convention.conventionNo}`)
+        .then(res => {
+          // console.log(res);
+          if(res.data){
+            setPayment({
+              merchantUid: res.data.merchantUid,
+              payNo: res.data.payNo,
+              payPrice: res.data.payPrice,
+              ticketNo: res.data.ticketNo
+            })
+          }
+          else{
+            setPayment(null);
+          }
+        })
+        .catch(err => {
+          console.error(err); 
+        })
+      }
 
     })
     .catch(err => {
       console.error(err); 
     })
 
-  }, [isPayment]);
+  }, [isPayment, memberNoState]);
 
 
   let testStartDate = new Date(convention.conventionStart);

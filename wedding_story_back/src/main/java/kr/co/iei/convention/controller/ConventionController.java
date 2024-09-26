@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -28,7 +29,6 @@ import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin("*")
@@ -150,5 +150,24 @@ public class ConventionController {
         return ResponseEntity.ok(result);
     }
     
+
+    @PostMapping("/reComment")
+    public ResponseEntity<Boolean> writeReComment(@ModelAttribute ConventionCommentDTO conventionComment) {
+        Boolean result = conventionService.insertconventionComment(conventionComment);
+        return ResponseEntity.ok(result);
+    }
+    
+
+    @DeleteMapping("/{conventionCommentNo}")
+    public ResponseEntity<Boolean> deleteComment(@PathVariable int conventionCommentNo){
+        Boolean result = conventionService.deleteConventionComment(conventionCommentNo);
+        return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping
+    public ResponseEntity<Boolean> updateComment(@ModelAttribute ConventionCommentDTO conventionComment){
+        Boolean result = conventionService.updateConventionComment(conventionComment);
+        return ResponseEntity.ok(result);
+    }
 
 }

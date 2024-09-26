@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
+import { loginNoState } from "../utils/RecoilData";
 
 const RefundTicket = (props) => {
 
@@ -13,8 +14,8 @@ const RefundTicket = (props) => {
     setIsPayment,
   } = props;
 
-  // const [memberNoState, setMemberNoState] = useRecoilState();
-  const [memberNoState, setMemberNoState] = useState(2);
+  const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
+  // const [memberNoState, setMemberNoState] = useState(2);
   
   class CancelPay extends React.Component {
     cancelPay = () => {
