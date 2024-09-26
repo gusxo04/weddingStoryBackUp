@@ -42,10 +42,11 @@ li {
 }
 
 :root {
-  --main1: #c19975;
+  --main1: #d3a984;
   --main2: #dce4e9;
   --hover1: #bddaed;
   --hover2: #b5b5b5;
+  --hover3: #ecded1;
 }
 
 select {
@@ -71,4 +72,8 @@ textarea {
 @font-face {
   font-family: ns-black;
   src: url(/public/font/NotoSansKR-Black.ttf);
+}
+@font-face {
+  font-family: ps-r;
+  src: url(/public/font/PinyonScript-Regular.ttf);
 }
