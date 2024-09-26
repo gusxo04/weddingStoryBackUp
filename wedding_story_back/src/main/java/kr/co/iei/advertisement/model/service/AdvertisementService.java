@@ -1,5 +1,7 @@
 package kr.co.iei.advertisement.model.service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,17 @@ public class AdvertisementService {
 	private AdvertisementDao advertisementDao;
 
 	public Map getAdvertisement() {
-		// TODO Auto-generated method stub
-		return null;
+		List activeAd = advertisementDao.activeAd();
+		List endAd = advertisementDao.endAd();
+		List yetAd = advertisementDao.yetAd();
+		List waitAd = advertisementDao.waitAd();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("activeAd",activeAd);
+		map.put("endAd",endAd);
+		map.put("yetAd",yetAd);
+		map.put("waitAd",waitAd);
+		
+		return map;
 	} 
 }
