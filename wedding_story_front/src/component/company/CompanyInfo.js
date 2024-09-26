@@ -1,20 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { companyNoState } from "../utils/RecoilData";
 
 const CompanyInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [company, setCompany] = useState({}); //DB에서 조회한 데이터가 들어갈 state
-  console.log(`${backServer}/company/thumb/${company.companyThumb}`);
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState); //recoil에 저장되어있는 companyNo
   useEffect(() => {
     axios
-      .get(`${backServer}/company`)
+      .get(`${backServer}/company/${companyNo}`)
       .then((res) => {
+        console.log(res);
         setCompany(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [companyNo]);
+
   console.log(company);
   return (
     <div className="company-info-wrap">

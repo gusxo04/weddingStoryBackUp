@@ -44,5 +44,6 @@ public interface MemberDao {
 	MemberDTO selectMemberConsult(int memberNo);
 
 	
+	int updateCompanyNo(String companyNo, int memberNo);
 
 }

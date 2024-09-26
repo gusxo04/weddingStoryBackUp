@@ -3,10 +3,14 @@ import CompanyJoinFrm from "./CompanyJoinFrm";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginNoState } from "../utils/RecoilData";
 
 const CompanyJoin = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const [loginNo, setLoginNo] = useRecoilState(loginNoState);
+  console.log(loginNo);
   const [company, setCompany] = useState({
     companyName: "",
     companyTel: "",
@@ -38,6 +42,7 @@ const CompanyJoin = () => {
       form.append("companyCategory", company.companyCategory);
       form.append("startTime", company.startTime);
       form.append("endTime", company.endTime);
+      form.append("memberNo", loginNo);
       if (thumbnail !== null) {
         form.append("thumbFile", thumbnail); //썸네일은 스프링에서 String 타입으로 받는게 아닌 multipartFile 로 받는다.
       } //썸네일 있는 경우에만 썸네일 append
@@ -51,10 +56,9 @@ const CompanyJoin = () => {
         form.append("keyWord", company.keyWord[i]);
       }
       axios
-        .post(`${backServer}/company`, form, {
+        .post(`${backServer}/company/join`, form, {
           headers: {
-            contentType: "multipart/formdate",
-            processDate: false,
+            contentType: "multipart/form-data",
           },
         })
         .then((res) => {

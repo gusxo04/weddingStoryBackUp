@@ -74,4 +74,7 @@
 		select member_name, member_phone from member where member_no=#{memberNo} 
 	</select>
 	
+	<update id="updateCompanyNo">
+		update member set company_no = #{companyNo} where member_no = #{memberNo}
+	</update>
 </mapper>

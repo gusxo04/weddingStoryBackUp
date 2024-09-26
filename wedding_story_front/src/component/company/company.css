@@ -145,6 +145,7 @@
   margin-bottom: 100px;
   display: flex;
   justify-content: center;
+  width: 1280px;
 }
 .btn-zone > button {
   position: relative;
@@ -193,6 +194,9 @@
 }
 .company-product-input-zone {
   padding-top: 20px;
+}
+.editor-zone {
+  margin-bottom: 40px;
 }
 .editor-zone > div {
   margin: 0 auto;

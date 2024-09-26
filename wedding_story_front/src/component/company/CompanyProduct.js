@@ -1,11 +1,30 @@
-import { useRef, useState } from "react";
-import ToastEditor from "../utils/ToastEditor";
+import { useState } from "react";
+import CompanyProductFrm from "./CompanyProductFrm";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  companyNoState,
+  loginIdState,
+  loginNoState,
+} from "../utils/RecoilData";
 
 const CompanyProduct = () => {
+  //   const [productName, setProductName] = useState("");
+  //   const [productImg, setProductImg] = useState("");
+  //   const [productContent, setProductContent] = useState("");
+  //   const [productPrice, setProductPrice] = useState("");
+  //   const [ProductThumb, setProductThumb] = useState([]);
+  //   const [coronation, setCoronation] = useState("");
+  //   const [diningRoom, setDiningRoom] = useState("");
+  //   const [numberPeople, setNumberPeople] = useState("");
+  // 하나씩 써서 넘기기 뭐해서 콘텐츠만 빼고 product 객체 만들어서 props.
+
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
   const [product, setProduct] = useState({
     productName: "",
     productImg: "",
-    productContent: "",
     productPrice: "",
     productThumb: [],
     coronation: "",
@@ -13,277 +32,84 @@ const CompanyProduct = () => {
     numberPeople: "",
   });
 
-  const changeValue = (e) => {
-    const name = e.target.name;
-    setProduct({ ...product, [name]: e.target.value });
-  };
-  const optionRef = useRef();
-  const optionView = () => {
-    optionRef.current.style.display = "block";
-  };
-  const optionClose = () => {
-    optionRef.current.style.display = "none";
-  };
-  const [productImg, setProductImg] = useState(null);
-  const imageRef = useRef();
-  const changeImg = (e) => {
-    console.log(e.currentTarget.files);
-    const files = e.currentTarget.files;
-    if (files.length !== 0 && files[0] !== 0) {
-      //files. 길이가 0이아니거나 배열의 처음이 0이 아니면
-      setProductImg({ ...product, productImg: files[0] }); //썸네일 표시 state에 배열의 처음 객체를 넣어라
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onloadend = () => {
-        setProductImg(reader.result);
-      }; //onloadend는 파일이 완전히 읽힌 후에 호출되는 이벤트 핸들러입니다.
+  const [productContent, setProductContent] = useState("");
+  const insertProduct = () => {
+    console.log("서브밋 버튼");
+    console.log(product);
+    console.log(productContent);
+    if (
+      product.productName !== "" &&
+      product.productImg !== "" &&
+      product.productPrice !== "" &&
+      product.productThumb !== null &&
+      productContent !== null
+    ) {
+      const form = new FormData();
+      console.log(product);
+      console.log(companyNo);
+      form.append("companyNo", companyNo);
+      form.append("productName", product.productName);
+      form.append("productPrice", product.productPrice);
+      form.append("productContent", productContent);
+      form.append("thumbFile", product.productImg);
+      if (
+        product.coronation !== "" &&
+        product.diningRoom !== "" &&
+        product.numberPeople !== ""
+      ) {
+        form.append("coronation", product.coronation);
+        form.append("diningRoom", product.diningRoom);
+        form.append("numberPeople", product.numberPeople);
+      }
+      if (product.productThumb !== null) {
+        for (let i = 0; i < product.productThumb.length; i++) {
+          form.append("thumbnailFiles", product.productThumb[i]);
+        }
+      }
+      axios
+        .post(`${backServer}/company/product`, form, {
+          headers: {
+            contentType: "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            title: "상품 등록 성공",
+            text: "상품등록을 완료하였습니다.",
+            icon: "success",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      setProductImg(null);
-      setProduct({ ...product, productImg: null });
+      Swal.fire({
+        title: "입력 오류",
+        text: "필수 정보를 모두 입력해주세요.",
+        icon: "error",
+      });
     }
   };
-
-  const [productThumbs, setProductThumbs] = useState([]);
-
   return (
-    <div className="companyProduct-wrap">
-      <div className="company-title">상품 등록</div>
-      <section className="company-section">
-        <div className="thumbnail-zone">
-          <div className="company-thumbnail image">
-            {productImg ? (
-              <img
-                onClick={() => {
-                  imageRef.current.click();
-                }}
-                src={productImg}
-              />
-            ) : (
-              <img
-                onClick={() => {
-                  imageRef.current.click();
-                }}
-                src="/image/default_img.png"
-              />
-            )}
-          </div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={changeImg}
-            ref={imageRef}
-            style={{ display: "none" }}
-          ></input>
+    <div className="companyProduct-main">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          insertProduct();
+        }}
+      >
+        <CompanyProductFrm
+          product={product}
+          setProduct={setProduct}
+          productContent={productContent}
+          setProductContent={setProductContent}
+        />
+        <div className="btn-zone">
+          <button type="submit">등록 하기</button>
         </div>
-        <div className="main-content">
-          <div className="company-product-input-zone">
-            <div className="company-input-wrap">
-              <label htmlFor="productName">상품명</label>
-              <input
-                type="text"
-                id="productName"
-                name="productName"
-                onChange={changeValue}
-              />
-            </div>
-            <div className="company-input-wrap">
-              <label htmlFor="productPrice">상품 가격</label>
-              <input
-                type="text"
-                id="productPrice"
-                name="productPrice"
-                onChange={changeValue}
-              />
-            </div>
-            <div className="company-input-wrap">
-              <label htmlFor="productCategory">카테고리</label>
-              <span className="radio-zone">
-                <label htmlFor="no0">웨딩홀</label>
-                <input
-                  type="radio"
-                  id="no0"
-                  name="productCategory"
-                  onClick={optionView}
-                />
-                <label htmlFor="no1">스튜디오</label>
-                <input
-                  type="radio"
-                  id="no1"
-                  name="productCategory"
-                  onClick={optionClose}
-                />
-                <label htmlFor="no2">드레스</label>
-                <input
-                  type="radio"
-                  id="no2"
-                  name="productCategory"
-                  onClick={optionClose}
-                />
-                <label htmlFor="no3">메이크업</label>
-                <input
-                  type="radio"
-                  id="no3"
-                  name="productCategory"
-                  onClick={optionClose}
-                />
-                <label htmlFor="no4">예복</label>
-                <input
-                  type="radio"
-                  id="no4"
-                  name="productCategory"
-                  onClick={optionClose}
-                />
-                <label htmlFor="no5">본식</label>
-                <input
-                  type="radio"
-                  id="no5"
-                  name="productCategory"
-                  onClick={optionClose}
-                />
-              </span>
-            </div>
-            <div className="option" ref={optionRef}>
-              <div className="company-input-wrap">
-                <label htmlFor="coronation">대관료</label>
-                <input
-                  type="text"
-                  id="coronation"
-                  name="coronation"
-                  onChange={changeValue}
-                />
-              </div>
-              <div className="company-input-wrap">
-                <label htmlFor="diningRoom">1인 식대</label>
-                <input
-                  type="text"
-                  id="diningRoom"
-                  name="diningRoom"
-                  onChange={changeValue}
-                />
-              </div>
-              <div className="company-input-wrap">
-                <label htmlFor="numberPeople">보증 인원</label>
-                <input
-                  type="text"
-                  id="numberPeople"
-                  name="numberPeople"
-                  onChange={changeValue}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <div className="productThumb-zone">
-        <ThumbnailDiv productThumbs={productThumbs} />
-      </div>
-      <div className="editor-zone">
-        <ToastEditor />
-      </div>
+      </form>
     </div>
   );
 };
 export default CompanyProduct;
-
-const ThumbnailDiv = (props) => {
-  const productThumbs = props.productThumbs;
-
-  const productRef1 = useRef();
-
-  const changeThumb = (e) => {
-    const files = e.currentTarget.files;
-    if (files.length !== 0 && files[0] !== 0) {
-    }
-  };
-
-  return (
-    <>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img
-            src={productThumbs}
-            onClick={() => {
-              productRef1.current.click();
-            }}
-          ></img>
-        ) : (
-          <img
-            src="/image/default_img.png"
-            onClick={() => {
-              productRef1.current.click();
-            }}
-          />
-        )}
-      </div>
-      <input
-        type="file"
-        accept="/image"
-        ref={productRef1}
-        onChange={changeThumb}
-      ></input>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-      <div className="productThumb">
-        {productThumbs === "" ? (
-          <img src={productThumbs}></img>
-        ) : (
-          <img src="/image/default_img.png" />
-        )}
-      </div>
-    </>
-  );
-};
