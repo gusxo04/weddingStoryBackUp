@@ -2,12 +2,8 @@ import { useState } from "react";
 import CompanyProductFrm from "./CompanyProductFrm";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  companyNoState,
-  loginIdState,
-  loginNoState,
-} from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
+import { companyNoState } from "../utils/RecoilData";
 
 const CompanyProduct = () => {
   //   const [productName, setProductName] = useState("");
