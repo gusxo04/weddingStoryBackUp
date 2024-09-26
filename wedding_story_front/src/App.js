@@ -33,7 +33,6 @@ function App() {
   const [loginNo, setLoginNo] = useRecoilState(loginNoState);
   const [loginId, setLoginId] = useRecoilState(loginIdState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  console.error("잘못된 데이터가 들어왔습니다");
   const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
 

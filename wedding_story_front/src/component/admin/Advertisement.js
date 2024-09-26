@@ -57,5 +57,8 @@ const Advertisement = () => {
   );
 };
 
-const InProgress = () => {};
+const InProgress = ({ ads }) => {
+  return <></>;
+};
+
 export default Advertisement;
