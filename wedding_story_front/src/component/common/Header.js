@@ -85,7 +85,7 @@ const HeaderLink = () => {
     <>
       {isLogin ? (
         <div className="header-link">
-          <Link to="#">{`${loginId}`}님</Link>
+          <Link to="/myPage/info">{`${loginId}`}님</Link>
           <span>|</span>
           <Link to="/logout" onClick={logout}>
             로그아웃

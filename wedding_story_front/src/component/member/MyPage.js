@@ -7,7 +7,7 @@ import MySchedule from "./MySchedule";
 import MyPayment from "./MyPayment";
 
 const MyPage = () => {
-  const [nowPath, setNowPath] = useState("");
+  const [nowPath, setNowPath] = useState("schedule");
 
   return (
     <section className="mypage-wrap">

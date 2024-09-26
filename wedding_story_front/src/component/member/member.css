@@ -281,14 +281,18 @@
 .join-movePage {
   gap: 30px;
 }
-.join-movePage button {
+
+.join-movePage-btn {
   width: 150px;
   height: 45px;
   border: none;
-  border-radius: 10px;
+  border-radius: 20px;
   background-color: var(--main2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.join-movePage > :last-child > button {
+.join-movePage > :last-child > div {
   background-color: #fff;
   border: 2px solid var(--main2);
 }
