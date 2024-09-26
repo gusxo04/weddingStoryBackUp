@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const JoinSuccess = (props) => {
   const setNowPath = props.setNowPath;
   setNowPath("success");
@@ -18,12 +20,16 @@ const JoinSuccess = (props) => {
         </div>
       </div>
       <div className="join-movePage">
-        <div>
-          <button>로그인</button>
-        </div>
-        <div>
-          <button>메인 페이지</button>
-        </div>
+        <Link to="/login">
+          <div className="join-movePage-btn">
+            <span>로그인</span>
+          </div>
+        </Link>
+        <Link to="/">
+          <div className="join-movePage-btn">
+            <span>메인페이지</span>
+          </div>
+        </Link>
       </div>
     </div>
   );
