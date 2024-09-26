@@ -41,4 +41,6 @@ public interface MemberDao {
 
 	String checkBusinessNo(String companyBusinessNo);
 
+	MemberDTO selectLoginMember(int memberNo);
+
 }

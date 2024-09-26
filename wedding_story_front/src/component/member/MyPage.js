@@ -8,27 +8,17 @@ import MyPayment from "./MyPayment";
 
 const MyPage = () => {
   const [nowPath, setNowPath] = useState("schedule");
-
   return (
     <section className="mypage-wrap">
       <div className="mypage-wrap-content">
-        <div className="mypage-step">
-          <div>
-            <h3>
-              {`${
-                nowPath == "schedule"
-                  ? "My Wedding Schedule"
-                  : nowPath == "payment"
-                  ? "My Wedding Payment"
-                  : nowPath == "favorite"
-                  ? "My Favorite Product"
-                  : "My Information"
-              }`}
-            </h3>
+        <div className="mypage-wrap-left">
+          <div className="mypage-info-box">
+            <p>고객이름</p>
           </div>
-        </div>
-        <div className="mypage-main-content">
           <div className="mypage-menu-box">
+            <div className="mypage-menu-box-title">
+              <p>자주찾는 메뉴</p>
+            </div>
             <div>
               <Link to="schedule">
                 <div
@@ -68,22 +58,44 @@ const MyPage = () => {
               </Link>
             </div>
           </div>
-          <div className="mypage-content">
-            <Routes>
-              <Route
-                path="schedule"
-                element={<MySchedule setNowPath={setNowPath} />}
-              />
-              <Route
-                path="payment"
-                element={<MyPayment setNowPath={setNowPath} />}
-              />
-              <Route
-                path="favorite"
-                element={<MyFavorite setNowPath={setNowPath} />}
-              />
-              <Route path="info" element={<MyInfo setNowPath={setNowPath} />} />
-            </Routes>
+        </div>
+        <div className="mypage-wrap-right">
+          <div className="mypage-step">
+            <div>
+              <h3>
+                {`${
+                  nowPath == "schedule"
+                    ? "My Wedding Schedule"
+                    : nowPath == "payment"
+                    ? "My Wedding Payment"
+                    : nowPath == "favorite"
+                    ? "My Favorite Product"
+                    : "My Information"
+                }`}
+              </h3>
+            </div>
+          </div>
+          <div className="mypage-main-content">
+            <div className="mypage-content">
+              <Routes>
+                <Route
+                  path="schedule"
+                  element={<MySchedule setNowPath={setNowPath} />}
+                />
+                <Route
+                  path="payment"
+                  element={<MyPayment setNowPath={setNowPath} />}
+                />
+                <Route
+                  path="favorite"
+                  element={<MyFavorite setNowPath={setNowPath} />}
+                />
+                <Route
+                  path="info"
+                  element={<MyInfo setNowPath={setNowPath} />}
+                />
+              </Routes>
+            </div>
           </div>
         </div>
       </div>
