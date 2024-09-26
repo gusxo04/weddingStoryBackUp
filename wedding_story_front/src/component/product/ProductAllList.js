@@ -34,7 +34,7 @@ const ProductAllList = () => {
             <Link to="/product/info">드레스</Link>
           </li>
           <li>
-            <Link to="/product/reviewUpdate">메이크업</Link>
+            <Link to="/product/review">메이크업</Link>
           </li>
           <li>
             <Link to="#">예복</Link>

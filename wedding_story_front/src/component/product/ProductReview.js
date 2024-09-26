@@ -1,118 +1,130 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginIdState } from "../utils/RecoilData";
+import axios from "axios";
+import ReviewForm from "../utils/ReviewFrom";
 
 const ProductReview = () => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [memberNo, setMemberNo] = useRecoilState(loginIdState);
+  const [member, setMember] = useState({
+    memberId: "",
+  });
+  const [reviews, setReviews] = useState([]);
+  const [currentReview, setCurrentReview] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const productNo = 123; // 실제 제품번호로 교체
+  const payNo = 456; // 실제 결제번호로 대체
 
-  const openPopup = () => {
+  const handleOpenPopup = () => {
+    setCurrentReview(null);
     setIsPopupOpen(true);
   };
 
-  const closePopup = () => {
+  const handleClosePopup = () => {
     setIsPopupOpen(false);
+    setCurrentReview(null);
   };
 
-  return (
-    <div>
-      <h1>리뷰 작성하기</h1>
-      <button onClick={openPopup}>리뷰 작성</button>
-      {isPopupOpen && <ReviewPopup onClose={closePopup} />}
-    </div>
-  );
-};
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/memberNo/${memberNo}`)
+      .then((res) => {
+        console.log(res.data);
+        setReviews(res.data); // 응답 구조가 리뷰 배열과 일치한다고 가정
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [backServer, memberNo]);
 
-const ReviewPopup = ({ onClose }) => {
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState("");
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
+  const handleReviewSubmit = (reviewData) => {
+    const newReview = {
+      productCommentNo: currentReview
+        ? currentReview.productCommentNo
+        : Date.now(),
+      productNo,
+      payNo,
+      memberNo,
+      rating: reviewData.rating,
+      review: reviewData.review,
+      creation: new Date(),
+      image: reviewData.image, // 리뷰 객체에 이미지 추가
+    };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // 리뷰 제출 로직 (API 호출 등)
-    console.log("Rating:", rating, "Review:", review, "Image:", image);
-    onClose();
-  };
-  //별클릭시 클릭만큼 별색깔 바꾸기
-
-  const renderStars = () => {
-    return [...Array(5)].map((_, index) => {
-      const starRating = index + 1;
-      return (
-        <FaStar
-          key={starRating}
-          onClick={() => setRating(starRating)}
-          style={{
-            cursor: "pointer",
-            color: starRating <= rating ? "gold" : "gray",
-            fontSize: "18px",
-          }}
-        />
+    if (currentReview) {
+      // 기존 리뷰 업데이트
+      setReviews((prev) =>
+        prev.map((review) =>
+          review.productCommentNo === currentReview.productCommentNo
+            ? newReview
+            : review
+        )
       );
-    });
+    } else {
+      // 새 리뷰 추가
+      setReviews((prev) => [...prev, newReview]);
+    }
+    handleClosePopup(); // 제출 후 팝업 닫기
+  };
+
+  const handleEditReview = (review) => {
+    setCurrentReview(review);
+    setIsPopupOpen(true);
+  };
+
+  const handleDeleteReview = (productCommentNo) => {
+    setReviews((prev) =>
+      prev.filter((review) => review.productCommentNo !== productCommentNo)
+    );
   };
 
   return (
-    <div className="review-wrap" style={popupStyle}>
-      <img src="/image/main_logo.png" />
-      <h2>리뷰 작성</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="title">
-          <label>별점:</label>
-          <div>{renderStars()}</div>
-        </div>
-        <div className="title">
-          <label>리뷰:</label>
-          <textarea
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-            required
-          />
-        </div>
-        <div className="title">
-          <label>이미지 업로드:</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          {imagePreview && (
-            <div>
-              <img
-                src={imagePreview}
-                alt="미리보기"
-                style={{ maxWidth: "100%", marginTop: "10px" }}
-              />
+    <div className="product-reviews">
+      <h3>리뷰</h3>
+      <button onClick={handleOpenPopup}>리뷰 작성</button>
+      {reviews.length > 0 ? (
+        reviews.map((review) => (
+          <div key={review.productCommentNo} className="review-item">
+            <div className="review-rating">
+              {Array.from({ length: 5 }, (_, index) => (
+                <FaStar
+                  key={index}
+                  style={{
+                    color: index < review.rating ? "gold" : "gray",
+                    fontSize: "24px",
+                  }}
+                />
+              ))}
+              <span>{` ${review.rating} / 5`}</span>
             </div>
-          )}
-        </div>
-        <div className="review-button">
-          <button type="submit">
-            <Link to="/product/info">제출</Link>
-          </button>
-          <button type="button" onClick={onClose}>
-            닫기
-          </button>
-        </div>
-      </form>
+            <div className="review-name">{loginIdState.loginId}</div>
+            <div className="review-text">{review.review}</div>
+            {review.image && (
+              <img
+                src={review.image}
+                alt="Review"
+                style={{ width: "300px", height: "300px" }}
+              />
+            )}
+            <button onClick={() => handleEditReview(review)}>수정</button>
+            <button onClick={() => handleDeleteReview(review.productCommentNo)}>
+              삭제
+            </button>
+          </div>
+        ))
+      ) : (
+        <p>리뷰가 없습니다.</p>
+      )}
+      <ReviewForm
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        onSubmit={handleReviewSubmit}
+        initialData={currentReview} // 편집을 위해 currentReview 데이터 전달
+      />
     </div>
   );
-};
-
-const popupStyle = {
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  backgroundColor: "white",
-  padding: "20px",
-  border: "1px solid #ccc",
-  zIndex: 1000,
 };
 
 export default ProductReview;

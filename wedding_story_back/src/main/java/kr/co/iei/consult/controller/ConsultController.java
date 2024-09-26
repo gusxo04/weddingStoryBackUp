@@ -30,8 +30,12 @@ public class ConsultController {
 	@Autowired
 	private MemberService memberService;
 	
+	@GetMapping(value = "/memberNo/{memberNo}")
+	public ResponseEntity<MemberDTO>selectMemberConsult(@PathVariable int memberNo){
+		MemberDTO member = consultService.selectMemberConsult(memberNo);
+		return ResponseEntity.ok(member);
+	}
 
-	
 	@PostMapping
 	 public ResponseEntity<Integer> insertConsult(@ModelAttribute ConsultDTO consult, @ModelAttribute MemberDTO member) {
         int result = consultService.insertConsult(consult,member);
