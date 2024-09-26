@@ -15,26 +15,28 @@ const AdminMenu = () => {
           <img src="/image/suv_logo.png" />
         </div>
         <table className="admin-menu-tbl">
-          <tr>
-            <th>직급</th>
-            <td>{memberType === 0 ? "관리자" : "부관리자"}</td>
-          </tr>
-          <tr>
-            <th>이름</th>
-            <td>{loginId}</td>
-          </tr>
-          <tr>
-            <td>
-              <button className="insertAdminBtn" onClick={insertAdmin}>
-                관리자 회원 추가
-              </button>
-            </td>
-            <td>
-              <button className="logoutBtn" onClick={logout}>
-                로그아웃
-              </button>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>직급</th>
+              <td>{memberType === 0 ? "관리자" : "부관리자"}</td>
+            </tr>
+            <tr>
+              <th>이름</th>
+              <td>{loginId}</td>
+            </tr>
+            <tr>
+              <td>
+                <button className="insertAdminBtn" onClick={insertAdmin}>
+                  관리자 회원 추가
+                </button>
+              </td>
+              <td>
+                <button className="logoutBtn" onClick={logout}>
+                  로그아웃
+                </button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div></div>
