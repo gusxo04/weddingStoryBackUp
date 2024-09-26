@@ -139,8 +139,7 @@ const Advertisement = () => {
 //   );
 // };
 
-// const PendingApproval = (props) => {
-//   const adyet = props.adyet;
+// const PendingApproval = ({ activeAd }) => {
 //   return (
 //     <>
 //       {adyet.length > 0 ? (
@@ -164,12 +163,11 @@ const Advertisement = () => {
 //   );
 // };
 
-// const Upcomming = (props) => {
-//   const adwait = props.adwait;
+// const Upcomming = ({ activeAd }) => {
 //   return (
 //     <>
-//       {adwait.length > 0 ? (
-//         adwait.map((ad) => (
+//       {adyet.length > 0 ? (
+//         adyet.map((ad) => (
 //           <tr key={ad.advertisementNo}>
 //             <td>{ad.company.companyName}</td>
 //             <td>{ad.adRank}</td>
