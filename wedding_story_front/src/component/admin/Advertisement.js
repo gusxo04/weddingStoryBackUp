@@ -19,7 +19,10 @@ const Advertisement = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data) {
-          setActiveAd(Object.values(res.data.list));
+          setActiveAd(Object.values(res.data.activeAd));
+          setAdend(Object.values(res.data.endAd));
+          setAdyet(Object.values(res.data.yetAd));
+          setAdwait(Object.values(res.data.waitAd));
         } else {
           console.log("진행중인 광고 없음");
           setActiveAd([]);
@@ -31,6 +34,7 @@ const Advertisement = () => {
         setActiveAd([]);
       });
   }, []);
+
   return (
     <div className="advertisement-wrap">
       <div className="page-title">
@@ -49,7 +53,61 @@ const Advertisement = () => {
             </tr>
           </thead>
           <tbody>
-            <InProgress />
+            <InProgress activeAd={activeAd} setActiveAd={setActiveAd} />
+          </tbody>
+        </table>
+      </div>
+
+      <div className="upComing">
+        <h3 style={{ float: "left", marginBottom: "10px" }}>광고예정</h3>
+        <table className="tbl ad-tbl">
+          <thead>
+            <tr>
+              <td>업체 이름</td>
+              <td>상품 이름</td>
+              <td>광고 시작</td>
+              <td>광고 종료</td>
+              <td>수정</td>
+            </tr>
+          </thead>
+          <tbody>
+            <Upcomming activeAd={activeAd} setActiveAd={setActiveAd} />
+          </tbody>
+        </table>
+      </div>
+
+      <div className="upComing">
+        <h3 style={{ float: "left", marginBottom: "10px" }}>승인대기</h3>
+        <table className="tbl ad-tbl">
+          <thead>
+            <tr>
+              <td>업체 이름</td>
+              <td>상품 이름</td>
+              <td>광고 시작</td>
+              <td>광고 종료</td>
+              <td>수정</td>
+            </tr>
+          </thead>
+          <tbody>
+            <InProgress activeAd={activeAd} setActiveAd={setActiveAd} />
+          </tbody>
+        </table>
+      </div>
+
+      <div className="ended">
+        <h3 style={{ float: "left", marginBottom: "10px" }}>종료</h3>
+        <table className="tbl ad-tbl">
+          <thead>
+            <tr>
+              <td>업체 이름</td>
+              <td>상품 이름</td>
+              <td>광고 시작</td>
+              <td>광고 종료</td>
+              <td>수정</td>
+            </tr>
+          </thead>
+          <tbody>
+            <InProgress activeAd={activeAd} setActiveAd={setActiveAd} />
           </tbody>
         </table>
       </div>
@@ -57,8 +115,75 @@ const Advertisement = () => {
   );
 };
 
-const InProgress = ({ ads }) => {
-  return <></>;
+const InProgress = ({ activeAd }) => {
+  return (
+    <>
+      {activeAd.length > 0 ? (
+        activeAd.map((ad) => (
+          <tr key={ad.advertisementNo}>
+            <td>{ad.company.companyName}</td>
+            <td>{ad.adRank}</td>
+            <td>{ad.adStart}</td>
+            <td>{ad.adEnd}</td>
+            <td>
+              <button>수정</button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="5">업체가 없습니다.</td>
+        </tr>
+      )}
+    </>
+  );
 };
 
+const PendingApproval = ({ activeAd }) => {
+  return (
+    <>
+      {adyet.length > 0 ? (
+        adyet.map((ad) => (
+          <tr key={ad.advertisementNo}>
+            <td>{ad.company.companyName}</td>
+            <td>{ad.adRank}</td>
+            <td>{ad.adStart}</td>
+            <td>{ad.adEnd}</td>
+            <td>
+              <button>수정</button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="5">업체가 없습니다.</td>
+        </tr>
+      )}
+    </>
+  );
+};
+
+const Upcomming = ({ activeAd }) => {
+  return (
+    <>
+      {adyet.length > 0 ? (
+        adyet.map((ad) => (
+          <tr key={ad.advertisementNo}>
+            <td>{ad.company.companyName}</td>
+            <td>{ad.adRank}</td>
+            <td>{ad.adStart}</td>
+            <td>{ad.adEnd}</td>
+            <td>
+              <button>수정</button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="5">업체가 없습니다.</td>
+        </tr>
+      )}
+    </>
+  );
+};
 export default Advertisement;

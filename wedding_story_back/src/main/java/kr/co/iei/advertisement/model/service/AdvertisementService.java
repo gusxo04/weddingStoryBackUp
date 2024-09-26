@@ -8,17 +8,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.iei.advertisement.model.dao.AdvertisementDao;
+import kr.co.iei.advertisement.model.dto.AdvertisementDTO;
+import kr.co.iei.company.model.dao.CompanyDao;
+import kr.co.iei.company.model.dto.CompanyDTO;
 
 @Service
 public class AdvertisementService {
 	@Autowired
 	private AdvertisementDao advertisementDao;
+	@Autowired
+	private CompanyDao companyDao;
 
 	public Map getAdvertisement() {
-		List activeAd = advertisementDao.activeAd();
-		List endAd = advertisementDao.endAd();
-		List yetAd = advertisementDao.yetAd();
-		List waitAd = advertisementDao.waitAd();
+		List<AdvertisementDTO> activeAd = advertisementDao.activeAd();
+		for(AdvertisementDTO ads : activeAd) {
+			CompanyDTO company = companyDao.selectContainCompany(ads.getCompanyNo());
+			ads.setCompany(company);
+		}
+		
+		List<AdvertisementDTO> endAd = advertisementDao.endAd();
+		for(AdvertisementDTO ads : endAd) {
+			CompanyDTO company = companyDao.selectContainCompany(ads.getCompanyNo());
+			ads.setCompany(company);
+		}
+		
+		List<AdvertisementDTO> yetAd = advertisementDao.yetAd();
+		for(AdvertisementDTO ads : yetAd) {
+			CompanyDTO company = companyDao.selectContainCompany(ads.getCompanyNo());
+			ads.setCompany(company);
+		}
+		List<AdvertisementDTO> waitAd = advertisementDao.waitAd();
+		for(AdvertisementDTO ads : waitAd) {
+			CompanyDTO company = companyDao.selectContainCompany(ads.getCompanyNo());
+			ads.setCompany(company);
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("activeAd",activeAd);
