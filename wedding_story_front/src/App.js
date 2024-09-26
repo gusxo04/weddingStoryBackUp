@@ -68,12 +68,12 @@ function App() {
   useEffect(() => {
     refreshLogin();
   });
-
+  const isAdminPage = location.pathname.startsWith("/admin");
   return (
     <div className="wrap">
       <Header />
       {/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
-      {memberType === 0 ? <AdminMenu /> : <></>}
+
       <main className="content-wrap">
         <Routes>
           <Route path="/login" element={<Login />} />

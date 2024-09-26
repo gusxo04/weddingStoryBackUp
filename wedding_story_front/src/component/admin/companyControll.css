@@ -1,11 +1,14 @@
 .company-controll-wrap {
-  width: 1200px;
+  width: 75%;
   margin: 0 auto;
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 50px;
+  box-sizing: border-box;
 }
 .companyInfo-wrap {
   display: flex;
   justify-content: space-between;
-  width: 1200px;
   margin: 0 auto;
   border-top: 1px solid #dddddd;
   padding-top: 15px;
@@ -49,9 +52,9 @@
   margin: 25px 0;
   font-size: 0.9em;
   font-family: sans-serif;
-  min-width: 400px;
+  min-width: 300px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  width: 600px;
+  width: 500px;
 }
 
 .tbl2 tr th {
@@ -78,7 +81,7 @@
 .company,
 .company-member {
   flex: 1;
-  margin-right: 20px;
+  margin-left: 25px;
 }
 
 .company-member {

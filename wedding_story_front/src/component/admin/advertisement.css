@@ -1,0 +1,10 @@
+.advertisement-wrap {
+  width: 75%;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 50px;
+  box-sizing: border-box;
+}
+.ad-tbl {
+}

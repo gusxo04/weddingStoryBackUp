@@ -1,0 +1,7 @@
+.admin-wrap {
+  display: flex;
+}
+.admin-content {
+  width: 75%;
+  text-align: center;
+}
