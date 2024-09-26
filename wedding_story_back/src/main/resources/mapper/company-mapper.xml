@@ -41,6 +41,9 @@
 	<update id="deleteCom">
 		update company set company_state=2 where company_no=#{companyNo}
 	</update>
+	<select id="selectContainCompany">
+		select * from company where company_no=#{companyNo}
+	</select>
 </mapper>
 
   

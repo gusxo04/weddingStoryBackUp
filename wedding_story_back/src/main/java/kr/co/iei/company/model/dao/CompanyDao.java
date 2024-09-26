@@ -22,4 +22,6 @@ public interface CompanyDao {
 
 	int deleteCom(String companyNo);
 
+	CompanyDTO selectContainCompany(String companyNo);
+
 }
