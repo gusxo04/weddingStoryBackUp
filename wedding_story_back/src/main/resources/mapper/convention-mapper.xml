@@ -99,4 +99,12 @@
         )
     </insert>
 
+    <delete id="deleteConventionComment">
+        delete from convention_comment where convention_comment_no = #{conventionCommentNo}
+    </delete>
+
+    <update id="updateConventionComment">
+        update convention_comment set convention_comment_content = #{conventionCommentContent}, edit_type = 1 where convention_comment_no = #{conventionCommentNo}
+    </update>
+
 </mapper>

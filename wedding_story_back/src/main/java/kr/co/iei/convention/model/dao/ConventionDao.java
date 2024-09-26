@@ -45,6 +45,10 @@ public interface ConventionDao {
 
     List selectConventionReCommentList(int conventionNo);
 
+    int deleteConventionComment(int conventionCommentNo);
+
+    int updateConventionComment(ConventionCommentDTO conventionComment);
+
 
 
 }

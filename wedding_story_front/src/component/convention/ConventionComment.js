@@ -16,8 +16,8 @@ const ConventionComment = (props) => {
     setComment,
     commentContent,
     setCommentContent,
-    addedComment,
-    setAddedComment,
+    changedComment,
+    setChangedComment,
     reCommentContent,
     setReCommentContent,
   } = props;
@@ -25,13 +25,14 @@ const ConventionComment = (props) => {
 
 const writeCheck = () => {
   
-    const commentRegex = /^.{1,1300}$/;
+    const commentRegex = /^.{0,1000}$/;
     
     if(commentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(commentContent)){
+    else if(!commentRegex.test(commentContent.replace(/\n/g, ''))){
+      console.log(commentContent);
       console.log("너무 큼");
       return false;
     }
@@ -51,7 +52,7 @@ const writeCheck = () => {
     .then(res => {
       // console.log(res);
       if(res.data){
-        setAddedComment(!addedComment);
+        setChangedComment(!changedComment);
         setCommentContent("");
       }
     })
@@ -68,9 +69,8 @@ const writeCheck = () => {
     setIsOpenReComment((prev) => ({...prev, [e]: !prev[e]}))
   }
 
-  const cancelAllTextareaRef = useRef(null);
+  // const cancelAllTextareaRef = useRef(null);
 
-  
 
   return (
     <div className="convention-comment-wrap">
@@ -81,6 +81,12 @@ const writeCheck = () => {
           }} spellCheck={false} placeholder="댓글을 작성해주세요" /> */}
           <textarea ref={textareaRef} id="comment-textarea" value={commentContent} onChange={(e) => {
             setCommentContent(e.target.value);
+            if(textareaRef.current.scrollHeight > textareaRef.current.clientHeight){
+              textareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+            }
+            else if(textareaRef.current.scrollHeight == textareaRef.current.clientHeight){
+              textareaRef.current.style.borderRadius = "30px";
+            }
           }} spellCheck={false} placeholder="댓글을 작성해주세요"></textarea>
         </div>
 
@@ -101,8 +107,8 @@ const writeCheck = () => {
                 <Comment c={c} comment={comment} index={index} 
                 getReComment={getReComment} isOpenReComment={isOpenReComment} 
                 reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}
-                cancelAllReComment={cancelAllReComment} cancelAllTextareaRef={cancelAllTextareaRef}
-                addedComment={addedComment} setAddedComment={setAddedComment}
+                cancelAllReComment={cancelAllReComment} 
+                changedComment={changedComment} setChangedComment={setChangedComment}
                 conventionNo={convention.conventionNo}
                 />
                 
@@ -134,8 +140,11 @@ const Comment = (props) => {
   const [reCommentBtnType, setReCommentBtnType] = useState(true);
   const reCommentRef = useRef(null);
   const [reCommentContent, setReCommentContent] = useState("");
+  const [editCommentContent, setEditCommentContent] = useState("");
 
-  
+  const contentRef = useRef(null);
+  const editTextareaRef = useRef(null);
+  const reTextareaRef = useRef(null);
   
   const{
     c,
@@ -144,11 +153,15 @@ const Comment = (props) => {
     getReComment,
     isOpenReComment,
     cancelAllReComment,
-    cancelAllTextareaRef,
     conventionNo,
-    addedComment,
-    setAddedComment,
+    changedComment,
+    setChangedComment,
   } = props;
+
+  // 댓글꺼
+
+
+
 
   const reCommentBtn = () => {
     setReCommentBtnType(false);
@@ -161,13 +174,13 @@ const Comment = (props) => {
   }
   
   const reCommentWrtieCheck = () => {
-    const commentRegex = /^.{1,1300}$/;
+    const commentRegex = /^.{1,1000}$/;
     
     if(reCommentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(reCommentContent)){
+    else if(!commentRegex.test(reCommentContent.replace(/\n/g, ''))){
       console.log("너무 큼");
       return false;
     }
@@ -175,7 +188,6 @@ const Comment = (props) => {
   }
 
   const reCommentWrite = () => {
-    console.log(c.conventionCommentNo);
     const checkType = reCommentWrtieCheck();
     if(!checkType) return;
     const form = new FormData();
@@ -189,7 +201,7 @@ const Comment = (props) => {
       // console.log(res);
       if(res.data){
         cancelReCommentBtn();
-        setAddedComment(!addedComment);
+        setChangedComment(!changedComment);
         setReCommentContent("");
       }
     })
@@ -197,6 +209,55 @@ const Comment = (props) => {
       console.error(err); 
     })
   }
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const editComment = () => {
+    setEditCommentContent(c.conventionCommentContent);
+    contentRef.current.style.display = "none";
+    editTextareaRef.current.style.display = "block";
+    setIsEditing(true);
+  }
+
+  const cancelEdit = () => {
+    contentRef.current.style.display = "inline";
+    editTextareaRef.current.style.display = "none";
+    setIsEditing(false);
+  }
+
+  const removeComment = () => {
+    axios.delete(`${backServer}/convention/${c.conventionCommentNo}`,)
+    .then((res) => {
+      console.log(res);
+      if(res.data){
+        setChangedComment(!changedComment);
+      }
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+    
+  }
+
+  const edit = () => {
+    const form = new FormData();
+    form.append("conventionCommentNo", c.conventionCommentNo);
+    form.append("conventionCommentContent", editCommentContent);
+    axios.patch(`${backServer}/convention`,form)
+    .then((res) => {
+      console.log(res);
+      if(res.data){
+        setChangedComment(!changedComment);
+        contentRef.current.style.display = "inline";
+        editTextareaRef.current.style.display = "none";
+        setIsEditing(false);
+      }
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+  }
+
 
   return (
     <div className="convention-comment">
@@ -210,19 +271,23 @@ const Comment = (props) => {
           <div className="convention-comment-date">
             <span>{c.conventionCommentDate.substring(0,16)}</span>
           </div>
+
+          <div className="convention-comment-is-edit">
+            <span>{c.editType === 1 ? "(수정됨)" : ""}</span>
+          </div>
         </div>
 
         <div className="convention-comment-header-zone-child2">
           <div className="convention-comment-edit">
             {c.memberNo === memberNoState ? 
-            <span className="cursor-p">수정</span>
+            <span className="cursor-p" onClick={isEditing ? edit : editComment}>{isEditing ? "완료" : "수정"}</span>
             : 
             ""}
           </div>
 
           <div className="convention-comment-delete">
           {c.memberNo === memberNoState ? 
-            <span className="cursor-p">삭제</span>
+            <span className="cursor-p" onClick={isEditing ? cancelEdit : removeComment}>{isEditing ? "취소" : "삭제"}</span>
             :
             ""
           }
@@ -231,8 +296,17 @@ const Comment = (props) => {
       </div>
 
       <div className="convention-comment-content-zone-container">
-        <span>{c.conventionCommentContent}</span>
-        <textarea id="edit-textarea" style={{display:"none"}}></textarea>
+        <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
+        <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
+        style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+          setEditCommentContent(e.target.value);
+          if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
+            editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+          }
+          else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
+            editTextareaRef.current.style.borderRadius = "30px";
+          }
+        }} ></textarea>
       </div>
 
       <div className="convention-comment-reply-container">
@@ -254,8 +328,14 @@ const Comment = (props) => {
 
       <div className="convention-comment-write-reply-container" style={{display:"none"}} ref={reCommentRef}>
         <div className="convention-comment-reply-textarea">
-          <textarea id="comment-textarea" spellCheck={false} value={reCommentContent} onChange={(e) => {
+          <textarea ref={reTextareaRef} id="comment-textarea" placeholder="답글을 작성해주세요" spellCheck={false} value={reCommentContent} onChange={(e) => {
             setReCommentContent(e.target.value);
+            if(reTextareaRef.current.scrollHeight > reTextareaRef.current.clientHeight){
+              reTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+            }
+            else if(reTextareaRef.current.scrollHeight == reTextareaRef.current.clientHeight){
+              reTextareaRef.current.style.borderRadius = "30px";
+            }
           }} ></textarea>
         </div>
         <div className="convention-comment-reply-write-btn">
@@ -270,8 +350,8 @@ const Comment = (props) => {
             <Fragment key={"reComment"+index}>
               {c.conventionCommentNo === rc.conventionCommentRef ? 
               <ReComment rc={rc} reCommentContent={reCommentContent} setReCommentContent={setReCommentContent} 
-              cancelAllReComment={cancelAllReComment} cancelAllTextareaRef={cancelAllTextareaRef}
-              conventionNo={conventionNo} addedComment={addedComment} setAddedComment={setAddedComment}
+              cancelAllReComment={cancelAllReComment}
+              conventionNo={conventionNo} changedComment={changedComment} setChangedComment={setChangedComment}
               c={c}
               />
               :
@@ -299,28 +379,83 @@ const ReComment = (props) => {
   const reCommentRef = useRef(null);
   const [reCommentContent, setReCommentContent] = useState("");
 
+  const [editCommentContent, setEditCommentContent] = useState("");
+
+  const contentRef = useRef(null);
+  const editTextareaRef = useRef(null);
+  const reTextareaRef = useRef(null);
+
   const {
     rc,
     c,
-    addedComment,
-    setAddedComment,
+    changedComment,
+    setChangedComment,
     conventionNo,
   } = props;
 
+
+
   const reCommentWrtieCheck = () => {
-    const commentRegex = /^.{1,1300}$/;
+    const commentRegex = /^.{1,1000}$/;
     
     if(reCommentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(reCommentContent)){
+    else if(!commentRegex.test(reCommentContent.replace(/\n/g, ''))){
       console.log("너무 큼");
       return false;
     }
     return true;
   }
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const editComment = () => {
+    setEditCommentContent(rc.conventionCommentContent);
+    contentRef.current.style.display = "none";
+    editTextareaRef.current.style.display = "block";
+    setIsEditing(true);
+  }
+
+  const cancelEdit = () => {
+    contentRef.current.style.display = "inline";
+    editTextareaRef.current.style.display = "none";
+    setIsEditing(false);
+  }
+
+  const removeComment = () => {
+    axios.delete(`${backServer}/convention/${rc.conventionCommentNo}`,)
+    .then((res) => {
+      console.log(res);
+      if(res.data){
+        setChangedComment(!changedComment);
+      }
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+    
+  }
+
+  const edit = () => {
+    const form = new FormData();
+    form.append("conventionCommentNo", rc.conventionCommentNo);
+    form.append("conventionCommentContent", editCommentContent);
+    axios.patch(`${backServer}/convention`,form)
+    .then((res) => {
+      console.log(res);
+      if(res.data){
+        setChangedComment(!changedComment);
+        contentRef.current.style.display = "inline";
+        editTextareaRef.current.style.display = "none";
+        setIsEditing(false);
+      }
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+  }
 
   const reCommentWrite = () => {
     const checkType = reCommentWrtieCheck();
@@ -336,7 +471,7 @@ const ReComment = (props) => {
       // console.log(res);
       if(res.data){
         cancelReCommentBtn();
-        setAddedComment(!addedComment);
+        setChangedComment(!changedComment);
         setReCommentContent("");
       }
     })
@@ -373,7 +508,7 @@ const ReComment = (props) => {
           <div className="convention-reComment-header-zone-child2">
             <div className="convention-reComment-edit">
             {rc.memberNo === memberNoState ? 
-              <span className="cursor-p">수정</span>
+              <span className="cursor-p" onClick={isEditing ? edit : editComment}>{isEditing ? "완료" : "수정"}</span>
               :
               ""
             }
@@ -381,7 +516,7 @@ const ReComment = (props) => {
 
             <div className="convention-reComment-delete">
             {rc.memberNo === memberNoState ? 
-              <span className="cursor-p">삭제</span>
+              <span className="cursor-p" onClick={isEditing ? cancelEdit : removeComment}>{isEditing ? "취소" : "삭제"}</span>
               :
               ""
             }
@@ -390,7 +525,11 @@ const ReComment = (props) => {
         </div>
 
         <div className="convention-reComment-content-zone-container">
-          <span>{rc.conventionCommentContent}</span>
+          <span ref={contentRef} id="white-space">{rc.conventionCommentContent}</span>
+          <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
+          style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+            setEditCommentContent(e.target.value);
+          }} ></textarea>
         </div>
 
         <div className="convention-reComment-reply">
@@ -399,8 +538,14 @@ const ReComment = (props) => {
 
         <div className="convention-reComment-write-reply-container" style={{display:"none"}} ref={reCommentRef}>
           <div className="convention-reComment-reply-textarea">
-            <textarea id="comment-textarea" spellCheck={false} placeholder="답글을 작성해주세요" value={reCommentContent} onChange={(e) => {
+            <textarea ref={reTextareaRef} id="comment-textarea" spellCheck={false} placeholder="답글을 작성해주세요" value={reCommentContent} onChange={(e) => {
               setReCommentContent(e.target.value);
+              if(reTextareaRef.current.scrollHeight > reTextareaRef.current.clientHeight){
+                reTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+              }
+              else if(reTextareaRef.current.scrollHeight == reTextareaRef.current.clientHeight){
+                reTextareaRef.current.style.borderRadius = "30px";
+              }
             }}></textarea>
           </div>
           <div className="convention-reComment-reply-write-btn">

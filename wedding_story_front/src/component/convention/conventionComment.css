@@ -7,12 +7,21 @@
   flex-direction: column;
 }
 
+#white-space{
+  white-space: pre-wrap;
+}
+
 @media (max-width : 1200px){
   .convention-comment-wrap .convention-reComment-reply-textarea{
     height: 120px;
-    font-size: 14px;
   }
   .convention-comment-wrap .convention-comment-reply-textarea{
+    height: 120px;
+  }
+  #comment-textarea{
+    font-size: 14px;
+  }
+  .convention-comment-wrap #edit-textarea{
     height: 120px;
     font-size: 14px;
   }
@@ -23,6 +32,13 @@
     font-size: 12px;
   }
   .convention-comment-wrap .convention-comment-reply-textarea{
+    height: 100px;
+    font-size: 12px;
+  }
+  #comment-textarea{
+    font-size: 12px;
+  }
+  .convention-comment-wrap #edit-textarea{
     height: 100px;
     font-size: 12px;
   }
@@ -41,6 +57,7 @@
   /* background-color: aqua; */
   display: flex;
   gap: 25px;
+  height: 60px;
 }
 
 .convention-comment-input-wrap{
@@ -50,26 +67,35 @@
 }
 .convention-comment-input-wrap>textarea{
   width: 100%;
-  height: 30px;
+  height: 100%;
+  /* height: 50%; */
   max-height: 40vh;
   border: none;
   font-size: 1.2em;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
   /* padding: 0 5px; */
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  /* border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px; */
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 25px;
   resize: none;
+  box-sizing: border-box;
   /* overflow: hidden; */
+}
+.convention-comment-input-wrap>textarea:focus{
+
+  border-bottom: 1px solid #ccc;
 }
 
 @media (max-width : 767px){
   .convention-comment-input-wrap>textarea{
-    height: 25px;
+    /* height: 25px; */
   }
 }
 
-
-.convention-comment-input-wrap>textarea:focus{
-  border-bottom: 1px solid #ccc;
-}
 
 .convention-comment-write-btn-zone{
   width: 15%;
@@ -77,6 +103,10 @@
   text-align: center;
   /* background-color: bisque; */
 }
+/* .convention-comment-write-wrap .convention-comment-input-wrap:focus-within ~ .convention-comment-write-btn-zone {
+  align-self: center;
+} */
+
 .convention-comment-write-btn-zone>button{
   width: 100%;
   max-width: 100px;
@@ -101,9 +131,14 @@
   /* overflow-y: hidden; */
   /* overflow-x: hidden; */
 }
+@media (max-width: 1200px){
+  .convention-comment-list-wrap{
+    font-size: 15px;
+  }
+}
 @media (max-width: 800px){
   .convention-comment-list-wrap{
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
@@ -165,6 +200,12 @@
 .convention-comment-header-zone-child1>.convention-comment-date>span{
   color: #989898;
 }
+.convention-comment-header-zone-child1>.convention-comment-is-edit{
+  margin-left: 2%;
+}
+.convention-comment-header-zone-child1>.convention-comment-is-edit>span{
+  color: #989898;
+}
 .convention-comment-reply-container{
   width: 100%;
   /* background-color: aquamarine; */
@@ -223,7 +264,7 @@
   border-radius: 30px;
   padding-top: 10px;
   padding-bottom: 5px;
-  padding-left: 10px;
+  padding-left: 25px;
   resize: none;
   box-sizing: border-box;
 }
@@ -363,7 +404,6 @@
   padding-top: 10px;
   padding-bottom: 5px;
   padding-left: 10px;
-  box-sizing: border-box;
   /* background-color: #8089d9; */
 }
 
@@ -390,11 +430,19 @@
 
 
 
-
-
-
-
-
+/* 수정시 textarea */
+#edit-textarea{
+  width: 80%;
+  height: 120px;
+  font-size: 1.2em;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  resize: none;
+  box-sizing: border-box;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
 
 
 

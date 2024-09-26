@@ -213,8 +213,21 @@ public class ConventionService {
         return commentMap;
     }
 
+    @Transactional
     public Boolean insertconventionComment(ConventionCommentDTO conventionComment) {
         int result = conventionDao.insertConventionComment(conventionComment);
+        return result == 1;
+    }
+
+    @Transactional
+    public Boolean deleteConventionComment(int conventionCommentNo) {
+        int result = conventionDao.deleteConventionComment(conventionCommentNo);
+        return result == 1;
+    }
+
+    @Transactional
+    public Boolean updateConventionComment(ConventionCommentDTO conventionComment) {
+        int result = conventionDao.updateConventionComment(conventionComment);
         return result == 1;
     }
 
