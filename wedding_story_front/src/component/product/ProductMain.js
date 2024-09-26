@@ -8,6 +8,7 @@ import ProductInfo from "./ProductInfo";
 import ProductWeddingHall from "./ProductWeddingHall";
 import WeddingHallList from "./WeddingHallList";
 import WeddingHallInfo from "./WeddingHallInfo";
+import Report from "./Report";
 const ProductMain = () => {
   return (
     <Routes>
@@ -19,6 +20,7 @@ const ProductMain = () => {
       <Route path="hallInfo" element={<WeddingHallInfo />} />
       <Route path="counsel" element={<Counsel />} />
       <Route path="pay" element={<ProductPay />} />
+      <Route path="report" element={<Report />} />
     </Routes>
   );
 };
