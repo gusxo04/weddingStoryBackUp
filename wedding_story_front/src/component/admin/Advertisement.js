@@ -53,7 +53,7 @@ const Advertisement = () => {
             </tr>
           </thead>
           <tbody>
-            <InProgress activeAd={activeAd} setActiveAd={setActiveAd} />
+            {/* <InProgress activeAd={activeAd} setActiveAd={setActiveAd} /> */}
           </tbody>
         </table>
       </div>
@@ -71,7 +71,7 @@ const Advertisement = () => {
             </tr>
           </thead>
           <tbody>
-            <Upcomming activeAd={activeAd} setActiveAd={setActiveAd} />
+            {/* <Upcomming activeAd={activeAd} setActiveAd={setActiveAd} /> */}
           </tbody>
         </table>
       </div>
@@ -89,7 +89,7 @@ const Advertisement = () => {
             </tr>
           </thead>
           <tbody>
-            <InProgress activeAd={activeAd} setActiveAd={setActiveAd} />
+            {/* <InProgress activeAd={activeAd} setActiveAd={setActiveAd} /> */}
           </tbody>
         </table>
       </div>
@@ -107,7 +107,7 @@ const Advertisement = () => {
             </tr>
           </thead>
           <tbody>
-            <InProgress activeAd={activeAd} setActiveAd={setActiveAd} />
+            {/* <InProgress activeAd={activeAd} setActiveAd={setActiveAd} /> */}
           </tbody>
         </table>
       </div>
@@ -115,75 +115,77 @@ const Advertisement = () => {
   );
 };
 
-const InProgress = ({ activeAd }) => {
-  return (
-    <>
-      {activeAd.length > 0 ? (
-        activeAd.map((ad) => (
-          <tr key={ad.advertisementNo}>
-            <td>{ad.company.companyName}</td>
-            <td>{ad.adRank}</td>
-            <td>{ad.adStart}</td>
-            <td>{ad.adEnd}</td>
-            <td>
-              <button>수정</button>
-            </td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="5">업체가 없습니다.</td>
-        </tr>
-      )}
-    </>
-  );
-};
+// const InProgress = ({ activeAd }) => {
+//   return (
+//     <>
+//       {activeAd.length > 0 ? (
+//         activeAd.map((ad) => (
+//           <tr key={ad.advertisementNo}>
+//             <td>{ad.company.companyName}</td>
+//             <td>{ad.adRank}</td>
+//             <td>{ad.adStart}</td>
+//             <td>{ad.adEnd}</td>
+//             <td>
+//               <button>수정</button>
+//             </td>
+//           </tr>
+//         ))
+//       ) : (
+//         <tr>
+//           <td colSpan="5">업체가 없습니다.</td>
+//         </tr>
+//       )}
+//     </>
+//   );
+// };
 
-const PendingApproval = ({ activeAd }) => {
-  return (
-    <>
-      {adyet.length > 0 ? (
-        adyet.map((ad) => (
-          <tr key={ad.advertisementNo}>
-            <td>{ad.company.companyName}</td>
-            <td>{ad.adRank}</td>
-            <td>{ad.adStart}</td>
-            <td>{ad.adEnd}</td>
-            <td>
-              <button>수정</button>
-            </td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="5">업체가 없습니다.</td>
-        </tr>
-      )}
-    </>
-  );
-};
+// const PendingApproval = (props) => {
+//   const adyet = props.adyet;
+//   return (
+//     <>
+//       {adyet.length > 0 ? (
+//         adyet.map((ad) => (
+//           <tr key={ad.advertisementNo}>
+//             <td>{ad.company.companyName}</td>
+//             <td>{ad.adRank}</td>
+//             <td>{ad.adStart}</td>
+//             <td>{ad.adEnd}</td>
+//             <td>
+//               <button>수정</button>
+//             </td>
+//           </tr>
+//         ))
+//       ) : (
+//         <tr>
+//           <td colSpan="5">업체가 없습니다.</td>
+//         </tr>
+//       )}
+//     </>
+//   );
+// };
 
-const Upcomming = ({ activeAd }) => {
-  return (
-    <>
-      {adyet.length > 0 ? (
-        adyet.map((ad) => (
-          <tr key={ad.advertisementNo}>
-            <td>{ad.company.companyName}</td>
-            <td>{ad.adRank}</td>
-            <td>{ad.adStart}</td>
-            <td>{ad.adEnd}</td>
-            <td>
-              <button>수정</button>
-            </td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="5">업체가 없습니다.</td>
-        </tr>
-      )}
-    </>
-  );
-};
+// const Upcomming = (props) => {
+//   const adwait = props.adwait;
+//   return (
+//     <>
+//       {adwait.length > 0 ? (
+//         adwait.map((ad) => (
+//           <tr key={ad.advertisementNo}>
+//             <td>{ad.company.companyName}</td>
+//             <td>{ad.adRank}</td>
+//             <td>{ad.adStart}</td>
+//             <td>{ad.adEnd}</td>
+//             <td>
+//               <button>수정</button>
+//             </td>
+//           </tr>
+//         ))
+//       ) : (
+//         <tr>
+//           <td colSpan="5">업체가 없습니다.</td>
+//         </tr>
+//       )}
+//     </>
+//   );
+// };
 export default Advertisement;

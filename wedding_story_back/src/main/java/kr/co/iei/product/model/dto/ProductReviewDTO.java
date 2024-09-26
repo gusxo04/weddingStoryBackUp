@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value = "product")
+@Alias(value = "productReview")
 public class ProductReviewDTO {
 	private int productCommentNo;	//리뷰번호
 	private int productNo;	//상품번호
