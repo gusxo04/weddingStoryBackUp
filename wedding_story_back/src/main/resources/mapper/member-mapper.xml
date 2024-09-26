@@ -69,4 +69,9 @@
 	<select id="checkBusinessNo" resultType="String">
 		select company_no from member where company_business_no=#{companyBusinessNo}
 	</select>
+	
+	<select id="selectMemberConsult" resultType="member">
+		select member_name, member_phone from member where member_no=#{memberNo} 
+	</select>
+	
 </mapper>

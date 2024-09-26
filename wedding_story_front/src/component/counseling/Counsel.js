@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./counsel.css";
 import { useRecoilState } from "recoil";
+import { loginIdState } from "../utils/RecoilData";
 
 const Counsel = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  const params = useParams();
-  const memberNo = params.memberNo;
+  const [memberNo, setMemberNo] = useRecoilState(loginIdState);
   const [member, setMember] = useState({
     memberName: "",
     memberPhone: "",
   });
+  //console.log(memberNo);
 
   const [consult, setConsult] = useState({
     consultDate: "",
@@ -22,38 +23,27 @@ const Counsel = () => {
     consultWrite: "",
   });
   const [isDateUndefined, setIsDateUndefined] = useState(false);
-
-  const changeMember = (e) => {
-    const { name, value } = e.target;
-    setMember({ ...member, [name]: value });
-  };
-
   const changeConsult = (e) => {
     const { name, value } = e.target;
     setConsult({ ...consult, [name]: value });
   };
   useEffect(() => {
+    console.log(memberNo);
     axios
-      .get(`${backServer}/member/memberNo/${memberNo}`)
+      .get(`${backServer}/consult/memberNo/${memberNo}`)
       .then((res) => {
         setMember({
+          ...member,
           memberName: res.data.memberName,
           memberPhone: res.data.memberPhone,
         });
         console.log(res);
+        //console.log(member);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-  // const handleReservation = (e) => {
-  //   e.preventDefault();
-  //   if (!isDateUndefined && !consult.reservation) {
-  //     alert("예식 예정일을 선택해주세요.");
-  //     return;
-  //   }
-  // };
 
   const requestData = {
     ...consult,
@@ -85,6 +75,7 @@ const Counsel = () => {
         console.error(err);
       });
   };
+
   const tomorrow = () => {
     const date = new Date();
     date.setDate(date.getDate() + 1);
@@ -98,6 +89,7 @@ const Counsel = () => {
         onSubmit={(e) => {
           e.preventDefault();
           consultForm();
+          navigate("/");
         }}
       >
         <Link to="/">
@@ -113,9 +105,7 @@ const Counsel = () => {
                 type="text"
                 name="memberName"
                 id="memberName"
-                value={member.memberName}
-                onChange={changeMember}
-                required
+                defaultValue={member.memberName}
               />
             </div>
           </div>
@@ -129,8 +119,6 @@ const Counsel = () => {
                 name="memberPhone"
                 id="memberPhone"
                 value={member.memberPhone}
-                onChange={changeMember}
-                required
               />
             </div>
           </div>

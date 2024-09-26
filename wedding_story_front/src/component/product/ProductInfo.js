@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import ProductReview from "./ProductReview";
 // Assuming you have necessary imports for Viewer and any other components
 
 const ProductInfo = () => {
@@ -87,29 +88,15 @@ const ProductInfo = () => {
           )}
         </div>
         <br />
-        <div className="product-reviews">
-          <h3>리뷰</h3>
-          {productComment.review && productComment.review.length > 0 ? (
-            productComment.review.map((review, index) => (
-              <div key={index} className="review-item">
-                <div className="review-Date">{review.creationDate}</div>
-                <div className="review-rating">⭐️ {review.rating} / 5</div>
-                <div className="review-text">{review.review}</div>
-              </div>
-            ))
-          ) : (
-            <p>리뷰가 없습니다.</p>
-          )}
-        </div>
+        <ProductReview />
         <br />
         <div className="product-faq">
           <h3>FAQ</h3>
         </div>
         <br />
         <div className="product-map-view">
-          {/* Assuming you have a Map component to display the company location */}
           <h3>회사 위치</h3>
-          {/* Placeholder for map component; integrate your Map API here */}
+          {/* 지도 구성 요소에 대한 자리 표시자입니다. 여기에 지도 API를 통합하세요 */}
           {/* <MapComponent location={product.companyLocation} /> */}
         </div>
       </div>
