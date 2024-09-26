@@ -46,10 +46,10 @@ const ProductInfo = () => {
           </div>
           <div className="product-view-preview">
             <div className="prduct-report">
-              <Link to="/">
+              <Link to="/product/list">
                 <h5>뒤로가기/</h5>
               </Link>
-              <Link>
+              <Link to="/report">
                 <h5>신고하기</h5>
               </Link>
             </div>
