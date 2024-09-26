@@ -28,7 +28,6 @@ import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin("*")
@@ -147,6 +146,13 @@ public class ConventionController {
     public ResponseEntity<Boolean> writeComment(@ModelAttribute ConventionCommentDTO conventionComment) {
         Boolean result = conventionService.insertconventionComment(conventionComment);
         
+        return ResponseEntity.ok(result);
+    }
+    
+
+    @PostMapping("/reComment")
+    public ResponseEntity<Boolean> writeReComment(@ModelAttribute ConventionCommentDTO conventionComment) {
+        Boolean result = conventionService.insertconventionComment(conventionComment);
         return ResponseEntity.ok(result);
     }
     

@@ -13,6 +13,8 @@
 }
 .header-content {
   width: 1200px;
+  /* width: 75%; */
+  /* background-color: #808080; */
   height: 100%;
 }
 .header-link {

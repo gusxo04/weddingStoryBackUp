@@ -20,24 +20,29 @@
 
 .convention-comment-input-wrap{
   width: 85%;
-  height: 50px;
+  /* height: 100px; */
   /* background-color: aquamarine; */
 }
-.convention-comment-input-wrap>input{
+.convention-comment-input-wrap>textarea{
   width: 100%;
   height: 30px;
+  max-height: 40vh;
   border: none;
   font-size: 1.2em;
   border-bottom: 1px solid #ccc;
   padding: 0 5px;
+  resize: none;
+  /* overflow: hidden; */
 }
-.convention-comment-input-wrap>input:focus{
-  border-bottom: 1px solid #bbb;
+
+
+.convention-comment-input-wrap>textarea:focus{
+  border-bottom: 1px solid #ccc;
 }
 
 .convention-comment-write-btn-zone{
   width: 15%;
-  height: 50px;
+  /* height: 50px; */
   text-align: center;
   /* background-color: bisque; */
 }
@@ -216,6 +221,11 @@
   width: 35px;
 }
 
+.convention-reComment>.convention-reComment-content-zone-container{
+  width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+}
 
 .convention-reComment-header-zone-container>.convention-reComment-header-zone-child1>.convention-reComment-date>span{
   color: #989898;
@@ -229,9 +239,33 @@
   color: #989898;
 }
 
+.convention-reComment-write-reply-container{
+  width: 100%;
+  height: 50px;
+  background-color: #8089d9;
+}
 
+.convention-reComment-reply-textarea{
+  width: 80%;
+  background-color: aliceblue;
+}
 
+.convention-reComment-reply-textarea>textarea{
+  width: 100%;
+  height: 30px;
+  max-height: 40vh;
+  border: none;
+  margin-top: 10px;
+  font-size: 1.2em;
+  border-bottom: 1px solid #ccc;
+  padding: 0 5px;
+  resize: none;
+}
 
+.convention-reComment-reply-write-btn{
+  width: 20%;
+  background-color: #989898;
+}
 
 
 

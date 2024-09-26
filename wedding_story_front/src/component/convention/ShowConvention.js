@@ -39,6 +39,7 @@ const ShowConvention = (props) => {
   const [commentContent, setCommentContent] = useState("");
   const [comment, setComment] = useState([]);
   const [addedComment, setAddedComment] = useState(true);
+  const [reCommentContent, setReCommentContent] = useState("");
 
   useEffect(() => {
     // 댓글 조회하기 (박람회가 있을 경우에만 댓글 조회가 가능하기 때문에 showConvention 안에서 만들어도 됨)
@@ -213,6 +214,7 @@ const ShowConvention = (props) => {
       setCommentContent={setCommentContent} commentContent={commentContent} 
       comment={comment} setComment={setComment} 
       addedComment={addedComment} setAddedComment={setAddedComment}
+      reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}
       />
     </div>
   )

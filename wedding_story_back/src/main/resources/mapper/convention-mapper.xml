@@ -86,7 +86,17 @@
     </select>
 
     <insert id="insertConventionComment">
-        insert into convention_comment values(convention_comment_seq.nextval, #{memberNo}, #{conventionNo}, #{conventionCommentContent}, 0, sysdate, null)
+        insert into convention_comment values(convention_comment_seq.nextval, #{memberNo}, #{conventionNo}, #{conventionCommentContent}, 0, sysdate, 
+        <choose>
+            <when test="conventionCommentRef == 0">
+            null
+            </when>
+
+            <when test="conventionCommentRef != 0">
+            #{conventionCommentRef}
+            </when>
+        </choose>
+        )
     </insert>
 
 </mapper>
