@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.advertisement.model.dao.CompanyDao">
+  <select id="activeAd">
+  	select * from advertisement where advertisement_state=2
+  </select>
+  <select id="endAd">
+  	select * from advertisement where advertisement_state=3
+  </select>
+  <select id="yetAd">
+  	select * from advertisement where advertisement_state=1
+  </select>
+  <select id="waitAd">
+  	select * from advertisement where advertisement_state=0
+  </select>
+</mapper>
+
+  

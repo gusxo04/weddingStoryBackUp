@@ -3,7 +3,7 @@ import "./advertisement.css";
 import axios from "axios";
 const Advertisement = () => {
   const [Advertisement, setAdvertisement] = useState([]);
-  const [ading, setAding] = useState([]); //광고중
+  const [activeAd, setActiveAd] = useState([]); //광고중
 
   const [adend, setAdend] = useState([]); //광고 종료
 
@@ -15,22 +15,22 @@ const Advertisement = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/admin/advertisement`)
+      .get(`${backServer}/advertisement/advertisement`)
       .then((res) => {
         console.log(res.data);
         if (res.data) {
-          setAding(Object.values(res.data.list));
+          setActiveAd(Object.values(res.data.list));
         } else {
-          console.log("진행중인 관고 없음");
-          setAding([]);
+          console.log("진행중인 광고 없음");
+          setActiveAd([]);
         }
       })
       .catch((err) => {
         console.log(err);
         console.log("진행중인 광고 조회 에러");
-        setAding([]);
+        setActiveAd([]);
       });
-  }, [ading, adend, adwait]);
+  }, []);
   return (
     <div className="advertisement-wrap">
       <div className="page-title">
