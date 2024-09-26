@@ -327,7 +327,7 @@
   width: 67%;
   margin-left: 3%;
   display: flex;
-  gap: 15px;
+  /* gap: 15px; */
 }
 
 .convention-reComment>.convention-reComment-header-zone-container>.convention-reComment-header-zone-child2{
@@ -359,10 +359,19 @@
   margin-top: 5px;
 }
 
+.convention-reComment-header-zone-container>.convention-reComment-header-zone-child1>.convention-reComment-date{
+  margin-left: 2%;
+}
 .convention-reComment-header-zone-container>.convention-reComment-header-zone-child1>.convention-reComment-date>span{
   color: #989898;
 }
 
+.convention-reComment-header-zone-child1>.convention-reComment-is-edit{
+  margin-left: 2%;
+}
+.convention-reComment-header-zone-child1>.convention-reComment-is-edit>span{
+  color: #989898;
+}
 
 .convention-reComment-header-zone-child2>.convention-comment-reply{
 
