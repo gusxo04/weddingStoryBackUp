@@ -25,94 +25,137 @@ const CompanyHeader = () => {
         </div>
       </div>
       <div className="header-c-content">
-        <ul>
-          <li>
-            {companyNo ? (
+        {companyNo !== null ? (
+          <ul>
+            <li>
               <Link to="/company/product" className="nav-item">
                 <div>
                   <span className="material-icons">view_in_ar</span>
                 </div>
                 <span>상품관리</span>
               </Link>
-            ) : (
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">account_box</span>
+                </div>
+                <span>고객관리</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">event</span>
+                </div>
+                <span>상담일정</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">date_range</span>
+                </div>
+                <span>진행일정</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">local_atm</span>
+                </div>
+                <span>매출관리</span>
+              </Link>
+            </li>
+            <li className="info-menu" onClick={toggleDropdown}>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">settings</span>
+                </div>
+                <span>사용자관리</span>
+              </Link>
+              {isDropdownOpen && (
+                <ul className="down-menu-bar" style={{}}>
+                  <li>
+                    <Link to="/company/Info" className="down-menu">
+                      내 업체 정보
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/company/JoinUpdate" className="down-menu">
+                      업체 정보 수정
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/company/Info" className="down-menu">
+                      광고 요청
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+          </ul>
+        ) : (
+          <ul>
+            <li>
               <Link to="#" className="nav-item">
                 <div>
                   <span className="material-icons">view_in_ar</span>
                 </div>
                 <span>상품관리</span>
               </Link>
-            )}
-          </li>
-          <li>
-            <Link to="#" className="nav-item">
-              <div>
-                <span className="material-icons">account_box</span>
-              </div>
-              <span>고객관리</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="#" className="nav-item">
-              <div>
-                <span className="material-icons">event</span>
-              </div>
-              <span>상담일정</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="#" className="nav-item">
-              <div>
-                <span className="material-icons">date_range</span>
-              </div>
-              <span>진행일정</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="#" className="nav-item">
-              <div>
-                <span className="material-icons">local_atm</span>
-              </div>
-              <span>매출관리</span>
-            </Link>
-          </li>
-          <li className="info-menu" onClick={toggleDropdown}>
-            <Link to="#" className="nav-item">
-              <div>
-                <span className="material-icons">settings</span>
-              </div>
-              <span>사용자관리</span>
-            </Link>
-            {isDropdownOpen && (
-              <ul className="down-menu-bar" style={{}}>
-                <li>
-                  <Link to="/company/Info" className="down-menu">
-                    내 업체 정보
-                  </Link>
-                </li>
-                <li>
-                  {companyNo !== null ? (
-                    <Link to="/company/JoinUpdate" className="down-menu">
-                      업체 정보 수정
-                    </Link>
-                  ) : (
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">account_box</span>
+                </div>
+                <span>고객관리</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">event</span>
+                </div>
+                <span>상담일정</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">date_range</span>
+                </div>
+                <span>진행일정</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">local_atm</span>
+                </div>
+                <span>매출관리</span>
+              </Link>
+            </li>
+            <li className="info-menu" onClick={toggleDropdown}>
+              <Link to="#" className="nav-item">
+                <div>
+                  <span className="material-icons">settings</span>
+                </div>
+                <span>사용자관리</span>
+              </Link>
+              {isDropdownOpen && (
+                <ul className="down-menu-bar" style={{}}>
+                  <li>
                     <Link to="/company/Join" className="down-menu">
                       업체 등록
                     </Link>
-                  )}
-                </li>
-                {companyNo !== null ? (
-                  <li>
-                    <Link to="/company/advertisement" className="down-menu">
-                      광고 요청
-                    </Link>
                   </li>
-                ) : (
-                  <></>
-                )}
-              </ul>
-            )}
-          </li>
-        </ul>
+                </ul>
+              )}
+            </li>
+          </ul>
+        )}
       </div>
     </header>
   );
