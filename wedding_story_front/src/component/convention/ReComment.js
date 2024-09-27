@@ -2,6 +2,7 @@ import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
 import { useRef, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ReComment = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -36,14 +37,22 @@ const ReComment = (props) => {
     if(editComment) testCommentContet = editCommentContent;
     else testCommentContet = reCommentContent;
     
-    const commentRegex = /^.{1,1000}$/;
+    const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(testCommentContet.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(testCommentContet.replace(/\n/g, ''))){
-      console.log("너무 큼");
+    // else if(!commentRegex.test(testCommentContet.replace(/\n/g, ''))){
+    else if(!commentRegex.test(testCommentContet)){
+      Swal.fire({
+        title : "박람회 댓글",
+        text : "너무 많은 내용을 입력하셨습니다",
+        icon : "warning",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
       return false;
     }
     return true;

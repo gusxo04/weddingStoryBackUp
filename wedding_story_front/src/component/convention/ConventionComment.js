@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { loginNoState } from "../utils/RecoilData";
 import Comment from './Comment';
+import Swal from "sweetalert2";
 
 const ConventionComment = (props) => {
 
@@ -26,15 +27,22 @@ const ConventionComment = (props) => {
 
 const writeCheck = () => {
   
-    const commentRegex = /^.{0,1000}$/;
+    const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(commentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(commentContent.replace(/\n/g, ''))){
-      console.log(commentContent);
-      console.log("너무 큼");
+    // else if(!commentRegex.test(commentContent.replace(/\n/g, ''))){
+    else if(!commentRegex.test(commentContent)){
+      Swal.fire({
+        title : "박람회 댓글",
+        text : "너무 많은 내용을 입력하셨습니다",
+        icon : "warning",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
       return false;
     }
     return true;

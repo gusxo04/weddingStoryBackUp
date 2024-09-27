@@ -46,7 +46,7 @@
 
 .convention-comment-list-zone{
   /* margin-bottom: 20px; */
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .cursor-p{
@@ -198,19 +198,17 @@
   line-height: var(--lineHeight);
   /* height: calc(var(--lineHeight) * 5); */
   width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
   word-wrap: break-word;
   word-break: break-all;
-  overflow: hidden;
-  
-  /* background-color: black; */
 
 }
-.convention-comment>.convention-comment-content-zone-container.show{
-  height: auto;
-}
+
 .convention-comment>.convention-comment-content-zone-container>span{
-  text-overflow: clip;
+
 }
+
 .convention-comment-header-zone-child1>.convention-comment-date>span{
   color: #989898;
 }

@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
 import axios from "axios";
 import ReComment from './ReComment';
+import Swal from "sweetalert2";
 
 const Comment = (props) => {
 
@@ -34,25 +35,6 @@ const Comment = (props) => {
   } = props;
 
 
-// 더보기 체크
-  // const [lines, setLines] = useState(0);
-  // let text;
-  // useEffect(() => {
-  //   contentRef.current.style.color = "black";
-  //   text = c.conventionCommentContent.split('\n');
-  //   setLines(text.length);
-  // }, [changedComment]);
-  // console.log(index+"text 줄",lines);
-
-  // if(lines > 5){
-  //   contentRef.current.style.color = "red";
-  // }
-
-
-
-
-
-
   const reCommentBtn = () => {
     setReCommentBtnType(false);
     // contentContainerRef.current.style.height = "150px";
@@ -72,14 +54,23 @@ const Comment = (props) => {
     if(editComment) testCommentContent = editCommentContent;
     else testCommentContent = reCommentContent;
 
-    const commentRegex = /^.{1,1000}$/;
+    const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(testCommentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(testCommentContent.replace(/\n/g, ''))){
+    // else if(!commentRegex.test(testCommentContent.replace(/\n/g, ''))){
+    else if(!commentRegex.test(testCommentContent)){
       console.log("너무 큼");
+      Swal.fire({
+        title : "박람회 댓글",
+        text : "너무 많은 내용을 입력하셨습니다",
+        icon : "warning",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
       return false;
     }
     return true;
