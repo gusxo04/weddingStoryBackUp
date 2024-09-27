@@ -503,3 +503,9 @@
 .long-convention-reComment>span{
   color: #6c6c6c ;
 }
+
+
+/* 답글일때 수정 textarea */
+.convention-reComment-content-edit-zone-container{
+  margin-left: 3%;
+}
