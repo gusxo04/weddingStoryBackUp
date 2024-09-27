@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -20,6 +20,8 @@ const ReComment = (props) => {
   const editTextContainerRef = useRef(null);
   const reTextareaRef = useRef(null);
   const contentContainerRef = useRef(null);
+  const lineTypeRef = useRef(null);
+  const longContentRef = useRef(null);
 
   const {
     rc,
@@ -153,6 +155,17 @@ const ReComment = (props) => {
   }
 
   const reCommentLineHeight = 20;
+
+  const [isOverFlowing, setIsOverFlowing] = useState(false);
+  
+  useEffect(() => {
+    setIsOverFlowing(false);
+    if(rc.conventionCommentContent.split("\n").length > 5 || (contentContainerRef.current && contentContainerRef.current.offsetHeight > 100)){
+      setIsOverFlowing(true);
+      setLineType(false);
+      contentContainerRef.current.style.height = reCommentLineHeight*5 +"px";
+    }
+  }, [rc]);
   
 
   return (
@@ -194,7 +207,7 @@ const ReComment = (props) => {
 
 
 
-        {rc.conventionCommentContent.split("\n").length > 5 ? 
+        {isOverFlowing ? 
         <>
 
           <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : reCommentLineHeight*5 +"px"}}>
@@ -214,13 +227,13 @@ const ReComment = (props) => {
             }} ></textarea>
           </div>
 
-          <div className="long-convention-reComment">
-            <span className="cursor-p" onClick={() => {
+          <div className="long-convention-reComment" ref={longContentRef}>
+            <span className="cursor-p" ref={lineTypeRef} onClick={() => {
               if(lineType){
                 contentContainerRef.current.style.height = reCommentLineHeight*5 +"px";
               }
               else{
-                contentContainerRef.current.style.height = reCommentLineHeight*rc.conventionCommentContent.split("\n").length +"px";
+                contentContainerRef.current.style.height = "auto"
               }
               setLineType(!lineType);
             }}>{lineType ? "간략히" : "자세히 보기"}</span>
@@ -228,7 +241,7 @@ const ReComment = (props) => {
         </>
           : 
           <>
-            <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : reCommentLineHeight*rc.conventionCommentContent.split("\n").length +"px"}}>
+            <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : "auto"}}>
               <span ref={contentRef} id="white-space">{rc.conventionCommentContent}</span>
             </div>
 

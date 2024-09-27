@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
 import axios from "axios";
@@ -21,6 +21,8 @@ const Comment = (props) => {
   const editTextareaRef = useRef(null);
   const editTextContainerRef = useRef(null);
   const reTextareaRef = useRef(null);
+  const lineTypeRef = useRef(null);
+  const longContentRef = useRef(null);
   
   const{
     c,
@@ -109,6 +111,8 @@ const Comment = (props) => {
     editTextareaRef.current.style.display = "block";
     setIsEditing(true);
   }
+
+  
   
   const cancelEdit = () => {
     contentRef.current.style.display = "inline";
@@ -156,6 +160,39 @@ const Comment = (props) => {
   }
   const commentLineHeight = 20;
 
+  // useEffect(() => {
+  //   setLineType(false);
+  //   // console.log(contentRef.current.offsetHeight);
+  //   if(lineTypeRef.current && lineTypeRef.current.textContent === "간략히"){
+  //     lineTypeRef.current.click();
+  //   }
+  // }, [changedComment]);
+
+
+  // useEffect(() => {
+  //   console.log(c);
+  //   console.log(contentContainerRef.current);
+  //   if(contentContainerRef.current && contentContainerRef.current.offsetHeight > 100){
+  //     longContentRef.current.style.display = "block";
+  //     contentContainerRef.current.style.height = "100px";
+  //   }
+  //   else if(contentContainerRef.current && contentContainerRef.current.offsetHeight <= 100){
+  //     contentContainerRef.current.style.height = "auto";
+  //     longContentRef.current.style.display = "none";
+  //   }
+  // }, [c]);
+  
+  const [isOverFlowing, setIsOverFlowing] = useState(false);
+  
+  useEffect(() => {
+    setIsOverFlowing(false);
+    if(c.conventionCommentContent.split("\n").length > 5 || (contentContainerRef.current && contentContainerRef.current.offsetHeight > 100)){
+      setIsOverFlowing(true);
+      setLineType(false);
+      contentContainerRef.current.style.height = commentLineHeight*5 +"px";
+    }
+  }, [c]);
+
   return (
     <div className="convention-comment">
       <div className="convention-comment-header-zone-container">
@@ -194,11 +231,10 @@ const Comment = (props) => {
 
       
 
-
-
-      {c.conventionCommentContent.split("\n").length > 5 ? 
+      {/* {c.conventionCommentContent.split("\n").length > 5 ?  */}
+      {isOverFlowing ?
       <>
-        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*5 +"px"}}>
+        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*5 +"px"}} >
           <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
         </div>
 
@@ -214,40 +250,45 @@ const Comment = (props) => {
             }
           }} ></textarea>
         </div>
+
         
-        <div className="long-convention-comment" >
-          <span className="cursor-p" onClick={() => {
+        <div className="long-convention-comment" ref={longContentRef} >
+          <span className="cursor-p" ref={lineTypeRef} onClick={() => {
             if(lineType){
               contentContainerRef.current.style.height = commentLineHeight*5 +"px";
             }
             else{
-              contentContainerRef.current.style.height = commentLineHeight*c.conventionCommentContent.split("\n").length +"px";
+              // contentContainerRef.current.style.height = commentLineHeight*c.conventionCommentContent.split("\n").length +"px";
+              contentContainerRef.current.style.height = "auto";
             }
             setLineType(!lineType);
           }}>{lineType ? "간략히" : "자세히 보기"}</span>
         </div>
       </>
-        : 
-        <>
-          <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*c.conventionCommentContent.split("\n").length +"px"}}>
-            <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
-          </div>
+      : 
+      <>
+        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height:"auto"}}>
+          <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
+        </div>
 
-          <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
-            <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
-            style={{display:"none"}} value={editCommentContent} onChange={(e) => {
-              setEditCommentContent(e.target.value);
-              if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
-                editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
-              }
-              else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
-                editTextareaRef.current.style.borderRadius = "30px";
-              }
-            }} ></textarea>
-          </div>
-        </>
-
+        <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
+          <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
+          style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+            setEditCommentContent(e.target.value);
+            if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
+              editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+            }
+            else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
+              editTextareaRef.current.style.borderRadius = "30px";
+            }
+          }} ></textarea>
+        </div>
+      </>
       }
+
+        
+
+      
 
       <div className="convention-comment-reply-container">
         <div className="convention-comment-reply">

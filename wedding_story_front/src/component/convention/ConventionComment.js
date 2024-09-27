@@ -79,8 +79,6 @@ const writeCheck = () => {
     setIsOpenReComment((prev) => ({...prev, [e]: !prev[e]}))
   }
 
-  // const cancelAllTextareaRef = useRef(null);
-
 
   return (
     
@@ -111,29 +109,17 @@ const writeCheck = () => {
         <div className="convention-comment-show">
           {/* c는 comment고 rc는 reComment */}
           {comment.commentList?.map((c,index) => {
-              const cancelAllReComment = () => {
-                // cancelAllTextareaRef.current.style.display = "none";
-              }
+
+
+            
             return (
               <div className="convention-comment-list-zone" key={"comment"+index}>
                 <Comment c={c} comment={comment} index={index} 
                 getReComment={getReComment} isOpenReComment={isOpenReComment} 
                 reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}
-                cancelAllReComment={cancelAllReComment} 
                 changedComment={changedComment} setChangedComment={setChangedComment}
                 conventionNo={convention.conventionNo}
                 />
-                
-                {/* {c.reCommentList?.map((rc, index) => {
-                  console.log("dssdsd"+c);
-                  console.log(rc);
-                  return (
-                    // {comment.conventionCommentNo === reComment.conventionCommentRef ?  : ""}
-                    <div key={"reComment"+index} className="convention-reComment">
-                      {rc.conventionCommentContent}
-                    </div>
-                  )
-                })} */}
               </div>
             )
           })}

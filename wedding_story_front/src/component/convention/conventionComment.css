@@ -202,11 +202,16 @@
   overflow-x: hidden;
   word-wrap: break-word;
   word-break: break-all;
+    /* display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical; */
+  text-overflow: clip;
 
 }
 
 .convention-comment>.convention-comment-content-zone-container>span{
-
+  width: 100%;
+  display: block;
 }
 
 .convention-comment-header-zone-child1>.convention-comment-date>span{
