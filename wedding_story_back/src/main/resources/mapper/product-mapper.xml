@@ -16,6 +16,12 @@
   </select>
   
   <insert id="insertProduct">
-  	insert into product values(product_seq.nextval,#{companyNo},#{productName},#{productImg},#{productContent},#{productPrice},#{productThumb},#{coronation},#{diningRoom},#{numberPeople})
+  	insert into product values(product_seq.nextval,#{companyNo},#{productName},#{productImg},#{productContent},#{productPrice},null,#{coronation},#{diningRoom},#{numberPeople})
+  	<selectKey resultType="int" keyProperty="productNo" order="AFTER">
+  		select max(product_no) from product  
+  	</selectKey> 
+  </insert>
+  <insert id="insertProductFile">
+  	insert into product_file values (product_File_seq.nextval,#{productNo},#{fileName},#{filePath})
   </insert>
 </mapper>

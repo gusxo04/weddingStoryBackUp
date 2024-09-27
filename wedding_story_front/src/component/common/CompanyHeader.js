@@ -82,7 +82,7 @@ const CompanyHeader = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/company/JoinUpdate" className="down-menu">
+                    <Link to="/company/info/update" className="down-menu">
                       업체 정보 수정
                     </Link>
                   </li>
