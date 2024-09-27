@@ -194,16 +194,19 @@
 
 .convention-comment>.convention-comment-content-zone-container{
   /* background-color: #bbb; */
+  --lineHeight : 20px;
+  line-height: var(--lineHeight);
+  /* height: calc(var(--lineHeight) * 5); */
   width: 100%;
   word-wrap: break-word;
   word-break: break-all;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: clip;
+  
   /* background-color: black; */
 
+}
+.convention-comment>.convention-comment-content-zone-container.show{
+  height: auto;
 }
 .convention-comment>.convention-comment-content-zone-container>span{
   text-overflow: clip;
@@ -363,12 +366,23 @@
   margin-left: 3%;
   word-wrap: break-word;
   word-break: break-all;
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
+  
+  --lineHeight : 20px;
+  line-height: var(--lineHeight);
+  /* height: calc(var(--lineHeight) * 5); */
+  word-wrap: break-word;
+  word-break: break-all;
   overflow: hidden;
-  text-overflow: clip;
 }
+
+.convention-reComment>.convention-reComment-content-zone-container.show{
+  height: auto;
+}
+
+
 .convention-reComment-reply{
   width: 97%;
   margin-left: 3%;
