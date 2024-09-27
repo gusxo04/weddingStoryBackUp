@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.product.model.dto.ProductDTO;
+import kr.co.iei.product.model.dto.ProductFileDTO;
 import kr.co.iei.util.PageInfo;
 
 @Mapper
@@ -15,6 +16,8 @@ public interface ProductDao {
 	List getProductList(PageInfo pi);
 
 	int insertProduct(ProductDTO product);
+
+	int insertProductFile(ProductFileDTO list);
 
 
 

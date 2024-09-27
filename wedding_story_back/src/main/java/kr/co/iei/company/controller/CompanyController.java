@@ -51,7 +51,6 @@ public class CompanyController {
 			company.setCompanyThumb(filepath); 						//company에 추가
 		}
 		
-		System.out.println(company);
 		
 		
 		int result = companyService.insertCompany(company,keyWord,member);
@@ -65,13 +64,14 @@ public class CompanyController {
 	public ResponseEntity<CompanyDTO> selectCompanyInfo(@PathVariable String companyNo){
 		System.out.println(companyNo);
 		CompanyDTO resultCompany = companyService.selectCompanyInfo(companyNo);
-		return ResponseEntity.ok(resultCompany);
+		System.out.println(resultCompany);
+		return ResponseEntity.ok(resultCompany); 
 	}
 	
 	
 	//업체 상품 등록
 	@PostMapping(value="/product")
-	public ResponseEntity<Integer> insertProduct(@ModelAttribute ProductDTO product, @ModelAttribute MultipartFile thumbFile ,@ModelAttribute MultipartFile[] thumbnailFiles){
+	public ResponseEntity<Boolean> insertProduct(@ModelAttribute ProductDTO product, @ModelAttribute MultipartFile thumbFile ,@ModelAttribute MultipartFile[] thumbnailFiles){
 		
 		if(thumbFile != null) {
 			String savepath = root+"/product/image/";					//경로 등록
@@ -81,7 +81,7 @@ public class CompanyController {
 			
 			
 		}
-		List<ProductFileDTO> list = new ArrayList<ProductFileDTO>();
+		List<ProductFileDTO> productFile = new ArrayList<ProductFileDTO>();
 		if(thumbnailFiles != null) {
 			String savepath = root+"/product/thumb/";
 			for(MultipartFile files : thumbnailFiles) {
@@ -90,17 +90,18 @@ public class CompanyController {
 					String filepath = fileUtil.upload(savepath, files);
 					fileDTO.setFileName(filename);
 					fileDTO.setFilePath(filepath);
+					productFile.add(fileDTO);
 			}
-		String thumbList = list.toString();
-		product.setProductThumb(thumbList);
 		}
-		//product.setCompanyNo(companyNo);
-		System.out.println(product);
-		int result = companyService.insertProduct(product);
+
+		
+		int result = companyService.insertProduct(product, productFile);
 		
 		
-		return ResponseEntity.ok(result);
+		return ResponseEntity.ok(result == 1+productFile.size());
 	}
+	
+	
 
 	
 }

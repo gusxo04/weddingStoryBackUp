@@ -7,6 +7,7 @@ import CompanyHeader from "../common/CompanyHeader";
 import { useRecoilState } from "recoil";
 import { companyNoState } from "../utils/RecoilData";
 import CompanyNoNull from "./CompanyNoNull";
+import CompanyInfoUpdate from "./CompanyInfoUpdate";
 
 const CompanyMain = () => {
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
@@ -26,6 +27,7 @@ const CompanyMain = () => {
             <Route path="join" element={<CompanyJoin />} />
             <Route path="info" element={<CompanyInfo />} />
             <Route path="product" element={<CompanyProduct />} />
+            <Route path="info/update" element={<CompanyInfoUpdate />} />
           </Routes>
         </section>
       </div>

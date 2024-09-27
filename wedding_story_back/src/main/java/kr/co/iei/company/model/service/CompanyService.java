@@ -1,5 +1,7 @@
 package kr.co.iei.company.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.product.model.dao.ProductDao;
 import kr.co.iei.product.model.dto.ProductDTO;
+import kr.co.iei.product.model.dto.ProductFileDTO;
 
 @Service
 public class CompanyService {
@@ -62,8 +65,15 @@ public class CompanyService {
 		return resultCompany;
 	}
 	//업체가 상품 등록 
-	public int insertProduct(ProductDTO product) {
+	@Transactional
+	public int insertProduct(ProductDTO product, List<ProductFileDTO> productFile) {
 		int resultProduct = productDao.insertProduct(product);
+		System.out.println(product);
+		for(ProductFileDTO list : productFile) {//서비스에서 productNo를 부여받음
+			System.out.println(list);
+			list.setProductNo(product.getProductNo());// 리스트에 productNo를 하나씩 넣어줌 
+			resultProduct += productDao.insertProductFile(list);//list를 하나씩 DB에 저장 리턴의 결과값을 resultProduct에 더함 
+		}
 		return resultProduct;
 	}
 

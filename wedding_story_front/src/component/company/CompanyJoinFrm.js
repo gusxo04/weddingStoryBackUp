@@ -3,6 +3,7 @@ import Select from "react-select";
 import "./company.css";
 import Example from "../utils/ReactTagInput";
 import DaumPost from "../utils/DaumPost";
+import { useLocation } from "react-router-dom";
 
 // 시간 option 만들기 - 시(hour)
 let openHour = [];
@@ -31,6 +32,14 @@ const CompanyJoinFrm = (props) => {
   const setCompany = props.setCompany;
   const thumbnail = props.thumbnail;
   const setThumbnail = props.setThumbnail;
+
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const pathname = window.location.pathname;
+  const location = useLocation();
+  const url = location.pathname;
+  console.log(location);
+  console.log(url);
+  console.log(pathname);
 
   const selectOptions = [
     { value: 0, label: "웨딩홀" },
@@ -137,15 +146,14 @@ const CompanyJoinFrm = (props) => {
                 }}
                 src={CompanyImg}
               />
+            ) : CompanyImg ? (
+              <img
+                src={`${backServer}/company/thumb/${company.companyThumb}`}
+                onClick={() => {
+                  thumbnailRef.current.click();
+                }}
+              />
             ) : (
-              //  : boardThumb ? (
-              //   // <img
-              //   //   src={`${backServer}/company/thumb/${boardThumb}`}
-              //   //   onClick={() => {
-              //   //     thumbnailRef.current.click();
-              //   //   }}
-              //   // />
-              // )
               <img
                 onClick={() => {
                   thumbnailRef.current.click();
