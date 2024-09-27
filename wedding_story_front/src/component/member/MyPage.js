@@ -1,19 +1,41 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "./mypage.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyFavorite from "./MyFavorite";
 import MyInfo from "./MyInfo";
 import MySchedule from "./MySchedule";
 import MyPayment from "./MyPayment";
+import PasswordChange from "./PasswordChange";
+import { useRecoilValue } from "recoil";
+import { loginNoState } from "../utils/RecoilData";
+import axios from "axios";
 
 const MyPage = () => {
   const [nowPath, setNowPath] = useState("schedule");
+  const memberNo = useRecoilValue(loginNoState);
+  const [member, setMember] = useState({});
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  useEffect(() => {
+    axios
+      .get(`${backServer}/member/selectLoginMember/` + memberNo)
+      .then((res) => {
+        setMember(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [memberNo]);
   return (
     <section className="mypage-wrap">
       <div className="mypage-wrap-content">
         <div className="mypage-wrap-left">
           <div className="mypage-info-box">
-            <p>고객이름</p>
+            <div>
+              <h3>
+                <span className="mypage-font-point">반가워요!</span>
+                {` ${member.memberName}`}님
+              </h3>
+            </div>
           </div>
           <div className="mypage-menu-box">
             <div className="mypage-menu-box-title">
@@ -93,6 +115,10 @@ const MyPage = () => {
                 <Route
                   path="info"
                   element={<MyInfo setNowPath={setNowPath} />}
+                />
+                <Route
+                  path="info/password"
+                  element={<PasswordChange setMember={setMember} />}
                 />
               </Routes>
             </div>

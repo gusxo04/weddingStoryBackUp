@@ -59,7 +59,7 @@ const MyInfo = (props) => {
             <th></th>
             <th>비밀번호</th>
             <th className="mypage-info-password">
-              <Link to="#">
+              <Link to="password">
                 <div>변경하기</div>
               </Link>
             </th>
