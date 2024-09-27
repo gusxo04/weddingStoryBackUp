@@ -62,6 +62,7 @@ const writeCheck = () => {
       // console.log(res);
       if(res.data){
         setChangedComment(!changedComment);
+        textareaRef.current.style.borderRadius = "30px";
         setCommentContent("");
       }
     })
