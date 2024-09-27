@@ -4,8 +4,12 @@ import "./company.css";
 import CompanyInfo from "./CompanyInfo";
 import CompanyProduct from "./CompanyProduct";
 import CompanyHeader from "../common/CompanyHeader";
+import { useRecoilState } from "recoil";
+import { companyNoState } from "../utils/RecoilData";
 
 const CompanyMain = () => {
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  console.log(companyNo);
   return (
     <>
       <div className="company-wrap">
