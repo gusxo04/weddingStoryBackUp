@@ -21,6 +21,7 @@ import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.company.model.service.CompanyService;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
+import kr.co.iei.product.model.dto.ProductFileDTO;
 import kr.co.iei.util.FileUtils;
 
 @CrossOrigin("*")
@@ -76,13 +77,19 @@ public class CompanyController {
 			String savepath = root+"/product/image/";					//경로 등록
 			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
 			product.setProductImg(filepath); 						//company에 추가
+			
+			
+			
 		}
-		List list = new ArrayList();
+		List<ProductFileDTO> list = new ArrayList<ProductFileDTO>();
 		if(thumbnailFiles != null) {
-		for(MultipartFile files : thumbnailFiles) {
-				String savepath = root+"/product/thumb/";
-				String filepath = fileUtil.upload(savepath, files);
-				list.add(filepath);
+			String savepath = root+"/product/thumb/";
+			for(MultipartFile files : thumbnailFiles) {
+				ProductFileDTO fileDTO = new ProductFileDTO();
+					String filename = files.getOriginalFilename();
+					String filepath = fileUtil.upload(savepath, files);
+					fileDTO.setFileName(filename);
+					fileDTO.setFilePath(filepath);
 			}
 		String thumbList = list.toString();
 		product.setProductThumb(thumbList);
