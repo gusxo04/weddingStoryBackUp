@@ -28,8 +28,6 @@ const Header = () => {
   );
 };
 
-
-
 const MainHeader = () => {
   return (
     <header className="header">
