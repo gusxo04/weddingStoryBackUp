@@ -45,7 +45,8 @@
 }
 
 .convention-comment-list-zone{
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
+  margin-bottom: 10px;
 }
 
 .cursor-p{
@@ -57,7 +58,8 @@
   /* background-color: aqua; */
   display: flex;
   gap: 25px;
-  height: 60px;
+  /* height: 60px; */
+  height: 70px;
 }
 
 .convention-comment-input-wrap{
@@ -102,6 +104,7 @@
   /* height: 50px; */
   text-align: center;
   /* background-color: bisque; */
+  align-self: center;
 }
 /* .convention-comment-write-wrap .convention-comment-input-wrap:focus-within ~ .convention-comment-write-btn-zone {
   align-self: center;
@@ -191,12 +194,23 @@
 
 .convention-comment>.convention-comment-content-zone-container{
   /* background-color: #bbb; */
+  --lineHeight : 20px;
+  line-height: var(--lineHeight);
+  /* height: calc(var(--lineHeight) * 5); */
   width: 100%;
   word-wrap: break-word;
   word-break: break-all;
+  overflow: hidden;
+  
   /* background-color: black; */
-}
 
+}
+.convention-comment>.convention-comment-content-zone-container.show{
+  height: auto;
+}
+.convention-comment>.convention-comment-content-zone-container>span{
+  text-overflow: clip;
+}
 .convention-comment-header-zone-child1>.convention-comment-date>span{
   color: #989898;
 }
@@ -352,7 +366,23 @@
   margin-left: 3%;
   word-wrap: break-word;
   word-break: break-all;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical; */
+  
+  --lineHeight : 20px;
+  line-height: var(--lineHeight);
+  /* height: calc(var(--lineHeight) * 5); */
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
 }
+
+.convention-reComment>.convention-reComment-content-zone-container.show{
+  height: auto;
+}
+
+
 .convention-reComment-reply{
   width: 97%;
   margin-left: 3%;
@@ -456,5 +486,20 @@
 
 
 
-
-
+/* 더보기 관련 */
+/* 200lines */
+/* 댓글 더보기 */
+.long-convention-comment{
+  margin-top: 5px;
+}
+.long-convention-comment>span{
+  color: #6c6c6c ;
+}
+/* 답글 더보기 */
+.long-convention-reComment{
+  margin-top: 5px;
+  margin-left: 3%;
+}
+.long-convention-reComment>span{
+  color: #6c6c6c ;
+}

@@ -9,6 +9,9 @@ import ConventionLayout from "../utils/ConventionLayout";
 import RefundTicket from "./RefundTicket";
 import ConventionComment from "./ConventionComment";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { isLoginState } from "../utils/RecoilData";
+import NoLoginConventionComment from "./NoLoginConventionComment";
 
 const ShowConvention = (props) => {
 
@@ -40,6 +43,8 @@ const ShowConvention = (props) => {
   const [comment, setComment] = useState([]);
   const [changedComment, setChangedComment] = useState(true);
   const [reCommentContent, setReCommentContent] = useState("");
+
+  const isLogin = useRecoilValue(isLoginState);
 
   useEffect(() => {
     // 댓글 조회하기 (박람회가 있을 경우에만 댓글 조회가 가능하기 때문에 showConvention 안에서 만들어도 됨)
@@ -210,12 +215,16 @@ const ShowConvention = (props) => {
       ""
       }
 
+      {isLogin ? 
       <ConventionComment convention={convention} 
       setCommentContent={setCommentContent} commentContent={commentContent} 
       comment={comment} setComment={setComment} 
       changedComment={changedComment} setChangedComment={setChangedComment}
       reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}
       />
+      :
+      <NoLoginConventionComment />
+      }
     </div>
   )
 }
