@@ -9,8 +9,8 @@ import ConventionLayout from "../utils/ConventionLayout";
 import RefundTicket from "./RefundTicket";
 import ConventionComment from "./ConventionComment";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { isLoginState } from "../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState, loginNoState, memberTypeState } from "../utils/RecoilData";
 import NoLoginConventionComment from "./NoLoginConventionComment";
 
 const ShowConvention = (props) => {
@@ -44,6 +44,7 @@ const ShowConvention = (props) => {
   const [changedComment, setChangedComment] = useState(true);
   const [reCommentContent, setReCommentContent] = useState("");
 
+  const [loginMemberType, setLoginMemberType] = useRecoilState(memberTypeState);
   const isLogin = useRecoilValue(isLoginState);
 
   useEffect(() => {
@@ -172,28 +173,42 @@ const ShowConvention = (props) => {
 {/*  style={{width:"45%"}}
  style={{width:"45%"}} */}
  {/* 업체면은 부스보기가 없으므로 convention-inner-preview-info div에 저 스타일을 추가 */}
+        
+        {/* 회원인경우 */}
+        {loginMemberType === 1 ?
+        startDate === 0 ? 
+        "" 
+        :
+        !payment ? 
         <div className="convention-inner-preview-info convention-buy-btn" >
-          {startDate === 0 ? 
-          "" 
-          :
-          !payment ? 
           <button onClick={() => {
             setNoticeEmail("");
             setAlertType(3);
           }}>박람회 신청</button>
-          :
+        </div>
+        :
+        <div className="convention-inner-preview-info convention-buy-btn" >
           <button onClick={() => {
             setAlertType(4);
           }}>환불하기</button>
-          }
-
-          {/* <button onClick={() => {
+        </div>
+        :
+        ""
+        }
+        
+        {loginMemberType === 0 ?
+        <div className="convention-inner-preview-info convention-buy-btn" >
+          <button onClick={() => {
             navigate("/convention/update/"+convention.conventionNo);
-          }}>박람회 수정</button> */}
+          }}>박람회 수정</button>
+        </div>
+        :
+        ""
+        }
 
           {/* 일반유저면 신청 / 업체면 부스 등록 / 관리자면 수정 */}
-        </div>
       </div>
+      
 
       
       

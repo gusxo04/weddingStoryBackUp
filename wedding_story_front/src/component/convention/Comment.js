@@ -1,8 +1,9 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
 import axios from "axios";
 import ReComment from './ReComment';
+import Swal from "sweetalert2";
 
 const Comment = (props) => {
 
@@ -18,7 +19,10 @@ const Comment = (props) => {
   const contentRef = useRef(null);
   const contentContainerRef = useRef(null);
   const editTextareaRef = useRef(null);
+  const editTextContainerRef = useRef(null);
   const reTextareaRef = useRef(null);
+  const lineTypeRef = useRef(null);
+  const longContentRef = useRef(null);
   
   const{
     c,
@@ -33,28 +37,12 @@ const Comment = (props) => {
   } = props;
 
 
-// 더보기 체크
-  // const [lines, setLines] = useState(0);
-  // let text;
-  // useEffect(() => {
-  //   contentRef.current.style.color = "black";
-  //   text = c.conventionCommentContent.split('\n');
-  //   setLines(text.length);
-  // }, [changedComment]);
-  // console.log(index+"text 줄",lines);
-
-  // if(lines > 5){
-  //   contentRef.current.style.color = "red";
-  // }
-
-
-
-
-
-
   const reCommentBtn = () => {
     setReCommentBtnType(false);
-    contentContainerRef.current.style.height = "150px";
+    // contentContainerRef.current.style.height = "150px";
+    if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
+      editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+    }
     reCommentRef.current.style.display = "flex";
   }
   
@@ -68,14 +56,23 @@ const Comment = (props) => {
     if(editComment) testCommentContent = editCommentContent;
     else testCommentContent = reCommentContent;
 
-    const commentRegex = /^.{1,1000}$/;
+    const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(testCommentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(testCommentContent.replace(/\n/g, ''))){
+    // else if(!commentRegex.test(testCommentContent.replace(/\n/g, ''))){
+    else if(!commentRegex.test(testCommentContent)){
       console.log("너무 큼");
+      Swal.fire({
+        title : "박람회 댓글",
+        text : "너무 많은 내용을 입력하셨습니다",
+        icon : "warning",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
       return false;
     }
     return true;
@@ -109,12 +106,18 @@ const Comment = (props) => {
   const editComment = () => {
     setEditCommentContent(c.conventionCommentContent);
     contentRef.current.style.display = "none";
+    contentContainerRef.current.style.display = "none";
+    editTextContainerRef.current.style.display = "block";
     editTextareaRef.current.style.display = "block";
     setIsEditing(true);
   }
 
+  
+  
   const cancelEdit = () => {
     contentRef.current.style.display = "inline";
+    contentContainerRef.current.style.display = "block";
+    editTextContainerRef.current.style.display = "none";
     editTextareaRef.current.style.display = "none";
     setIsEditing(false);
   }
@@ -145,7 +148,9 @@ const Comment = (props) => {
       if(res.data){
         setChangedComment(!changedComment);
         contentRef.current.style.display = "inline";
+        editTextContainerRef.current.style.display = "none";
         editTextareaRef.current.style.display = "none";
+        contentContainerRef.current.style.display = "block";
         setIsEditing(false);
       }
     })
@@ -154,6 +159,39 @@ const Comment = (props) => {
     })
   }
   const commentLineHeight = 20;
+
+  // useEffect(() => {
+  //   setLineType(false);
+  //   // console.log(contentRef.current.offsetHeight);
+  //   if(lineTypeRef.current && lineTypeRef.current.textContent === "간략히"){
+  //     lineTypeRef.current.click();
+  //   }
+  // }, [changedComment]);
+
+
+  // useEffect(() => {
+  //   console.log(c);
+  //   console.log(contentContainerRef.current);
+  //   if(contentContainerRef.current && contentContainerRef.current.offsetHeight > 100){
+  //     longContentRef.current.style.display = "block";
+  //     contentContainerRef.current.style.height = "100px";
+  //   }
+  //   else if(contentContainerRef.current && contentContainerRef.current.offsetHeight <= 100){
+  //     contentContainerRef.current.style.height = "auto";
+  //     longContentRef.current.style.display = "none";
+  //   }
+  // }, [c]);
+  
+  const [isOverFlowing, setIsOverFlowing] = useState(false);
+  
+  useEffect(() => {
+    setIsOverFlowing(false);
+    if(c.conventionCommentContent.split("\n").length > 5 || (contentContainerRef.current && contentContainerRef.current.offsetHeight > 100)){
+      setIsOverFlowing(true);
+      setLineType(false);
+      contentContainerRef.current.style.height = commentLineHeight*5 +"px";
+    }
+  }, [c]);
 
   return (
     <div className="convention-comment">
@@ -193,12 +231,14 @@ const Comment = (props) => {
 
       
 
-   
-
-      {c.conventionCommentContent.split("\n").length > 5 ? 
+      {/* {c.conventionCommentContent.split("\n").length > 5 ?  */}
+      {isOverFlowing ?
       <>
-        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*5 +"px"}}>
+        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*5 +"px"}} >
           <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
+        </div>
+
+        <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
           <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
           style={{display:"none"}} value={editCommentContent} onChange={(e) => {
             setEditCommentContent(e.target.value);
@@ -210,21 +250,28 @@ const Comment = (props) => {
             }
           }} ></textarea>
         </div>
-        <div className="long-convention-comment" >
-          <span className="cursor-p" onClick={() => {
+
+        
+        <div className="long-convention-comment" ref={longContentRef} >
+          <span className="cursor-p" ref={lineTypeRef} onClick={() => {
             if(lineType){
               contentContainerRef.current.style.height = commentLineHeight*5 +"px";
             }
             else{
-              contentContainerRef.current.style.height = commentLineHeight*c.conventionCommentContent.split("\n").length +"px";
+              // contentContainerRef.current.style.height = commentLineHeight*c.conventionCommentContent.split("\n").length +"px";
+              contentContainerRef.current.style.height = "auto";
             }
             setLineType(!lineType);
           }}>{lineType ? "간략히" : "자세히 보기"}</span>
         </div>
       </>
-        : 
-        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*c.conventionCommentContent.split("\n").length +"px"}}>
+      : 
+      <>
+        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height:"auto"}}>
           <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
+        </div>
+
+        <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
           <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
           style={{display:"none"}} value={editCommentContent} onChange={(e) => {
             setEditCommentContent(e.target.value);
@@ -236,7 +283,12 @@ const Comment = (props) => {
             }
           }} ></textarea>
         </div>
+      </>
       }
+
+        
+
+      
 
       <div className="convention-comment-reply-container">
         <div className="convention-comment-reply">

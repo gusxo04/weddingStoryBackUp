@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { loginNoState } from "../utils/RecoilData";
 import Comment from './Comment';
+import Swal from "sweetalert2";
 
 const ConventionComment = (props) => {
 
@@ -26,15 +27,22 @@ const ConventionComment = (props) => {
 
 const writeCheck = () => {
   
-    const commentRegex = /^.{0,1000}$/;
+    const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(commentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(commentContent.replace(/\n/g, ''))){
-      console.log(commentContent);
-      console.log("너무 큼");
+    // else if(!commentRegex.test(commentContent.replace(/\n/g, ''))){
+    else if(!commentRegex.test(commentContent)){
+      Swal.fire({
+        title : "박람회 댓글",
+        text : "너무 많은 내용을 입력하셨습니다",
+        icon : "warning",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
       return false;
     }
     return true;
@@ -54,6 +62,7 @@ const writeCheck = () => {
       // console.log(res);
       if(res.data){
         setChangedComment(!changedComment);
+        textareaRef.current.style.borderRadius = "30px";
         setCommentContent("");
       }
     })
@@ -69,8 +78,6 @@ const writeCheck = () => {
   const getReComment = (e) => {
     setIsOpenReComment((prev) => ({...prev, [e]: !prev[e]}))
   }
-
-  // const cancelAllTextareaRef = useRef(null);
 
 
   return (
@@ -102,29 +109,17 @@ const writeCheck = () => {
         <div className="convention-comment-show">
           {/* c는 comment고 rc는 reComment */}
           {comment.commentList?.map((c,index) => {
-              const cancelAllReComment = () => {
-                // cancelAllTextareaRef.current.style.display = "none";
-              }
+
+
+            
             return (
               <div className="convention-comment-list-zone" key={"comment"+index}>
                 <Comment c={c} comment={comment} index={index} 
                 getReComment={getReComment} isOpenReComment={isOpenReComment} 
                 reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}
-                cancelAllReComment={cancelAllReComment} 
                 changedComment={changedComment} setChangedComment={setChangedComment}
                 conventionNo={convention.conventionNo}
                 />
-                
-                {/* {c.reCommentList?.map((rc, index) => {
-                  console.log("dssdsd"+c);
-                  console.log(rc);
-                  return (
-                    // {comment.conventionCommentNo === reComment.conventionCommentRef ?  : ""}
-                    <div key={"reComment"+index} className="convention-reComment">
-                      {rc.conventionCommentContent}
-                    </div>
-                  )
-                })} */}
               </div>
             )
           })}

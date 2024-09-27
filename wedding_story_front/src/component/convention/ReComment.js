@@ -1,7 +1,8 @@
 import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ReComment = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -16,8 +17,11 @@ const ReComment = (props) => {
 
   const contentRef = useRef(null);
   const editTextareaRef = useRef(null);
+  const editTextContainerRef = useRef(null);
   const reTextareaRef = useRef(null);
   const contentContainerRef = useRef(null);
+  const lineTypeRef = useRef(null);
+  const longContentRef = useRef(null);
 
   const {
     rc,
@@ -35,14 +39,22 @@ const ReComment = (props) => {
     if(editComment) testCommentContet = editCommentContent;
     else testCommentContet = reCommentContent;
     
-    const commentRegex = /^.{1,1000}$/;
+    const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(testCommentContet.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(testCommentContet.replace(/\n/g, ''))){
-      console.log("너무 큼");
+    // else if(!commentRegex.test(testCommentContet.replace(/\n/g, ''))){
+    else if(!commentRegex.test(testCommentContet)){
+      Swal.fire({
+        title : "박람회 댓글",
+        text : "너무 많은 내용을 입력하셨습니다",
+        icon : "warning",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
       return false;
     }
     return true;
@@ -53,12 +65,16 @@ const ReComment = (props) => {
   const editComment = () => {
     setEditCommentContent(rc.conventionCommentContent);
     contentRef.current.style.display = "none";
+    contentContainerRef.current.style.display = "none";
+    editTextContainerRef.current.style.display = "block";
     editTextareaRef.current.style.display = "block";
     setIsEditing(true);
   }
-
+  
   const cancelEdit = () => {
     contentRef.current.style.display = "inline";
+    contentContainerRef.current.style.display = "block";
+    editTextContainerRef.current.style.display = "none";
     editTextareaRef.current.style.display = "none";
     setIsEditing(false);
   }
@@ -92,6 +108,7 @@ const ReComment = (props) => {
         setChangedComment(!changedComment);
         contentRef.current.style.display = "inline";
         editTextareaRef.current.style.display = "none";
+        contentContainerRef.current.style.display = "block";
         setIsEditing(false);
       }
     })
@@ -127,6 +144,9 @@ const ReComment = (props) => {
     setReCommentBtnType(false);
     setReCommentContent("@"+rc.memberId+" ");
     reCommentRef.current.style.display = "flex";
+    if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
+      editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+    }
   }
   
   const cancelReCommentBtn = () => {
@@ -135,6 +155,17 @@ const ReComment = (props) => {
   }
 
   const reCommentLineHeight = 20;
+
+  const [isOverFlowing, setIsOverFlowing] = useState(false);
+  
+  useEffect(() => {
+    setIsOverFlowing(false);
+    if(rc.conventionCommentContent.split("\n").length > 5 || (contentContainerRef.current && contentContainerRef.current.offsetHeight > 100)){
+      setIsOverFlowing(true);
+      setLineType(false);
+      contentContainerRef.current.style.height = reCommentLineHeight*5 +"px";
+    }
+  }, [rc]);
   
 
   return (
@@ -176,37 +207,58 @@ const ReComment = (props) => {
 
 
 
-        {rc.conventionCommentContent.split("\n").length > 5 ? 
+        {isOverFlowing ? 
         <>
 
           <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : reCommentLineHeight*5 +"px"}}>
             <span ref={contentRef} id="white-space">{rc.conventionCommentContent}</span>
+          </div>
+
+          <div className="convention-reComment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef} >
             <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
             style={{display:"none"}} value={editCommentContent} onChange={(e) => {
               setEditCommentContent(e.target.value);
+              if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
+                editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+              }
+              else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
+                editTextareaRef.current.style.borderRadius = "30px";
+              }
             }} ></textarea>
           </div>
 
-          <div className="long-convention-reComment">
-            <span className="cursor-p" onClick={() => {
+          <div className="long-convention-reComment" ref={longContentRef}>
+            <span className="cursor-p" ref={lineTypeRef} onClick={() => {
               if(lineType){
                 contentContainerRef.current.style.height = reCommentLineHeight*5 +"px";
               }
               else{
-                contentContainerRef.current.style.height = reCommentLineHeight*c.conventionCommentContent.split("\n").length +"px";
+                contentContainerRef.current.style.height = "auto"
               }
               setLineType(!lineType);
             }}>{lineType ? "간략히" : "자세히 보기"}</span>
           </div>
         </>
           : 
-          <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : reCommentLineHeight*rc.conventionCommentContent.split("\n").length +"px"}}>
-            <span ref={contentRef} id="white-space">{rc.conventionCommentContent}</span>
-            <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
-            style={{display:"none"}} value={editCommentContent} onChange={(e) => {
-              setEditCommentContent(e.target.value);
-            }} ></textarea>
-          </div>
+          <>
+            <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : "auto"}}>
+              <span ref={contentRef} id="white-space">{rc.conventionCommentContent}</span>
+            </div>
+
+            <div className="convention-reComment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef} >
+              <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
+              style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+                setEditCommentContent(e.target.value);
+                if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
+                  editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+                }
+                else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
+                  editTextareaRef.current.style.borderRadius = "30px";
+                }
+              }} ></textarea>
+            </div>
+            
+          </>
           }
 
         <div className="convention-reComment-reply">

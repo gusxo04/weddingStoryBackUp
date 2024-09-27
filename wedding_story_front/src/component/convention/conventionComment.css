@@ -46,7 +46,7 @@
 
 .convention-comment-list-zone{
   /* margin-bottom: 20px; */
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .cursor-p{
@@ -198,19 +198,22 @@
   line-height: var(--lineHeight);
   /* height: calc(var(--lineHeight) * 5); */
   width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
   word-wrap: break-word;
   word-break: break-all;
-  overflow: hidden;
-  
-  /* background-color: black; */
+    /* display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical; */
+  text-overflow: clip;
 
 }
-.convention-comment>.convention-comment-content-zone-container.show{
-  height: auto;
-}
+
 .convention-comment>.convention-comment-content-zone-container>span{
-  text-overflow: clip;
+  width: 100%;
+  display: block;
 }
+
 .convention-comment-header-zone-child1>.convention-comment-date>span{
   color: #989898;
 }
@@ -502,4 +505,10 @@
 }
 .long-convention-reComment>span{
   color: #6c6c6c ;
+}
+
+
+/* 답글일때 수정 textarea */
+.convention-reComment-content-edit-zone-container{
+  margin-left: 3%;
 }
