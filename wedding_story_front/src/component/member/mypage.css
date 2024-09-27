@@ -32,6 +32,11 @@
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
+.mypage-font-point {
+  background: -webkit-linear-gradient(var(--main1), #cc95c0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .mypage-menu-box {
   margin-top: 10px;
   border-bottom-left-radius: 12px;
@@ -84,7 +89,8 @@
 .mypage-content {
   width: 100%;
 }
-.mypage-info-wrap {
+.mypage-info-wrap,
+.mypage-password-wrap {
   padding-bottom: 10px;
   display: flex;
   justify-content: center;
@@ -148,4 +154,42 @@
 }
 .mypage-labelbox .backGray {
   background-color: var(--main2);
+}
+.mypage-password-wrap > div {
+  width: 95%;
+}
+
+.mypage-password-inputbox {
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid var(--main2);
+  border-bottom: 1px solid var(--main2);
+  margin: 20px 0;
+}
+.mypage-password-inputbox > div {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  margin: 30px 0;
+}
+.mypage-password-input input {
+  padding: 5px 15px;
+  height: 45px;
+  border: 2px solid var(--main2);
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.mypage-password-btnbox {
+  display: flex;
+  justify-content: center;
+}
+.mypage-password-btnbox > button {
+  width: 30%;
+  height: 45px;
+  border: none;
+  border-radius: 7px;
+  background-color: var(--main2);
+  font-size: 16px;
 }
