@@ -1,7 +1,7 @@
 import axios from "axios";
 import "./conventionComment.css";
 import { useRecoilState } from "recoil";
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { loginNoState } from "../utils/RecoilData";
 
 const ConventionComment = (props) => {
@@ -143,8 +143,10 @@ const Comment = (props) => {
   const reCommentRef = useRef(null);
   const [reCommentContent, setReCommentContent] = useState("");
   const [editCommentContent, setEditCommentContent] = useState("");
+  const [lineType, setLineType] = useState(false);
 
   const contentRef = useRef(null);
+  const contentContainerRef = useRef(null);
   const editTextareaRef = useRef(null);
   const reTextareaRef = useRef(null);
   
@@ -160,7 +162,22 @@ const Comment = (props) => {
     setChangedComment,
   } = props;
 
-  // 댓글꺼
+
+// 더보기 체크
+  // const [lines, setLines] = useState(0);
+  // let text;
+  // useEffect(() => {
+  //   contentRef.current.style.color = "black";
+  //   text = c.conventionCommentContent.split('\n');
+  //   setLines(text.length);
+  // }, [changedComment]);
+  // console.log(index+"text 줄",lines);
+
+  // if(lines > 5){
+  //   contentRef.current.style.color = "red";
+  // }
+
+
 
 
 
@@ -175,14 +192,18 @@ const Comment = (props) => {
     reCommentRef.current.style.display = "none";
   }
   
-  const reCommentWrtieCheck = () => {
+  const reCommentWrtieCheck = (editComment) => {
+    let testCommentContent;
+    if(editComment) testCommentContent = editCommentContent;
+    else testCommentContent = reCommentContent;
+
     const commentRegex = /^.{1,1000}$/;
     
-    if(reCommentContent.trim() === ""){
+    if(testCommentContent.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(reCommentContent.replace(/\n/g, ''))){
+    else if(!commentRegex.test(testCommentContent.replace(/\n/g, ''))){
       console.log("너무 큼");
       return false;
     }
@@ -242,6 +263,8 @@ const Comment = (props) => {
   }
 
   const edit = () => {
+    const checkType = reCommentWrtieCheck(true);
+    if(!checkType) return;
     const form = new FormData();
     form.append("conventionCommentNo", c.conventionCommentNo);
     form.append("conventionCommentContent", editCommentContent);
@@ -297,7 +320,7 @@ const Comment = (props) => {
         </div>
       </div>
 
-      <div className="convention-comment-content-zone-container">
+      <div className="convention-comment-content-zone-container" ref={contentContainerRef}>
         <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
         <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
         style={{display:"none"}} value={editCommentContent} onChange={(e) => {
@@ -310,6 +333,21 @@ const Comment = (props) => {
           }
         }} ></textarea>
       </div>
+
+      {c.conventionCommentContent.split("\n").length > 5 ? 
+      <div className="long-convention-comment">
+        <span className="cursor-p" onClick={() => {
+          if(lineType){
+            contentContainerRef.current.style.webkitLineClamp = 5;
+          }
+          else{
+            contentContainerRef.current.style.webkitLineClamp = 100;
+          }
+          setLineType(!lineType);
+        }}>{lineType ? "간략히" : "자세히 보기"}</span>
+      </div>
+      : 
+      ""}
 
       <div className="convention-comment-reply-container">
         <div className="convention-comment-reply">
@@ -380,12 +418,14 @@ const ReComment = (props) => {
   const [reCommentBtnType, setReCommentBtnType] = useState(true);
   const reCommentRef = useRef(null);
   const [reCommentContent, setReCommentContent] = useState("");
+  const [lineType, setLineType] = useState(false);
 
   const [editCommentContent, setEditCommentContent] = useState("");
 
   const contentRef = useRef(null);
   const editTextareaRef = useRef(null);
   const reTextareaRef = useRef(null);
+  const contentContainerRef = useRef(null);
 
   const {
     rc,
@@ -397,14 +437,19 @@ const ReComment = (props) => {
 
 
 
-  const reCommentWrtieCheck = () => {
+  const reCommentWrtieCheck = (editComment) => {
+    let testCommentContet;
+
+    if(editComment) testCommentContet = editCommentContent;
+    else testCommentContet = reCommentContent;
+    
     const commentRegex = /^.{1,1000}$/;
     
-    if(reCommentContent.trim() === ""){
+    if(testCommentContet.trim() === ""){
       console.log("비어있음");
       return false;
     }
-    else if(!commentRegex.test(reCommentContent.replace(/\n/g, ''))){
+    else if(!commentRegex.test(testCommentContet.replace(/\n/g, ''))){
       console.log("너무 큼");
       return false;
     }
@@ -441,6 +486,10 @@ const ReComment = (props) => {
   }
 
   const edit = () => {
+
+    const checkType = reCommentWrtieCheck(true);
+    if(!checkType) return;
+    
     const form = new FormData();
     form.append("conventionCommentNo", rc.conventionCommentNo);
     form.append("conventionCommentContent", editCommentContent);
@@ -530,13 +579,28 @@ const ReComment = (props) => {
           </div>
         </div>
 
-        <div className="convention-reComment-content-zone-container">
+        <div className="convention-reComment-content-zone-container" ref={contentContainerRef}>
           <span ref={contentRef} id="white-space">{rc.conventionCommentContent}</span>
           <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
           style={{display:"none"}} value={editCommentContent} onChange={(e) => {
             setEditCommentContent(e.target.value);
           }} ></textarea>
         </div>
+
+        {rc.conventionCommentContent.split("\n").length > 5 ? 
+          <div className="long-convention-reComment">
+            <span className="cursor-p" onClick={() => {
+              if(lineType){
+                contentContainerRef.current.style.webkitLineClamp = 5;
+              }
+              else{
+                contentContainerRef.current.style.webkitLineClamp = 100;
+              }
+              setLineType(!lineType);
+            }}>{lineType ? "간략히" : "자세히 보기"}</span>
+          </div>
+          : 
+          ""}
 
         <div className="convention-reComment-reply">
           <span className="cursor-p" onClick={reCommentBtnType ? reCommentBtn : cancelReCommentBtn}>답글</span>
@@ -554,6 +618,9 @@ const ReComment = (props) => {
               }
             }}></textarea>
           </div>
+
+
+          
           <div className="convention-reComment-reply-write-btn">
             <button onClick={reCommentWrite}>작성</button>
           </div>

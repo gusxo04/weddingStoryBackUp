@@ -14,7 +14,7 @@ const ConventionMain = () => {
   const navigate = useNavigate();
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
-  console.log(memberNoState);
+  
   const [convention, setConvention] = useState({});
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
