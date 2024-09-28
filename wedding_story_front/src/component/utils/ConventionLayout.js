@@ -1,19 +1,43 @@
 import axios from "axios";
 import "./conventionLayout.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { companyNoState } from "./RecoilData";
+import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
 
-const ConventionLayout = () => {
+const ConventionLayout = (props) => {
 
+  // Permission 은 db member 테이블에 있는 memberType 따라가면 됨
+  // 0은 어드민 권한 / 1은 회원 권한 / 2는 업체 권한
+  // 어드민은 가격수정 가능 / 회원은 부스 관람가능 / 업체는 부스 구매 가능
+  const {
+    convention,
+    permission,
+  } = props;
+  
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [aSeat, setASeat] = useState([]);
   const [bSeat, setBSeat] = useState([]);
   const [cSeat, setCSeat] = useState([]);
+  const [changedSeatInfo, setChangedSeatInfo] = useState(true);
+  const [seatInfo, setSeatInfo] = useState({});
+  // SeatAlert 컴포넌트에게 넘겨줄 seat 정보임
+
+  // seatAlert은 Alert 띄울 여부
+  const [seatCompanyAlert, setSeatCompanyAlert] = useState(false);
+  const [seatAdminAlert, setSeatAdminAlert] = useState(false);
+
+  const checkedRef = useRef(null);
+  const checkSpanRef = useRef(null);
+
+  const [loginCompanyNoState, setLoginCompanyNoState] = useRecoilState(companyNoState);
+  // companyNo는 int가 아닌 String임 -> like C0001 
 
   useEffect(() => {
     // 나중에 업체인지 조건걸기
     axios.get(`${backServer}/convention/layout`)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       setASeat(res.data.line0);
       setBSeat(res.data.line1);
       setCSeat(res.data.line2);
@@ -22,11 +46,107 @@ const ConventionLayout = () => {
     .catch(err => {
       console.error(err); 
     })
-  }, []);
+  }, [changedSeatInfo]);
 
-  const seatProblem = () => {
-    console.log("문제가 있는 상품이에요");
+  const seatProblem = (seat) => {
+    if(permission === 0){
+      clickedSeat(seat);
+      // 어드민은 문제 있는 좌석도 클릭 가능
+    }
+
+    
   }
+
+
+  const clickedSeat = (seat) => {
+    setSeatInfo(seat);
+    if(permission === 0){
+      // 어드민이 좌석 클릭시
+      setSeatAdminAlert(true);
+    }
+    else if(permission === 1){
+      // 회원이 좌석 클릭시
+    }
+    else if(permission === 2){
+      // 업체가 좌석 클릭시
+      setSeatCompanyAlert(true);
+    }
+  }
+  
+  const purchaseSeat = () => {
+    if(!checkedRef.current.checked){
+      // 동의 안 하면 못 넘어감 ㅎ
+      checkSpanRef.current.style.color = "rgb(246, 67, 67)";
+      return;
+    }
+    const date = new Date();
+    const dateString = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()+""+date.getHours()+""+date.getMinutes()+""+date.getSeconds();
+
+    window.IMP.request_pay({
+      pg: "html5_inicis.INIpayTest",
+      pay_method: "card",
+      merchant_uid: dateString,
+      name: "박람회 부스",
+      amount: seatInfo.conventionSeatPrice,
+      // 나중에 회원 DB 조회해서 다 넣기
+      buyer_email: "test@portone.io",
+      buyer_name: "구매자 이름",
+      buyer_tel: "010-1234-5678",
+      buyer_addr: "서울특별시 강남구 신사동",
+      buyer_postcode: "123-456"
+    }, rsp => {
+      if (rsp.success) {
+        // 결제 성공 시 로직
+        console.log(rsp);
+        const form = new FormData();
+
+        // 박람회 업체 등록할때
+        form.append("seatNo", seatInfo.seatNo);
+        
+        // 공용
+        form.append("companyNo", loginCompanyNoState);
+        form.append("conventionNo", convention.conventionNo);
+
+        // 업체 구매이력 테이블
+        form.append("merchantUid", rsp.merchant_uid);
+        form.append("payPrice", seatInfo.conventionSeatPrice);
+        
+
+        axios.post(`${backServer}/convention/buy/seat`, form)
+        .then((res) => {
+          console.log(res);
+          if(res.data){
+            setSeatCompanyAlert(false);
+            // 결제 성공시
+            Swal.fire({
+              title : "박람회 부스",
+              text : "결제에 성공하셨습니다",
+              timer : 2500,
+              confirmButtonColor : "var(--main1)",
+              confirmButtonText : "확인",
+            })
+          }
+        })
+        .catch((err) => {
+          console.error(err); 
+          Swal.fire({
+            title : "박람회 부스",
+            text : "잠시후 다시 시도해주세요",
+            timer : 2500,
+            confirmButtonColor : "var(--main1)",
+            confirmButtonText : "확인",
+          })
+        })
+        
+      } else {
+        // 결제 실패 시 로직
+        console.log('Payment failed', rsp.error_msg);
+        // 추가로 실행할 로직을 여기에 작성
+      }
+    });
+    
+  }
+  
   
 // 필요한 거 -> 업체가 산 좌석이 어딘지를 알아야 하고 , 문제가 있는 좌석은 문제가 있음을 알 수 있게 해야 함
   return (
@@ -37,14 +157,17 @@ const ConventionLayout = () => {
 {/* 그리고 onclick역시 problem */}
         <div className="layout layout-a">
           {aSeat.map((seat,index) => {
-            const seatInfo = () => {
-              console.log(seat);
-            }
+            // const seatInfo = () => {
+            //   purchaseSeat(seat);
+            // }
             // const seatProblem = () => {
             //   console.log("문제가 있는 상품");
             // }
             return (
-              <div key={"seat-"+index} onClick={seat.seatStatus === 0 ? seatInfo : seatProblem} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+              <div key={"seat-"+index} onClick={() => {
+                // seat.seatStatus === 0 ? purchaseSeat(seat) : seatProblem()
+                seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+              }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
             )
           })}
         </div>
@@ -58,7 +181,9 @@ const ConventionLayout = () => {
             //   console.log("문제가 있는 상품");
             // }
             return (
-              <div key={"seat-"+index} onClick={seat.seatStatus === 0 ? seatInfo : seatProblem} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+              <div key={"seat-"+index} onClick={() => {
+                seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+              }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
             )
           })}
         </div>
@@ -72,14 +197,234 @@ const ConventionLayout = () => {
             //   console.log("문제가 있는 상품");
             // }
             return (
-              <div key={"seat-"+index} onClick={seat.seatStatus === 0 ? seatInfo : seatProblem} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+              <div key={"seat-"+index} onClick={() => {
+                seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+              }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
             )
           })}
         </div>
         
       </div>
+
+      
+        {seatCompanyAlert ?
+        <SeatCompanyAlert seatInfo={seatInfo} setSeatCompanyAlert={setSeatCompanyAlert} 
+        purchaseSeat={purchaseSeat} checkedRef={checkedRef} 
+        checkSpanRef={checkSpanRef}
+        />
+
+        :
+        ""}
+
+        {seatAdminAlert ?
+        <SeatAdminAlert seatInfo={seatInfo} setSeatAdminAlert={setSeatAdminAlert} 
+        changedSeatInfo={changedSeatInfo} setChangedSeatInfo={setChangedSeatInfo}
+        />
+        :
+        ""
+        }
+      
+      
     </div>
     
+  )
+}
+
+
+const SeatCompanyAlert = (props) => {
+  const{
+    seatInfo,
+    setSeatCompanyAlert,
+    purchaseSeat,
+    checkedRef,
+    checkSpanRef,
+  } = props;
+
+  // console.log(seatInfo);
+
+  const closeSeatAlert = (e) => {
+    if(e.target.className === "convention-seat-alert-wrap"){
+      setSeatCompanyAlert(false)
+    }
+  }
+
+  return (
+    <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
+      <div className="convention-seat-alert">
+        <div className="convention-seat-info-wrap">
+          <div className="convention-seat-info-title">
+            <span>박람회 부스 구매</span>
+          </div>
+
+          <div className="convention-seat-info-content">
+            <div className="convention-seat-info-code df-basic">
+              <span>좌석코드 : {seatInfo.seatCode}</span>
+            </div>
+            <div className="convention-seat-info-price df-basic">
+              <span>가격 : <span id="red-color">{seatInfo.conventionSeatPrice}</span>원</span>
+            </div>
+          </div>
+
+          <div className="convention-seat-info-personal df-basic">
+            <label htmlFor="personal-check" className="cursor-p" ref={checkSpanRef} >이용약관및 개인정보 수집/이용 동의</label>
+            <input type="checkbox" id="personal-check" ref={checkedRef} />
+          </div>
+          
+          <div className="convention-seat-info-btn df-basic">
+            <button onClick={purchaseSeat}>구매하기</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+
+const SeatAdminAlert = (props) => {
+  const {
+    seatInfo,
+    setSeatAdminAlert,
+    changedSeatInfo,
+    setChangedSeatInfo,
+  } = props;
+
+  console.log(seatInfo);
+
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
+  const [seatPrice, setSeatPrice] = useState(seatInfo.conventionSeatPrice);
+  const [selectStatus, setSelectStatus] = useState(seatInfo.seatStatus);
+
+  const wrongPriceRef = useRef(null);
+  const wrongContainerRef = useRef(null);
+  const showWrongRef = useRef(null);
+  
+
+  const closeSeatAlert = (e) => {
+    if(e.target.className === "convention-seat-alert-wrap"){
+      setSeatAdminAlert(false);
+    }
+  }
+
+  const updatePrice = () => {
+    if(isNaN(seatPrice)){
+      wrongPriceRef.current.classList.add("wrong-price");
+      showWrongRef.current.style.display = "flex";
+      wrongContainerRef.current.id = "wrong-price-zone";
+      return;
+    }
+    
+    if(seatPrice < 99){
+      wrongPriceRef.current.classList.add("wrong-price");
+      showWrongRef.current.style.display = "flex";
+      wrongContainerRef.current.id = "wrong-price-zone";
+      // 최소 100원은 해야함
+      return;
+    }
+
+    const form = new FormData();
+
+    form.append("seatNo", seatInfo.seatNo);
+    form.append("conventionSeatPrice", seatPrice);
+    form.append("seatStatus", selectStatus);
+
+    axios.patch(`${backServer}/convention/update/seatInfo`, form)
+    .then((res) => {
+      console.log(res);
+      if(res.data){
+        setSeatAdminAlert(false);
+        setChangedSeatInfo(!changedSeatInfo);
+        Swal.fire({
+          title : "부스 정보",
+          text : "정보 수정 완료",
+          timer : 2000,
+          confirmButtonText : "확인",
+          confirmButtonColor : "var(--main1)"
+        })
+      }
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+
+
+    
+  }
+
+
+
+  return (
+    <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
+      <div className="convention-seat-alert" id="convention-admin-alert-wrap">
+        <div className="convention-seat-info-wrap" ref={wrongContainerRef}>
+          <div className="convention-seat-info-title">
+            <span>박람회 부스 정보</span>
+          </div>
+
+          <div className="convention-seat-info-content">
+            <div className="convention-seat-info-code df-basic">
+              <span>좌석코드 : {seatInfo.seatCode}</span>
+            </div>
+
+            <div className="convention-seat-info-wrong-price df-basic" style={{display:"none"}} ref={showWrongRef}>
+              <span>잘못된 가격임</span>
+            </div>
+            
+            <div className="convention-seat-info-price df-basic">
+              <div className="convention-seat-info-price-child">
+                <label className="cursor-p" ref={wrongPriceRef} htmlFor="seat-price">가격 : </label>
+              </div>
+              <div className="convention-seat-info-price-input">
+                <input type="text" id="seat-price" value={seatPrice} onChange={(e) => {
+                  if(isFinite(e.target.value)){
+                    setSeatPrice(e.target.value)
+                  }
+                }}/>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="convention-seat-info-status">
+            <div className="convention-seat-info-status-title">
+              <span>자리 상태</span>
+            </div>
+            
+            <div className="convention-seat-info-status-content df-basic">
+              <div className="convention-seat-info-status-ok status-container">
+                <div className="status-ok-container">
+                  <label htmlFor="status-ok">정상</label>
+                </div>
+                <div className="status-ok-input-container">
+                  <input type="radio" id="status-ok" name="status" checked={selectStatus === 0 ? true : false} onChange={() => {
+                    setSelectStatus(0);
+                  }} />
+                </div>
+              </div>
+
+              <div className="convention-seat-info-status-bad status-container">
+                <div className="status-bad-container">
+                  <label htmlFor="status-bad">비정상</label>
+                </div>
+                <div className="status-bad-input-container">
+                  <input type="radio" id="status-bad" name="status" checked={selectStatus === 1 ? true : false} onChange={() => {
+                    setSelectStatus(1);
+                  }} />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="convention-seat-info-btn df-basic">
+            <button onClick={updatePrice}>수정하기</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
   )
 }
 

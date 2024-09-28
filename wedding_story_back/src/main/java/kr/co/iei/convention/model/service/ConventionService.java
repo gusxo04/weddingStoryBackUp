@@ -25,10 +25,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.co.iei.company.model.dto.CompanyPayDTO;
 import kr.co.iei.convention.model.dao.ConventionDao;
 import kr.co.iei.convention.model.dto.ConventionCommentDTO;
+import kr.co.iei.convention.model.dto.ConventionCompanyDTO;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 
@@ -134,6 +137,53 @@ public class ConventionService {
         return result == 3;
     }
 
+    
+
+    public Map<String, List> selectConventionComments(int conventionNo) {
+        List commentList = conventionDao.selectConventionCommentList(conventionNo);
+        List reCommentList = conventionDao.selectConventionReCommentList(conventionNo);
+        Map<String, List> commentMap = new HashMap<>();
+        commentMap.put("commentList", commentList);
+        commentMap.put("reCommentList", reCommentList);
+        return commentMap;
+    }
+
+    @Transactional
+    public Boolean insertconventionComment(ConventionCommentDTO conventionComment) {
+        int result = conventionDao.insertConventionComment(conventionComment);
+        return result == 1;
+    }
+
+    @Transactional
+    public Boolean deleteConventionComment(int conventionCommentNo) {
+        int result = conventionDao.deleteConventionComment(conventionCommentNo);
+        return result == 1;
+    }
+
+    @Transactional
+    public Boolean updateConventionComment(ConventionCommentDTO conventionComment) {
+        int result = conventionDao.updateConventionComment(conventionComment);
+        return result == 1;
+    }
+
+    @Transactional
+	public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
+        int result = conventionDao.insertConventionCompany(conventionCompany);
+        if(result > 0){
+            result += conventionDao.insertCompanyPay(companyPay);
+        }
+        return result == 2;
+	}
+
+
+
+
+
+
+
+
+
+    // 환불 기능 메서드 2개 
     private String getAccessToken() {
         // 토큰 발급받는 코드
         String clientId = restApi;
@@ -204,33 +254,9 @@ public class ConventionService {
         return code;
     }
 
-    public Map<String, List> selectConventionComments(int conventionNo) {
-        List commentList = conventionDao.selectConventionCommentList(conventionNo);
-        List reCommentList = conventionDao.selectConventionReCommentList(conventionNo);
-        Map<String, List> commentMap = new HashMap<>();
-        commentMap.put("commentList", commentList);
-        commentMap.put("reCommentList", reCommentList);
-        return commentMap;
-    }
-
     @Transactional
-    public Boolean insertconventionComment(ConventionCommentDTO conventionComment) {
-        int result = conventionDao.insertConventionComment(conventionComment);
+	public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
+        int result = conventionDao.updateSeatInfo(conventionSeat);
         return result == 1;
-    }
-
-    @Transactional
-    public Boolean deleteConventionComment(int conventionCommentNo) {
-        int result = conventionDao.deleteConventionComment(conventionCommentNo);
-        return result == 1;
-    }
-
-    @Transactional
-    public Boolean updateConventionComment(ConventionCommentDTO conventionComment) {
-        int result = conventionDao.updateConventionComment(conventionComment);
-        return result == 1;
-    }
-
-
-
+	}
 }

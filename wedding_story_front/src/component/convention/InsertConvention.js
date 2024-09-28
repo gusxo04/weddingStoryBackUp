@@ -5,13 +5,14 @@ import WriteForm from "./WriteForm";
 import SwitchButton from "./SwitchButton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import "./conventionWriteForm.css";
+import CheckLayout from "./CheckLayout";
 
 const InsertConvention = () => {
   
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  const [formType, setFormType] = useState(true);
+  const [formType, setFormType] = useState(1);
   const [imgStyle, setImgStyle] = useState(2);
   
   const [conventionTitle, setConventionTitle] = useState("");
@@ -185,7 +186,7 @@ const InsertConvention = () => {
       <div className="convention-container insert-convention-container">
 
         <SwitchButton formType={formType} setFormType={setFormType} />
-        {formType ? 
+        {formType === 1 ? 
         <>
           <WriteForm imgStyle={imgStyle} setImgStyle={setImgStyle} 
           conventionTitle={conventionTitle} setConventionTitle={setConventionTitle} 
@@ -208,11 +209,17 @@ const InsertConvention = () => {
           </div>
         </>
           :
+          formType === 2 ?
           <Preview imgStyle={imgStyle} conventionTitle={conventionTitle} conventionContent={conventionContent} 
           conventionStart={conventionStart} conventionEnd={conventionEnd}
           conventionPrice={conventionPrice} conventionLimit={conventionLimit}
           conventionTime={conventionTime} showImage={showImage}
           />
+          :
+          formType === 3 ?
+          <CheckLayout />
+          :
+          "아무것도 없성"
         }
       </div>
 

@@ -43,6 +43,7 @@ const ShowConvention = (props) => {
   const [comment, setComment] = useState([]);
   const [changedComment, setChangedComment] = useState(true);
   const [reCommentContent, setReCommentContent] = useState("");
+  
 
   const [loginMemberType, setLoginMemberType] = useRecoilState(memberTypeState);
   const isLogin = useRecoilValue(isLoginState);
@@ -155,15 +156,19 @@ const ShowConvention = (props) => {
       :
       ""
       :
-      <ConventionLayout />
+      <ConventionLayout convention={convention} permission={2} />
       }
 
       <div className="convention-preview-info-wrap">
+        {loginMemberType === 2 ? 
+        ""
+        :
         <div className="convention-inner-preview-info convention-layout-btn">
           <button onClick={() => {
             setShowType(!showType);
           }}>부스 보기</button>
         </div>
+        }
 
         <div className="convention-inner-preview-info convention-way-btn" >
           <button onClick={() => {
@@ -201,6 +206,16 @@ const ShowConvention = (props) => {
           <button onClick={() => {
             navigate("/convention/update/"+convention.conventionNo);
           }}>박람회 수정</button>
+        </div>
+        :
+        ""
+        }
+
+        {loginMemberType === 2 ?
+        <div className="convention-inner-preview-info convention-buy-btn" >
+          <button onClick={() => {
+            setShowType(!showType);
+          }}>부스 구매</button>
         </div>
         :
         ""

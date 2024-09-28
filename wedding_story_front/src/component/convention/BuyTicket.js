@@ -73,7 +73,7 @@ const BuyTicket = (props) => {
         form.append("progressDate", selectDate);
         form.append("progressTime", convention.conventionTime);
         
-        axios.post(`${backServer}/convention/buy`, form)
+        axios.post(`${backServer}/convention/buy/ticket`, form)
         .then(res => {
           console.log(res);
           if(res.data){

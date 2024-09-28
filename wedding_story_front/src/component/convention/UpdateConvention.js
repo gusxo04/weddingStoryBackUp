@@ -4,6 +4,7 @@ import SwitchButton from "./SwitchButton";
 import WriteForm from "./WriteForm";
 import Preview from "./Preview";
 import axios from "axios";
+import CheckLayout from "./CheckLayout";
 
 const UpdateConvention = () => {
 
@@ -12,7 +13,7 @@ const UpdateConvention = () => {
   const conventionNo = params.conventionNo;
   
   const navigate = useNavigate();
-  const [formType, setFormType] = useState(true);
+  const [formType, setFormType] = useState(1);
   const [imgStyle, setImgStyle] = useState(2);
   
   const [conventionTitle, setConventionTitle] = useState("");
@@ -206,7 +207,7 @@ const UpdateConvention = () => {
       <div className="convention-container insert-convention-container">
 
         <SwitchButton formType={formType} setFormType={setFormType} />
-        {formType ? 
+        {formType === 1 ? 
         <>
           <WriteForm imgStyle={imgStyle} setImgStyle={setImgStyle} 
           conventionTitle={conventionTitle} setConventionTitle={setConventionTitle} 
@@ -229,12 +230,18 @@ const UpdateConvention = () => {
           </div>
         </>
           :
+          formType === 2 ?
           <Preview imgStyle={imgStyle} conventionTitle={conventionTitle} conventionContent={conventionContent} 
           conventionStart={conventionStart} conventionEnd={conventionEnd}
           conventionPrice={conventionPrice} conventionLimit={conventionLimit}
           conventionTime={conventionTime} showImage={showImage}
           conventionImg={conventionImg}
           />
+          :
+          formType === 3 ?
+          <CheckLayout />
+          :
+          "아무것도 업서"
         }
       </div>
 

@@ -107,4 +107,17 @@
         update convention_comment set convention_comment_content = #{conventionCommentContent}, edit_type = 1 where convention_comment_no = #{conventionCommentNo}
     </update>
 
+
+    <insert id="insertConventionCompany">
+        insert into convention_company values(convention_company_seq.nextval, #{conventionNo}, #{companyNo}, #{seatNo})
+    </insert>
+
+    <insert id="insertCompanyPay">
+        insert into company_pay values(pay_no_seq.nextval, #{companyNo}, #{conventionNo}, null, to_char(sysdate, 'yyyy-mm-dd'), #{payPrice}, 0, 0, #{merchantUid})
+    </insert>
+
+    <update id="updateSeatInfo">
+        update convention_seat set convention_seat_price = #{conventionSeatPrice}, seat_status = #{seatStatus} where seat_no = #{seatNo}
+    </update>
+
 </mapper>

@@ -6,9 +6,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.company.model.dto.CompanyPayDTO;
 import kr.co.iei.convention.model.dto.ConventionCommentDTO;
+import kr.co.iei.convention.model.dto.ConventionCompanyDTO;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 
@@ -48,6 +51,12 @@ public interface ConventionDao {
     int deleteConventionComment(int conventionCommentNo);
 
     int updateConventionComment(ConventionCommentDTO conventionComment);
+
+    public int insertConventionCompany(ConventionCompanyDTO conventionCompany);
+
+	int insertCompanyPay(CompanyPayDTO companyPay);
+
+	int updateSeatInfo(ConventionSeatDTO conventionSeat);
 
 
 

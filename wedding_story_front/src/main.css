@@ -5,25 +5,25 @@
   font-family: ns-r;
 }
 
-body {
-  font-size: 16px;
+html {
+  /* font-size: 16px; */
   line-height: 1.5;
 }
 @media (max-width: 1199px) {
-  body {
-    font-size: 15px;
+  html {
+    font-size: 0.9375rem; 
     line-height: 1.4;
   }
 }
 @media (max-width: 767px) {
-  body {
-    font-size: 14px;
+  html {
+    font-size: 0.875rem; 
     line-height: 1.3;
   }
 }
 @media (max-width: 479px) {
-  body {
-    font-size: 13px;
+  html {
+    font-size: 0.8125rem; 
     line-height: 1.2;
   }
 }
@@ -76,4 +76,10 @@ textarea {
 @font-face {
   font-family: ps-r;
   src: url(/public/font/PinyonScript-Regular.ttf);
+}
+
+
+
+.cursor-p{
+  cursor: pointer;
 }

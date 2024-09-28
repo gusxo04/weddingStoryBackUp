@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.company.model.dto.CompanyPayDTO;
 import kr.co.iei.convention.model.dto.ConventionCommentDTO;
+import kr.co.iei.convention.model.dto.ConventionCompanyDTO;
 import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
+import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberPayDTO;
@@ -34,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CrossOrigin("*")
 @RequestMapping("/convention")
 public class ConventionController {
-    
+
     @Autowired
     private ConventionService conventionService;
 
@@ -91,7 +93,7 @@ public class ConventionController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/buy")
+    @PostMapping("/buy/ticket")
     public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {
         boolean result = conventionService.conventionMemberPay(conventionMember, memberPay);
 
@@ -133,41 +135,55 @@ public class ConventionController {
         return ResponseEntity.ok(result);
     }
 
-
     // 박람회 댓글 조회
     @GetMapping("/comment/{conventionNo}")
     public ResponseEntity<Map> getConventionComment(@PathVariable int conventionNo) {
         Map<String, List> map = conventionService.selectConventionComments(conventionNo);
         return ResponseEntity.ok(map);
     }
-    
-    
+
     //박람회 댓글 작성
     @PostMapping("/comment")
     public ResponseEntity<Boolean> writeComment(@ModelAttribute ConventionCommentDTO conventionComment) {
         Boolean result = conventionService.insertconventionComment(conventionComment);
-        
+
         return ResponseEntity.ok(result);
     }
-    
 
     @PostMapping("/reComment")
     public ResponseEntity<Boolean> writeReComment(@ModelAttribute ConventionCommentDTO conventionComment) {
         Boolean result = conventionService.insertconventionComment(conventionComment);
         return ResponseEntity.ok(result);
     }
-    
 
     @DeleteMapping("/{conventionCommentNo}")
-    public ResponseEntity<Boolean> deleteComment(@PathVariable int conventionCommentNo){
+    public ResponseEntity<Boolean> deleteComment(@PathVariable int conventionCommentNo) {
         Boolean result = conventionService.deleteConventionComment(conventionCommentNo);
         return ResponseEntity.ok(result);
     }
 
     @PatchMapping
-    public ResponseEntity<Boolean> updateComment(@ModelAttribute ConventionCommentDTO conventionComment){
+    public ResponseEntity<Boolean> updateComment(@ModelAttribute ConventionCommentDTO conventionComment) {
         Boolean result = conventionService.updateConventionComment(conventionComment);
         return ResponseEntity.ok(result);
     }
+
+    
+    @PostMapping("/buy/seat")
+    public ResponseEntity<Boolean> conventionCompanyPay(@ModelAttribute ConventionCompanyDTO conventionCompany, @ModelAttribute CompanyPayDTO companyPay) {
+        System.out.println(conventionCompany);
+        System.out.println(companyPay);
+        boolean result = conventionService.conventionCompanyPay(conventionCompany, companyPay);
+        return ResponseEntity.ok(result);
+    }
+    
+    @PatchMapping("/update/seatInfo")
+    public ResponseEntity<Boolean> updateSeatInfo(@ModelAttribute ConventionSeatDTO conventionSeat){
+        boolean result = conventionService.updateSeatInfo(conventionSeat);
+        return ResponseEntity.ok(result);
+    }
+
+    
+    
 
 }
