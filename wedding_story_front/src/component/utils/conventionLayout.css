@@ -107,6 +107,7 @@
     border: 1px solid black;
     /* height: 80px; */
     cursor: pointer;
+    font-size: 1rem;
 }
 .seatA, .seatC{
     /* margin: 0px 20px; */
@@ -167,6 +168,7 @@
     font-size: calc(12px + (20 - 14) * (100vw - 380px) / (1280 - 320));
     /* font-size: 1.2rem; */
     font-weight: 600;
+    border-bottom: 1px solid #ccc;
 }
 
 
@@ -196,6 +198,7 @@
 
 .convention-seat-info-wrap>.convention-seat-info-btn{
     height: 20%;
+    border-top: 1px solid #ccc;
 }
 .convention-seat-info-btn>button{
     width: 40%;
@@ -228,6 +231,7 @@
 
 #convention-admin-alert-wrap .convention-seat-info-title{
     height: 15%;
+    border-bottom: 1px solid #ccc;
 }
 #convention-admin-alert-wrap .convention-seat-info-content{
     height: 40%;
@@ -247,6 +251,7 @@
 
 #convention-admin-alert-wrap .convention-seat-info-btn{
     height: 20%;
+    border-top: 1px solid #ccc;
 }
 
 #convention-admin-alert-wrap .convention-seat-info-status{
@@ -308,4 +313,100 @@
     width: 15px;
     height: 15px;
     align-self: center;
+}
+
+
+/* 회원 alert */
+.convention-seat-member-alert{
+    width: 30%;
+    min-width: 250px;
+    height: 30%;
+    background-color: white;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.convention-seat-member-info-title{
+    width: 100%;
+    height: 20%;
+    /* background-color: #ccc; */
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-bottom: 1px solid #ccc;
+}
+
+.convention-seat-member-info-content{
+    width: 100%;
+    height: 35%;
+    /* background-color: antiquewhite; */
+    margin-top: 10%;
+}
+.convention-seat-info-company-name{
+    width: 100%;
+    height: 30%;
+    /* background-color: aqua; */
+    display: flex;
+}
+.convention-seat-info-company-name-left{
+    width: 50%;
+    height: 100%;
+    /* background-color: aliceblue; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.convention-seat-info-company-name-right{
+    width: 50%;
+    height: 100%;
+    /* background-color: rgb(166, 219, 219); */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.convention-seat-info-company-category{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    /* background-color: aquamarine; */
+}
+
+.convention-seat-info-company-category-left{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.convention-seat-info-company-category-right{
+    width: 50%;
+    height: 100%;
+    /* background-color: #ccc; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.convention-seat-member-info-link{
+    width: 100%;
+    height: 15%;
+}
+.convention-seat-member-info-link>a{
+    color: var(--main1);
+}
+
+.convention-seat-member-info-btn{
+    width: 100%;
+    height: 20%;
+    border-top: 1px solid #ccc;
+}
+.convention-seat-member-info-btn>button{
+    width: 25%;
+    height: 55%;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--main1);
+    color: white;
+    font-size: 1.1rem;
 }

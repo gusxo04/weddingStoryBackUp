@@ -156,7 +156,7 @@ const ShowConvention = (props) => {
       :
       ""
       :
-      <ConventionLayout convention={convention} permission={2} />
+      <ConventionLayout convention={convention} permission={loginMemberType === 2 ? 2 : 1} />
       }
 
       <div className="convention-preview-info-wrap">
@@ -166,7 +166,7 @@ const ShowConvention = (props) => {
         <div className="convention-inner-preview-info convention-layout-btn">
           <button onClick={() => {
             setShowType(!showType);
-          }}>부스 보기</button>
+          }}>{showType ? "부스 보기" : "박람회 보기"}</button>
         </div>
         }
 
@@ -215,7 +215,7 @@ const ShowConvention = (props) => {
         <div className="convention-inner-preview-info convention-buy-btn" >
           <button onClick={() => {
             setShowType(!showType);
-          }}>부스 구매</button>
+          }}>{showType ? "부스 구매" : "박람회 보기"}</button>
         </div>
         :
         ""

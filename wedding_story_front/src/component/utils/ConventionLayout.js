@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { companyNoState } from "./RecoilData";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
+import { Link } from 'react-router-dom';
 
 const ConventionLayout = (props) => {
 
@@ -24,6 +25,7 @@ const ConventionLayout = (props) => {
   // SeatAlert 컴포넌트에게 넘겨줄 seat 정보임
 
   // seatAlert은 Alert 띄울 여부
+  const [seatMemberAlert, setSeatMemberAlert] = useState(false);
   const [seatCompanyAlert, setSeatCompanyAlert] = useState(false);
   const [seatAdminAlert, setSeatAdminAlert] = useState(false);
 
@@ -58,6 +60,7 @@ const ConventionLayout = (props) => {
   }
 
 
+  // main 에서는 업체 말곤 다 permission이 1임 
   const clickedSeat = (seat) => {
     setSeatInfo(seat);
     if(permission === 0){
@@ -65,7 +68,8 @@ const ConventionLayout = (props) => {
       setSeatAdminAlert(true);
     }
     else if(permission === 1){
-      // 회원이 좌석 클릭시
+      // 회원이 좌석 클릭시 (or 메인에서 어드민이 클릭시)
+      setSeatMemberAlert(true);
     }
     else if(permission === 2){
       // 업체가 좌석 클릭시
@@ -219,6 +223,14 @@ const ConventionLayout = (props) => {
         {seatAdminAlert ?
         <SeatAdminAlert seatInfo={seatInfo} setSeatAdminAlert={setSeatAdminAlert} 
         changedSeatInfo={changedSeatInfo} setChangedSeatInfo={setChangedSeatInfo}
+        />
+        :
+        ""
+        }
+
+        {seatMemberAlert ?
+        <SeatMemberAlert seatInfo={seatInfo} setSeatMemberAlert={setSeatMemberAlert}
+        
         />
         :
         ""
@@ -423,6 +435,67 @@ const SeatAdminAlert = (props) => {
           </div>
           
         </div>
+      </div>
+    </div>
+  )
+}
+
+
+const SeatMemberAlert = (props) => {
+
+  const{
+    setSeatMemberAlert,
+    seatInfo,
+  } = props;
+
+  const closeSeatAlert = (e) => {
+    if(e.target.className === "convention-seat-alert-wrap"){
+      setSeatMemberAlert(false);
+    }
+  }
+  
+  return (
+    <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
+      <div className="convention-seat-member-alert">
+        <div className="convention-seat-member-info-title df-basic">
+          <span>등록된 업체 정보</span>
+        </div>
+
+        <div className="convention-seat-member-info-content">
+          {/* 부스가 비어있다면 등록된 업체가 없다고 띄워야 함 */}
+          {/* 밑에 name이랑 category 없애고 그냥 content에 등록된 업체 없음 띄우기 */}
+          {/* 나중에 데이터 생기면 업체까지 한 번에 조회해서 seatInfo에 넣기 */}
+          <div className="convention-seat-info-company-name">
+            <div className="convention-seat-info-company-name-left">
+              <span>업체명 : </span>
+            </div>
+            <div className="convention-seat-info-company-name-right">
+              <pre> 엄청난 업체명</pre>
+            </div>
+          </div>
+
+          <div className="convention-seat-info-company-category">
+            <div className="convention-seat-info-company-category-left">
+              <span>카테고리 : </span>
+            </div>
+            <div className="convention-seat-info-company-category-right">
+              <pre> 메이크업</pre>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div className="convention-seat-member-info-link df-basic">
+          <Link className="cursor-p">업체 보러가기</Link>
+        </div>
+
+        <div className="convention-seat-member-info-btn df-basic">
+          <button onClick={() => {
+            setSeatMemberAlert(false);
+          }}>확인</button>
+        </div>
+        
       </div>
     </div>
   )
