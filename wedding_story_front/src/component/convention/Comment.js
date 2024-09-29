@@ -103,12 +103,22 @@ const Comment = (props) => {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const editComment = () => {
+  useEffect(() => {
     setEditCommentContent(c.conventionCommentContent);
+  }, []);
+
+  const editComment = () => {
+    // setEditCommentContent(c.conventionCommentContent);
     contentRef.current.style.display = "none";
     contentContainerRef.current.style.display = "none";
     editTextContainerRef.current.style.display = "block";
     editTextareaRef.current.style.display = "block";
+    if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
+      editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
+    }
+    else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
+      editTextareaRef.current.style.borderRadius = "30px";
+    }
     setIsEditing(true);
   }
 

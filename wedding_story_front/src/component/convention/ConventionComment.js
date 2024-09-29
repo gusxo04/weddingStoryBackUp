@@ -80,10 +80,10 @@ const writeCheck = () => {
   }
 
 
+
   return (
     
     <div className="convention-comment-wrap">
-      {/* 금요일날 만들 거 1 -> 로그인 안 했으면 댓글 못 달게 막아야 함 */}
       <div className="convention-comment-write-wrap">
         <div className="convention-comment-input-wrap">
           {/* <input type="text" value={commentContent} onChange={(e) => {

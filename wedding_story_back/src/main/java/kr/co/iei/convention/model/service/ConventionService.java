@@ -160,6 +160,7 @@ public class ConventionService {
 
     @Transactional
     public Boolean insertconventionComment(ConventionCommentDTO conventionComment) {
+        conventionComment.setConventionCommentContent(conventionComment.getConventionCommentContent().replaceAll("\\s+$", ""));
         int result = conventionDao.insertConventionComment(conventionComment);
         return result == 1;
     }
