@@ -1,9 +1,11 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../utils/RecoilData";
+import { loginIdState } from "../../utils/RecoilData";
 import axios from "axios";
-import ReviewForm from "../utils/ReviewFrom";
+import styles from "./ProductReview.module.css";
+import { ReviewForm } from "../components";
 
 const ProductReview = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -81,13 +83,14 @@ const ProductReview = () => {
   };
 
   return (
-    <div className="product-reviews">
+    <div className={styles["product-reviews"]}>
       <h3>리뷰</h3>
       <button onClick={handleOpenPopup}>리뷰 작성</button>
+
       {reviews.length > 0 ? (
         reviews.map((review) => (
-          <div key={review.productCommentNo} className="review-item">
-            <div className="review-rating">
+          <div key={review.productCommentNo} className={styles["review-item"]}>
+            <div className={styles["review-rating"]}>
               {Array.from({ length: 5 }, (_, index) => (
                 <FaStar
                   key={index}
@@ -99,8 +102,8 @@ const ProductReview = () => {
               ))}
               <span>{` ${review.rating} / 5`}</span>
             </div>
-            <div className="review-name">{loginIdState.loginId}</div>
-            <div className="review-text">{review.review}</div>
+            <div className={styles["review-name"]}>{loginIdState.loginId}</div>
+            <div className={styles["review-text"]}>{review.review}</div>
             {review.image && (
               <img
                 src={review.image}

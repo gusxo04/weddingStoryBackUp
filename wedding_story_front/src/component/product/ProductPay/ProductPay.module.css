@@ -1,0 +1,14 @@
+/*결제css*/
+.pay-wrap {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--main2);
+  text-align: center;
+  width: 400px;
+  height: 800px;
+  margin: 0 auto;
+  align-self: center;
+}
+.pay-button {
+  padding-top: 100px;
+}

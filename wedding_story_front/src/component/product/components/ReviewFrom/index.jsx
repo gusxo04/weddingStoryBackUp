@@ -2,7 +2,32 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "./RecoilData";
+import { loginIdState } from "../../../utils/RecoilData";
+
+const Stars = ({ rating, onClick }) => {
+  const handleStartClick = (starRating) => (e) => {
+    onClick(starRating);
+  };
+
+  return (
+    <>
+      {[...Array(5)].map((_, index) => {
+        const starRating = index + 1;
+        return (
+          <FaStar
+            key={starRating}
+            onClick={handleStartClick(starRating)}
+            fill={starRating <= rating ? "gold" : "gray"}
+            style={{
+              cursor: "pointer",
+              fontSize: "20px",
+            }}
+          />
+        );
+      })}
+    </>
+  );
+};
 
 const ReviewForm = ({ isOpen, onClose, onSubmit, initialData }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -47,21 +72,8 @@ const ReviewForm = ({ isOpen, onClose, onSubmit, initialData }) => {
     onClose(); // 제출 후 팝업 닫기
   };
 
-  const renderStars = () => {
-    return [...Array(5)].map((_, index) => {
-      const starRating = index + 1;
-      return (
-        <FaStar
-          key={starRating}
-          onClick={() => setRating(starRating)}
-          style={{
-            cursor: "pointer",
-            color: starRating <= rating ? "gold" : "gray",
-            fontSize: "20px",
-          }}
-        />
-      );
-    });
+  const handleStarClick = (starRating) => {
+    setRating(starRating);
   };
 
   if (!isOpen) return null; // 열려있지 않으면 렌더링X
@@ -76,7 +88,7 @@ const ReviewForm = ({ isOpen, onClose, onSubmit, initialData }) => {
         <form onSubmit={handleSubmit}>
           <div className="title">
             <label>별점:</label>
-            <div>{renderStars()}</div>
+            <Stars rating={rating} onClick={handleStarClick} />
           </div>
           <div className="title">
             <label>리뷰:</label>

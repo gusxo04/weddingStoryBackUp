@@ -1,8 +1,8 @@
-import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import PageNavi from "../utils/PagiNavi";
+import PageNavi from "../../utils/PagiNavi";
+import styles from "./ProductAllList.module.css";
 
 const ProductAllList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -24,9 +24,9 @@ const ProductAllList = () => {
   }, [reqPage]);
 
   return (
-    <section className="board-list">
-      <div className="page-title">
-        <ul className="name-title">
+    <section className={styles["board-list"]}>
+      <div className={styles["page-title"]}>
+        <ul className={styles["name-title"]}>
           <li>
             <Link to="/product/list">스튜디오</Link>
           </li>
@@ -45,14 +45,14 @@ const ProductAllList = () => {
         </ul>
       </div>
 
-      <div className="product-list-wrap">
-        <ul className="posting-wrap">
+      <div className={styles["product-list-wrap"]}>
+        <ul className={styles["posting-wrap"]}>
           {productList.map((product, i) => {
             return <BoardItem key={"product-" + i} product={product} />;
           })}
         </ul>
       </div>
-      <div className="board-paging-wrap">
+      <div className={styles["board-paging-wrap"]}>
         <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
       </div>
     </section>
@@ -65,7 +65,7 @@ const BoardItem = (props) => {
   const navigate = useNavigate();
   return (
     <li
-      className="posting-item"
+      className={styles["posting-item"]}
       onClick={() => {
         navigate(`/product/list/${product.productNo}`);
       }}
@@ -79,12 +79,12 @@ const BoardItem = (props) => {
           }
         />
       </div>
-      <div className="posting-info">
-        <div className="favirite">
+      <div className={styles["posting-info"]}>
+        <div className={styles["favirite"]}>
           <span className="material-icons-outlined">favorite</span>
         </div>
-        <div className="posting-title">{product.productName}</div>
-        <div className="posting-sub-info">
+        <div className={styles["posting-title"]}>{product.productName}</div>
+        <div className={styles["posting-sub-info"]}>
           <span>{product.productPrice}</span>
         </div>
       </div>

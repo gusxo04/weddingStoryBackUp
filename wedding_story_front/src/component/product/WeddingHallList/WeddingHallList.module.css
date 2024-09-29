@@ -1,0 +1,31 @@
+/*제품 스드메제품 보기 전체css*/
+.board-list {
+  width: 100%;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: var(--main2);
+  margin: 0 auto;
+  align-self: center;
+}
+.board-list > .page-title {
+  padding: 30px;
+  font-size: 17px;
+  justify-content: center;
+}
+
+.board-list > .page-title > ul {
+  display: flex;
+  text-align: center;
+}
+
+.board-list > .page-title > ul > li {
+  padding-right: 10px;
+}
+.board-list > .page-title > .name-title {
+  padding-left: 42%;
+  margin: 0 auto;
+}
+.name-title :hover {
+  color: #c19975;
+  cursor: pointer;
+}

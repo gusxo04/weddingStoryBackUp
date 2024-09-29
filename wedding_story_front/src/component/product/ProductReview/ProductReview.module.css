@@ -1,0 +1,47 @@
+/*리뷰css*/
+.review-wrap > img {
+  width: 300px;
+}
+
+.review-wrap > h2 {
+  color: var(--main1);
+}
+.review-wrap > .title {
+  text-align: center;
+  padding-bottom: 200px;
+}
+.title > label {
+  color: var(--main1);
+}
+.review-wrap > .title > textarea {
+  margin-left: 0;
+}
+
+.review-wrap > .content {
+  border-radius: 10px;
+  height: 800px;
+  padding-left: 500px;
+  background-color: var(--main2);
+}
+
+.review-item {
+  padding: 20px;
+  border: 1px solid #c19975;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.review-item > textarea {
+  margin-left: 0px;
+}
+
+.review-button {
+  padding-top: 20px;
+  padding-left: 50px;
+}
+.review-button > button {
+  width: 100px;
+  border: 1px solid #000;
+  background-color: #c19975;
+  color: #fff;
+}

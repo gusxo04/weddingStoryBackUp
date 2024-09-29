@@ -3,8 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import ProductReview from "./ProductReview";
+import ProductReview from "../ProductReview";
 // Assuming you have necessary imports for Viewer and any other components
+import styles from "./ProductInfo.module.css";
 
 const ProductInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -28,13 +29,13 @@ const ProductInfo = () => {
   }, [productNo, backServer]);
 
   return (
-    <section className="product-view-wrap">
-      <div className="product-title">
+    <section className={styles["product-view-wrap"]}>
+      <div className={styles["product-title"]}>
         <h3>{product.productName}상세보기</h3>
       </div>
-      <div className="product-view-content">
-        <div className="product-view-info">
-          <div className="product-thumbnail">
+      <div className={styles["product-view-content"]}>
+        <div className={styles["product-view-info"]}>
+          <div className={styles["product-thumbnail"]}>
             <img
               src={
                 product.productThumb
@@ -44,8 +45,8 @@ const ProductInfo = () => {
               //alt={product.productTitle}
             />
           </div>
-          <div className="product-view-preview">
-            <div className="prduct-report">
+          <div className={styles["product-view-preview"]}>
+            <div className={styles["prduct-report"]}>
               <Link to="/product/list">
                 <h5>뒤로가기/</h5>
               </Link>
@@ -53,7 +54,7 @@ const ProductInfo = () => {
                 <h5>신고하기</h5>
               </Link>
             </div>
-            <table className="product-tbl">
+            <table className={styles["product-tbl"]}>
               <tbody>
                 <tr>
                   <th style={{ width: "20%" }}>회사명</th>
@@ -71,15 +72,15 @@ const ProductInfo = () => {
             </table>
           </div>
         </div>
-        <div className="product-btn-zone">
-          <button type="button" className="btn">
+        <div className={styles["product-btn-zone"]}>
+          <button type="button" className={styles["btn"]}>
             <Link to="/counseling/counsel">상담하기</Link>
           </button>
-          <button type="button" className="btn">
+          <button type="button" className={styles["btn"]}>
             <Link to="/product/pay">결제하기</Link>
           </button>
         </div>
-        <div className="product-content-wrap">
+        <div className={styles["product-content-wrap"]}>
           <h3>상세보기</h3>
           {product.productContent ? (
             <Viewer initialValue={product.productContent} />
@@ -90,11 +91,11 @@ const ProductInfo = () => {
         <br />
         <ProductReview />
         <br />
-        <div className="product-faq">
+        <div className={styles["product-faq"]}>
           <h3>FAQ</h3>
         </div>
         <br />
-        <div className="product-map-view">
+        <div className={styles["product-map-view"]}>
           <h3>회사 위치</h3>
           {/* 지도 구성 요소에 대한 자리 표시자입니다. 여기에 지도 API를 통합하세요 */}
           {/* <MapComponent location={product.companyLocation} /> */}
@@ -131,11 +132,11 @@ const FileItem = ({ file }) => {
   };
 
   return (
-    <div className="board-file">
-      <span className="material-icons file-icon" onClick={filedown}>
+    <div className={styles["board-file"]}>
+      <span className="material-icons" onClick={filedown}>
         file_download
       </span>
-      <span className="file-name">{file.filename}</span>
+      <span className={styles["file-name"]}>{file.filename}</span>
     </div>
   );
 };

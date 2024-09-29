@@ -1,0 +1,82 @@
+/*상세css*/
+.product-view-wrap {
+  width: 900px;
+  padding: 30px;
+  margin: 0 auto;
+  text-align: center;
+}
+.product-title > h3 {
+  color: #c19975;
+  font-size: 20px;
+  font-family: ns_b;
+}
+.product-back > .material-icons {
+  text-align: left;
+}
+.product-thumbnail > img {
+  width: 300px;
+  height: 300px;
+}
+
+.product-tbl {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+}
+
+.product-tbl th,
+.product-tbl td {
+  padding: 12px 15px;
+}
+
+.product-tbl tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.product-tbl tbody tr:last-of-type {
+  border-bottom: 2px solid #c19975;
+}
+
+.product-view-content {
+  padding: 5%;
+}
+
+.product-view-info {
+  display: flex;
+}
+
+.product-view-preview {
+  padding-top: 5%;
+  padding-left: 13%;
+}
+.product-view-preview > .prduct-report {
+  display: flex;
+  padding-left: 74%;
+}
+
+.product-content-wrap {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-reviews {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-faq {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-map-view {
+  border-top: 1px solid #c19975;
+  border-bottom: 1px solid #c19975;
+}
+
+.product-btn-zone {
+  display: flex;
+  padding-bottom: 5%;
+}

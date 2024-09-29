@@ -1,13 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import "./product.css";
 import Counsel from "../counseling/Counsel";
 import ProductPay from "./ProductPay";
 import ProductReview from "./ProductReview";
-import ProductAllList from "./ProductAllList";
 import ProductInfo from "./ProductInfo";
 import ProductWeddingHall from "./ProductWeddingHall";
 import WeddingHallList from "./WeddingHallList";
 import WeddingHallInfo from "./WeddingHallInfo";
+import ProductAllList from "./ProductAllList";
 const ProductMain = () => {
   return (
     <Routes>

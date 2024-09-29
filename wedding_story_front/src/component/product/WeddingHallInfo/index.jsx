@@ -2,8 +2,9 @@ import { Viewer } from "@toast-ui/react-editor";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ReviewForm from "../utils/ReviewFrom";
 import { FaStar } from "react-icons/fa";
+import styles from "./WeddingHallInfo.module.css";
+import { ReviewForm } from "../components";
 
 const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -55,13 +56,13 @@ const WeddingHallInfo = () => {
   }, [boardNo, backServer]);
 
   return (
-    <section className="product-view-wrap">
-      <div className="product-title">
+    <section className={styles["product-view-wrap"]}>
+      <div className={styles["product-title"]}>
         <h3>웨딩홀 상세보기</h3>
       </div>
-      <div className="product-view-content">
-        <div className="product-view-info">
-          <div className="product-thumbnail">
+      <div className={styles["product-view-content"]}>
+        <div className={styles["product-view-info"]}>
+          <div className={styles["product-thumbnail"]}>
             <img
               src={
                 board.boardThumb
@@ -71,8 +72,8 @@ const WeddingHallInfo = () => {
               alt={board.boardTitle}
             />
           </div>
-          <div className="product-view-preview">
-            <div className="prduct-report">
+          <div className={styles["product-view-preview"]}>
+            <div className={styles["prduct-report"]}>
               <Link to="/">
                 <h5>뒤로가기/</h5>
               </Link>
@@ -80,7 +81,7 @@ const WeddingHallInfo = () => {
                 <h5>신고하기</h5>
               </Link>
             </div>
-            <table className="product-tbl">
+            <table className={styles["product-tbl"]}>
               <tbody>
                 <tr>
                   <th style={{ width: "20%" }}>회사명</th>
@@ -98,15 +99,15 @@ const WeddingHallInfo = () => {
             </table>
           </div>
         </div>
-        <div className="product-btn-zone">
-          <button type="button" className="btn">
+        <div className={styles["product-btn-zone"]}>
+          <button type="button" className={styles["btn"]}>
             <Link to="/counseling/counsel">상담하기</Link>
           </button>
-          <button type="button" className="btn">
+          <button type="button" className={styles["btn"]}>
             <Link to="/product/weddingHall">예약하기</Link>
           </button>
         </div>
-        <div className="product-content-wrap">
+        <div className={styles["product-content-wrap"]}>
           <h3>상세보기</h3>
           {board.boardContent ? (
             <Viewer initialValue={board.boardContent} />
@@ -115,12 +116,12 @@ const WeddingHallInfo = () => {
           )}
         </div>
         <br />
-        <div className="product-reviews">
+        <div className={styles["product-reviews"]}>
           <h3>리뷰</h3>
           {reviews.length > 0 ? (
             reviews.map((review) => (
-              <div key={review.id} className="review-item">
-                <div className="review-rating">
+              <div key={review.id} className={styles["review-item"]}>
+                <div className={styles["review-rating"]}>
                   {Array.from({ length: 5 }, (_, index) => (
                     <FaStar
                       key={index}
@@ -132,7 +133,7 @@ const WeddingHallInfo = () => {
                   ))}
                   <span>{` ${review.rating} / 5`}</span>
                 </div>
-                <div className="review-text">{review.review}</div>
+                <div className={styles["review-text"]}>{review.review}</div>
               </div>
             ))
           ) : (
@@ -146,11 +147,11 @@ const WeddingHallInfo = () => {
           />
         </div>
         <br />
-        <div className="product-faq">
+        <div className={styles["product-faq"]}>
           <h3>FAQ</h3>
         </div>
         <br />
-        <div className="product-map-view">
+        <div className={styles["product-map-view"]}>
           {/* 회사 위치를 표시하는 지도 구성 요소가 있다고 가정합니다. */}
           <h3>회사 위치</h3>
           {/* 지도 구성 요소에 대한 자리 표시자입니다. 여기에 지도 API를 통합하세요 */}
