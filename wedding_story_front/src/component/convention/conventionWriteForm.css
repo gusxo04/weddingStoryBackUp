@@ -16,6 +16,7 @@
   justify-content: center;
   gap: 5%;
   /* background-color: azure; */
+  margin-bottom: 10px;
 }
 
 .convention-header>button{

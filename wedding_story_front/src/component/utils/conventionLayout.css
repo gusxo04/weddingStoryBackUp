@@ -1,3 +1,57 @@
+.convention-explain-wrap{
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    /* background-color: #b4bfd4; */
+    
+}
+.convention-explain-list{
+    width: 25%;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 200px
+}
+.df-explain{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.convention-explain-white{
+    width: 30%;
+    /* background-color: aliceblue; */
+}
+.convention-white-box{
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+.convention-explain-gray{
+    width: 30%;
+    /* background-color: aliceblue; */
+    
+}
+.convention-gray-box{
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    background-color: #ccc;
+}
+
+.convention-explain-main{
+    width: 30%;
+    /* background-color: aliceblue; */
+}
+.convention-main-box{
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    background-color: var(--main1);
+}
+
 .convention-layout-wrap{
     display: flex;
     justify-content: center;
@@ -10,7 +64,8 @@
     width: 960px;
     height: 50vh;
     justify-content: center;
-    margin-top: 5%;
+    margin-top: 3%;
+    /* 여기 margin임 */
 }
 
 .convention-layout-wrap+.convention-preview-info-wrap{
@@ -121,6 +176,7 @@
 
 .problem{
     background-color: #ccc;
+    cursor: auto;
 }
 
 
@@ -319,6 +375,7 @@
 /* 회원 alert */
 .convention-seat-member-alert{
     width: 30%;
+    max-width: 350px;
     min-width: 250px;
     height: 30%;
     background-color: white;

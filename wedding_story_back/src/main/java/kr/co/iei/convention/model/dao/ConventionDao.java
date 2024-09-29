@@ -13,6 +13,7 @@ import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
 import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
+import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 
 @Mapper
@@ -57,6 +58,10 @@ public interface ConventionDao {
 	int insertCompanyPay(CompanyPayDTO companyPay);
 
 	int updateSeatInfo(ConventionSeatDTO conventionSeat);
+
+	MemberDTO selectMemberInfo(int memberNo);
+
+	ConventionMemberDTO checkTicketDupelicate(ConventionMemberDTO conventionMember);
 
 
 

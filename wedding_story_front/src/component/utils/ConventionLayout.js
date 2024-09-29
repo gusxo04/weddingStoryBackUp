@@ -154,91 +154,109 @@ const ConventionLayout = (props) => {
   
 // 필요한 거 -> 업체가 산 좌석이 어딘지를 알아야 하고 , 문제가 있는 좌석은 문제가 있음을 알 수 있게 해야 함
   return (
-    <div className="convention-layout-wrap">
-      {/* wrap은 테스트용임 */}
-      <div className="convention-layout-container">
-{/* 문제가 있는 좌석은 problem이라는 class부여 */}
-{/* 그리고 onclick역시 problem */}
-        <div className="layout layout-a">
-          {aSeat.map((seat,index) => {
-            // const seatInfo = () => {
-            //   purchaseSeat(seat);
-            // }
-            // const seatProblem = () => {
-            //   console.log("문제가 있는 상품");
-            // }
-            return (
-              <div key={"seat-"+index} onClick={() => {
-                // seat.seatStatus === 0 ? purchaseSeat(seat) : seatProblem()
-                seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-              }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
-            )
-          })}
+    <>
+      <div className="convention-explain-wrap">
+        <div className="convention-explain-list">
+          <div className="convention-explain-white df-explain">
+            <span>빈 좌석</span>
+            <div className="convention-white-box"></div>
+          </div>
+          <div className="convention-explain-gray df-explain">
+            <span>점검 좌석</span>
+            <div className="convention-gray-box"></div>
+          </div>
+          <div className="convention-explain-main df-explain">
+            <span>업체 좌석</span>
+            <div className="convention-main-box"></div>
+          </div>
         </div>
+      </div>
+    
+      <div className="convention-layout-wrap">
+
+        <div className="convention-layout-container">
+  {/* 문제가 있는 좌석은 problem이라는 class부여 */}
+  {/* 그리고 onclick역시 problem */}
+          <div className="layout layout-a">
+            {aSeat.map((seat,index) => {
+              // const seatInfo = () => {
+              //   purchaseSeat(seat);
+              // }
+              // const seatProblem = () => {
+              //   console.log("문제가 있는 상품");
+              // }
+              return (
+                <div key={"seat-"+index} onClick={() => {
+                  // seat.seatStatus === 0 ? purchaseSeat(seat) : seatProblem()
+                  seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+              )
+            })}
+          </div>
+          
+          <div className="layout layout-b">
+            {bSeat.map((seat,index) => {
+              const seatInfo = () => {
+                console.log(seat);
+              }
+              // const seatProblem = () => {
+              //   console.log("문제가 있는 상품");
+              // }
+              return (
+                <div key={"seat-"+index} onClick={() => {
+                  seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+              )
+            })}
+          </div>
+          
+          <div className="layout layout-c">
+            {cSeat.map((seat,index) => {
+              const seatInfo = () => {
+                console.log(seat);
+              }
+              // const seatProblem = () => {
+              //   console.log("문제가 있는 상품");
+              // }
+              return (
+                <div key={"seat-"+index} onClick={() => {
+                  seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+              )
+            })}
+          </div>
+          
+        </div>
+
         
-        <div className="layout layout-b">
-          {bSeat.map((seat,index) => {
-            const seatInfo = () => {
-              console.log(seat);
-            }
-            // const seatProblem = () => {
-            //   console.log("문제가 있는 상품");
-            // }
-            return (
-              <div key={"seat-"+index} onClick={() => {
-                seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-              }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
-            )
-          })}
-        </div>
+          {seatCompanyAlert ?
+          <SeatCompanyAlert seatInfo={seatInfo} setSeatCompanyAlert={setSeatCompanyAlert} 
+          purchaseSeat={purchaseSeat} checkedRef={checkedRef} 
+          checkSpanRef={checkSpanRef}
+          />
+
+          :
+          ""}
+
+          {seatAdminAlert ?
+          <SeatAdminAlert seatInfo={seatInfo} setSeatAdminAlert={setSeatAdminAlert} 
+          changedSeatInfo={changedSeatInfo} setChangedSeatInfo={setChangedSeatInfo}
+          />
+          :
+          ""
+          }
+
+          {seatMemberAlert ?
+          <SeatMemberAlert seatInfo={seatInfo} setSeatMemberAlert={setSeatMemberAlert}
+          
+          />
+          :
+          ""
+          }
         
-        <div className="layout layout-c">
-          {cSeat.map((seat,index) => {
-            const seatInfo = () => {
-              console.log(seat);
-            }
-            // const seatProblem = () => {
-            //   console.log("문제가 있는 상품");
-            // }
-            return (
-              <div key={"seat-"+index} onClick={() => {
-                seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-              }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
-            )
-          })}
-        </div>
         
       </div>
-
-      
-        {seatCompanyAlert ?
-        <SeatCompanyAlert seatInfo={seatInfo} setSeatCompanyAlert={setSeatCompanyAlert} 
-        purchaseSeat={purchaseSeat} checkedRef={checkedRef} 
-        checkSpanRef={checkSpanRef}
-        />
-
-        :
-        ""}
-
-        {seatAdminAlert ?
-        <SeatAdminAlert seatInfo={seatInfo} setSeatAdminAlert={setSeatAdminAlert} 
-        changedSeatInfo={changedSeatInfo} setChangedSeatInfo={setChangedSeatInfo}
-        />
-        :
-        ""
-        }
-
-        {seatMemberAlert ?
-        <SeatMemberAlert seatInfo={seatInfo} setSeatMemberAlert={setSeatMemberAlert}
-        
-        />
-        :
-        ""
-        }
-      
-      
-    </div>
-    
+    </>
   )
 }
 

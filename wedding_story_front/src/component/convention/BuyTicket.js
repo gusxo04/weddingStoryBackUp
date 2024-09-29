@@ -25,6 +25,24 @@ const BuyTicket = (props) => {
     setIsPayment,
   } = props;
 
+  const [memberName, setMemberName] = useState("");
+  const [memberPhone, setMemberPhone] = useState("");
+  const [memberEmail, setMemberEmail] = useState("");
+
+  useEffect(() => {
+    console.log("uef");
+    axios.get(`${backServer}/convention/get/memberInfo/${memberNoState}`)
+    .then((res) => {
+      console.log(res);
+      setMemberEmail(res.data.memberEmail);
+      setMemberName(res.data.memberName);
+      setMemberPhone(res.data.memberPhone);
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+  }, []);
+
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
 
   
@@ -38,6 +56,7 @@ const BuyTicket = (props) => {
     }
 
     //알림 받을 이메일 합치기
+
     
     
     // 결제 API!
@@ -52,11 +71,11 @@ const BuyTicket = (props) => {
       name: "박람회 티켓",
       amount: convention.conventionPrice,
       // 나중에 회원 DB 조회해서 다 넣기
-      buyer_email: "test@portone.io",
-      buyer_name: "구매자 이름",
-      buyer_tel: "010-1234-5678",
-      buyer_addr: "서울특별시 강남구 신사동",
-      buyer_postcode: "123-456"
+      buyer_email: memberEmail,
+      buyer_name: memberName,
+      buyer_tel: memberPhone,
+      // buyer_addr: "서울특별시 강남구 신사동",
+      // buyer_postcode: "123-456"
     }, rsp => {
       if (rsp.success) {
         // 결제 성공 시 로직

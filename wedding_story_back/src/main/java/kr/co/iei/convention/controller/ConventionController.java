@@ -28,9 +28,12 @@ import kr.co.iei.convention.model.dto.ConventionMemberDTO;
 import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.convention.model.service.ConventionService;
+import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin("*")
@@ -92,6 +95,13 @@ public class ConventionController {
         boolean result = conventionService.insertConvention(convention);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/get/memberInfo/{memberNo}")
+    public ResponseEntity<MemberDTO> getMemberInfo(@PathVariable int memberNo) {
+        MemberDTO memberDTO = conventionService.selectMemberInfo(memberNo);
+        return ResponseEntity.ok(memberDTO);
+    }
+
 
     @PostMapping("/buy/ticket")
     public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {

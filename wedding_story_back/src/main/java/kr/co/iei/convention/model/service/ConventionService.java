@@ -1,13 +1,9 @@
 package kr.co.iei.convention.model.service;
 
-
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -17,11 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.web.client.RestTemplate;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,6 +26,7 @@ import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.convention.model.dto.ConventionMemberDTO;
 import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
+import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 
 @Service
@@ -74,32 +68,48 @@ public class ConventionService {
         // convention.setConventionEnd(conventionEndDate);
         // 아니 이거 안 해도 되는건데 뭐임..1시간 가까이 개고생했네
         boolean result = conventionDao.insertConvention(convention);
+        System.out.println("박람회 등록 : "+result);
         return result;
     }
+
+    
+	public MemberDTO selectMemberInfo(int memberNo) {
+        MemberDTO memberDTO = conventionDao.selectMemberInfo(memberNo);
+        return memberDTO;
+	}
 
     @Transactional
     public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay) {
         //티켓 코드 생성
         Random random = new Random();
         conventionMember.setTicketCode("");
-        for(int i = 0; i < 30; i++){
-            int randomType = random.nextInt(3);
-            if(randomType == 0){
-                String randomCode = String.valueOf((char)(random.nextInt(26)+97));
-                conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
+        while(true){
+            for(int i = 0; i < 30; i++){
+                int randomType = random.nextInt(3);
+                if(randomType == 0){
+                    String randomCode = String.valueOf((char)(random.nextInt(26)+97));
+                    conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
+                }
+                else if(randomType == 1){
+                    String randomCode = String.valueOf((char)(random.nextInt(26)+65));
+                    conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
+                }
+                else if(randomType == 2){
+                    String randomCode = random.nextInt(10) + "";
+                    conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
+                }
             }
-            else if(randomType == 1){
-                String randomCode = String.valueOf((char)(random.nextInt(26)+65));
-                conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
-            }
-            else if(randomType == 2){
-                String randomCode = random.nextInt(10) + "";
-                conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
-            }
-        }
 
-        // 혹시 티켓코드가 겹칠 수 있으니까 먼저 조회해서 없는지 있는지 판단 후 insert 해야함
-        // 
+            //티켓코드 중복체크
+            ConventionMemberDTO checkTicket = conventionDao.checkTicketDupelicate(conventionMember);
+            if(checkTicket == null){
+                break;
+            }
+            else{
+                conventionMember.setTicketCode("");
+            }
+                
+        }
         
         int result = conventionDao.insertConventionMember(conventionMember);
         if(result > 0){
@@ -178,11 +188,6 @@ public class ConventionService {
 
 
 
-
-
-
-
-
     // 환불 기능 메서드 2개 
     private String getAccessToken() {
         // 토큰 발급받는 코드
@@ -242,21 +247,29 @@ public class ConventionService {
         System.out.println("response 에요!!! : "+response.getBody());
         ObjectMapper om = new ObjectMapper();
         String code = "-1";
-		try {
+        try {
             JsonNode json = om.readTree(response.getBody());
             code = json.get("code").asText();
-		} catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
         System.out.println("code : "+code);
         
         return code;
     }
 
     @Transactional
-	public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
+    public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
         int result = conventionDao.updateSeatInfo(conventionSeat);
         return result == 1;
-	}
+    }
+
+
+
+
+
+    
+
+
 }

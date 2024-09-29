@@ -120,4 +120,12 @@
         update convention_seat set convention_seat_price = #{conventionSeatPrice}, seat_status = #{seatStatus} where seat_no = #{seatNo}
     </update>
 
+    <select id="selectMemberInfo" resultType="member">
+        select member_email, member_phone, member_name from member where member_no = #{memberNo}
+    </select>
+
+    <select id="checkTicketDupelicate" resultType="conventionMember">
+        select ticket_no from convention_member where ticket_code = #{ticketCode}
+    </select>
+
 </mapper>
