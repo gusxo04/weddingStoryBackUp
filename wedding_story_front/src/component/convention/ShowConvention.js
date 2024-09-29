@@ -13,6 +13,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState, loginNoState, memberTypeState } from "../utils/RecoilData";
 import NoLoginConventionComment from "./NoLoginConventionComment";
 
+
 const ShowConvention = (props) => {
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -223,6 +224,7 @@ const ShowConvention = (props) => {
 
           {/* 일반유저면 신청 / 업체면 부스 등록 / 관리자면 수정 */}
       </div>
+
       
 
       

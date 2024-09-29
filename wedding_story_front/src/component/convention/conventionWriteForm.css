@@ -140,6 +140,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .convention-info-wrap .input-zone>.convention-input-container>.mid-date-container{
   width: 4%;
@@ -147,6 +148,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 45px;
+  /* background-color: #bbb; */
 }
 .convention-info-wrap .input-zone>.convention-input-container>.end-date-container{
   width: 48%;
@@ -154,7 +157,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 
+}
+
+.convention-date-icon{
+  position: absolute;
+  right: 5%;
+  font-size: 1.5rem;
+  bottom: 37%;
+}
+.convention-time-icon{
+  position: absolute;
+  right: 5%;
+  font-size: 1.5rem;
+  bottom: 37%;
 }
 
 .convention-info-wrap .input-zone input{
@@ -162,8 +179,9 @@
   border-bottom: 1px solid #ccc;
   /* margin: 0 5%; */
   width: 100%;
-  font-size: 20px;
-  padding: 5px;
+  /* font-size: 20px; */
+  font-size: 1.2rem;
+  /* padding: 5px; */
 }
 /* .convention-info-wrap .input-zone>.convention-date-container>input{
   margin: 0 10%;
