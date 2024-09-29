@@ -246,7 +246,7 @@ const WriteForm = (props) => {
           </div>
           <div className="input-zone">
             <div className="convention-input-container">
-              <input type="type" value={conventionLimit} readOnly={writeType === 2 ? true : false} onChange={(e) => {
+              <input type="text" id="convention-limit" value={conventionLimit} readOnly={writeType === 2 ? true : false} onChange={(e) => {
                 if(!isNaN(e.target.value) ){
                   setConventionLimit(e.target.value); 
                 }
@@ -261,7 +261,7 @@ const WriteForm = (props) => {
           </div>
           <div className="input-zone">
             <div className="convention-input-container">
-              <input type="type" value={conventionPrice} readOnly={writeType === 2 ? true : false} onChange={(e) => {
+              <input type="text" id="convention-price" value={conventionPrice} readOnly={writeType === 2 ? true : false} onChange={(e) => {
                 if(!isNaN(e.target.value) ){
                   setConventionPrice(e.target.value); 
                 }

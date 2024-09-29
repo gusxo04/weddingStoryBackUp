@@ -204,7 +204,7 @@ const UpdateConvention = () => {
   
   return (
     <div className="convention-wrap">
-      <div className="convention-container insert-convention-container">
+      <div className="convention-container insert-convention-container update-convention-container">
 
         <SwitchButton formType={formType} setFormType={setFormType} />
         {formType === 1 ? 
