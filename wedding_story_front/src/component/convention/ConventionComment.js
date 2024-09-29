@@ -97,7 +97,11 @@ const writeCheck = () => {
             else if(textareaRef.current.scrollHeight == textareaRef.current.clientHeight){
               textareaRef.current.style.borderRadius = "30px";
             }
-          }} spellCheck={false} placeholder="댓글을 작성해주세요"></textarea>
+          }} spellCheck={false} placeholder="댓글을 작성해주세요"
+          onKeyUp={(e) => {
+            if(e.key === "Enter" && e.keyCode === 13 && !e.shiftKey) writeComment()
+          }}
+          ></textarea>
         </div>
 
         <div className="convention-comment-write-btn-zone">

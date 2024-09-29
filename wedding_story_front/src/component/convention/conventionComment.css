@@ -2,6 +2,8 @@
   width: 100%;
   /* background-color: aliceblue; */
   /* height: 500px; */
+  min-height: 100px;
+  margin-bottom: 30px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -127,7 +129,8 @@
   width: 80%;
   /* height: 500px; */
   /* background-color: #ccc; */
-  margin-top: 10px;
+  /* margin-top: 10px; */
+  margin-top: 20px;
   overflow: hidden;
   /* overflow-y: hidden; */
   /* overflow-x: hidden; */

@@ -248,6 +248,8 @@ const Comment = (props) => {
             else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
               editTextareaRef.current.style.borderRadius = "30px";
             }
+          }} onKeyUp={(e) => {
+            if(e.key === "Enter" && e.keyCode === 13 && !e.shiftKey) edit()
           }} ></textarea>
         </div>
 
@@ -281,6 +283,8 @@ const Comment = (props) => {
             else if(editTextareaRef.current.scrollHeight == editTextareaRef.current.clientHeight){
               editTextareaRef.current.style.borderRadius = "30px";
             }
+          }} onKeyUp={(e) => {
+            if(e.key === "Enter" && e.keyCode === 13 && !e.shiftKey) edit()
           }} ></textarea>
         </div>
       </>
@@ -317,6 +321,8 @@ const Comment = (props) => {
             else if(reTextareaRef.current.scrollHeight == reTextareaRef.current.clientHeight){
               reTextareaRef.current.style.borderRadius = "30px";
             }
+          }} onKeyUp={(e) => {
+            if(e.key === "Enter" && e.keyCode === 13 && !e.shiftKey) reCommentWrite()
           }} ></textarea>
         </div>
         <div className="convention-comment-reply-write-btn">
