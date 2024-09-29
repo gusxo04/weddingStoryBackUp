@@ -93,6 +93,11 @@
     position: fixed;
     overflow: auto;
 }
+@media (max-width : 430px){
+    .convention-member-alert-wrap{
+        height: 120vh;
+    }
+}
 
 .convention-input-alert{
     width: 50%;
@@ -587,4 +592,21 @@
 
 img.invalid{
     border: 1px solid red;
+}
+
+
+/* 개인정보동의 관련 css */
+.personal-container{
+    padding: 10px;
+    text-wrap: pretty;
+    line-height: 25px;
+}
+
+/* @media(max-width : 1199px){
+    .personal-container{
+        line-height: 25px;
+    }
+} */
+#no-active-convention{
+    display: none;
 }

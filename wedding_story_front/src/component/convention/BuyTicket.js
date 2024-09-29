@@ -35,6 +35,7 @@ const BuyTicket = (props) => {
 
   const checkRef = useRef(null);
   const checkEmailRef = useRef(null);
+  const dateScrollRef = useRef(null);
 
   useEffect(() => {
     console.log("uef");
@@ -52,6 +53,10 @@ const BuyTicket = (props) => {
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
 
+  useEffect(() => {
+    dateScrollRef.current.scrollTop = 0;
+  }, [showType]);
+
   
   const submit = () => {
     dateMsgRef.current.style.display = "none";
@@ -61,7 +66,10 @@ const BuyTicket = (props) => {
     const emailRegex = /^[a-zA-Z]{3,30}$/;
 
     if(!personalRef.current.checked || !selectDate || (noticeEmail.trim() !== "" && !emailRegex.test(noticeEmail))){
-      if(!selectDate) dateMsgRef.current.style.display = "flex";
+      if(!selectDate) {
+        dateMsgRef.current.style.display = "flex";
+        setShowType(true);
+      }
       if(!personalRef.current.checked) personalMsgRef.current.style.color = "var(--red2)";
       if(noticeEmail.trim() !== "" && !emailRegex.test(noticeEmail)) {
         checkEmailRef.current.textContent = "정확한 이메일을 입력해주세요";
@@ -181,15 +189,14 @@ const BuyTicket = (props) => {
           
         </div>
         
-        <div className="convention-date-wrap">
-        {showType ? 
-          <>
+        <div className="convention-date-wrap" ref={dateScrollRef}>
+
             {conventionShowDate.map((date,index) => {
               const selectDate = (e) => {
                 setSelectDate(e.target.value);
               }
               return (
-                <div key={"date-"+index} className="convention-inner-date">
+                <div key={"date-"+index} className="convention-inner-date" id={showType ? "" : "no-active-convention"}>
                   <label htmlFor={"date-label-"+index+1}>
                     <span>{date.toLocaleDateString().slice(0,-1).trim().split(" ").join("").split('.').join('-')}</span>
                     <span id="small">({date.toLocaleDateString('ko-kr', {weekday: 'short'})})</span>
@@ -202,10 +209,11 @@ const BuyTicket = (props) => {
                 </div>
               )
             })}
-          </>
-          : 
-          <PersonalPolicy />
-        }
+
+          <div className="personal-container" id={showType ? "no-active-convention" : ""}>
+            <PersonalPolicy />
+          </div>
+        
         </div>
 
         <div className="convention-personal-info-wrap">
