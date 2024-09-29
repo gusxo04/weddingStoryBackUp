@@ -1,10 +1,11 @@
 import axios from "axios";
 import "./convention.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ShowConvention from "./ShowConvention";
-import { loginNoState } from "../utils/RecoilData";
+import { loginNoState, memberTypeState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
+import ConventionLoading from "./ConventionLoading";
 
 
 
@@ -14,6 +15,7 @@ const ConventionMain = () => {
   const navigate = useNavigate();
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
   
   const [convention, setConvention] = useState({});
   const [startDate, setStartDate] = useState(null);
@@ -50,6 +52,7 @@ const ConventionMain = () => {
   const personalMsgRef = useRef(null);
 
   useEffect(() => {
+  // useLayoutEffect(() => {
     axios.get(`${backServer}/convention`)
     .then(res => {
       // console.log(res);
@@ -136,7 +139,8 @@ const ConventionMain = () => {
         : 
         <EmptyConvention navigate={navigate} />
         :
-        "비어있어요"}
+        <ConventionLoading />
+        }
       </div>
     </div>
   )
