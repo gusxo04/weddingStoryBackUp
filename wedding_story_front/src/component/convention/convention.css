@@ -96,6 +96,8 @@
 
 .convention-input-alert{
     width: 50%;
+    /* min-width: 280px; */
+    min-width: 370px;
     height: 70%;
     background-color:white;
     position: fixed;
@@ -118,17 +120,20 @@
     align-items: end;
 }
 .convention-email-info-wrap>label{
-    font-size: 18px;
+    /* font-size: 18px; */
+    font-size: 1.15rem;
     font-weight: 600;
     cursor: pointer;
 }
 .convention-email-input-wrap{
     width: 60%;
+    min-width: 200px;
     height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
     align-self: center;
+    gap: 5px;
 }
 .convention-email-input-wrap>.email-first-input-wrap>.convention-email-input{
     width: 70%;
@@ -136,8 +141,9 @@
     border: none;
     border-bottom: 1px solid #ccc;
     background-color: transparent;
-    font-size: 16px;
+    /* font-size: 16px; */
     padding: 0 5px;
+    font-size: 1rem;
 }
 .convention-email-input-wrap>span{
     /* margin: 0 10px; */
@@ -149,23 +155,28 @@
     border: none;
     border-bottom: 1px solid #ccc;
     background-color: transparent;
-    font-size: 16px;
+    font-size: 1rem;
+    
 }
 .convention-email-input-wrap>.email-first-input-wrap{
     width: 45%;
     display: flex;
     justify-content: end;
+    height: 50%;
 }
 .convention-email-input-wrap>.email-mid-wrap{
     width: 5%;
     display: flex;
     justify-content: center;
+    align-items: end;
+    height: 50%;
 }
 
 .convention-email-input-wrap>.email-last-input-wrap{
     width: 25%;
     display: flex;
     justify-content: start;
+    height: 50%;
 }
 
 #convention-email-last>option{
@@ -177,7 +188,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    /* font-size: 16px; */
     font-weight: 500;
 }
 
@@ -188,7 +199,8 @@
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
-    font-size: 1.1em;
+    /* font-size: 1.1em; */
+    font-size: 1.1rem;
     font-weight: 500;
     text-align: center;
     overflow-y: auto;
@@ -208,7 +220,7 @@
     cursor: pointer;
 }
 #small{
-    font-size: 16px;
+    /* font-size: 16px; */
     font-weight: 500;
 }
 .convention-date-wrap input[type=radio]{
@@ -223,9 +235,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    /* font-size: 18px; */
+    font-size: 1.2rem;
     font-weight: 500;
     gap: 10px;
+}
+#convention-personal-info{
+    font-size: 1.75rem;
 }
 .convention-personal-info-wrap>input[type=checkbox]{
     width: 20px;
@@ -277,19 +293,65 @@
 
 /* 환불 alert */
 .convention-refund-alert-wrap{
-    width: 50%;
-    height: 60%;
+    width: 45%;
+    max-width: 550px;
+    min-width: 250px;
+    height: 40%;
     background-color:white;
     position: fixed;
     display: flex;
-    justify-content: center;
     flex-direction: column;
 }
 
-.convention-refund-alert-wrap>#refund-btn{
-    width: 60px;
-    height: 50px;
-    align-self: center;
+.convention-refund-title{
+    width: 100%;
+    height: 20%;
+    /* background-color: #bbb; */
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.convention-refund-content{
+    width: 100%;
+    height: 60%;
+    /* background-color: aliceblue; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.convention-refund-span{
+    width: 100%;
+    height: 30%;
+    /* background-color: aquamarine; */
+}
+.convention-refund-reason{
+    width: 100%;
+    height: 70%;
+    /* background-color: bisque; */
+}
+.convention-refund-reason>#refund-text{
+    width: 80%;
+    height: 100%;
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+}
+
+.convention-refund-btn{
+    width: 100%;
+    height: 20%;
+    /* background-color: aqua; */
+}
+
+
+.convention-refund-btn>#refund-btn{
+    width: 20%;
+    min-width: 70px;
+    height: 45%;
+    min-height: 32px;
+    font-size: 1.1rem;
 }
 
 

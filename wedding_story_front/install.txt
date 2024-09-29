@@ -40,3 +40,7 @@ npm install sweetalert2
 2024-09-24 오후 04:53
 npm install react-slick --save --force
 npm install slick-carousel --save --force
+
+정현태
+2024-09-29 오후 04:34
+npm install react-datepicker --force

@@ -47,6 +47,8 @@ li {
   --hover1: #bddaed;
   --hover2: #b5b5b5;
   --hover3: #ecded1;
+  --red: rgb(246, 67, 67);
+  --red2: rgb(253, 68, 55);
 }
 
 select {
@@ -82,4 +84,11 @@ textarea {
 
 .cursor-p{
   cursor: pointer;
+}
+
+.main-btn{
+  background-color: var(--main1);
+  border-radius: 20px;
+  border: none;
+  color: white;
 }
