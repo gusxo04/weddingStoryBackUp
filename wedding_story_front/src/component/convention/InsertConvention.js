@@ -40,11 +40,6 @@ const InsertConvention = () => {
     setConventionTime(conventionStartTime+" ~ "+conventionEndTime);
   }, [conventionStartTime, conventionEndTime]);
 
-  console.log(conventionStart);
-
-
-  
-
 
   const writeTest = () => {
     console.log(conventionStart);

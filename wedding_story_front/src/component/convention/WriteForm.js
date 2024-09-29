@@ -3,6 +3,8 @@ import ToastEditor from "../utils/ToastEditor";
 import axios from "axios";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { loginNoState } from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
 
 
 const WriteForm = (props) => {
@@ -10,6 +12,7 @@ const WriteForm = (props) => {
   const imgStyle = props.imgStyle;
   const setImgStyle = props.setImgStyle;
   const imageRef = useRef(null);
+
 
   // const conventionTitle = props.conventionTitle;
   // const setConventionTitle = props.setConventionTitle;
@@ -78,8 +81,21 @@ const WriteForm = (props) => {
   const [showConventionEndTime, setShowConventionEndTime] = useState("");
   // 단순 보여주기 용 state임
 
+  
+  useEffect(() => {
+    if(writeType !== 2 || conventionStart === "") return;
+    const formatShowConventionStart = new Date(conventionStart);
+    const formatShowConventionEnd = new Date(conventionEnd);
+    const formatShowconventionStartTime = new Date(`${conventionStart}T${conventionStartTime}:00`);
+    const formatShowConventionEndTime = new Date(`${conventionStart}T${conventionEndTime}:00`);
+    setShowConventionstart(formatShowConventionStart);
+    setShowConventionEnd(formatShowConventionEnd);
+    setShowConventionStartTime(formatShowconventionStartTime);
+    setShowConventionEndTime(formatShowConventionEndTime);
+    // DatePicker로 바꾸면서 value에 넣을 수 있는 값이 바뀌어서 이렇게 바꿔줘야 함
+  }, [conventionStart]);
 
-  console.log(conventionStart);
+  // console.log(new Date(`${conventionStart}T${conventionStartTime}:00`));
   
   return (
     
@@ -196,7 +212,7 @@ const WriteForm = (props) => {
                   setConventionStartTime(formattedTime);
                 }} 
                 showTimeSelect showTimeSelectOnly timeIntervals={30} timeCaption="Time"
-                dateFormat="h:mm:aa" readOnly={writeType === 2 ? true : false}
+                dateFormat="h:mm:aa"
                 />
                 <label className="material-icons convention-time-icon cursor-p" htmlFor="convention-start-time" >schedule</label>
               </div>
@@ -215,7 +231,7 @@ const WriteForm = (props) => {
                   setConventionEndTime(formattedTime);
                 }} 
                 showTimeSelect showTimeSelectOnly timeIntervals={30} timeCaption="Time"
-                dateFormat="h:mm:aa" readOnly={writeType === 2 ? true : false}
+                dateFormat="h:mm:aa"
                 />
                 <label className="material-icons convention-time-icon cursor-p" htmlFor="convention-end-time" >schedule</label>
               </div>
