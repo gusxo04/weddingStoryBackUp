@@ -40,11 +40,14 @@ const InsertConvention = () => {
     setConventionTime(conventionStartTime+" ~ "+conventionEndTime);
   }, [conventionStartTime, conventionEndTime]);
 
+  console.log(conventionStart);
+
 
   
 
 
   const writeTest = () => {
+    console.log(conventionStart);
     let isTest = true;
     const titleReg = /^.{1,100}$/;
     const contentReg = /^.{1,1300}$/;
@@ -161,7 +164,9 @@ const InsertConvention = () => {
     return false;
   }
   
+
   const compareTime = () => {
+
     // 시간 비교
     if(conventionStartTime === "" || conventionEndTime === "") return false;
     const startHour = parseInt(conventionStartTime.split(":")[0]);
