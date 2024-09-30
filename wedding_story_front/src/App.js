@@ -36,8 +36,6 @@ function App() {
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
   const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
-  console.log(companyNo);
-  console.log(memberType);
 
   const refreshLogin = () => {
     const refreshToken = window.localStorage.getItem("refreshToken");

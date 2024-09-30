@@ -171,7 +171,7 @@
   justify-content: center;
   gap: 20px;
   align-items: center;
-  margin: 30px 0;
+  margin: 40px 0;
 }
 .mypage-password-input input {
   padding: 5px 15px;
@@ -192,4 +192,48 @@
   border-radius: 7px;
   background-color: var(--main2);
   font-size: 16px;
+}
+
+.mypage-newPassword-content {
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid var(--main2);
+  border-bottom: 1px solid var(--main2);
+  margin: 20px 0;
+}
+.mypage-newPassword-content > div {
+  width: 100%;
+}
+.mypage-newPassword-content > div > div {
+  margin: 40px 0;
+  width: 100%;
+}
+.mypage-newPassword-inputBox {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+.mypage-newPassword-content span {
+  margin-left: 310px;
+}
+.mypage-info-btnBox div {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+.mypage-info-btnBox button {
+  width: 20%;
+  height: 40px;
+  border: 1px solid #c9c9c9;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.mypage-info-modifybtn {
+  background-color: var(--main2);
+}
+.mypage-info-delbtn {
+  background-color: #fff;
 }

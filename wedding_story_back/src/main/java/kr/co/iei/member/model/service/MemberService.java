@@ -111,4 +111,36 @@ public class MemberService {
 		m.setMemberPw(null);
 		return m;
 	}
+
+	public int checkOldPw(MemberDTO member) {
+		MemberDTO m = memberDao.searchPw(member.getMemberId());
+		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	@Transactional
+	public int modifyPw(MemberDTO member) {
+		String defaultPw = member.getMemberPw();
+		String encPw = encoder.encode(defaultPw);
+		member.setMemberPw(encPw);
+		int result = memberDao.modifyPw(member);
+		return result;
+	}
+	@Transactional
+	public int updateMember2(MemberDTO member) {
+		int result = memberDao.updateMember2(member);
+		return result;
+	}
+	@Transactional
+	public int deleteMember(MemberDTO member) {
+		int result = memberDao.deleteMember(member);
+		return result;
+	}
+
+	public int checkEmail(String checkEmail) {
+		int result = memberDao.checkEmail(checkEmail);
+		return result;
+	}
 }
