@@ -3,6 +3,7 @@
 <mapper namespace="kr.co.iei.company.model.dao.CompanyDao">
   <insert id="insertCompany">
   	insert into company values(#{companyNo},#{companyCategory},#{companyName},#{companyTel},#{companyAddr},#{companyInfo},#{companyThumb},#{startTime},#{endTime},sysdate,#{dayOff},0,1)
+  	
   </insert>
 
 	<insert id="insertKeyWord">
@@ -44,6 +45,27 @@
 	<select id="selectContainCompany">
 		select * from company where company_no=#{companyNo}
 	</select>
+	
+	
+	<update id="updateCompanyInfo">
+		update company set 
+		
+		
+		company_tel = #{companyTel},
+		company_addr = #{companyAddr},
+		company_info = #{companyInfo},
+		<if test='companyThumb != null'>
+		company_thumb = #{companyThumb},
+		</if> 
+		start_time = #{startTime},
+		end_time = #{endTime},
+		day_off = #{dayOff}
+		where company_no = #{companyNo}
+		
+	</update>
+	<update id="updateCompanyKeyWord">
+		update company_keyword set keyword = #{keyWord} where company_no =#{companyNo}
+	</update>
 </mapper>
 
   

@@ -11,49 +11,48 @@ const CompanyJoin = () => {
   const navigate = useNavigate();
   const [loginNo, setLoginNo] = useRecoilState(loginNoState);
   console.log(loginNo);
-  const [company, setCompany] = useState({
-    companyName: "",
-    companyTel: "",
-    companyAddr: "",
-    companyInfo: "",
-    companyCategory: "",
-    startTime: "",
-    endTime: "",
-    dayOff: [],
-    keyWord: [],
-  });
+  const [companyName, setCompanyName] = useState("");
+  const [companyTel, setCompanyTel] = useState("");
+  const [companyAddr, setCompanyAddr] = useState("");
+  const [companyInfo, setCompanyInfo] = useState("");
+  const [companyCategory, setCompanyCategory] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [dayOff, setDayOff] = useState([]);
+  const [keyWord, setKeyWord] = useState([]);
+
   const [thumbnail, setThumbnail] = useState(null);
   const insertCompany = () => {
     if (
-      company.companyName !== "" &&
-      company.companyTel !== "" &&
-      company.companyInfo !== "" &&
-      company.companyCategory !== "" &&
-      company.startTime !== "" &&
-      company.endTime !== "" &&
-      company.keyWord !== null &&
+      companyName !== "" &&
+      companyTel !== "" &&
+      companyInfo !== "" &&
+      companyCategory !== "" &&
+      startTime !== "" &&
+      endTime !== "" &&
+      keyWord !== null &&
       thumbnail !== null
     ) {
       const form = new FormData();
-      form.append("companyName", company.companyName);
-      form.append("companyTel", company.companyTel);
-      form.append("companyAddr", company.companyAddr);
-      form.append("companyInfo", company.companyInfo);
-      form.append("companyCategory", company.companyCategory);
-      form.append("startTime", company.startTime);
-      form.append("endTime", company.endTime);
+      form.append("companyName", companyName);
+      form.append("companyTel", companyTel);
+      form.append("companyAddr", companyAddr);
+      form.append("companyInfo", companyInfo);
+      form.append("companyCategory", companyCategory);
+      form.append("startTime", startTime);
+      form.append("endTime", endTime);
       form.append("memberNo", loginNo);
       if (thumbnail !== null) {
         form.append("thumbFile", thumbnail); //썸네일은 스프링에서 String 타입으로 받는게 아닌 multipartFile 로 받는다.
       } //썸네일 있는 경우에만 썸네일 append
-      if (company.dayOff !== null) {
-        for (let i = 0; i < company.dayOff.length; i++) {
-          form.append("dayOff", company.dayOff[i]);
+      if (dayOff !== null) {
+        for (let i = 0; i < dayOff.length; i++) {
+          form.append("dayOff", dayOff[i]);
         }
       }
 
-      for (let i = 0; i < company.keyWord.length; i++) {
-        form.append("keyWord", company.keyWord[i]);
+      for (let i = 0; i < keyWord.length; i++) {
+        form.append("keyWord", keyWord[i]);
       }
       axios
         .post(`${backServer}/company/join`, form, {
@@ -94,8 +93,24 @@ const CompanyJoin = () => {
         }}
       >
         <CompanyJoinFrm
-          company={company}
-          setCompany={setCompany}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
+          companyTel={companyTel}
+          setCompanyTel={setCompanyTel}
+          companyAddr={companyAddr}
+          setCompanyAddr={setCompanyAddr}
+          companyInfo={companyInfo}
+          setCompanyInfo={setCompanyInfo}
+          companyCategory={companyCategory}
+          setCompanyCategory={setCompanyCategory}
+          startTime={startTime}
+          setStartTime={setStartTime}
+          endTime={endTime}
+          setEndTime={setEndTime}
+          dayOff={dayOff}
+          setDayOff={setDayOff}
+          keyWord={keyWord}
+          setKeyWord={setKeyWord}
           thumbnail={thumbnail}
           setThumbnail={setThumbnail}
         />

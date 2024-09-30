@@ -24,4 +24,8 @@ public interface CompanyDao {
 
 	CompanyDTO selectContainCompany(String companyNo);
 
+	int updateCompanyInfo(CompanyDTO company);
+
+	int updateCompanyKeyWord(KeyWordDTO keyWord);
+
 }
