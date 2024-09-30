@@ -13,6 +13,16 @@
   <select id="waitAd" resultType="advertisement">
   	select * from advertisement where advertisement_state=0
   </select>
+  <update id="changeStartDate">
+  	update advertisement set AD_START=TO_DATE(#{changeStartDate}, 'YYYY/MM/DD') where ADVERTISEMENT_NO=#{advertisementNo}
+  </update>
+  
+  <update id="changeEndDate">
+  	update advertisement set AD_End=TO_DATE(#{changeEndDate}, 'YYYY/MM/DD') where ADVERTISEMENT_NO=#{advertisementNo}
+  </update>
+  <update id="acceptAdvertisement">
+  	update advertisement set advertisement_state=1 where advertisement_no=#{advertisementNo}
+  </update>
 </mapper>
 
   

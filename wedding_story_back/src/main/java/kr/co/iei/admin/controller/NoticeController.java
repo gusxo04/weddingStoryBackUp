@@ -58,7 +58,7 @@ public class NoticeController {
 			@ModelAttribute MultipartFile[] noticeFile){
     	System.out.println("insert 실행");
     	System.out.println(notice);
-    	if(notice.getCompanyNo()==0) {
+    	if(notice.getCompanyNo()=="0") {
     		notice.setCompanyNo(null);
     		System.out.println("notice의 값이 0입니다");
     		System.out.println(notice);
@@ -93,6 +93,11 @@ public class NoticeController {
     
     @GetMapping(value = "/prenextnoticeNo/{noticeNo}")
     public ResponseEntity<Map> selectPreNextNotice(@PathVariable int noticeNo){
+    	Map<String, NoticeDTO> map = noticeService.selectPreNextNotice(noticeNo);
+    	return ResponseEntity.ok(map);
+    }
+    @GetMapping(value = "/refuse/{loginId}/{companyNo}/{refuse}")
+    public ResponseEntity<Map> refuseAd(@PathVariable int noticeNo){
     	Map<String, NoticeDTO> map = noticeService.selectPreNextNotice(noticeNo);
     	return ResponseEntity.ok(map);
     }

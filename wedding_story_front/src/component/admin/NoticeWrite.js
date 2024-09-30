@@ -20,16 +20,6 @@ const NoticeWrite = () => {
   const [companyNo, setCompanyNo] = useState(0); //특정 업체 대상으로 공개 시 회사 코드 입력
 
   const writeNotice = () => {
-    console.log("-------------");
-    console.log("noticeWriter" + loginId);
-    console.log("noticeTitle" + noticeTitle);
-    console.log("noticeContent" + noticeContent);
-    console.log("companyNo" + companyNo);
-    console.log("thumbnail" + thumbnail);
-    console.log("noticeFile" + noticeFile);
-    console.log("noticeVisible" + noticeVisible);
-    console.log("-------------");
-
     if (noticeTitle !== "" && noticeContent !== "") {
       const form = new FormData();
       form.append("noticeTitle", noticeTitle);

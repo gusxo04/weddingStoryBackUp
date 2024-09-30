@@ -15,4 +15,11 @@ public interface AdvertisementDao {
 
 	List waitAd();
 
+	int changeStartDate(String changeStartDate, int advertisementNo);
+
+	int changeEndDate(String changeEndDate, int advertisementNo);
+
+	int acceptAdvertisement(int advertisementNo);
+
+
 }
