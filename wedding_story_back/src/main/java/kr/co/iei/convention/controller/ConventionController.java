@@ -1,5 +1,6 @@
 package kr.co.iei.convention.controller;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,9 +33,6 @@ import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @CrossOrigin("*")
@@ -102,9 +101,9 @@ public class ConventionController {
         return ResponseEntity.ok(memberDTO);
     }
 
-
     @PostMapping("/buy/ticket")
-    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember, @ModelAttribute MemberPayDTO memberPay) {
+    public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember,
+            @ModelAttribute MemberPayDTO memberPay) {
         boolean result = conventionService.conventionMemberPay(conventionMember, memberPay);
 
         System.out.println(conventionMember); // 넘어온 데이터 -> memberNo, memberEmail(알림받을)
@@ -122,17 +121,27 @@ public class ConventionController {
     public ResponseEntity<Boolean> updateConvention(@ModelAttribute ConventionDTO convention,
             @ModelAttribute MultipartFile image) {
 
+        String oldThumb = null;
         if (image != null) {
+            oldThumb = convention.getConventionImg();
             String savepath = root + "/convention/";
             String filepath = fileUtils.upload(savepath, image);
             convention.setConventionImg(filepath);
         }
         boolean result = conventionService.updateConvention(convention);
+        if(result && image != null){
+            //파일 삭제
+            // 업데이트에 성공하고, 수정된 사진이 있을 경우에만 기존 사진 삭제
+            String savepath = root+"/convention/";
+            File delFile = new File(savepath + oldThumb);
+            delFile.delete();
+        }
+        
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/payment/{memberNo}/{conventionNo}")
-    public ResponseEntity<MemberPayDTO> getPayment(@PathVariable int memberNo, @PathVariable int conventionNo) {
+    @GetMapping("/payment/member/{memberNo}/{conventionNo}")
+    public ResponseEntity<MemberPayDTO> getPaymentAsMember(@PathVariable int memberNo, @PathVariable int conventionNo) {
         MemberPayDTO memberPay = conventionService.getPayment(memberNo, conventionNo);
         return ResponseEntity.ok(memberPay);
 
@@ -140,7 +149,7 @@ public class ConventionController {
 
     @PostMapping("/refund")
     public ResponseEntity<Boolean> refundConventionTicket(@RequestBody RefundRequest request) {
-        // System.out.println(request); 
+        System.out.println(request);
         Boolean result = conventionService.refundPayment(request);
         return ResponseEntity.ok(result);
     }
@@ -152,7 +161,7 @@ public class ConventionController {
         return ResponseEntity.ok(map);
     }
 
-    //박람회 댓글 작성
+    // 박람회 댓글 작성
     @PostMapping("/comment")
     public ResponseEntity<Boolean> writeComment(@ModelAttribute ConventionCommentDTO conventionComment) {
         Boolean result = conventionService.insertconventionComment(conventionComment);
@@ -178,22 +187,26 @@ public class ConventionController {
         return ResponseEntity.ok(result);
     }
 
-    
     @PostMapping("/buy/seat")
-    public ResponseEntity<Boolean> conventionCompanyPay(@ModelAttribute ConventionCompanyDTO conventionCompany, @ModelAttribute CompanyPayDTO companyPay) {
+    public ResponseEntity<Boolean> conventionCompanyPay(@ModelAttribute ConventionCompanyDTO conventionCompany,
+            @ModelAttribute CompanyPayDTO companyPay) {
         System.out.println(conventionCompany);
         System.out.println(companyPay);
         boolean result = conventionService.conventionCompanyPay(conventionCompany, companyPay);
         return ResponseEntity.ok(result);
     }
-    
+
     @PatchMapping("/update/seatInfo")
-    public ResponseEntity<Boolean> updateSeatInfo(@ModelAttribute ConventionSeatDTO conventionSeat){
+    public ResponseEntity<Boolean> updateSeatInfo(@ModelAttribute ConventionSeatDTO conventionSeat) {
         boolean result = conventionService.updateSeatInfo(conventionSeat);
         return ResponseEntity.ok(result);
     }
 
-    
+    @GetMapping("/payment/company/{companyNo}/{conventionNo}")
+    public ResponseEntity<CompanyPayDTO> getPaymentAsCompany(@PathVariable String companyNo, @PathVariable int conventionNo) {
+        CompanyPayDTO companyPay = conventionService.getPayment(companyNo, conventionNo);
+        return ResponseEntity.ok(companyPay);
+    }
     
 
 }
