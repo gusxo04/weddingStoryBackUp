@@ -38,7 +38,6 @@ const BuyTicket = (props) => {
   const dateScrollRef = useRef(null);
 
   useEffect(() => {
-    console.log("uef");
     axios.get(`${backServer}/convention/get/memberInfo/${memberNoState}`)
     .then((res) => {
       console.log(res);

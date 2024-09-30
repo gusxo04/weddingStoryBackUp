@@ -179,6 +179,11 @@
     cursor: auto;
 }
 
+/* 업체가 부스에 있는 경우 css */
+.company-exist{
+    background-color: var(--main1);
+}
+
 
 
 
@@ -398,6 +403,10 @@
     height: 35%;
     /* background-color: antiquewhite; */
     margin-top: 10%;
+}
+.empty-company{
+    width: 100%;
+    height: 60%;
 }
 .convention-seat-info-company-name{
     width: 100%;
