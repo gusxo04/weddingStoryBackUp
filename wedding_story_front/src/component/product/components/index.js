@@ -1,2 +1,2 @@
 export { default as ReviewForm } from "./ReviewFrom";
-export { default as Report } from "./Report";
+export { default as Report } from "./ReportFrom";
