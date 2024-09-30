@@ -13,7 +13,6 @@ import Admin from "./component/admin/Admin";
 import AdminControll from "./component/admin/AdminControll";
 import CompanyHeader from "./component/common/CompanyHeader";
 import CompanyMain from "./component/company/CompanyMain";
-import Counsel from "./component/counseling/Counsel";
 import AdminHeader from "./component/common/AdminHeader";
 import Join from "./component/member/Join";
 import ConventionLobby from "./component/convention/ConventionLobby";
@@ -28,6 +27,7 @@ import {
 import AdminMenu from "./component/admin/AdminMenu";
 import MyPage from "./component/member/MyPage";
 import { Report } from "./component/product/components";
+import Consult from "./component/consult/Consult";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -84,7 +84,7 @@ function App() {
           <Route path="/convention/*" element={<ConventionLobby />} />
           {/* <Route path="/test" element={<ConventionLayout />} /> */}
           <Route path="/product/*" element={<ProductMain />} />
-          <Route path="/counseling/*" element={<Counsel />} />
+          <Route path="/consult/*" element={<Consult />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/company/*" element={<CompanyMain />} />
           <Route path="/report" element={<Report />} />

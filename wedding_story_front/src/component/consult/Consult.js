@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import "./counsel.css";
+import "./consult.css";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 
-const Counsel = () => {
+const Consult = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [memberNo, setMemberNo] = useRecoilState(loginIdState);
@@ -218,4 +218,4 @@ const Counsel = () => {
   );
 };
 
-export default Counsel;
+export default Consult;
