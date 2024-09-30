@@ -21,6 +21,6 @@ public class ConventionSeatDTO {
     private int conventionCompanyNo;
     private int conventionNo;
     private String companyNo;
-    private int companyCategory;
+    private String companyCategory;
     private String CompanyName;
 }

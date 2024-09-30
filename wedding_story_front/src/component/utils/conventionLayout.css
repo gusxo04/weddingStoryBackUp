@@ -271,7 +271,9 @@
     font-size: calc(12px + (16 - 12) * (100vw - 380px) / (1280 - 320));
     font-weight: 600;
 }
-
+.convention-seat-info-btn>.cant-buy{
+    background-color: #ccc;
+}
 
 
 #red-color{

@@ -86,6 +86,17 @@ const ConventionLayout = (props) => {
   }
   
   const purchaseSeat = () => {
+    console.log(payment);
+    if(payment.merchantUid){
+      Swal.fire({
+        title : "박람회 부스 구매",
+        text : "부스는 한 개만 구입가능합니다",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
+      return;
+    }
+    
     if(!checkedRef.current.checked){
       // 동의 안 하면 못 넘어감 ㅎ
       checkSpanRef.current.style.color = "rgb(246, 67, 67)";
@@ -166,7 +177,7 @@ const ConventionLayout = (props) => {
     setSeatInfo(seat);
     setSeatCompanyAlert(true);
   }
-  
+
   
 // 필요한 거 -> 업체가 산 좌석이 어딘지를 알아야 하고 , 문제가 있는 좌석은 문제가 있음을 알 수 있게 해야 함
   return (
@@ -213,6 +224,7 @@ const ConventionLayout = (props) => {
                     }
                     else{
                       // 다른 사람꺼라면
+                      setSeatInfo(seat);
                       setSeatMemberAlert(true);
                     }
                   }
@@ -234,6 +246,7 @@ const ConventionLayout = (props) => {
                       clickedRefundSeat(seat);
                     }
                     else{
+                      setSeatInfo(seat);
                       setSeatMemberAlert(true);
                     }
                   }
@@ -255,6 +268,7 @@ const ConventionLayout = (props) => {
                       clickedRefundSeat(seat);
                     }
                     else{
+                      setSeatInfo(seat);
                       setSeatMemberAlert(true);
                     }
                   }
@@ -390,7 +404,7 @@ const SeatCompanyAlert = (props) => {
           
           <div className="convention-seat-info-btn df-basic">
             {type === 0 ? 
-            <button onClick={purchaseSeat}>구매하기</button>
+            <button onClick={purchaseSeat} className={payment.merchantUid ? "cant-buy" : ""} >구매하기</button>
             :
             // <button onClick={refundSeat}>환불하기</button>
             <button onClick={refundSeat}>환불하기</button>
@@ -565,6 +579,8 @@ const SeatMemberAlert = (props) => {
     }
   }
 
+  console.log(seatInfo);
+
   return (
     <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
       <div className="convention-seat-member-alert">
@@ -583,7 +599,7 @@ const SeatMemberAlert = (props) => {
                 <span>업체명 : </span>
               </div>
               <div className="convention-seat-info-company-name-right">
-                <pre>{seatInfo.companyName}</pre>
+                <pre> {seatInfo.companyName}</pre>
               </div>
             </div>
 
@@ -592,7 +608,7 @@ const SeatMemberAlert = (props) => {
                 <span>카테고리 : </span>
               </div>
               <div className="convention-seat-info-company-category-right">
-                <pre>{seatInfo.companyCategory}</pre>
+                <pre> {seatInfo.companyCategory}</pre>
               </div>
 
             </div>
