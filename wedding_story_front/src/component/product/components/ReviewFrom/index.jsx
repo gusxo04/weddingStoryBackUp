@@ -45,7 +45,7 @@ const ReviewForm = ({ isOpen, onClose, onSubmit, initialData }) => {
     if (initialData) {
       setRating(initialData.rating);
       setReviewText(initialData.review);
-      setImagePreview(initialData.image || "");
+      setImagePreview(initialData.image);
     } else {
       setRating(0);
       setReviewText("");

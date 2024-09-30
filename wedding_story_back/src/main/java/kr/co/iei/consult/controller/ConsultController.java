@@ -43,5 +43,6 @@ public class ConsultController {
         System.out.println(member);
         return ResponseEntity.ok(result);
     }
+	
     
 }

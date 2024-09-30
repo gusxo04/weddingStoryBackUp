@@ -27,7 +27,7 @@ import {
 } from "./component/utils/RecoilData";
 import AdminMenu from "./component/admin/AdminMenu";
 import MyPage from "./component/member/MyPage";
-import Report from "./component/utils/Report";
+import { Report } from "./component/product/components";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -87,7 +87,7 @@ function App() {
           <Route path="/counseling/*" element={<Counsel />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/company/*" element={<CompanyMain />} />
-          <Route path="/report" element={<Report/>}/>
+          <Route path="/report" element={<Report />} />
         </Routes>
       </main>
       <Footer />

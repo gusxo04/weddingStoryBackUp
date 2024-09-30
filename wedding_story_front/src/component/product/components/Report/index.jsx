@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Report = () => {
@@ -28,19 +29,51 @@ const Report = () => {
 };
 
 const ReportForm = ({ onClose }) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const [reportText, setReportText] = useState("");
+  const [companyNo, setCompanyNo] = useState(); //업체번호
+  const [productNo, setProduct] = useState();
   const navigator = useNavigate();
 
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/companyNo/${companyNo}`)
+      .then((res) => {
+        console.log(res);
+        setProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleChange = (e) => {
     setReportText(e.target.value);
   };
 
+  /*
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("신고 내용:", reportText);  
+    console.log("신고 내용:", reportText);
     setReportText(""); // 폼 초기화
     //navigator("/"); // 신고 후 이동
     onClose(); // 팝업 닫기
+  };
+*/
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${backServer}/report`, { reportText })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log("신고 내용:", reportText);
+    setReportText(""); // 폼 초기화
+    navigator("/"); // 신고후 이동
+    onClose(); // 닫기
   };
 
   return (
@@ -58,7 +91,9 @@ const ReportForm = ({ onClose }) => {
         />
         <br />
         <button type="submit">신고하기</button>
-        <button type="button" onClick={onClose}>취소</button>
+        <button type="button" onClick={onClose}>
+          취소
+        </button>
       </form>
     </div>
   );
