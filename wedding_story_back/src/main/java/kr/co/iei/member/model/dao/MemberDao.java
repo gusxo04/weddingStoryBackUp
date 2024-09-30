@@ -21,8 +21,6 @@ public interface MemberDao {
 
 	List selectCompanyContainList(String companyNo);
 
-
-	
 	int checkLastMemberCode();
 
 	int checkLastCompanyNo();
@@ -46,5 +44,14 @@ public interface MemberDao {
 	int updateCompanyNo(String companyNo, int memberNo);
 	
 	MemberDTO selectLoginMember(int memberNo);
+
+	int modifyPw(MemberDTO member);
+
+	int updateMember2(MemberDTO member);
+
+	int deleteMember(MemberDTO member);
+
+	int checkEmail(String checkEmail);
+
 
 }

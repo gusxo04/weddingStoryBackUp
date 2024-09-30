@@ -118,7 +118,12 @@ const JoinCompany = (props) => {
       axios
         .get(`${backServer}/member/checkEmail/` + checkEmail)
         .then((res) => {
-          setEmailCode(res.data);
+          if (res.data === "중복") {
+            setEmailCheck(3);
+          } else {
+            setEmailCheck(2);
+            setEmailCode(res.data);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -376,7 +381,9 @@ const JoinCompany = (props) => {
                       ? ""
                       : emailCheck === 1
                       ? "이메일 형식에 맞추어 기입해 주세요."
-                      : "인증번호를 이메일로 전송했습니다."
+                      : emailCheck === 2
+                      ? "인증번호를 이메일로 전송했습니다."
+                      : "이미 가입되었거나 탈퇴한 이메일입니다."
                   }`}
                 </span>
               </div>
