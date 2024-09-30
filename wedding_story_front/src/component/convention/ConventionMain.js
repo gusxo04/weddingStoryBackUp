@@ -3,7 +3,7 @@ import "./convention.css";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ShowConvention from "./ShowConvention";
-import { loginNoState, memberTypeState } from "../utils/RecoilData";
+import { companyNoState, loginNoState, memberTypeState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import ConventionLoading from "./ConventionLoading";
 
@@ -16,7 +16,9 @@ const ConventionMain = () => {
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  
+  const [loginCompanyNoState, setLoginCompanyNoState] = useRecoilState(companyNoState);
+
+
   const [convention, setConvention] = useState({});
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -64,10 +66,10 @@ const ConventionMain = () => {
       // 업체도 부스를 샀는지 안 샀는지 조회해야 해서 uef 따로 빼는게 나을듯
       // 나중에 if로 업체인지 회원인지 조회후 axios 요청하기
       // 지금은 회원꺼 먼저
-      if(memberNoState !== 0){
-        axios.get(`${backServer}/convention/payment/${memberNoState}/${res.data.convention.conventionNo}`)
+      if(memberType === 1){
+        axios.get(`${backServer}/convention/payment/member/${memberNoState}/${res.data.convention.conventionNo}`)
         .then(res => {
-          // console.log(res);
+          console.log(res);
           if(res.data){
             setPayment({
               merchantUid: res.data.merchantUid,
@@ -84,6 +86,22 @@ const ConventionMain = () => {
           console.error(err); 
         })
       }
+      else if(memberType === 2){
+        // 업체일 경우
+        axios.get(`${backServer}/convention/payment/company/${loginCompanyNoState}/${res.data.convention.conventionNo}`)
+        .then((res) => {
+          console.log(res);
+          setPayment({
+            merchantUid: res.data.merchantUid,
+            payNo: res.data.payNo,
+            payPrice: res.data.payPrice,
+            conventionCompanyNo: res.data.conventionCompanyNo
+          })
+        })
+        .catch((err) => {
+          console.error(err); 
+        })
+      }
 
     })
     .catch(err => {
@@ -92,7 +110,7 @@ const ConventionMain = () => {
 
   }, [isPayment, memberNoState]);
 
-
+  
   let testStartDate = new Date(convention.conventionStart);
   let testEndDate = new Date(convention.conventionEnd);
 

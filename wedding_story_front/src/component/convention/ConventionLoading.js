@@ -17,7 +17,7 @@ const ConventionLoading = () => {
   }
   else{
     return <div className="convention-loading-wrap df-basic">
-      <span class="loader"></span>
+      <span className="loader"></span>
     </div>
   }
   

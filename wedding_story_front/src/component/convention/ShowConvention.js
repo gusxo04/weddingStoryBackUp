@@ -157,7 +157,7 @@ const ShowConvention = (props) => {
       :
       ""
       :
-      <ConventionLayout convention={convention} permission={loginMemberType === 2 ? 2 : 1} />
+      <ConventionLayout convention={convention} payment={payment} isPayment={isPayment} setIsPayment={setIsPayment} permission={loginMemberType === 2 ? 2 : 1} />
       }
 
       <div className="convention-preview-info-wrap">
@@ -174,7 +174,7 @@ const ShowConvention = (props) => {
         <div className="convention-inner-preview-info convention-way-btn" >
           <button onClick={() => {
             setAlertType(2);
-          }}>찾아오시는 길</button>
+          }}>박람회 위치</button>
         </div>
 {/*  style={{width:"45%"}}
  style={{width:"45%"}} */}

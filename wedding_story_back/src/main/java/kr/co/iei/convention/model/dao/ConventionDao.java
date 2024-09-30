@@ -63,6 +63,12 @@ public interface ConventionDao {
 
 	ConventionMemberDTO checkTicketDupelicate(ConventionMemberDTO conventionMember);
 
+	CompanyPayDTO selectCompanyPayment(String companyNo, int conventionNo);
+
+	int updateCompanyPay(RefundRequest request);
+
+	int deleteConventionCompany(RefundRequest request);
+
 
 
 }

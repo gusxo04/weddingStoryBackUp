@@ -17,4 +17,10 @@ public class ConventionSeatDTO {
     private String seatCode;
     private int seatStatus;
     // 0 정상 / 1 구매 불가능자리
+
+    private int conventionCompanyNo;
+    private int conventionNo;
+    private String companyNo;
+    private int companyCategory;
+    private String CompanyName;
 }
