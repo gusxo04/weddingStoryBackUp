@@ -170,7 +170,31 @@ const ConventionLayout = (props) => {
         // 추가로 실행할 로직을 여기에 작성
       }
     });
-    
+  }
+
+  const seatInfoList = (seat) => {
+    if(seat.companyNo && loginCompanyNoState) {
+      // 만약 이미 누가 산 부스라면~
+      if(loginCompanyNoState === seat.companyNo && buyable){
+        // 근데 그게 내가 산거라면
+        clickedRefundSeat(seat);
+      }
+      else{
+        // 다른 사람꺼라면
+        setSeatInfo(seat);
+        setSeatMemberAlert(true);
+      }
+    }
+    else{
+      // 아직 구매 안 한 부스라면
+      // 구매 안 한 건데 이미 박람회 시작했으면 업체 없다고 띄워야 함 (부스 구매 불가능)
+      if(!buyable) {
+        setSeatInfo(seat);
+        setSeatMemberAlert(true);
+        return;
+      }
+      seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+    }
   }
 
   const clickedRefundSeat = (seat) => {
@@ -218,29 +242,29 @@ const ConventionLayout = (props) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
                   // seat.seatStatus === 0 ? purchaseSeat(seat) : seatProblem()
-
-                  if(seat.companyNo && loginCompanyNoState) {
-                    // 만약 이미 누가 산 부스라면~
-                    if(loginCompanyNoState === seat.companyNo && buyable){
-                      // 근데 그게 내가 산거라면
-                      clickedRefundSeat(seat);
-                    }
-                    else{
-                      // 다른 사람꺼라면
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                    }
-                  }
-                  else{
-                    // 아직 구매 안 한 부스라면
-                    // 구매 안 한 건데 이미 박람회 시작했으면 업체 없다고 띄워야 함 (부스 구매 불가능)
-                    if(!buyable) {
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                      return;
-                    }
-                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  }
+                  seatInfoList(seat);
+                  // if(seat.companyNo && loginCompanyNoState) {
+                  //   // 만약 이미 누가 산 부스라면~
+                  //   if(loginCompanyNoState === seat.companyNo && buyable){
+                  //     // 근데 그게 내가 산거라면
+                  //     clickedRefundSeat(seat);
+                  //   }
+                  //   else{
+                  //     // 다른 사람꺼라면
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //   }
+                  // }
+                  // else{
+                  //   // 아직 구매 안 한 부스라면
+                  //   // 구매 안 한 건데 이미 박람회 시작했으면 업체 없다고 띄워야 함 (부스 구매 불가능)
+                  //   if(!buyable) {
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //     return;
+                  //   }
+                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  // }
                 }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -250,24 +274,25 @@ const ConventionLayout = (props) => {
             {bSeat.map((seat,index) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
-                  if(seat.companyNo && loginCompanyNoState){
-                    if(loginCompanyNoState === seat.companyNo && buyable){
-                      clickedRefundSeat(seat);
-                    }
-                    else{
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                    }
-                  }
-                  else{
+                  seatInfoList(seat);
+                  // if(seat.companyNo && loginCompanyNoState){
+                  //   if(loginCompanyNoState === seat.companyNo && buyable){
+                  //     clickedRefundSeat(seat);
+                  //   }
+                  //   else{
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //   }
+                  // }
+                  // else{
 
-                    if(!buyable) {
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                      return;
-                    }
-                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  }
+                  //   if(!buyable) {
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //     return;
+                  //   }
+                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  // }
                 }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -277,23 +302,24 @@ const ConventionLayout = (props) => {
             {cSeat.map((seat,index) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
-                  if(seat.companyNo && loginCompanyNoState){
-                    if(loginCompanyNoState === seat.companyNo && buyable){
-                      clickedRefundSeat(seat);
-                    }
-                    else{
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                    }
-                  }
-                  else{
-                    if(!buyable) {
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                      return;
-                    }
-                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  }
+                  seatInfoList(seat);
+                  // if(seat.companyNo && loginCompanyNoState){
+                  //   if(loginCompanyNoState === seat.companyNo && buyable){
+                  //     clickedRefundSeat(seat);
+                  //   }
+                  //   else{
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //   }
+                  // }
+                  // else{
+                  //   if(!buyable) {
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //     return;
+                  //   }
+                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  // }
                 }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
