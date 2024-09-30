@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Alias(value="notice")
 public class NoticeDTO {
 	private int noticeNo;//자동생성
-	private Integer companyNo;
+	private String companyNo;
 	private String noticeTitle;//받아야함
 	private String noticeContent;//받아야함
 	private String noticeDate;

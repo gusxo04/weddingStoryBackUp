@@ -44,3 +44,7 @@ npm install slick-carousel --save --force
 정현태
 2024-09-29 오후 04:34
 npm install react-datepicker --force
+
+김연우
+2024-09-30 오후 12:55
+npm i date-fns --force

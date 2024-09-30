@@ -44,12 +44,29 @@ public class AdvertisementService {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("현재 광고 : "+activeAd);
+//		System.out.println("현재 광고 : "+activeAd);
 		map.put("activeAd",activeAd);
 		map.put("endAd",endAd);
 		map.put("yetAd",yetAd);
 		map.put("waitAd",waitAd);
 		
 		return map;
-	} 
+	}
+
+	public int changeStartDate(String changeStartDate, int advertisementNo) {
+		int result = advertisementDao.changeStartDate(changeStartDate, advertisementNo);
+		return result;
+	}
+
+	public int changeEndDate(String changeEndDate, int advertisementNo) {
+		int result = advertisementDao.changeEndDate(changeEndDate, advertisementNo);
+		return result;
+	}
+
+	public int acceptAdvertisement(int advertisementNo) {
+		int result = advertisementDao.acceptAdvertisement(advertisementNo);
+		return 0;
+	}
+
+	
 }
