@@ -438,16 +438,14 @@ const Overlay = (props) => {
   const ad = props.ad;
   const refuseChange = props.refuseChange;
   const loginId = props.loginId;
-  const advertisementNo = props.ad.advertisementNo;
+  const companyNo = props.ad.companyNo;
   const refuse = props.refuse;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const setchange = props.setchange;
 
   const postRefuse = () => {
     axios
-      .get(
-        `${backServer}/notice/refuse/${loginId}/${advertisementNo}/${refuse}`
-      )
+      .get(`${backServer}/notice/refuse/${loginId}/${companyNo}/${refuse}`)
       .then((res) => {
         console.log(res.data);
         setchange((prev) => prev + 1);
