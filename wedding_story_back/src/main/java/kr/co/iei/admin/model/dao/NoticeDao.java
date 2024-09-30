@@ -22,4 +22,8 @@ public interface NoticeDao {
 
 	List<NoticeFileDTO> selectOneNoticeFile(int noticeNo);
 
+	NoticeDTO selectNextNotice(int noticeNo);
+
+	NoticeDTO selectPreNotice(int noticeNo);
+
 }

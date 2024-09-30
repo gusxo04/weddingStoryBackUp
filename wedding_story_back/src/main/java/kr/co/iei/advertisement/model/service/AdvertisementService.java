@@ -44,6 +44,7 @@ public class AdvertisementService {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("현재 광고 : "+activeAd);
 		map.put("activeAd",activeAd);
 		map.put("endAd",endAd);
 		map.put("yetAd",yetAd);

@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil";
+import { RecoilState, useRecoilState } from "recoil";
 import "./noticeWrite.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,12 @@ import NoticeFrm from "./NoticeFrm";
 import ToastEditorN from "../utils/ToastEditorN";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { loginIdState } from "../utils/RecoilData";
 const NoticeWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   //글작성 시 전송할 데이터 선언
-  //const [loginId, setLoginId] = useRecoilState(loginIdState); //로그인한 회원 아이디 값(입력할게아니기때문에 state사용안하고 변수로만 사용)
-  const [loginId, setLoginId] = useState(""); //로그인 아직 미구현 >> 아이디 입력(임시)
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
   const [noticeTitle, setNoticeTitle] = useState(""); //사용자가 입력할 제목
   const [thumbnail, setThumbnail] = useState(null); //썸네일은 첨부파일로 처리
   const [noticeContent, setNoticeContent] = useState(""); //사용자가 입력할 내용
@@ -84,7 +84,6 @@ const NoticeWrite = () => {
         >
           <NoticeFrm
             loginId={loginId}
-            setLoginId={setLoginId}
             noticeTitle={noticeTitle}
             setNoticeTitle={setNoticeTitle}
             thumbnail={thumbnail}

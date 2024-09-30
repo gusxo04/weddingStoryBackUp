@@ -14,7 +14,7 @@ const NoticeList = () => {
     axios
       .get(`${backServer}/notice/list/${reqPage}/${userState}`)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setNoticeList(res.data.list);
         setPi(res.data.pi);
       })
@@ -36,9 +36,13 @@ const NoticeList = () => {
             </div>
           </div>
           <ul className="posting-wrap">
-            {noticeList.map((notice, i) => {
-              return <NoticeItem key={"notice-" + i} notice={notice} />;
-            })}
+            {noticeList.data === null ? (
+              <li>작성된 공지사항이 없습니다.</li>
+            ) : (
+              noticeList.map((notice, i) => {
+                return <NoticeItem key={"notice-" + i} notice={notice} />;
+              })
+            )}
           </ul>
         </div>
         <div className="notice-paging-wrap">
