@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Alias(value="company")
 public class CompanyDTO {
 	private String companyNo;
-	private int companyCategory;
+	private String companyCategory;
 	private String companyName;
 	private String companyTel;
 	private String companyAddr;

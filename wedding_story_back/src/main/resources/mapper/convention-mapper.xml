@@ -11,7 +11,11 @@
     <!-- 1 or 4 -->
 
     <select id="selectConventionSeat" resultType="conventionSeat">
-        select * from convention_seat where
+        select seat_no, convention_seat_price, seat_code, seat_status,convention_company_no, convention_no, company_no, company_category, company_name
+        from convention_seat
+        left join convention_company cc using (seat_no)
+        left join company c using(company_no)
+        where
         seat_code like 
         <choose>
             <when test="i == 0">
@@ -113,7 +117,7 @@
     </insert>
 
     <insert id="insertCompanyPay">
-        insert into company_pay values(pay_no_seq.nextval, #{companyNo}, #{conventionNo}, null, to_char(sysdate, 'yyyy-mm-dd'), #{payPrice}, 0, 0, #{merchantUid})
+        insert into company_pay values(company_pay_seq.nextval, #{companyNo}, #{conventionNo}, null, to_char(sysdate, 'yyyy-mm-dd'), #{payPrice}, 1, 0, #{merchantUid})
     </insert>
 
     <update id="updateSeatInfo">
@@ -127,5 +131,20 @@
     <select id="checkTicketDupelicate" resultType="conventionMember">
         select ticket_no from convention_member where ticket_code = #{ticketCode}
     </select>
+
+    <select id="selectCompanyPayment" resultType="companyPay">
+        select pay_no, (select convention_company_no from convention_company where convention_no = #{conventionNo} and company_no = #{companyNo}) as convention_company_no, pay_price, merchant_uid 
+            from company_pay where company_no = #{companyNo} and
+            sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = #{conventionNo}) and
+            progress = 0
+    </select>
+
+    <update id="updateCompanyPay">
+        update company_pay set progress = 1 where merchant_uid = #{merchantUid} and company_no = #{companyNo}
+    </update>
+
+    <delete id="deleteConventionCompany">
+        delete from convention_company where convention_company_no = #{conventionCompanyNo}
+    </delete>
 
 </mapper>

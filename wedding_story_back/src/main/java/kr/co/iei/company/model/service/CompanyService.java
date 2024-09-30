@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
@@ -30,6 +31,7 @@ public class CompanyService {
 	@Transactional
 	public int insertCompany(CompanyDTO company, KeyWordDTO keyWord, MemberDTO member) {
 		int lastCompanyNo = memberDao.checkLastCompanyNo();
+		
 		if(lastCompanyNo<9) {
 			String companyNo = "C000"+(lastCompanyNo+1);
 			company.setCompanyNo(companyNo);
@@ -75,6 +77,12 @@ public class CompanyService {
 			resultProduct += productDao.insertProductFile(list);//list를 하나씩 DB에 저장 리턴의 결과값을 resultProduct에 더함 
 		}
 		return resultProduct;
+	}
+	public int updateCompanyInfo(CompanyDTO company, KeyWordDTO keyWord) {
+		int result1 = companyDao.updateCompanyInfo(company);
+		int result2 = companyDao.updateCompanyKeyWord(keyWord);	
+		int totalResult= result1 + result2;
+		return totalResult;
 	}
 
 

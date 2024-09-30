@@ -11,7 +11,7 @@
 		product_thumb,
 		product_name,
 		product_price
-		from product order by product_no desc) b)
+		from product where product_state=1 order by product_no desc) b)
 		where rnum between #{start} and#{end}
   </select>
   
@@ -24,4 +24,10 @@
   <insert id="insertProductFile">
   	insert into product_file values (product_File_seq.nextval,#{productNo},#{fileName},#{filePath})
   </insert>
+  
+  <select id="selectOneProduct" resultType="product">
+  	select company_no, product_name,product_thumb,product_price from product where company_no
+  </select>
+  
+  
 </mapper>

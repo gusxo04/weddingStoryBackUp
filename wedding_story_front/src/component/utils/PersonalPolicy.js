@@ -133,8 +133,10 @@ const PersonalPolicy = () => {
         문의하시기 바랍니다.
       </p>
       <p>개인정보침해신고센터 ( http://privacy.kisa.or.kr / 국번없이 118 )</p>
-      <p>
-        대검찰청 사이버수사과 ( http://
+      {/* <p> */}
+      <p>대검찰청 사이버수사과 ( http://.spo.go.kr / 국번없이 1301 )</p>
+      <p>경찰청 사이버안전국 ( http://cybrburau.polic.go.kr / 국번없이 182 )</p>
+        {/* 대검찰청 사이버수사과 ( http://
         <p>
           <p>
             <p>.spo.go.kr / 국번없이 1301 )</p>
@@ -143,7 +145,7 @@ const PersonalPolicy = () => {
           au.polic
         </p>
         .go.kr / 국번없이 182 )
-      </p>
+      </p> */}
       <p>10. 기타</p>
       <p>
         본 홈페이지에 링크되어 있는 웹사이트들이 개인정보를 수집하는 행위에

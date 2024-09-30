@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,17 +45,14 @@ public class CompanyController {
 		//썸네일 파일은 String으로 받을수 없음 -> MultipartFile로 thumbFile라는 객체로 받은 후 
 		//아래 로직을 통해서 savepath 로 실제 저장장소경로를 등록해주고  fileUtil을 통해서 savepath(저장경로)에thumbFile(실제 파일)을 업로드 해주고 저장된 경로를 filepath리턴받는다.
 		//리턴받은 값을 company.CompanyThumb에 set 해준다. 
-		
+		System.out.println(company);
+		System.out.println(keyWord);
 		if(thumbFile != null) {
 			String savepath = root+"/company/thumb/";					//경로 등록
 			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
 			company.setCompanyThumb(filepath); 						//company에 추가
 		}
-		
-		
-		
 		int result = companyService.insertCompany(company,keyWord,member);
-		
 		return ResponseEntity.ok(result == 3);
 	}
 	
@@ -62,9 +60,7 @@ public class CompanyController {
 	//업체 정보 조회
 	@GetMapping(value="/{companyNo}")
 	public ResponseEntity<CompanyDTO> selectCompanyInfo(@PathVariable String companyNo){
-		System.out.println(companyNo);
 		CompanyDTO resultCompany = companyService.selectCompanyInfo(companyNo);
-		System.out.println(resultCompany);
 		return ResponseEntity.ok(resultCompany); 
 	}
 	
@@ -77,9 +73,6 @@ public class CompanyController {
 			String savepath = root+"/product/image/";					//경로 등록
 			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
 			product.setProductImg(filepath); 						//company에 추가
-			
-			
-			
 		}
 		List<ProductFileDTO> productFile = new ArrayList<ProductFileDTO>();
 		if(thumbnailFiles != null) {
@@ -93,14 +86,22 @@ public class CompanyController {
 					productFile.add(fileDTO);
 			}
 		}
-
-		
 		int result = companyService.insertProduct(product, productFile);
-		
-		
 		return ResponseEntity.ok(result == 1+productFile.size());
 	}
 	
+	//업체 정보 업데이트 (수정)
+	@PatchMapping
+	public ResponseEntity<Boolean> updateCompanyInfo(@ModelAttribute CompanyDTO company,@ModelAttribute KeyWordDTO keyWord, @ ModelAttribute MultipartFile thumbFile){
+		if(thumbFile != null) {
+			String savepath = root+"/product/image/";
+			String filepath = fileUtil.upload(savepath, thumbFile);
+			company.setCompanyThumb(filepath);
+		}
+		int result = companyService.updateCompanyInfo(company,keyWord);
+		
+		return ResponseEntity.ok(result == 2);
+	}
 	
 
 	

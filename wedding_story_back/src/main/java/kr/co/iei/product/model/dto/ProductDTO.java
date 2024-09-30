@@ -24,5 +24,5 @@ public class ProductDTO {
 	private int diningRoom;	//식비 --
 	private int numberPeople;	//보증인원 --
 	private List<ProductFileDTO> fileList; //썸네일이미지 여러장이 들어가는 ProductFileDTO 타입의 List;
-	
+	private int productState;
 }

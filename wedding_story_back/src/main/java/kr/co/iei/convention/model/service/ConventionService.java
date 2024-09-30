@@ -140,11 +140,19 @@ public class ConventionService {
         String code = cancelPayment(accessToken, request);
         int result = -2;
         if(code.equals("0")){
-            result = conventionDao.updateMemberPayKind(request);
-            result += conventionDao.deleteConventionMember(request);
-            result += conventionDao.updateMemberPay(request); 
+            if(request.getMemberNo() != 0){
+                result = conventionDao.updateMemberPayKind(request);
+                result += conventionDao.deleteConventionMember(request);
+                result += conventionDao.updateMemberPay(request); 
+                return result == 3;
+            }
+            else if(request.getCompanyNo() != null){
+                result = conventionDao.updateCompanyPay(request);
+                result += conventionDao.deleteConventionCompany(request);
+                return result == 2;
+            }
         }
-        return result == 3;
+        return false;
     }
 
     
@@ -265,6 +273,11 @@ public class ConventionService {
         int result = conventionDao.updateSeatInfo(conventionSeat);
         return result == 1;
     }
+
+	public CompanyPayDTO getPayment(String companyNo, int conventionNo) {
+        return conventionDao.selectCompanyPayment(companyNo, conventionNo);
+	}
+
 
 
 

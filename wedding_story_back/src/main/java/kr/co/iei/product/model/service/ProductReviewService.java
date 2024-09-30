@@ -26,4 +26,5 @@ public class ProductReviewService {
 		int result = productReviewDao.insertReview(review,member);
 		return result;
 	}
+	
 }

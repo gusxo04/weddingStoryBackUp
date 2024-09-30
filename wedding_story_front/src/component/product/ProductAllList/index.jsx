@@ -4,11 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../../utils/PagiNavi";
 import styles from "./ProductAllList.module.css";
 
+const businessCodes = {
+  0: "웨딩홀",
+  1: "스튜디오",
+  2: "드레스",
+  3: "메이크업",
+  4: "예복",
+  5: "본식",
+};
+
 const ProductAllList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
+  const [businessCode, setBusinessCode] = useState(1); // Default to '스튜디오'
 
   useEffect(() => {
     axios
@@ -23,24 +33,39 @@ const ProductAllList = () => {
       });
   }, [reqPage]);
 
+  // 비즈니스 코드를 기준으로 제품 필터링
+  const filteredProducts = productList.filter(
+    (product) => product.businessCode === businessCode
+  );
+
   return (
     <section className={styles["board-list"]}>
       <div className={styles["page-title"]}>
         <ul className={styles["name-title"]}>
           <li>
-            <Link to="/product/list">스튜디오</Link>
+            <Link to="/product/list" onClick={() => setBusinessCode(1)}>
+              스튜디오
+            </Link>
           </li>
           <li>
-            <Link to="/product/info">드레스</Link>
+            <Link to="#" onClick={() => setBusinessCode(2)}>
+              드레스
+            </Link>
           </li>
           <li>
-            <Link to="/product/review">메이크업</Link>
+            <Link to="/product/info" onClick={() => setBusinessCode(3)}>
+              메이크업
+            </Link>
           </li>
           <li>
-            <Link to="/product/report">예복</Link>
+            <Link to="/product/hallinfo" onClick={() => setBusinessCode(4)}>
+              예복
+            </Link>
           </li>
           <li>
-            <Link to="#">본식</Link>
+            <Link to="/product/list" onClick={() => setBusinessCode(5)}>
+              본식
+            </Link>
           </li>
         </ul>
       </div>

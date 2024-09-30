@@ -5,6 +5,7 @@ import { companyNoState } from "./RecoilData";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
+import { cancelPay } from "../convention/conventionRefund";
 
 const ConventionLayout = (props) => {
 
@@ -14,8 +15,12 @@ const ConventionLayout = (props) => {
   const {
     convention,
     permission,
+    payment,
+    isPayment,
+    setIsPayment,
   } = props;
   
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [aSeat, setASeat] = useState([]);
   const [bSeat, setBSeat] = useState([]);
@@ -29,6 +34,9 @@ const ConventionLayout = (props) => {
   const [seatCompanyAlert, setSeatCompanyAlert] = useState(false);
   const [seatAdminAlert, setSeatAdminAlert] = useState(false);
 
+    //구매시에는 0이고 / 환불시에는 타입이 1임
+  const [type, setType] = useState(0);
+
   const checkedRef = useRef(null);
   const checkSpanRef = useRef(null);
 
@@ -39,7 +47,7 @@ const ConventionLayout = (props) => {
     // 나중에 업체인지 조건걸기
     axios.get(`${backServer}/convention/layout`)
     .then(res => {
-      // console.log(res);
+      console.log(res);
       setASeat(res.data.line0);
       setBSeat(res.data.line1);
       setCSeat(res.data.line2);
@@ -59,9 +67,9 @@ const ConventionLayout = (props) => {
     
   }
 
-
   // main 에서는 업체 말곤 다 permission이 1임 
   const clickedSeat = (seat) => {
+    setType(0);
     setSeatInfo(seat);
     if(permission === 0){
       // 어드민이 좌석 클릭시
@@ -78,6 +86,17 @@ const ConventionLayout = (props) => {
   }
   
   const purchaseSeat = () => {
+    console.log(payment);
+    if(payment.merchantUid){
+      Swal.fire({
+        title : "박람회 부스 구매",
+        text : "부스는 한 개만 구입가능합니다",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
+      return;
+    }
+    
     if(!checkedRef.current.checked){
       // 동의 안 하면 못 넘어감 ㅎ
       checkSpanRef.current.style.color = "rgb(246, 67, 67)";
@@ -121,6 +140,8 @@ const ConventionLayout = (props) => {
           console.log(res);
           if(res.data){
             setSeatCompanyAlert(false);
+            setChangedSeatInfo(!changedSeatInfo);
+            setIsPayment(!isPayment);
             // 결제 성공시
             Swal.fire({
               title : "박람회 부스",
@@ -150,7 +171,13 @@ const ConventionLayout = (props) => {
     });
     
   }
-  
+
+  const clickedRefundSeat = (seat) => {
+    setType(1);
+    setSeatInfo(seat);
+    setSeatCompanyAlert(true);
+  }
+
   
 // 필요한 거 -> 업체가 산 좌석이 어딘지를 알아야 하고 , 문제가 있는 좌석은 문제가 있음을 알 수 있게 해야 함
   return (
@@ -188,40 +215,67 @@ const ConventionLayout = (props) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
                   // seat.seatStatus === 0 ? purchaseSeat(seat) : seatProblem()
-                  seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+
+                  if(seat.companyNo && loginCompanyNoState) {
+                    // 만약 이미 누가 산 부스라면~
+                    if(loginCompanyNoState === seat.companyNo){
+                      // 근데 그게 내가 산거라면
+                      clickedRefundSeat(seat);
+                    }
+                    else{
+                      // 다른 사람꺼라면
+                      setSeatInfo(seat);
+                      setSeatMemberAlert(true);
+                    }
+                  }
+                  else{
+                    // 아직 구매 안 한 부스라면
+                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  }
+                }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
           </div>
           
           <div className="layout layout-b">
             {bSeat.map((seat,index) => {
-              const seatInfo = () => {
-                console.log(seat);
-              }
-              // const seatProblem = () => {
-              //   console.log("문제가 있는 상품");
-              // }
               return (
                 <div key={"seat-"+index} onClick={() => {
-                  seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+                  if(seat.companyNo && loginCompanyNoState){
+                    if(loginCompanyNoState === seat.companyNo){
+                      clickedRefundSeat(seat);
+                    }
+                    else{
+                      setSeatInfo(seat);
+                      setSeatMemberAlert(true);
+                    }
+                  }
+                  else{
+                    console.log(seat);
+                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  }
+                }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
           </div>
           
           <div className="layout layout-c">
             {cSeat.map((seat,index) => {
-              const seatInfo = () => {
-                console.log(seat);
-              }
-              // const seatProblem = () => {
-              //   console.log("문제가 있는 상품");
-              // }
               return (
                 <div key={"seat-"+index} onClick={() => {
-                  seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem")} >{seat.seatCode}</div>
+                  if(seat.companyNo && loginCompanyNoState){
+                    if(loginCompanyNoState === seat.companyNo){
+                      clickedRefundSeat(seat);
+                    }
+                    else{
+                      setSeatInfo(seat);
+                      setSeatMemberAlert(true);
+                    }
+                  }
+                  else{
+                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  }
+                }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
           </div>
@@ -232,7 +286,9 @@ const ConventionLayout = (props) => {
           {seatCompanyAlert ?
           <SeatCompanyAlert seatInfo={seatInfo} setSeatCompanyAlert={setSeatCompanyAlert} 
           purchaseSeat={purchaseSeat} checkedRef={checkedRef} 
-          checkSpanRef={checkSpanRef}
+          checkSpanRef={checkSpanRef} type={type} payment={payment}
+          isPayment={isPayment} setIsPayment={setIsPayment}
+          setChangedSeatInfo={setChangedSeatInfo} changedSeatInfo={changedSeatInfo}
           />
 
           :
@@ -268,9 +324,17 @@ const SeatCompanyAlert = (props) => {
     purchaseSeat,
     checkedRef,
     checkSpanRef,
+    type,
+    payment,
+    isPayment,
+    setIsPayment,
+    changedSeatInfo,
+    setChangedSeatInfo,
   } = props;
 
   // console.log(seatInfo);
+  const [loginCompanyNoState, setLoginCompanyNoState] = useRecoilState(companyNoState);
+  const [result, setResult] = useState(-1);
 
   const closeSeatAlert = (e) => {
     if(e.target.className === "convention-seat-alert-wrap"){
@@ -278,12 +342,43 @@ const SeatCompanyAlert = (props) => {
     }
   }
 
+  const refundSeat = () => {
+    cancelPay(0, loginCompanyNoState, payment, "부스 환불", setResult);
+    
+  }
+
+  useEffect(() => {
+    if(result === 0){
+      Swal.fire({
+        title : "박람회 환불",
+        text : "잠시후 다시 시도해주세요",
+        confirmButtonColor : "var(--main1)",
+        confirmButtonText : "확인"
+      })
+      setSeatCompanyAlert(false);
+    }
+    else if(result === 1){
+      setIsPayment(!isPayment);
+      setChangedSeatInfo(!changedSeatInfo);
+      Swal.fire({
+        title : "박람회 부스",
+        text : "환불 완료",
+        confirmButtonColor : "var(--main1)",
+        confirmButtonText : "확인"
+      })
+      setSeatCompanyAlert(false);
+    }
+    
+  }, [result]);
+  
+
+
   return (
     <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
       <div className="convention-seat-alert">
         <div className="convention-seat-info-wrap">
           <div className="convention-seat-info-title">
-            <span>박람회 부스 구매</span>
+            <span>{type === 0 ? "박람회 부스 구매" : "박람회 부스 환불"}</span>
           </div>
 
           <div className="convention-seat-info-content">
@@ -292,16 +387,28 @@ const SeatCompanyAlert = (props) => {
             </div>
             <div className="convention-seat-info-price df-basic">
               <span>가격 : <span id="red-color">{seatInfo.conventionSeatPrice}</span>원</span>
+              {/* 처음에 산 가격으로 바꿔줘야함 -> 처음 산가격도 조회해야 함 */}
             </div>
           </div>
 
           <div className="convention-seat-info-personal df-basic">
-            <label htmlFor="personal-check" className="cursor-p" ref={checkSpanRef} >이용약관및 개인정보 수집/이용 동의</label>
-            <input type="checkbox" id="personal-check" ref={checkedRef} />
+            {type === 0 ? 
+            <>
+              <label htmlFor="personal-check" className="cursor-p" ref={checkSpanRef} >이용약관및 개인정보 수집/이용 동의</label>
+              <input type="checkbox" id="personal-check" ref={checkedRef} />
+            </>
+            :
+            <span>박람회 개최 3일전부터는 환불이 불가능합니다.</span>
+            }
           </div>
           
           <div className="convention-seat-info-btn df-basic">
-            <button onClick={purchaseSeat}>구매하기</button>
+            {type === 0 ? 
+            <button onClick={purchaseSeat} className={payment.merchantUid ? "cant-buy" : ""} >구매하기</button>
+            :
+            // <button onClick={refundSeat}>환불하기</button>
+            <button onClick={refundSeat}>환불하기</button>
+            }
           </div>
           
         </div>
@@ -471,7 +578,9 @@ const SeatMemberAlert = (props) => {
       setSeatMemberAlert(false);
     }
   }
-  
+
+  console.log(seatInfo);
+
   return (
     <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
       <div className="convention-seat-member-alert">
@@ -479,34 +588,46 @@ const SeatMemberAlert = (props) => {
           <span>등록된 업체 정보</span>
         </div>
 
-        <div className="convention-seat-member-info-content">
-          {/* 부스가 비어있다면 등록된 업체가 없다고 띄워야 함 */}
-          {/* 밑에 name이랑 category 없애고 그냥 content에 등록된 업체 없음 띄우기 */}
-          {/* 나중에 데이터 생기면 업체까지 한 번에 조회해서 seatInfo에 넣기 */}
-          <div className="convention-seat-info-company-name">
-            <div className="convention-seat-info-company-name-left">
-              <span>업체명 : </span>
+        {seatInfo.companyName && seatInfo.companyCategory ? 
+        <>
+          <div className="convention-seat-member-info-content">
+            {/* 부스가 비어있다면 등록된 업체가 없다고 띄워야 함 */}
+            {/* 밑에 name이랑 category 없애고 그냥 content에 등록된 업체 없음 띄우기 */}
+            {/* 나중에 데이터 생기면 업체까지 한 번에 조회해서 seatInfo에 넣기 */}
+            <div className="convention-seat-info-company-name">
+              <div className="convention-seat-info-company-name-left">
+                <span>업체명 : </span>
+              </div>
+              <div className="convention-seat-info-company-name-right">
+                <pre> {seatInfo.companyName}</pre>
+              </div>
             </div>
-            <div className="convention-seat-info-company-name-right">
-              <pre> 엄청난 업체명</pre>
+
+            <div className="convention-seat-info-company-category">
+              <div className="convention-seat-info-company-category-left">
+                <span>카테고리 : </span>
+              </div>
+              <div className="convention-seat-info-company-category-right">
+                <pre> {seatInfo.companyCategory}</pre>
+              </div>
+
             </div>
           </div>
 
-          <div className="convention-seat-info-company-category">
-            <div className="convention-seat-info-company-category-left">
-              <span>카테고리 : </span>
-            </div>
-            <div className="convention-seat-info-company-category-right">
-              <pre> 메이크업</pre>
-            </div>
-
+          <div className="convention-seat-member-info-link df-basic">
+            <Link className="cursor-p">업체 보러가기</Link>
           </div>
+        </>
 
+        
+        :
+        <div className="empty-company df-basic">
+          <span>아직 업체가 없습니다</span>
         </div>
+        }
 
-        <div className="convention-seat-member-info-link df-basic">
-          <Link className="cursor-p">업체 보러가기</Link>
-        </div>
+
+        
 
         <div className="convention-seat-member-info-btn df-basic">
           <button onClick={() => {

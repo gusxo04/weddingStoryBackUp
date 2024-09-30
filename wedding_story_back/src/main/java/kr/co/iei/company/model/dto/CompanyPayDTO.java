@@ -22,4 +22,5 @@ public class CompanyPayDTO {
 	private int progress;
 	private String merchantUid;
 	
+	private int conventionCompanyNo;
 }
