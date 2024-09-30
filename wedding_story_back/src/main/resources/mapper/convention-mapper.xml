@@ -11,7 +11,7 @@
     <!-- 1 or 4 -->
 
     <select id="selectConventionSeat" resultType="conventionSeat">
-        select seat_no, convention_seat_price, seat_code, seat_status,convention_company_no, convention_no, company_no, nvl(company_category, '-1') as company_category, company_name
+        select seat_no, convention_seat_price, seat_code, seat_status,convention_company_no, convention_no, company_no, company_category, company_name
         from convention_seat
         left join convention_company cc using (seat_no)
         left join company c using(company_no)
@@ -133,7 +133,7 @@
     </select>
 
     <select id="selectCompanyPayment" resultType="companyPay">
-        select pay_no, (select convention_company_no from convention_company where convention_no = #{conventionNo}) as convention_company_no, pay_price, merchant_uid 
+        select pay_no, (select convention_company_no from convention_company where convention_no = #{conventionNo} and company_no = #{companyNo}) as convention_company_no, pay_price, merchant_uid 
             from company_pay where company_no = #{companyNo} and
             sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = #{conventionNo}) and
             progress = 0
