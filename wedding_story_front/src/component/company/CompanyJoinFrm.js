@@ -47,6 +47,15 @@ const CompanyJoinFrm = (props) => {
   const keyWord = props.keyWord;
   const setKeyWord = props.setKeyWord;
 
+  console.log(companyCategory);
+  console.log(companyName);
+  console.log(companyTel);
+  console.log();
+  console.log();
+  console.log();
+  console.log();
+  console.log();
+
   const thumbnail = props.thumbnail;
   const setThumbnail = props.setThumbnail;
 
