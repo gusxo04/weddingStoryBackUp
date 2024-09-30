@@ -7,7 +7,8 @@
 	</select>
 	<select id="selectNoticeList" resultType="notice">
 		select * from
-		(select rownum as rnum, b.* from
+		(select
+		rownum as rnum, b.* from
 		(select
 		notice_no,
 		notice_title,
@@ -15,53 +16,69 @@
 		notice_writer,
 		notice_date
 		from notice order by notice_no desc) b)
-		where rnum between #{start} and
+		where
+		rnum between #{start} and
 		#{end}
 	</select>
 
 	<insert id="insertNotice">
-		insert into notice values(notice_seq.nextval, #{companyNo} , #{noticeTitle},
-		#{noticeContent}, to_char(sysdate, 'yyyy-mm-dd'), #{noticeVisible} ,#{noticeThumb}, #{noticeWriter})
+		insert into notice values(notice_seq.nextval, #{companyNo} ,
+		#{noticeTitle},
+		#{noticeContent}, to_char(sysdate, 'yyyy-mm-dd'),
+		#{noticeVisible} ,#{noticeThumb}, #{noticeWriter})
 		<selectKey resultType="int" keyProperty="noticeNo"
 			order="AFTER">
 			select max(notice_no) from notice
 		</selectKey>
 	</insert>
 	<insert id="insertNoticeFile">
-		insert into notice_file values(notice_file_seq.nextval, #{noticeNo},
+		insert into notice_file
+		values(notice_file_seq.nextval, #{noticeNo},
 		#{filename}, #{filepath})
 	</insert>
 	<select id="selectOneNotice" resultMap="getNotice">
 		select
-			notice_no,
-			notice_title,
-			notice_thumb,
-			notice_content,
-			notice_writer,
-			notice_visible,
-			company_no,
-			notice_date
-		from notice where notice_no=#{noticeNo}
+		notice_no,
+		notice_title,
+		notice_thumb,
+		notice_content,
+		notice_writer,
+		notice_visible,
+		company_no,
+		notice_date
+		from notice where
+		notice_no=#{noticeNo}
 	</select>
-	
+	<select id="selectNextNotice" resultType="notice">
+		SELECT NOTICE_TITLE, notice_no
+		FROM notice
+		WHERE notice_no = (SELECT MIN(notice_no) FROM notice WHERE notice_no > #{noticeNo})
+	</select>
+
+	<select id="selectPreNotice" resultType="notice">
+    <![CDATA[
+    SELECT NOTICE_TITLE, notice_no
+	FROM notice
+	WHERE notice_no = (SELECT MAX(notice_no) FROM notice WHERE notice_no < #{noticeNo})
+    ]]>
+	</select>
+
 	<select id="selectOneNoticeFile" resultType="noticeFile">
-		select * from notice_file where notice_no=#{noticeNo}
+		select * from
+		notice_file where notice_no=#{noticeNo}
 	</select>
-		
+
 	<resultMap type="notice" id="getNotice">
-		<result column="notice_no" property="noticeNo"/>
-		<result column="company_no" property="companyNo"/>
-		<result column="notice_title" property="noticeTitle"/>
-		<result column="notice_content" property="noticeContent"/>
-		<result column="notice_date" property="noticeDate"/>
-		<result column="notice_visible" property="noticeVisible"/>
-		<result column="notice_thumb" property="noticeThumb"/>
-		<result column="notice_writer" property="noticeWriter"/>
+		<result column="notice_no" property="noticeNo" />
+		<result column="company_no" property="companyNo" />
+		<result column="notice_title" property="noticeTitle" />
+		<result column="notice_content" property="noticeContent" />
+		<result column="notice_date" property="noticeDate" />
+		<result column="notice_visible" property="noticeVisible" />
+		<result column="notice_thumb" property="noticeThumb" />
+		<result column="notice_writer" property="noticeWriter" />
 		<collection property="fileList"
-				select="selectOneNoticeFile"
-				column="notice_no"
-				javaType="java.util.List"
-				ofType="noticeFile"
-		/>
+			select="selectOneNoticeFile" column="notice_no"
+			javaType="java.util.List" ofType="noticeFile" />
 	</resultMap>
 </mapper>

@@ -3,14 +3,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
+import "./noticeView.css";
 
 const NoticeView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
 
   const noticeNo = params.noticeNo;
-  const previousNoticeNo = Number(params.noticeNo) - 1;
-  const nextNoticeNo = Number(params.noticeNo) + 1;
+  // const previousNoticeNo = Number(params.noticeNo) - 1;
+  // const nextNoticeNo = Number(params.noticeNo) + 1;
 
   const [notice, setNotice] = useState({});
   const [nextNotice, setNextNotice] = useState({});
@@ -28,25 +29,16 @@ const NoticeView = () => {
       });
 
     axios
-      .get(`${backServer}/notice/noticeNo/${previousNoticeNo}`)
+      .get(`${backServer}/notice/prenextnoticeNo/${noticeNo}`)
       .then((res) => {
         console.log(res);
-        setPreviousNotice(res.data);
+        setPreviousNotice(res.data.previousNotice);
+        setNextNotice(res.data.nextNotice);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    axios
-      .get(`${backServer}/notice/noticeNo/${nextNoticeNo}`)
-      .then((res) => {
-        console.log(res);
-        setNextNotice(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [noticeNo, previousNoticeNo, nextNoticeNo]);
+  }, [noticeNo]);
   const handlePreviousClick = () => {
     if (previousNotice.noticeNo) {
       navigate(`/admin/notice/view/${previousNotice.noticeNo}`);
@@ -57,6 +49,10 @@ const NoticeView = () => {
     if (nextNotice.noticeNo) {
       navigate(`/admin/notice/view/${nextNotice.noticeNo}`);
     }
+  };
+
+  const stop = (event) => {
+    event.stopPropagation();
   };
   return (
     <section className="notice-view-wrap">
@@ -89,14 +85,14 @@ const NoticeView = () => {
         {nextNotice && nextNotice.noticeTitle ? (
           <span>{nextNotice.noticeTitle}</span>
         ) : (
-          <span>다음 공지사항이 없습니다.</span>
+          <span onClick={stop}>다음 공지사항이 없습니다.</span>
         )}
       </div>
       <div className="previous-notice" onClick={handlePreviousClick}>
         {previousNotice && previousNotice.noticeTitle ? (
           <span>{previousNotice.noticeTitle}</span>
         ) : (
-          <span>이전 공지사항이 없습니다.</span>
+          <span onClick={stop}>이전 공지사항이 없습니다.</span>
         )}
       </div>
     </section>

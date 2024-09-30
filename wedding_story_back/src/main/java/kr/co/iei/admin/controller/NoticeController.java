@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ch.qos.logback.core.testUtil.NPEAppender;
 import kr.co.iei.admin.model.dto.NoticeDTO;
 import kr.co.iei.admin.model.dto.NoticeFileDTO;
 import kr.co.iei.admin.model.service.AdminService;
@@ -39,7 +40,9 @@ public class NoticeController {
     public ResponseEntity<Map> list (@PathVariable int reqPage, @PathVariable int userState){
 //    	System.out.println("reqPage : "+reqPage);
 //    	System.out.println("userState"+userState);
+    	System.out.println("userstate"+userState);
     	Map map = noticeService.selectNoticeList(reqPage, userState);
+    	
     	return ResponseEntity.ok(map);
     }
     
@@ -86,5 +89,11 @@ public class NoticeController {
     public ResponseEntity<NoticeDTO> selectOneNotice(@PathVariable int noticeNo){
     	NoticeDTO notice = noticeService.selectOneNotice(noticeNo);
     	return ResponseEntity.ok(notice);
+    }
+    
+    @GetMapping(value = "/prenextnoticeNo/{noticeNo}")
+    public ResponseEntity<Map> selectPreNextNotice(@PathVariable int noticeNo){
+    	Map<String, NoticeDTO> map = noticeService.selectPreNextNotice(noticeNo);
+    	return ResponseEntity.ok(map);
     }
 }

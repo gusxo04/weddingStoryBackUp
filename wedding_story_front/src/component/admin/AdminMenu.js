@@ -3,8 +3,8 @@ import "./adminMenu.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 const AdminMenu = () => {
-  const loginId = useRecoilState(loginIdState);
-  const memberType = useRecoilState(memberTypeState);
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
   // console.log("membertype : " + memberType);
   const insertAdmin = () => {};
   const logout = () => {};

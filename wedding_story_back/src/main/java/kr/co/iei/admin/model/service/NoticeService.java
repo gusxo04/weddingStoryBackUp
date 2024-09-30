@@ -26,7 +26,7 @@ public class NoticeService {
 		int numPerPage = 10;
 		int pageNaviSize = 5;
 		int totalCount;
-		
+
 		if (userState == 0) {
 			// 관리자용(전체열람)
 			totalCount = noticeDao.totalCount();
@@ -35,8 +35,9 @@ public class NoticeService {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", list);
 			map.put("pi", pi);
+			System.out.println(list);
 			return map;
-			
+
 		} else if (userState == 1) {
 			// 모든 업체에게
 			totalCount = noticeDao.totalCount();
@@ -64,11 +65,11 @@ public class NoticeService {
 		}
 		return null;
 	}
-	
+
 	@Transactional
 	public int insertNotice(NoticeDTO notice, List<NoticeFileDTO> noticeFileList) {
 		int result = noticeDao.insertNotice(notice);
-		for(NoticeFileDTO noticeFile : noticeFileList) {
+		for (NoticeFileDTO noticeFile : noticeFileList) {
 			noticeFile.setNoticeNo(notice.getNoticeNo());
 			result += noticeDao.insertNoticeFile(noticeFile);
 		}
@@ -79,4 +80,17 @@ public class NoticeService {
 		NoticeDTO notice = noticeDao.selectOneNotice(noticeNo);
 		return notice;
 	}
+
+	public Map<String, NoticeDTO> selectPreNextNotice(int noticeNo) {
+		Map<String, NoticeDTO> map = new HashMap<String, NoticeDTO>();
+		NoticeDTO nextNotice = noticeDao.selectNextNotice(noticeNo);
+
+		map.put("nextNotice", nextNotice);
+
+		NoticeDTO preNotice = noticeDao.selectPreNotice(noticeNo);
+		map.put("previousNotice", preNotice);
+
+		return map;
+	}
+
 }

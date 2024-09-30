@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
+import { useRecoilState } from "recoil";
+import { loginIdState, memberTypeState } from "../utils/RecoilData";
 
 const NoticeFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const loginId = props.loginId;
-  const setLoginId = props.setLoginId;
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const memberType = useRecoilState(memberTypeState);
   const noticeTitle = props.noticeTitle;
   const setNoticeTitle = props.setNoticeTitle;
   const thumbnail = props.thumbnail;
@@ -27,6 +29,7 @@ const NoticeFrm = (props) => {
   //썸네일 미리보기용 state(데이터전송하지 않음)
   const [noticeImg, setNoticeImg] = useState(null);
 
+  console.log(loginId + "로그인 아이디");
   //썸네일 이미지 첨부파일이 변경되면 동작할 함수
   const changeThumbnail = (e) => {
     //요소들이 겹쳐있는 상태에서 해당 요소를 선택할 때는 currentTarget(target을사용하면 여러요소가 한번에 선택)
@@ -123,13 +126,9 @@ const NoticeFrm = (props) => {
               <th>작성자</th>
               <td className="left">
                 <div className="input-item">
-                  <input
-                    type="text"
-                    id="loginId"
-                    name="loginId"
-                    value={loginId}
-                    onChange={(e) => setLoginId(e.target.value)}
-                  />
+                  <a id="loginId" name="loginId">
+                    {loginId}
+                  </a>
                 </div>
               </td>
             </tr>
