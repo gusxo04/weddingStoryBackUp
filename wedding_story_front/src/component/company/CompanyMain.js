@@ -5,13 +5,17 @@ import CompanyInfo from "./CompanyInfo";
 import CompanyProduct from "./CompanyProduct";
 import CompanyHeader from "../common/CompanyHeader";
 import { useRecoilState } from "recoil";
-import { companyNoState } from "../utils/RecoilData";
+import { companyNoState, loginNoState } from "../utils/RecoilData";
 import CompanyNoNull from "./CompanyNoNull";
 import CompanyInfoUpdate from "./CompanyInfoUpdate";
+import axios from "axios";
+import { useEffect } from "react";
 
 const CompanyMain = () => {
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  const [loginNo, setLoginNo] = useRecoilState(loginNoState);
   console.log(companyNo);
+
   return (
     <>
       <div className="company-wrap">

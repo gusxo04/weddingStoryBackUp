@@ -47,4 +47,8 @@ public interface MemberDao {
 	
 	MemberDTO selectLoginMember(int memberNo);
 
+	String selectCompanyNo(int loginNo);
+
+	String selectInsertCompanyNo(int memberNo);
+
 }

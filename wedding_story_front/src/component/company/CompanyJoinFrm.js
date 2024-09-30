@@ -47,15 +47,6 @@ const CompanyJoinFrm = (props) => {
   const keyWord = props.keyWord;
   const setKeyWord = props.setKeyWord;
 
-  console.log(companyCategory);
-  console.log(companyName);
-  console.log(companyTel);
-  console.log();
-  console.log();
-  console.log();
-  console.log();
-  console.log();
-
   const thumbnail = props.thumbnail;
   const setThumbnail = props.setThumbnail;
 
@@ -76,8 +67,15 @@ const CompanyJoinFrm = (props) => {
   const tel2Ref = useRef();
   const tel3Ref = useRef();
 
-  const [tel1, tel2, tel3] = companyTel.split("-");
+  // const [tel1, tel2, tel3] = telNumber;
   //DB에서 조회후 split으로 자른 데이터
+
+  // if (tel1Ref.current) tel1Ref.current.value = tel1;
+  // if (tel2Ref.current) tel2Ref.current.value = tel2;
+  // if (tel3Ref.current) tel3Ref.current.value = tel3;
+
+  // 상태에도 전화번호 전체를 설정
+  // setCompanyTel(telNumber);
 
   //전화번호 input 나뉘어져 있는거 합치기
   const changeTel = () => {
@@ -107,7 +105,7 @@ const CompanyJoinFrm = (props) => {
     detailAddress: "",
   });
   //DB에서 조회하 데이터 자른값
-  const [addr1, addr2] = companyAddr.split("-");
+  // const [addr1, addr2] = companyAddr.split("-");
 
   //썸네일 관리
   const thumbnailRef = useRef(null);
@@ -153,7 +151,6 @@ const CompanyJoinFrm = (props) => {
       setDayOff(dayOff.filter((item) => item !== value));
     }
   };
-  console.log(`${backServer}/company/thumb/${thumbnail}`);
   //주소값 input 값 변경시 합치기
   useEffect(() => {
     const addrAll = `${address.address}-${address.detailAddress}`.trim();
@@ -230,7 +227,6 @@ const CompanyJoinFrm = (props) => {
               <input
                 type="text"
                 id="companyTel"
-                value={tel1}
                 ref={tel1Ref}
                 onChange={(e) => handleTelInput(e, tel1Ref)}
                 maxLength={3}
@@ -239,7 +235,6 @@ const CompanyJoinFrm = (props) => {
               <input
                 type="text"
                 id="companyTel"
-                value={tel2}
                 ref={tel2Ref}
                 onChange={(e) => handleTelInput(e, tel2Ref)}
                 maxLength={4}
@@ -248,7 +243,6 @@ const CompanyJoinFrm = (props) => {
               <input
                 type="text"
                 id="companyTel"
-                value={tel3}
                 ref={tel3Ref}
                 onChange={(e) => handleTelInput(e, tel3Ref)}
                 maxLength={4}
@@ -260,7 +254,7 @@ const CompanyJoinFrm = (props) => {
                 type="text"
                 id="companyAddr"
                 defaultValue={address.address}
-                value={addr1}
+                //value={addr1}
                 readOnly
               ></input>
               <DaumPost address={address} setAddress={setAddress} />
@@ -271,7 +265,7 @@ const CompanyJoinFrm = (props) => {
                 type="text"
                 id="companyAddr-detail"
                 defaultValue={address.detailAddress}
-                value={addr2}
+                // value={addr2}
                 onChange={(e) => {
                   setAddress({ ...address, detailAddress: e.target.value });
                 }}
