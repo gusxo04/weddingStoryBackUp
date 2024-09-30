@@ -157,7 +157,10 @@ const ShowConvention = (props) => {
       :
       ""
       :
-      <ConventionLayout convention={convention} payment={payment} isPayment={isPayment} setIsPayment={setIsPayment} permission={loginMemberType === 2 ? 2 : 1} />
+      <ConventionLayout convention={convention} payment={payment} isPayment={isPayment} 
+      setIsPayment={setIsPayment} permission={loginMemberType === 2 ? 2 : 1} 
+      buyable={type}
+      />
       }
 
       <div className="convention-preview-info-wrap">
@@ -202,6 +205,7 @@ const ShowConvention = (props) => {
         ""
         }
         
+        {/* 어드민인 경우 */}
         {loginMemberType === 0 ?
         <div className="convention-inner-preview-info convention-buy-btn" >
           <button onClick={() => {
@@ -212,6 +216,7 @@ const ShowConvention = (props) => {
         ""
         }
 
+        {/* 업체인 경우 */}
         {loginMemberType === 2 ?
         <div className="convention-inner-preview-info convention-buy-btn" >
           <button onClick={() => {
