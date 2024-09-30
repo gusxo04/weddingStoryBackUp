@@ -92,5 +92,12 @@
 	</update>
 	<select id="checkEmail" resultType="int">
 		select count(*) from member where member_email=#{memberEmail}
+	
+	<select id="selectCompanyNo" resultType="String">
+		select company_no from member where member_no=#{loginNo}
+	</select>
+	
+	<select id="selectInsertCompanyNo" resultType="String">
+		select company_no from member where member_no=#{memberNo}
 	</select>
 </mapper>

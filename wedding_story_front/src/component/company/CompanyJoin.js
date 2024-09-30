@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CompanyJoinFrm from "./CompanyJoinFrm";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginNoState } from "../utils/RecoilData";
+import { companyNoState, loginNoState } from "../utils/RecoilData";
 
 const CompanyJoin = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [loginNo, setLoginNo] = useRecoilState(loginNoState);
-  console.log(loginNo);
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
   const [companyName, setCompanyName] = useState("");
   const [companyTel, setCompanyTel] = useState("");
   const [companyAddr, setCompanyAddr] = useState("");
@@ -22,6 +22,7 @@ const CompanyJoin = () => {
   const [keyWord, setKeyWord] = useState([]);
 
   const [thumbnail, setThumbnail] = useState(null);
+
   const insertCompany = () => {
     if (
       companyName !== "" &&
@@ -62,16 +63,15 @@ const CompanyJoin = () => {
         })
         .then((res) => {
           console.log(res);
-          if (res.data === true) {
-            Swal.fire({
-              title: "등록성공",
-              text: "업체 등록에 성공하였습니다.",
-              icon: "success",
-              timer: 5000,
-            }).then(() => {
-              navigate("/company");
-            });
-          }
+          setCompanyNo(res.data);
+          Swal.fire({
+            title: "등록성공",
+            text: "업체 등록에 성공하였습니다.",
+            icon: "success",
+            timer: 5000,
+          }).then(() => {
+            navigate("/company");
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -84,6 +84,8 @@ const CompanyJoin = () => {
       });
     }
   };
+  console.log(companyNo);
+
   return (
     <div>
       <form

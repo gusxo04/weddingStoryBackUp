@@ -96,6 +96,9 @@ public class MemberService {
 	public LoginMemberDTO refresh(String token) {
 		try {
 			LoginMemberDTO loginMember = jwtUtil.checkToken(token);
+			System.out.println(loginMember);
+			String companyNo = memberDao.selectInsertCompanyNo(loginMember.getMemberNo()); //
+			loginMember.setCompanyNo(companyNo);
 			String accessToken = jwtUtil.createAccessToken(loginMember.getMemberNo(), loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
 			String refreshToken = jwtUtil.createRefreshToken(loginMember.getMemberNo(),loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
 			loginMember.setAccessToken(accessToken);

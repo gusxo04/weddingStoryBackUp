@@ -18,7 +18,7 @@ const CompanyInfoUpdate = () => {
   const [endTime, setEndTime] = useState("");
   const [dayOff, setDayOff] = useState([]);
   const [keyWord, setKeyWord] = useState([]);
-
+  const [telNumber, setTelNumber] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
 
   useEffect(() => {
@@ -27,7 +27,8 @@ const CompanyInfoUpdate = () => {
       .then((res) => {
         console.log(res);
         setCompanyName(res.data.companyName);
-        setCompanyTel(res.data.companyTel);
+        setTelNumber(res.data.companyTel.split("-"));
+        console.log(telNumber);
         setCompanyAddr(res.data.companyAddr);
         setCompanyInfo(res.data.companyInfo);
         setCompanyCategory(res.data.companyCategory);
@@ -122,6 +123,7 @@ const CompanyInfoUpdate = () => {
           setKeyWord={setKeyWord}
           thumbnail={thumbnail}
           setThumbnail={setThumbnail}
+          telNumber={telNumber}
         />
         <div className="btn-zone">
           <button type="submit">등록 하기</button>

@@ -97,21 +97,7 @@ const CompanyInfo = () => {
               <input
                 type="text"
                 id="companyCategory"
-                defaultValue={
-                  company.companyCategory === 0
-                    ? "웨딩홀"
-                    : company.companyCategory === 1
-                    ? "스튜디오"
-                    : company.companyCategory === 2
-                    ? "드레스"
-                    : company.companyCategory === 3
-                    ? "메이크업"
-                    : company.companyCategory === 4
-                    ? "예복"
-                    : company.companyCategory === 5
-                    ? "본식"
-                    : ""
-                }
+                defaultValue={company.companyCategory}
                 readOnly={true}
               ></input>
             </div>
