@@ -44,6 +44,7 @@
 	<select id="selectContainCompany">
 		select * from company where company_no=#{companyNo}
 	</select>
+	
 </mapper>
 
   

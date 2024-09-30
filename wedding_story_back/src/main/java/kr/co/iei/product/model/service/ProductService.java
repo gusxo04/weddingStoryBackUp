@@ -7,7 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.iei.company.model.dao.CompanyDao;
+import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.product.model.dao.ProductDao;
+import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -15,6 +18,9 @@ import kr.co.iei.util.PageUtil;
 public class ProductService {
 	@Autowired
 	private ProductDao productDao;
+	
+	@Autowired
+	private CompanyDao componyDao;
 	
 	@Autowired
 	private PageUtil pageUtil;
@@ -30,6 +36,11 @@ public class ProductService {
 		map.put("pi", pi);
 		return map;
 	}
-	
+
+	public ProductDTO productList(int productNo) {
+		ProductDTO product = productDao.selectOneProduct(productNo);
+		return product;
+	}
+
 	
 }

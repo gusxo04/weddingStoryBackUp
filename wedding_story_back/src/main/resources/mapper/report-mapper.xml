@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.product.model.dao.ReportDao">
+	<insert id="insertReport">
+		 insert into report values (#{memberNo}, #{companyNo}, #{reportContent}, sysdate)
+	</insert>
+	
+	<select id="getReportId" resultType="report">
+		select * from report where report_no = #{reportNo]}
+	</select>
+	
+	<delete id="deleteReport">
+		delete from report where report_no = #{reportNo}
+	</delete>
+	
+</mapper>

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import ProductReview from "../ProductReview";
-// Assuming you have necessary imports for Viewer and any other components
 import styles from "./ProductInfo.module.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import { loginIdState } from "../../utils/RecoilData";
 
 const ProductInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -13,7 +15,7 @@ const ProductInfo = () => {
   const productNo = params.productNo;
   const [product, setProduct] = useState({});
   const [productComment, setProductComment] = useState({});
-  //const [loginId, setLoginId] = useRecoilState();
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
   const navigator = useNavigate();
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const ProductInfo = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [productNo, backServer]);
+  }, []);
 
   return (
     <section className={styles["product-view-wrap"]}>
@@ -42,7 +44,7 @@ const ProductInfo = () => {
                   ? `${backServer}/product/thumb/${product.productThumb}`
                   : "/image/default_img.png"
               }
-              //alt={product.productTitle}
+              alt={product.productTitle}
             />
           </div>
           <div className={styles["product-view-preview"]}>
@@ -89,7 +91,9 @@ const ProductInfo = () => {
           )}
         </div>
         <br />
-        <ProductReview />
+        <div>
+          <ProductReview />
+        </div>
         <br />
         <div className={styles["product-faq"]}>
           <h3>FAQ</h3>

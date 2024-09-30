@@ -13,7 +13,7 @@ const Counsel = () => {
     memberName: "",
     memberPhone: "",
   });
-  //console.log(memberNo);
+  console.log(memberNo);
 
   const [consult, setConsult] = useState({
     consultDate: "",
@@ -38,7 +38,7 @@ const Counsel = () => {
           memberPhone: res.data.memberPhone,
         });
         console.log(res);
-        //console.log(member);
+        console.log(member);
       })
       .catch((err) => {
         console.log(err);

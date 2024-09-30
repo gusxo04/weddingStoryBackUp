@@ -24,4 +24,5 @@ public interface CompanyDao {
 
 	CompanyDTO selectContainCompany(String companyNo);
 
+
 }

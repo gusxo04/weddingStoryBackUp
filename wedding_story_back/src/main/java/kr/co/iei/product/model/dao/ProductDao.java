@@ -19,6 +19,8 @@ public interface ProductDao {
 
 	int insertProductFile(ProductFileDTO list);
 
+	ProductDTO selectOneProduct(int productNo);
+
 
 
 }

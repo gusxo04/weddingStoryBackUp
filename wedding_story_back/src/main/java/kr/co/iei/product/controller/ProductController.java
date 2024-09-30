@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.service.ProductService;
 import kr.co.iei.util.FileUtils;
 
@@ -39,4 +40,11 @@ public class ProductController {
 		return ResponseEntity.ok(map);
 	}
 	
+	@GetMapping("/product/{productNo}")
+	public ResponseEntity<ProductDTO> productList(@PathVariable int productNo){
+		ProductDTO product = productService.productList(productNo);
+		return ResponseEntity.ok(product);
+	}
+
+
 }

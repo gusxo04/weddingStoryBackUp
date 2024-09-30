@@ -3,7 +3,7 @@
   width: 100%;
   padding: 30px;
   border-radius: 10px;
-  background-color: var(--main2);
+  /*background-color: var(--main2);*/
   margin: 0 auto;
   align-self: center;
 }
@@ -16,16 +16,37 @@
 .board-list > .page-title > ul {
   display: flex;
   text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 20px;
 }
 
 .board-list > .page-title > ul > li {
   padding-right: 10px;
 }
-.board-list > .page-title > .name-title {
-  padding-left: 42%;
-  margin: 0 auto;
-}
+
 .name-title :hover {
   color: #c19975;
   cursor: pointer;
+}
+/*페이지*/
+.pageNum {
+  cursor: pointer;
+}
+.board-paging-wrap > ul > li > .page-item {
+  cursor: pointer;
+  margin: 10px;
+}
+.board-paging-wrap > ul > li > .active-page {
+  font-weight: bolder;
+}
+.board-paging-wrap > ul {
+  display: flex;
+  padding: 0px 47%;
+}
+.board-paging-wrap {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
