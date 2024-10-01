@@ -6,6 +6,17 @@ import { loginIdState } from "../../utils/RecoilData";
 import axios from "axios";
 import styles from "./ProductReview.module.css";
 import { ReviewForm } from "../components";
+import Slider from "react-slick";
+
+const showMaxCnt = 4;
+const arr = Array.from(new Array(3));
+const settings = {
+  dots: false,
+  infinite: arr.length > showMaxCnt,
+  speed: 500,
+  slidesToShow: showMaxCnt,
+  slidesToScroll: showMaxCnt,
+};
 
 const ProductReview = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -86,40 +97,47 @@ const ProductReview = () => {
     <div className={styles["product-reviews"]}>
       <h3>리뷰</h3>
       <button onClick={handleOpenPopup}>리뷰 작성</button>
-
-      {reviews.length > 0 ? (
-        reviews.map((review) => (
-          <div key={review.productCommentNo} className={styles["review-item"]}>
-            <div className={styles["review-rating"]}>
-              {Array.from({ length: 5 }, (_, index) => (
-                <FaStar
-                  key={index}
-                  style={{
-                    color: index < review.rating ? "gold" : "gray",
-                    fontSize: "24px",
-                  }}
+      <Slider {...settings}>
+        {reviews.length > 0 ? (
+          reviews.map((review) => (
+            <div
+              key={review.productCommentNo}
+              className={styles["review-item"]}
+            >
+              <div className={styles["review-rating"]}>
+                {Array.from({ length: 5 }, (_, index) => (
+                  <FaStar
+                    key={index}
+                    style={{
+                      color: index < review.rating ? "gold" : "gray",
+                      fontSize: "24px",
+                    }}
+                  />
+                ))}
+              </div>
+              <div className={styles["review-name"]}>
+                {loginIdState.loginId}
+              </div>
+              <div className={styles["review-text"]}>{review.review}</div>
+              {review.image && (
+                <img
+                  src={review.image}
+                  alt="Review"
+                  style={{ width: "300px", height: "300px" }}
                 />
-              ))}
-              <span>{` ${review.rating} / 5`}</span>
+              )}
+              <button onClick={() => handleEditReview(review)}>수정</button>
+              <button
+                onClick={() => handleDeleteReview(review.productCommentNo)}
+              >
+                삭제
+              </button>
             </div>
-            <div className={styles["review-name"]}>{loginIdState.loginId}</div>
-            <div className={styles["review-text"]}>{review.review}</div>
-            {review.image && (
-              <img
-                src={review.image}
-                alt="Review"
-                style={{ width: "300px", height: "300px" }}
-              />
-            )}
-            <button onClick={() => handleEditReview(review)}>수정</button>
-            <button onClick={() => handleDeleteReview(review.productCommentNo)}>
-              삭제
-            </button>
-          </div>
-        ))
-      ) : (
-        <p>리뷰가 없습니다.</p>
-      )}
+          ))
+        ) : (
+          <p>리뷰가 없습니다.</p>
+        )}
+      </Slider>
       <ReviewForm
         isOpen={isPopupOpen}
         onClose={handleClosePopup}

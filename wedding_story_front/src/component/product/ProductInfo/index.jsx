@@ -5,9 +5,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import ProductReview from "../ProductReview";
 import styles from "./ProductInfo.module.css";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import { loginIdState } from "../../utils/RecoilData";
+import KakaoMap from "../components/KakaoMap";
 
 const ProductInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -15,6 +15,7 @@ const ProductInfo = () => {
   const productNo = params.productNo;
   const [product, setProduct] = useState({});
   const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const [company, setCompany] = useState({ companyAddr: "" });
   const navigator = useNavigate();
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const ProductInfo = () => {
         </div>
         <div className={styles["product-btn-zone"]}>
           <button type="button" className={styles["btn"]}>
-            <Link to="/counseling/counsel">상담하기</Link>
+            <Link to="/consult/consult">상담하기</Link>
           </button>
           <button type="button" className={styles["btn"]}>
             <Link to="/product/pay">결제하기</Link>
@@ -86,7 +87,7 @@ const ProductInfo = () => {
           {product.productContent ? (
             <Viewer initialValue={product.productContent} />
           ) : (
-            ""
+            "상세보기가 없습니다."
           )}
         </div>
         <br />
@@ -95,13 +96,24 @@ const ProductInfo = () => {
         </div>
         <br />
         <div className={styles["product-faq"]}>
-          <h3>FAQ</h3>
+          <h3>QnA</h3>
+          {product.productContent ? (
+            <Viewer initialValue={product.productContent} />
+          ) : (
+            "QnA가 없습니다."
+          )}
         </div>
         <br />
         <div className={styles["product-map-view"]}>
           <h3>회사 위치</h3>
+          {company.companyAddr ? (
+            <Viewer initialValue={company.companyAddr} />
+          ) : (
+            "회사위치 뷰"
+          )}
           {/* 지도 구성 요소에 대한 자리 표시자입니다. 여기에 지도 API를 통합하세요 */}
           {/* <MapComponent location={product.companyLocation} /> */}
+          <KakaoMap />
         </div>
       </div>
     </section>

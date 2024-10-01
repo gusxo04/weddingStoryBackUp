@@ -29,6 +29,10 @@
   border: 1px solid #c19975;
   border-radius: 5px;
   display: inline-block;
+  margin: 50px auto;
+}
+.review-item > review-rating {
+  color: gold;
 }
 
 .review-item > textarea {
@@ -44,4 +48,40 @@
   border: 1px solid #000;
   background-color: #c19975;
   color: #fff;
+}
+/*슬라이더 에로우표시*/
+.slick-prev,
+.slick-next {
+  /* 버튼테두리없애기*/
+  border: none;
+  /*배튼배경색 투명으로*/
+  background-color: transparent;
+}
+
+.slick-prev {
+  /*절대값 부모 위치에 맞게*/
+  position: absolute;
+  left: 0;
+  bottom: -45px;
+  z-index: 1000;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  /*텍스트 뒤로 보내기 (안보이게)*/
+  text-indent: -9999px;
+}
+.slick-next {
+  /*절대값부모위치에 맞게 */
+  position: absolute;
+  /*next는 오른쪽위치*/
+  right: 0;
+  /*아래쪽에서 45px만큼올라감*/
+  bottom: -45px;
+  /* 앞쪽나오게하기 */
+  z-index: 1000;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  /*텍스트 뒤로보내기*/
+  text-indent: -9999px;
 }

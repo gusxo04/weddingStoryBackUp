@@ -37,9 +37,28 @@ public class ProductService {
 		return map;
 	}
 
+	
 	public ProductDTO productList(int productNo) {
 		ProductDTO product = productDao.selectOneProduct(productNo);
 		return product;
+	}
+
+
+	public Map getProducthallList(int reqPage) {
+		String category = "웨딩홀";
+		int numPerPage = 5;
+		int pageNaviSize = 4;
+		int totalCount = productDao.TotalCount();
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = productDao.getProductHallList(pi,category);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		//System.out.println(list);
+		//System.out.println(pi);
+		
+		map.put("list", list);
+		map.put("pi", pi);
+		return map;
 	}
 
 	
