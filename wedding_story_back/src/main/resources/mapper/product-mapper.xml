@@ -45,6 +45,8 @@
   
   <select id="selectProductName" resultType="product">
   	select * from product
+  </select>
+  	
   <select id="selectProductList" resultType="product">
 	  select * from
 			(select rownum as rnum, b.* from
