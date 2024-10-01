@@ -39,19 +39,26 @@ const Login = () => {
       .post(`${backServer}/member/login`, member)
       .then((res) => {
         console.log(res.data);
-        setLoginId(res.data.memberId);
-        setMemberType(res.data.memberType);
-        setMemberCode(res.data.memberCode);
-        setCompanyNo(res.data.companyNo);
-        setMemberNo(res.data.memberNo);
-        axios.defaults.headers.common["Authorization"] = res.data.accessToken;
-        window.localStorage.setItem("refreshToken", res.data.refreshToken);
-        if (res.data.memberType === 0) {
-          navigate("/admin");
-        } else if (res.data.memberType === 1) {
-          navigate("/");
-        } else if (res.data.memberType === 2) {
-          navigate("/company");
+        if (res.data.memberType !== 4) {
+          setLoginId(res.data.memberId);
+          setMemberType(res.data.memberType);
+          setMemberCode(res.data.memberCode);
+          setCompanyNo(res.data.companyNo);
+          setMemberNo(res.data.memberNo);
+          axios.defaults.headers.common["Authorization"] = res.data.accessToken;
+          window.localStorage.setItem("refreshToken", res.data.refreshToken);
+          if (res.data.memberType === 0) {
+            navigate("/admin");
+          } else if (res.data.memberType === 1) {
+            navigate("/");
+          } else if (res.data.memberType === 2) {
+            navigate("/company");
+          }
+        } else if (res.data.memberType === 4) {
+          Swal.fire({
+            text: "탈퇴한 회원입니다.",
+            icon: "info",
+          });
         }
       })
       .catch((err) => {

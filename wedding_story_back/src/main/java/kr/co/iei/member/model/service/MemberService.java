@@ -96,6 +96,9 @@ public class MemberService {
 	public LoginMemberDTO refresh(String token) {
 		try {
 			LoginMemberDTO loginMember = jwtUtil.checkToken(token);
+			System.out.println(loginMember);
+			String companyNo = memberDao.selectInsertCompanyNo(loginMember.getMemberNo()); //
+			loginMember.setCompanyNo(companyNo);
 			String accessToken = jwtUtil.createAccessToken(loginMember.getMemberNo(), loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
 			String refreshToken = jwtUtil.createRefreshToken(loginMember.getMemberNo(),loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
 			loginMember.setAccessToken(accessToken);
@@ -110,5 +113,37 @@ public class MemberService {
 		MemberDTO m = memberDao.selectLoginMember(memberNo);
 		m.setMemberPw(null);
 		return m;
+	}
+
+	public int checkOldPw(MemberDTO member) {
+		MemberDTO m = memberDao.searchPw(member.getMemberId());
+		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	@Transactional
+	public int modifyPw(MemberDTO member) {
+		String defaultPw = member.getMemberPw();
+		String encPw = encoder.encode(defaultPw);
+		member.setMemberPw(encPw);
+		int result = memberDao.modifyPw(member);
+		return result;
+	}
+	@Transactional
+	public int updateMember2(MemberDTO member) {
+		int result = memberDao.updateMember2(member);
+		return result;
+	}
+	@Transactional
+	public int deleteMember(MemberDTO member) {
+		int result = memberDao.deleteMember(member);
+		return result;
+	}
+
+	public int checkEmail(String checkEmail) {
+		int result = memberDao.checkEmail(checkEmail);
+		return result;
 	}
 }

@@ -104,18 +104,22 @@ const JoinMember = (props) => {
     const checkEmail = member.memberEmail;
     const idRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     {
-      /*emailCheck 0은 미기재,1은 정규표현식 부적합,2은 이메일 인증 */
+      /*emailCheck 0은 미기재,1은 정규표현식 부적합,2은 이메일 인증,3은 가입되었던 이메일 */
     }
     if (checkEmail === "") {
       setEmailCheck(0);
     } else if (!idRegex.test(checkEmail)) {
       setEmailCheck(1);
     } else if (idRegex.test(checkEmail)) {
-      setEmailCheck(2);
       axios
         .get(`${backServer}/member/checkEmail/` + checkEmail)
         .then((res) => {
-          setEmailCode(res.data);
+          if (res.data === "중복") {
+            setEmailCheck(3);
+          } else {
+            setEmailCheck(2);
+            setEmailCode(res.data);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -353,7 +357,9 @@ const JoinMember = (props) => {
                       ? ""
                       : emailCheck === 1
                       ? "이메일 형식에 맞추어 기입해 주세요."
-                      : "인증번호를 이메일로 전송했습니다."
+                      : emailCheck === 2
+                      ? "인증번호를 이메일로 전송했습니다."
+                      : "이미 가입되었거나 탈퇴한 이메일입니다."
                   }`}
                 </span>
               </div>

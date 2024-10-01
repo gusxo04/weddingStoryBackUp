@@ -18,6 +18,8 @@ const ConventionLayout = (props) => {
     payment,
     isPayment,
     setIsPayment,
+    buyable,
+    // buyable이 true면 부스 구매 가능 
   } = props;
   
 
@@ -111,12 +113,11 @@ const ConventionLayout = (props) => {
       merchant_uid: dateString,
       name: "박람회 부스",
       amount: seatInfo.conventionSeatPrice,
-      // 나중에 회원 DB 조회해서 다 넣기
-      buyer_email: "test@portone.io",
-      buyer_name: "구매자 이름",
-      buyer_tel: "010-1234-5678",
-      buyer_addr: "서울특별시 강남구 신사동",
-      buyer_postcode: "123-456"
+      // buyer_email: "test@portone.io",
+      // buyer_name: "구매자 이름",
+      // buyer_tel: "010-1234-5678",
+      // buyer_addr: "서울특별시 강남구 신사동",
+      // buyer_postcode: "123-456"
     }, rsp => {
       if (rsp.success) {
         // 결제 성공 시 로직
@@ -169,7 +170,31 @@ const ConventionLayout = (props) => {
         // 추가로 실행할 로직을 여기에 작성
       }
     });
-    
+  }
+
+  const seatInfoList = (seat) => {
+    if(seat.companyNo && loginCompanyNoState) {
+      // 만약 이미 누가 산 부스라면~
+      if(loginCompanyNoState === seat.companyNo && buyable){
+        // 근데 그게 내가 산거라면
+        clickedRefundSeat(seat);
+      }
+      else{
+        // 다른 사람꺼라면
+        setSeatInfo(seat);
+        setSeatMemberAlert(true);
+      }
+    }
+    else{
+      // 아직 구매 안 한 부스라면
+      // 구매 안 한 건데 이미 박람회 시작했으면 업체 없다고 띄워야 함 (부스 구매 불가능)
+      if(!buyable) {
+        setSeatInfo(seat);
+        setSeatMemberAlert(true);
+        return;
+      }
+      seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+    }
   }
 
   const clickedRefundSeat = (seat) => {
@@ -178,6 +203,8 @@ const ConventionLayout = (props) => {
     setSeatCompanyAlert(true);
   }
 
+  console.log("10월 1일날 테스트 할 거 buyable이 false고 다른거 구매 안 되면 됨");
+  console.log("buyable : ",buyable);
   
 // 필요한 거 -> 업체가 산 좌석이 어딘지를 알아야 하고 , 문제가 있는 좌석은 문제가 있음을 알 수 있게 해야 함
   return (
@@ -215,23 +242,29 @@ const ConventionLayout = (props) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
                   // seat.seatStatus === 0 ? purchaseSeat(seat) : seatProblem()
-
-                  if(seat.companyNo && loginCompanyNoState) {
-                    // 만약 이미 누가 산 부스라면~
-                    if(loginCompanyNoState === seat.companyNo){
-                      // 근데 그게 내가 산거라면
-                      clickedRefundSeat(seat);
-                    }
-                    else{
-                      // 다른 사람꺼라면
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                    }
-                  }
-                  else{
-                    // 아직 구매 안 한 부스라면
-                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  }
+                  seatInfoList(seat);
+                  // if(seat.companyNo && loginCompanyNoState) {
+                  //   // 만약 이미 누가 산 부스라면~
+                  //   if(loginCompanyNoState === seat.companyNo && buyable){
+                  //     // 근데 그게 내가 산거라면
+                  //     clickedRefundSeat(seat);
+                  //   }
+                  //   else{
+                  //     // 다른 사람꺼라면
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //   }
+                  // }
+                  // else{
+                  //   // 아직 구매 안 한 부스라면
+                  //   // 구매 안 한 건데 이미 박람회 시작했으면 업체 없다고 띄워야 함 (부스 구매 불가능)
+                  //   if(!buyable) {
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //     return;
+                  //   }
+                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  // }
                 }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -241,19 +274,25 @@ const ConventionLayout = (props) => {
             {bSeat.map((seat,index) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
-                  if(seat.companyNo && loginCompanyNoState){
-                    if(loginCompanyNoState === seat.companyNo){
-                      clickedRefundSeat(seat);
-                    }
-                    else{
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                    }
-                  }
-                  else{
-                    console.log(seat);
-                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  }
+                  seatInfoList(seat);
+                  // if(seat.companyNo && loginCompanyNoState){
+                  //   if(loginCompanyNoState === seat.companyNo && buyable){
+                  //     clickedRefundSeat(seat);
+                  //   }
+                  //   else{
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //   }
+                  // }
+                  // else{
+
+                  //   if(!buyable) {
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //     return;
+                  //   }
+                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  // }
                 }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -263,18 +302,24 @@ const ConventionLayout = (props) => {
             {cSeat.map((seat,index) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
-                  if(seat.companyNo && loginCompanyNoState){
-                    if(loginCompanyNoState === seat.companyNo){
-                      clickedRefundSeat(seat);
-                    }
-                    else{
-                      setSeatInfo(seat);
-                      setSeatMemberAlert(true);
-                    }
-                  }
-                  else{
-                    seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  }
+                  seatInfoList(seat);
+                  // if(seat.companyNo && loginCompanyNoState){
+                  //   if(loginCompanyNoState === seat.companyNo && buyable){
+                  //     clickedRefundSeat(seat);
+                  //   }
+                  //   else{
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //   }
+                  // }
+                  // else{
+                  //   if(!buyable) {
+                  //     setSeatInfo(seat);
+                  //     setSeatMemberAlert(true);
+                  //     return;
+                  //   }
+                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
+                  // }
                 }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -372,7 +417,6 @@ const SeatCompanyAlert = (props) => {
   }, [result]);
   
 
-
   return (
     <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
       <div className="convention-seat-alert">
@@ -386,7 +430,7 @@ const SeatCompanyAlert = (props) => {
               <span>좌석코드 : {seatInfo.seatCode}</span>
             </div>
             <div className="convention-seat-info-price df-basic">
-              <span>가격 : <span id="red-color">{seatInfo.conventionSeatPrice}</span>원</span>
+              <span>가격 : <span id="red-color">{type === 0 ? seatInfo.conventionSeatPrice : payment.payPrice}</span>원</span>
               {/* 처음에 산 가격으로 바꿔줘야함 -> 처음 산가격도 조회해야 함 */}
             </div>
           </div>

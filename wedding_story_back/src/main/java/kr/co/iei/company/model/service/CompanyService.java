@@ -29,20 +29,21 @@ public class CompanyService {
 
 	//업체 등록 
 	@Transactional
-	public int insertCompany(CompanyDTO company, KeyWordDTO keyWord, MemberDTO member) {
+	public String insertCompany(CompanyDTO company, KeyWordDTO keyWord, MemberDTO member) {
 		int lastCompanyNo = memberDao.checkLastCompanyNo();
+		String companyNo = "";
 		
 		if(lastCompanyNo<9) {
-			String companyNo = "C000"+(lastCompanyNo+1);
+			companyNo = "C000"+(lastCompanyNo+1);
 			company.setCompanyNo(companyNo);
 		}else if(lastCompanyNo<99) {
-			String companyNo = "C00"+(lastCompanyNo+1);
+			companyNo = "C00"+(lastCompanyNo+1);
 			company.setCompanyNo(companyNo);
 		}else if(lastCompanyNo<999) {
-			String companyNo = "C0"+(lastCompanyNo+1);
+			companyNo = "C0"+(lastCompanyNo+1);
 			company.setCompanyNo(companyNo);
 		}else if(lastCompanyNo<9999) {
-			String companyNo = "C"+(lastCompanyNo+1);
+			companyNo = "C"+(lastCompanyNo+1);
 			company.setCompanyNo(companyNo);
 		}
 		System.out.println("service"+company);
@@ -58,7 +59,7 @@ public class CompanyService {
 		System.out.println(resultTotal);
 		
 			
-		return resultTotal;
+		return companyNo;
 	}
 	//업체 정보 한개 조회
 	public CompanyDTO selectCompanyInfo(String companyNo) {
@@ -78,11 +79,16 @@ public class CompanyService {
 		}
 		return resultProduct;
 	}
+	@Transactional
 	public int updateCompanyInfo(CompanyDTO company, KeyWordDTO keyWord) {
 		int result1 = companyDao.updateCompanyInfo(company);
 		int result2 = companyDao.updateCompanyKeyWord(keyWord);	
 		int totalResult= result1 + result2;
 		return totalResult;
+	}
+	public String selectCompanyNo(int loginNo) {
+		String result = memberDao.selectCompanyNo(loginNo);
+		return result;
 	}
 
 

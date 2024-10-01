@@ -153,7 +153,16 @@ const ConventionMain = () => {
         //   <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={true} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} />  
         //   : 
         //   <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} />) 
-        <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={startDate > 0 ? true : false} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} payment={payment} isPayment={isPayment} setIsPayment={setIsPayment} />
+        <ShowConvention convention={convention} conventionShowDate={conventionShowDate} 
+        type={startDate > 0 ? true : false} personalRef={personalRef} 
+        setSelectDate={setSelectDate} selectDate={selectDate} 
+        dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} 
+        noticeEmail={noticeEmail} changeEmail={changeEmail} 
+        changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} 
+        setNoticeEmail={setNoticeEmail} showType={showType} 
+        setShowType={setShowType} startDate={startDate} 
+        payment={payment} isPayment={isPayment} setIsPayment={setIsPayment} 
+        />
         : 
         <EmptyConvention navigate={navigate} />
         :

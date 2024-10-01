@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Counsel from "../counseling/Counsel";
+import Counsel from "../consult/Consult";
 import ProductPay from "./ProductPay";
 import ProductReview from "./ProductReview";
 import ProductInfo from "./ProductInfo";

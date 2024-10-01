@@ -116,10 +116,7 @@ const MyPage = () => {
                   path="info"
                   element={<MyInfo setNowPath={setNowPath} />}
                 />
-                <Route
-                  path="info/password"
-                  element={<PasswordChange setMember={setMember} />}
-                />
+                <Route path="info/password" element={<PasswordChange />} />
               </Routes>
             </div>
           </div>

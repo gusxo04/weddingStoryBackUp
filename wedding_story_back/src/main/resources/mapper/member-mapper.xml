@@ -81,4 +81,23 @@
 	<select id="selectLoginMember" resultType="member">
 		select * from member where member_no=#{memberNo}
 	</select>
+	<update id="modifyPw">
+		update member set member_pw=#{memberPw} where member_id=#{memberId}
+	</update>
+	<update id="updateMember2">
+		update member set member_name=#{memberName},member_phone=#{memberPhone},partner_name=#{partnerName},partner_id=#{partnerId} where member_id=#{memberId}
+	</update>
+	<update id="deleteMember">
+		update member set member_type=4 where member_id=#{memberId}
+	</update>
+	<select id="checkEmail" resultType="int">
+		select count(*) from member where member_email=#{memberEmail}
+	
+	<select id="selectCompanyNo" resultType="String">
+		select company_no from member where member_no=#{loginNo}
+	</select>
+	
+	<select id="selectInsertCompanyNo" resultType="String">
+		select company_no from member where member_no=#{memberNo}
+	</select>
 </mapper>

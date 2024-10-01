@@ -14,7 +14,6 @@ const ProductInfo = () => {
   const params = useParams();
   const productNo = params.productNo;
   const [product, setProduct] = useState({});
-  const [productComment, setProductComment] = useState({});
   const [loginId, setLoginId] = useRecoilState(loginIdState);
   const navigator = useNavigate();
 

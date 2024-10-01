@@ -77,7 +77,7 @@ const HeaderLink = () => {
     setLoginId("");
     setMemberType(-1);
     setMemberCode("");
-    setCompanyNo("");
+    setCompanyNo(null);
     delete axios.defaults.headers.common["Authorization"];
     window.localStorage.removeItem("refreshToken");
   };
