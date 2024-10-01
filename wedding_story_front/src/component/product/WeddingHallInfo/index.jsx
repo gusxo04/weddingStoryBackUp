@@ -4,80 +4,55 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import styles from "./WeddingHallInfo.module.css";
-import { ReviewForm } from "../components";
+import { KakaoMap, ReviewForm } from "../components";
+import { useRecoilState } from "recoil";
+import { loginIdState } from "../../utils/RecoilData";
+import ProductReview from "../ProductReview";
 
 const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
-  const boardNo = params.boardNo;
-  const [product, setProduct] = useState();
-  const [board, setBoard] = useState({});
-  //const [loginId, setLoginId] = useRecoilState();
-  const [reviews, setReviews] = useState([]);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [currentReview, setCurrentReview] = useState(null);
+  const productNo = params.productNo;
+  const [product, setProduct] = useState({});
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const [company, setCompany] = useState({ companyAddr: "" });
   const navigator = useNavigate();
-
-  const handleOpenPopup = () => {
-    setCurrentReview(null); // Reset currentReview for new review
-    setIsPopupOpen(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-    setCurrentReview(null);
-  };
-
-  const handleReviewSubmit = (reviewData) => {
-    if (currentReview) {
-      // 리뷰 수정
-      setReviews((prev) =>
-        prev.map((review) =>
-          review.id === currentReview.id ? { ...review, ...reviewData } : review
-        )
-      );
-    } else {
-      // 새 리뷰 추가
-      setReviews((prev) => [...prev, { id: Date.now(), ...reviewData }]);
-    }
-    handleClosePopup(); // Close popup after submission
-  };
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/boardNo/${boardNo}`)
+      .get(`${backServer}/product/productNo/${productNo}`)
       .then((res) => {
         console.log(res);
-        setBoard(res.data);
+        setProduct(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [boardNo, backServer]);
+  }, []);
 
   return (
     <section className={styles["product-view-wrap"]}>
       <div className={styles["product-title"]}>
-        <h3>웨딩홀 상세보기</h3>
+        <h3>{product.productName}상세보기</h3>
       </div>
       <div className={styles["product-view-content"]}>
         <div className={styles["product-view-info"]}>
           <div className={styles["product-thumbnail"]}>
             <img
               src={
-                board.boardThumb
-                  ? `${backServer}/board/thumb/${board.boardThumb}`
+                product.productThumb
+                  ? `${backServer}/product/thumb/${product.productThumb}`
                   : "/image/default_img.png"
               }
-              alt={board.boardTitle}
+              alt={product.productTitle}
             />
           </div>
           <div className={styles["product-view-preview"]}>
             <div className={styles["prduct-report"]}>
-              <Link to="/">
+              <Link to="/product/list">
                 <h5>뒤로가기/</h5>
               </Link>
-              <Link>
+              <Link to="/report">
                 <h5>신고하기</h5>
               </Link>
             </div>
@@ -85,15 +60,15 @@ const WeddingHallInfo = () => {
               <tbody>
                 <tr>
                   <th style={{ width: "20%" }}>회사명</th>
-                  <td style={{ width: "30%" }}>{board.companyName}</td>
+                  <td style={{ width: "30%" }}>{product.companyName}</td>
                 </tr>
                 <tr>
-                  <th style={{ width: "20%" }}>작성자</th>
-                  <td style={{ width: "30%" }}>{board.boardWriter}</td>
+                  <th style={{ width: "20%" }}>상품명</th>
+                  <td style={{ width: "30%" }}>{product.productName}</td>
                 </tr>
                 <tr>
                   <th style={{ width: "20%" }}>가격</th>
-                  <td colSpan={4}>{board.productPrice}원</td>
+                  <td colSpan={4}>{product.productPrice}원</td>
                 </tr>
               </tbody>
             </table>
@@ -101,65 +76,83 @@ const WeddingHallInfo = () => {
         </div>
         <div className={styles["product-btn-zone"]}>
           <button type="button" className={styles["btn"]}>
-            <Link to="/counseling/counsel">상담하기</Link>
+            <Link to="/consult/consult">상담하기</Link>
           </button>
           <button type="button" className={styles["btn"]}>
-            <Link to="/product/weddingHall">예약하기</Link>
+            <Link to="/product/pay">결제하기</Link>
           </button>
         </div>
         <div className={styles["product-content-wrap"]}>
           <h3>상세보기</h3>
-          {board.boardContent ? (
-            <Viewer initialValue={board.boardContent} />
+          {product.productContent ? (
+            <Viewer initialValue={product.productContent} />
           ) : (
-            ""
+            "상세보기가 없습니다."
           )}
         </div>
         <br />
-        <div className={styles["product-reviews"]}>
-          <h3>리뷰</h3>
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
-              <div key={review.id} className={styles["review-item"]}>
-                <div className={styles["review-rating"]}>
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <FaStar
-                      key={index}
-                      style={{
-                        color: index < review.rating ? "gold" : "gray",
-                        fontSize: "24px",
-                      }}
-                    />
-                  ))}
-                  <span>{` ${review.rating} / 5`}</span>
-                </div>
-                <div className={styles["review-text"]}>{review.review}</div>
-              </div>
-            ))
-          ) : (
-            <p>리뷰가 없습니다.</p>
-          )}
-          <ReviewForm
-            isOpen={isPopupOpen}
-            onClose={handleClosePopup}
-            onSubmit={handleReviewSubmit}
-            initialData={currentReview}
-          />
+        <div>
+          <ProductReview />
         </div>
         <br />
         <div className={styles["product-faq"]}>
-          <h3>FAQ</h3>
+          <h3>QnA</h3>
+          {product.productContent ? (
+            <Viewer initialValue={product.productContent} />
+          ) : (
+            "QnA가 없습니다."
+          )}
         </div>
         <br />
         <div className={styles["product-map-view"]}>
-          {/* 회사 위치를 표시하는 지도 구성 요소가 있다고 가정합니다. */}
           <h3>회사 위치</h3>
+          {company.companyAddr ? (
+            <Viewer initialValue={company.companyAddr} />
+          ) : (
+            "회사위치 뷰"
+          )}
           {/* 지도 구성 요소에 대한 자리 표시자입니다. 여기에 지도 API를 통합하세요 */}
-          {/* <MapComponent location={board.companyLocation} /> */}
+          {/* <MapComponent location={product.companyLocation} /> */}
+          <KakaoMap />
         </div>
       </div>
     </section>
   );
 };
 
+//첨부파일
+const FileItem = ({ file }) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
+  const filedown = () => {
+    axios
+      .get(`${backServer}/product/file/${file.boardFileNo}`, {
+        responseType: "blob",
+      })
+      .then((res) => {
+        const blob = new Blob([res.data]);
+        const fileObjectUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = fileObjectUrl;
+        link.style.display = "none";
+        link.download = file.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(fileObjectUrl);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div className={styles["board-file"]}>
+      <span className="material-icons" onClick={filedown}>
+        file_download
+      </span>
+      <span className={styles["file-name"]}>{file.filename}</span>
+    </div>
+  );
+};
 export default WeddingHallInfo;

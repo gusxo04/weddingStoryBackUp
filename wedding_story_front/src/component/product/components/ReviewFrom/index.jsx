@@ -96,7 +96,7 @@ const ReviewForm = ({ isOpen, onClose, onSubmit, initialData }) => {
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
               required
-              style={{ width: "300px", height: "30px" }}
+              style={{ width: "30px", height: "30px" }}
             />
           </div>
           <div className="title">

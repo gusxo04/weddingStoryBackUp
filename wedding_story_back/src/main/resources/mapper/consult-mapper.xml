@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.iei.consult.model.dao.ConsultDao">
 		
 		<insert id="insertConsult">
-			insert into consult values(#{memberName},#{memberPhone},#{consultDate},#{consultTime},#{reservation},#{consultTitle},#{consultWrite})
+			insert into consult values(consult_seq.nextval,#{memberNo},#{productNo},#{consultDate},#{consultTime},#{reservation},#{consultTitle},#{consultWrite})
 		</insert>
 		
 </mapper>

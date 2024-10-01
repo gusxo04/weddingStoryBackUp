@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Counsel from "../consult/Consult";
 import ProductPay from "./ProductPay";
 import ProductReview from "./ProductReview";
 import ProductInfo from "./ProductInfo";
@@ -7,6 +6,7 @@ import ProductWeddingHall from "./ProductWeddingHall";
 import WeddingHallList from "./WeddingHallList";
 import WeddingHallInfo from "./WeddingHallInfo";
 import ProductAllList from "./ProductAllList";
+import Consult from "../consult/Consult";
 const ProductMain = () => {
   return (
     <Routes>
@@ -16,7 +16,7 @@ const ProductMain = () => {
       <Route path="weddingHall" element={<ProductWeddingHall />} />
       <Route path="hallList" element={<WeddingHallList />} />
       <Route path="hallInfo" element={<WeddingHallInfo />} />
-      <Route path="counsel" element={<Counsel />} />
+      <Route path="consult" element={<Consult />} />
       <Route path="pay" element={<ProductPay />} />
     </Routes>
   );

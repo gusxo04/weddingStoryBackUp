@@ -21,6 +21,10 @@ public interface ProductDao {
 
 	ProductDTO selectOneProduct(int productNo);
 
+	ProductDTO selectProductName(int productNo);
+
+	List getProductHallList(PageInfo pi, String category);
+
 
 
 }
