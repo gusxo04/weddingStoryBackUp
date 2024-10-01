@@ -29,7 +29,7 @@ const memberCodeState = atom({
 //로그인한 업체 코드을 저장하는 저장소
 const companyNoState = atom({
   key: "companyNoState",
-  default: null,
+  default: "",
 });
 //atom으로 생성한 데이터로 처리하는 함수
 const isLoginState = selector({

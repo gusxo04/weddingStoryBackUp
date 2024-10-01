@@ -1,8 +1,11 @@
 package kr.co.iei.company.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +18,8 @@ import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.product.model.dao.ProductDao;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
+import kr.co.iei.util.PageInfo;
+import kr.co.iei.util.PageUtil;
 
 @Service
 public class CompanyService {
@@ -26,6 +31,9 @@ public class CompanyService {
 	
 	@Autowired
 	private ProductDao productDao;
+	
+	@Autowired
+	private PageUtil pageUtil; 
 
 	//업체 등록 
 	@Transactional
@@ -95,6 +103,33 @@ public class CompanyService {
 	public String selectCategory(String companyNo) {
 		String result = companyDao.selectCategory(companyNo);
 		return result;
+	}
+	
+	//페이징 리스트 list , 페이지 목록 생성 
+	public Map productList(int reqPage, String companyNo) {
+		/*게시물 조회 및 페이징에 필요한 데이터를 모두 취합*/
+		int numPerPage = 10; //한 페이지당 게시물 수
+		int pageNaviSize = 5; //페이지 네비 길이
+		int totalPage = productDao.TotalCount(); //게시물 갯수 count(*) 조회
+		 
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);//pageUtil을 사용하여 페이지 갯수 생성
+		System.out.println("service pi : " + pi);
+		List list = productDao.selectProductList(companyNo,pi);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		return map;
+	}
+	
+	//
+	public Map selectOneProduct(int productNo) {
+		ProductDTO product = productDao.selectProduct(productNo);
+		List file = productDao.selectProductFile(productNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("product", product);
+		map.put("thumbsFile", file);
+		return map;
 	}
 	
 

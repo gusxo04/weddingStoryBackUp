@@ -58,7 +58,7 @@ function App() {
           setLoginId("");
           setMemberType(-1);
           setMemberCode("");
-          setCompanyNo(null);
+          setCompanyNo("");
           delete axios.defaults.headers.common["Authorization"];
           window.localStorage.removeItem("refreshToken");
         });
