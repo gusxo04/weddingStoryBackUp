@@ -481,9 +481,9 @@ const Overlay = (props) => {
             ></textarea>
           </div>
         </div>
-      </div>
-      <div className="overlay-content-bottom">
-        <button onClick={() => postRefuse()}>작성</button>
+        <div className="overlay-content-bottom">
+          <button onClick={() => postRefuse()}>작성</button>
+        </div>
       </div>
     </div>
   );
