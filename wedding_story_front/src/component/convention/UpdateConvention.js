@@ -43,7 +43,7 @@ const UpdateConvention = () => {
   useEffect(() => {
     axios.get(`${backServer}/convention/`+conventionNo)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       setImgStyle(res.data.imgStyle);
       setConventionTitle(res.data.conventionTitle);
       setConventionContent(res.data.conventionContent);

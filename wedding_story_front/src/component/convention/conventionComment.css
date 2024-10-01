@@ -135,7 +135,7 @@
   /* overflow-y: hidden; */
   /* overflow-x: hidden; */
 }
-@media (max-width: 1200px){
+/* @media (max-width: 1200px){
   .convention-comment-list-wrap{
     font-size: 15px;
   }
@@ -144,7 +144,7 @@
   .convention-comment-list-wrap{
     font-size: 12px;
   }
-}
+} */
 
 .convention-comment{
   width: 100%;
@@ -195,8 +195,8 @@
 
 .convention-comment>.convention-comment-content-zone-container{
   /* background-color: #bbb; */
-  --lineHeight : 20px;
-  line-height: var(--lineHeight);
+  /* --lineHeight : 20px; */
+  /* line-height: var(--lineHeight); */
   /* height: calc(var(--lineHeight) * 5); */
   width: 100%;
   overflow-y: hidden;
@@ -374,8 +374,8 @@
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical; */
   
-  --lineHeight : 20px;
-  line-height: var(--lineHeight);
+  /* --lineHeight : 20px; */
+  /* line-height: var(--lineHeight); */
   /* height: calc(var(--lineHeight) * 5); */
   word-wrap: break-word;
   word-break: break-all;
@@ -494,7 +494,7 @@
 /* 200lines */
 /* 댓글 더보기 */
 .long-convention-comment{
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 .long-convention-comment>span{
   color: #6c6c6c ;

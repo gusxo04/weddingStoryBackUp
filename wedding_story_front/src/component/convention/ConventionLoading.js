@@ -10,10 +10,8 @@ const ConventionLoading = (props) => {
     loadingTime,
   } = props;
 
-  console.log(loadingTime);
   loadingTimer = loadingTime ?? 1500;
 
-  console.log("timer",loadingTimer);
 
   const [loading, setLoading] = useState(true);
   

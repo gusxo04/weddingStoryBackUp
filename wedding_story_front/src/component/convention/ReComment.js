@@ -164,19 +164,44 @@ const ReComment = (props) => {
     reCommentRef.current.style.display = "none";
   }
 
-  const reCommentLineHeight = 20;
+  const reCommentLineHeight = 24;
 
   const [isOverFlowing, setIsOverFlowing] = useState(false);
+  let width = window.innerWidth;
+  const [heightType, setHeightType] = useState(120);
   
   useEffect(() => {
     setIsOverFlowing(false);
-    if(rc.conventionCommentContent.split("\n").length > 5 || (contentContainerRef.current && contentContainerRef.current.offsetHeight > 100)){
+    if(contentContainerRef.current && contentContainerRef.current.scrollHeight > heightType){
       setIsOverFlowing(true);
       setLineType(false);
-      contentContainerRef.current.style.height = reCommentLineHeight*5 +"px";
+      contentContainerRef.current.style.height = heightType;
     }
-  }, [rc]);
+  }, [rc, heightType]);
+
+  const handleResize = () => {
+    // setWidth(window.innerWidth);
+    width = window.innerWidth;
+    // console.log(width);
+    //사용자 너비가 1200, 768 , 480 으로 될때마다 heightType 변경
+    if(width > 1200) setHeightType(120);
+    else if(width > 768 && width <= 1200) setHeightType(105);
+    else if(width > 480 && width <= 768) setHeightType(110);
+    else if(width < 480) setHeightType(95);
+    
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
+  useEffect(() => {
+    setChangedComment(!changedComment);
+  }, [heightType]);
 
   return (
     <>
@@ -220,7 +245,7 @@ const ReComment = (props) => {
         {isOverFlowing ? 
         <>
 
-          <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : reCommentLineHeight*5 +"px"}}>
+          <div className="convention-reComment-content-zone-container" ref={contentContainerRef} style={{height : heightType}}>
             <span ref={contentRef} id="white-space">{rc.conventionCommentContent}</span>
           </div>
 
@@ -242,7 +267,9 @@ const ReComment = (props) => {
           <div className="long-convention-reComment" ref={longContentRef}>
             <span className="cursor-p" ref={lineTypeRef} onClick={() => {
               if(lineType){
-                contentContainerRef.current.style.height = reCommentLineHeight*5 +"px";
+                contentContainerRef.current.style.height = heightType+"px";
+                console.log(heightType);
+                console.log("sdasdasdasda");
               }
               else{
                 contentContainerRef.current.style.height = "auto"

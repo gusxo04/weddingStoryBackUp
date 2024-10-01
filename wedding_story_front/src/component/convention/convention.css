@@ -510,7 +510,11 @@
     width: 100%;
     /* min-height: 700px; */
     max-height: 1200px;
-    /* height: 700px; */
+    
+    /* width: 100vw; */
+    /* height: 900px; */
+    /* position: absolute; */
+    /* right: -115px; */
 }
 #back-image{
     width: 100%;

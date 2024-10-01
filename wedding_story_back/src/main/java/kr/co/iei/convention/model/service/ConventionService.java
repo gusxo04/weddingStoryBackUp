@@ -28,6 +28,7 @@ import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
+import kr.co.iei.util.EmailSender;
 
 @Service
 public class ConventionService {
@@ -37,6 +38,9 @@ public class ConventionService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+	private EmailSender emailSender;
 
 
     private final String restApi = "0054761064210788";
@@ -200,6 +204,16 @@ public class ConventionService {
         return result == 2;
 	}
 
+    @Transactional
+    public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
+        int result = conventionDao.updateSeatInfo(conventionSeat);
+        return result == 1;
+    }
+
+	public CompanyPayDTO getPayment(String companyNo, int conventionNo) {
+        return conventionDao.selectCompanyPayment(companyNo, conventionNo);
+	}
+
 
 
 
@@ -274,16 +288,9 @@ public class ConventionService {
         return code;
     }
 
-    @Transactional
-    public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
-        int result = conventionDao.updateSeatInfo(conventionSeat);
-        return result == 1;
-    }
 
-	public CompanyPayDTO getPayment(String companyNo, int conventionNo) {
-        return conventionDao.selectCompanyPayment(companyNo, conventionNo);
-	}
-
+    //이메일 보내는 로직
+    
 
 
 

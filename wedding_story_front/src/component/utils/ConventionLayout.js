@@ -55,7 +55,7 @@ const ConventionLayout = (props) => {
     // 나중에 업체인지 조건걸기
     axios.get(`${backServer}/convention/layout`)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       setASeat(res.data.line0);
       setBSeat(res.data.line1);
       setCSeat(res.data.line2);
@@ -477,7 +477,6 @@ const SeatAdminAlert = (props) => {
     setChangedSeatInfo,
   } = props;
 
-  console.log(seatInfo);
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
@@ -519,7 +518,7 @@ const SeatAdminAlert = (props) => {
 
     axios.patch(`${backServer}/convention/update/seatInfo`, form)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if(res.data){
         setSeatAdminAlert(false);
         setChangedSeatInfo(!changedSeatInfo);

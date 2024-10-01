@@ -40,7 +40,7 @@ const ToastEditor = (props) => {
 
       : 
       <Editor ref={editorRef} initialValue={boardContent} initialEditType="wysiwyg" 
-      language="ko-KR" height="600px" onChange={changeValue} 
+      language="ko-KR" height="600px" onChange={changeValue}
       />
       }
       {/* 밑에 있는 Editor 컴포넌트 props 수정해서 쓰시면 됩니다 위에꺼는 박람회 용이라서 조금 달라요 */}

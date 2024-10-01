@@ -39,7 +39,6 @@ const ConventionMain = () => {
   const [showType, setShowType] = useState(true);
   const [isPayment, setIsPayment] = useState(true);
 
-
   // const [payment, setPayment] = useState({
   //   // merchantUid : "",
   //   // payNo : 0,
