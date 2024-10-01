@@ -32,6 +32,8 @@ public class WebConfig implements WebMvcConfigurer{
         registry.addResourceHandler("/product/image/**")            
         .addResourceLocations("file:///"+root+"/product/image/");
 		
+        registry.addResourceHandler("/product/editor/**")            
+        .addResourceLocations("file:///"+root+"/product/editor/");
 	}
 	
 	@Bean

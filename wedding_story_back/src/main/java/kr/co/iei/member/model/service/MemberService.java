@@ -96,8 +96,8 @@ public class MemberService {
 	public LoginMemberDTO refresh(String token) {
 		try {
 			LoginMemberDTO loginMember = jwtUtil.checkToken(token);
-			System.out.println(loginMember);
-			String companyNo = memberDao.selectInsertCompanyNo(loginMember.getMemberNo()); //
+			String companyNo = memberDao.selectInsertCompanyNo(loginMember.getMemberNo()); 
+			/* 업체등록을 누른시점에서 리프레쉬 토큰은 기존에 companyNo == null 인걸로 재생성하기에 companyNo가 발급 된 후 조회를 다시해서 리프레쉬 토큰 발행 */
 			loginMember.setCompanyNo(companyNo);
 			String accessToken = jwtUtil.createAccessToken(loginMember.getMemberNo(), loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
 			String refreshToken = jwtUtil.createRefreshToken(loginMember.getMemberNo(),loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
