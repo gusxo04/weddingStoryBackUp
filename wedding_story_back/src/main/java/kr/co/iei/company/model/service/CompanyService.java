@@ -32,7 +32,7 @@ public class CompanyService {
 	public String insertCompany(CompanyDTO company, KeyWordDTO keyWord, MemberDTO member) {
 		int lastCompanyNo = memberDao.checkLastCompanyNo();
 		String companyNo = "";
-		
+		//업체번호 최신꺼 조회후 다음번호 생성 
 		if(lastCompanyNo<9) {
 			companyNo = "C000"+(lastCompanyNo+1);
 			company.setCompanyNo(companyNo);
@@ -46,9 +46,8 @@ public class CompanyService {
 			companyNo = "C"+(lastCompanyNo+1);
 			company.setCompanyNo(companyNo);
 		}
-		System.out.println("service"+company);
 		int companyResult = companyDao.insertCompany(company);
-		
+		//생성한 업체번호 키워드에 등록
 		keyWord.setCompanyNo(company.getCompanyNo());
 		
 		int keyWordResult = companyDao.insertKeyWord(keyWord);
@@ -79,6 +78,7 @@ public class CompanyService {
 		}
 		return resultProduct;
 	}
+	//업체 정보 수정
 	@Transactional
 	public int updateCompanyInfo(CompanyDTO company, KeyWordDTO keyWord) {
 		int result1 = companyDao.updateCompanyInfo(company);
@@ -86,10 +86,17 @@ public class CompanyService {
 		int totalResult= result1 + result2;
 		return totalResult;
 	}
-	public String selectCompanyNo(int loginNo) {
-		String result = memberDao.selectCompanyNo(loginNo);
+	
+//	public String selectCompanyNo(int loginNo) {
+//		String result = memberDao.selectCompanyNo(loginNo);
+//		return result;
+//	}
+	//상품등록 페이지 이동시 업체 카테고리 조회
+	public String selectCategory(String companyNo) {
+		String result = companyDao.selectCategory(companyNo);
 		return result;
 	}
+	
 
 
 	

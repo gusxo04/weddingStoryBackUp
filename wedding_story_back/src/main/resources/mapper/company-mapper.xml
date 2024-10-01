@@ -42,6 +42,7 @@
 	<update id="deleteCom">
 		update company set company_state=2 where company_no=#{companyNo}
 	</update>
+	
 	<select id="selectContainCompany">
 		select * from company where company_no=#{companyNo}
 	</select>
@@ -66,6 +67,10 @@
 	<update id="updateCompanyKeyWord">
 		update company_keyword set keyword = #{keyWord} where company_no =#{companyNo}
 	</update>
+	
+	<select id="selectCategory" resultType="String">
+		select company_category from company where company_no = #{companyNo}
+	</select>
 </mapper>
 
   
