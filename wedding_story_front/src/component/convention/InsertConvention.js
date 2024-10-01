@@ -201,7 +201,7 @@ const InsertConvention = () => {
           // conventionTime={conventionTime} setConventionTime={setConventionTime}
           showImage={showImage} setShowImage={setShowImage}
           titleRef={titleRef} contentRef={contentRef} timeRef={timeRef} dateRef={dateRef}
-          limitRef={limitRef} priceRef={priceRef} imgRef={imgRef} writeType={1}
+          limitRef={limitRef} priceRef={priceRef} imgRef={imgRef} writeType={1} permission={0}
           /> 
 
           <div className="write-btn-zone">

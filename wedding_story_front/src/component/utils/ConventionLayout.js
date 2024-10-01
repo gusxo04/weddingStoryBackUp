@@ -6,6 +6,8 @@ import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
 import { cancelPay } from "../convention/conventionRefund";
+import PersonalPolicy from "./PersonalPolicy";
+import ConventionLoading from "../convention/ConventionLoading";
 
 const ConventionLayout = (props) => {
 
@@ -19,9 +21,13 @@ const ConventionLayout = (props) => {
     isPayment,
     setIsPayment,
     buyable,
+    startDate,
     // buyable이 true면 부스 구매 가능 
   } = props;
   
+
+
+
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [aSeat, setASeat] = useState([]);
@@ -65,8 +71,6 @@ const ConventionLayout = (props) => {
       clickedSeat(seat);
       // 어드민은 문제 있는 좌석도 클릭 가능
     }
-
-    
   }
 
   // main 에서는 업체 말곤 다 permission이 1임 
@@ -96,6 +100,7 @@ const ConventionLayout = (props) => {
         confirmButtonText : "확인",
         confirmButtonColor : "var(--main1)"
       })
+      setSeatCompanyAlert(false);
       return;
     }
     
@@ -104,6 +109,7 @@ const ConventionLayout = (props) => {
       checkSpanRef.current.style.color = "rgb(246, 67, 67)";
       return;
     }
+    checkSpanRef.current.style.color = "black";
     const date = new Date();
     const dateString = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()+""+date.getHours()+""+date.getMinutes()+""+date.getSeconds();
 
@@ -113,11 +119,6 @@ const ConventionLayout = (props) => {
       merchant_uid: dateString,
       name: "박람회 부스",
       amount: seatInfo.conventionSeatPrice,
-      // buyer_email: "test@portone.io",
-      // buyer_name: "구매자 이름",
-      // buyer_tel: "010-1234-5678",
-      // buyer_addr: "서울특별시 강남구 신사동",
-      // buyer_postcode: "123-456"
     }, rsp => {
       if (rsp.success) {
         // 결제 성공 시 로직
@@ -134,7 +135,6 @@ const ConventionLayout = (props) => {
         // 업체 구매이력 테이블
         form.append("merchantUid", rsp.merchant_uid);
         form.append("payPrice", seatInfo.conventionSeatPrice);
-        
 
         axios.post(`${backServer}/convention/buy/seat`, form)
         .then((res) => {
@@ -173,6 +173,11 @@ const ConventionLayout = (props) => {
   }
 
   const seatInfoList = (seat) => {
+    // console.log(seat);
+    if(permission === 0) {
+      clickedSeat(seat);
+      return;
+    }
     if(seat.companyNo && loginCompanyNoState) {
       // 만약 이미 누가 산 부스라면~
       if(loginCompanyNoState === seat.companyNo && buyable){
@@ -188,7 +193,7 @@ const ConventionLayout = (props) => {
     else{
       // 아직 구매 안 한 부스라면
       // 구매 안 한 건데 이미 박람회 시작했으면 업체 없다고 띄워야 함 (부스 구매 불가능)
-      if(!buyable) {
+      if(!buyable && seat.seatStatus === 0) {
         setSeatInfo(seat);
         setSeatMemberAlert(true);
         return;
@@ -203,10 +208,6 @@ const ConventionLayout = (props) => {
     setSeatCompanyAlert(true);
   }
 
-  console.log("10월 1일날 테스트 할 거 buyable이 false고 다른거 구매 안 되면 됨");
-  console.log("buyable : ",buyable);
-  
-// 필요한 거 -> 업체가 산 좌석이 어딘지를 알아야 하고 , 문제가 있는 좌석은 문제가 있음을 알 수 있게 해야 함
   return (
     <>
       <div className="convention-explain-wrap">
@@ -233,38 +234,9 @@ const ConventionLayout = (props) => {
   {/* 그리고 onclick역시 problem */}
           <div className="layout layout-a">
             {aSeat.map((seat,index) => {
-              // const seatInfo = () => {
-              //   purchaseSeat(seat);
-              // }
-              // const seatProblem = () => {
-              //   console.log("문제가 있는 상품");
-              // }
               return (
                 <div key={"seat-"+index} onClick={() => {
-                  // seat.seatStatus === 0 ? purchaseSeat(seat) : seatProblem()
                   seatInfoList(seat);
-                  // if(seat.companyNo && loginCompanyNoState) {
-                  //   // 만약 이미 누가 산 부스라면~
-                  //   if(loginCompanyNoState === seat.companyNo && buyable){
-                  //     // 근데 그게 내가 산거라면
-                  //     clickedRefundSeat(seat);
-                  //   }
-                  //   else{
-                  //     // 다른 사람꺼라면
-                  //     setSeatInfo(seat);
-                  //     setSeatMemberAlert(true);
-                  //   }
-                  // }
-                  // else{
-                  //   // 아직 구매 안 한 부스라면
-                  //   // 구매 안 한 건데 이미 박람회 시작했으면 업체 없다고 띄워야 함 (부스 구매 불가능)
-                  //   if(!buyable) {
-                  //     setSeatInfo(seat);
-                  //     setSeatMemberAlert(true);
-                  //     return;
-                  //   }
-                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  // }
                 }} className={"seat seatA" +" seatA"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -275,24 +247,6 @@ const ConventionLayout = (props) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
                   seatInfoList(seat);
-                  // if(seat.companyNo && loginCompanyNoState){
-                  //   if(loginCompanyNoState === seat.companyNo && buyable){
-                  //     clickedRefundSeat(seat);
-                  //   }
-                  //   else{
-                  //     setSeatInfo(seat);
-                  //     setSeatMemberAlert(true);
-                  //   }
-                  // }
-                  // else{
-
-                  //   if(!buyable) {
-                  //     setSeatInfo(seat);
-                  //     setSeatMemberAlert(true);
-                  //     return;
-                  //   }
-                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  // }
                 }} className={"seat seatB" +" seatB"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -303,23 +257,6 @@ const ConventionLayout = (props) => {
               return (
                 <div key={"seat-"+index} onClick={() => {
                   seatInfoList(seat);
-                  // if(seat.companyNo && loginCompanyNoState){
-                  //   if(loginCompanyNoState === seat.companyNo && buyable){
-                  //     clickedRefundSeat(seat);
-                  //   }
-                  //   else{
-                  //     setSeatInfo(seat);
-                  //     setSeatMemberAlert(true);
-                  //   }
-                  // }
-                  // else{
-                  //   if(!buyable) {
-                  //     setSeatInfo(seat);
-                  //     setSeatMemberAlert(true);
-                  //     return;
-                  //   }
-                  //   seat.seatStatus === 0 ? clickedSeat(seat) : seatProblem(seat)
-                  // }
                 }} className={"seat seatC" +" seatC"+index + " seat"+index + (seat.seatStatus === 0 ? "" : " problem") + (seat.companyNo ? " company-exist" : "")} >{seat.seatCode}</div>
               )
             })}
@@ -334,6 +271,7 @@ const ConventionLayout = (props) => {
           checkSpanRef={checkSpanRef} type={type} payment={payment}
           isPayment={isPayment} setIsPayment={setIsPayment}
           setChangedSeatInfo={setChangedSeatInfo} changedSeatInfo={changedSeatInfo}
+          convention={convention} startDate={startDate}
           />
 
           :
@@ -375,13 +313,24 @@ const SeatCompanyAlert = (props) => {
     setIsPayment,
     changedSeatInfo,
     setChangedSeatInfo,
+    convention,
+    startDate,
   } = props;
 
   // console.log(seatInfo);
   const [loginCompanyNoState, setLoginCompanyNoState] = useRecoilState(companyNoState);
   const [result, setResult] = useState(-1);
 
+  const [showType, setShowType] = useState(true);
+  const [checkable, setCheckable] = useState(false);
+  const personalRef = useRef(null);
+  const refundRef = useRef(null);
+
+  const [refundStatus, setRefundStatus] = useState(true);
+  
+
   const closeSeatAlert = (e) => {
+    if(!refundStatus) return;
     if(e.target.className === "convention-seat-alert-wrap"){
       setSeatCompanyAlert(false)
     }
@@ -392,7 +341,11 @@ const SeatCompanyAlert = (props) => {
     
   }
 
+
+
   useEffect(() => {
+    if(result === -1) return;
+    console.log("sdsdsd");
     if(result === 0){
       Swal.fire({
         title : "박람회 환불",
@@ -400,7 +353,6 @@ const SeatCompanyAlert = (props) => {
         confirmButtonColor : "var(--main1)",
         confirmButtonText : "확인"
       })
-      setSeatCompanyAlert(false);
     }
     else if(result === 1){
       setIsPayment(!isPayment);
@@ -411,11 +363,21 @@ const SeatCompanyAlert = (props) => {
         confirmButtonColor : "var(--main1)",
         confirmButtonText : "확인"
       })
-      setSeatCompanyAlert(false);
     }
-    
+    setSeatCompanyAlert(false);
+    setRefundStatus(true);
+    refundRef.current.textContent = `${refundMonth}월 ${refundDay}일 부터는 환불이 불가능합니다.`
   }, [result]);
-  
+
+
+  // 2일전 계산
+  const conventionStartDate = new Date(convention.conventionStart);
+  // console.log("startDate : ",conventionStartDate);
+  const refundDate = new Date(conventionStartDate - 2  * 24 * 60 * 60 * 1000);
+  // console.log("refundDate : ",refundDate);
+  const refundMonth = refundDate.getMonth()+1;
+  const refundDay = refundDate.getDate();
+
 
   return (
     <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
@@ -425,35 +387,79 @@ const SeatCompanyAlert = (props) => {
             <span>{type === 0 ? "박람회 부스 구매" : "박람회 부스 환불"}</span>
           </div>
 
-          <div className="convention-seat-info-content">
-            <div className="convention-seat-info-code df-basic">
-              <span>좌석코드 : {seatInfo.seatCode}</span>
-            </div>
-            <div className="convention-seat-info-price df-basic">
-              <span>가격 : <span id="red-color">{type === 0 ? seatInfo.conventionSeatPrice : payment.payPrice}</span>원</span>
-              {/* 처음에 산 가격으로 바꿔줘야함 -> 처음 산가격도 조회해야 함 */}
-            </div>
-          </div>
 
-          <div className="convention-seat-info-personal df-basic">
-            {type === 0 ? 
-            <>
-              <label htmlFor="personal-check" className="cursor-p" ref={checkSpanRef} >이용약관및 개인정보 수집/이용 동의</label>
-              <input type="checkbox" id="personal-check" ref={checkedRef} />
-            </>
-            :
-            <span>박람회 개최 3일전부터는 환불이 불가능합니다.</span>
-            }
-          </div>
+            <div className="convention-seat-info-content">
+              <div className="convention-seat-info-code df-basic">
+                <span>좌석코드 : {seatInfo.seatCode}</span>
+              </div>
+              <div className="convention-seat-info-price df-basic">
+                <span>가격 : <span id="red-color">{type === 0 ? seatInfo.conventionSeatPrice : payment.payPrice}</span>원</span>
+                {/* 처음에 산 가격으로 바꿔줘야함 -> 처음 산가격도 조회해야 함 */}
+              </div>
+            </div>
+
+            <div className="convention-seat-info-personal df-basic">
+              {type === 0 ? 
+              <>
+                <span className="material-icons cursor-p" id="convention-personal-info" ref={personalRef} onClick={() => {
+                  personalRef.current.style.color = "black"
+                  setShowType(!showType);
+                  setCheckable(true);
+                }}>info</span>
+                <label htmlFor="personal-check" className="cursor-p" ref={checkSpanRef} >이용약관및 개인정보 수집/이용 동의</label>
+                <input type="checkbox" id="personal-check" ref={checkedRef} onClick={() => {
+                  if(checkable) return;
+                  checkedRef.current.checked = false;
+                  personalRef.current.style.color = "var(--red2)"
+                }}/>
+              </>
+              :
+              // <span ref={refundRef}>박람회 개최 3일전부터는 환불이 불가능합니다.</span>
+              <span ref={refundRef}>{refundMonth}월 {refundDay}일 부터는 환불이 불가능합니다.</span>
+              }
+            </div>
+
+            <div className="company-personal-container" id={showType ? "no-active-convention" : ""}>
+              <div className="company-personal">
+                <PersonalPolicy />
+                <button className="main-btn" id="convention-personal-btn" onClick={() => {
+                  setShowType(!showType);
+                }}>확인하였습니다</button>
+              </div>
+            </div>
+
           
           <div className="convention-seat-info-btn df-basic">
+            <button onClick={() => {
+              setSeatCompanyAlert(false);
+            }}>취소</button>
             {type === 0 ? 
+            // showType ?
             <button onClick={purchaseSeat} className={payment.merchantUid ? "cant-buy" : ""} >구매하기</button>
             :
+            // <button onClick={() => {
+            //   setShowType(!showType);
+            // }}>결제창으로</button>
+            // :
             // <button onClick={refundSeat}>환불하기</button>
-            <button onClick={refundSeat}>환불하기</button>
+            <button id={refundStatus ? "" : "refunding"} className={startDate < 3 ? "refunding" : ""} onClick={() => {
+              if(startDate < 3) return
+              if(!refundStatus) return;
+              setRefundStatus(false);
+              refundSeat()
+              refundRef.current.textContent = "환불에는 다소 시간이 소요될 수 있습니다."
+            }}>환불하기</button>
             }
           </div>
+
+          {refundStatus ? 
+          ""
+          :
+          <div id="convention-loading">
+            <ConventionLoading loadingTime={0} />
+          </div>
+          }
+
           
         </div>
       </div>
@@ -623,7 +629,7 @@ const SeatMemberAlert = (props) => {
     }
   }
 
-  console.log(seatInfo);
+  // console.log(seatInfo);
 
   return (
     <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>

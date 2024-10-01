@@ -216,7 +216,7 @@ const BuyTicket = (props) => {
         </div>
 
         <div className="convention-personal-info-wrap">
-          <span className="material-icons" ref={checkRef} id="convention-personal-info" onClick={() => {
+          <span className="material-icons cursor-p" ref={checkRef} id="convention-personal-info" onClick={() => {
             checkRef.current.style.color = "black";
             setShowType(!showType);
             setCheckable(true);

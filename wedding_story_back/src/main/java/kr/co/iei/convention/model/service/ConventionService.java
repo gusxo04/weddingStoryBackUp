@@ -137,6 +137,12 @@ public class ConventionService {
     @Transactional
     public Boolean refundPayment(RefundRequest request) {
         String accessToken = getAccessToken();
+        try {
+            Thread.sleep(2000);
+            // 2초 지연시켜서 환불이 바로 가능하도록 했음
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         String code = cancelPayment(accessToken, request);
         int result = -2;
         if(code.equals("0")){
