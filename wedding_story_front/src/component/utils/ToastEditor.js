@@ -42,15 +42,9 @@ const ToastEditor = (props) => {
     <div className="editor-wrap">
       {type === 1 ? (
         writeType === 1 || (writeType === 2 && boardContent !== "") ? (
-          <Editor
-            ref={editorRef}
-            initialValue={boardContent}
-            initialEditType="wysiwyg"
-            language="ko-KR"
-            height="600px"
-            onChange={changeValue}
-            toolbarItems={toolbarItems}
-            autofocus={false}
+          <Editor ref={editorRef} initialValue={boardContent} initialEditType="wysiwyg"
+            language="ko-KR" height="600px" onChange={changeValue} 
+            toolbarItems={toolbarItems} autofocus={false}
           />
         ) : (
           ""

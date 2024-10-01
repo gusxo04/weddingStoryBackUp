@@ -345,7 +345,6 @@ const SeatCompanyAlert = (props) => {
 
   useEffect(() => {
     if(result === -1) return;
-    console.log("sdsdsd");
     if(result === 0){
       Swal.fire({
         title : "박람회 환불",

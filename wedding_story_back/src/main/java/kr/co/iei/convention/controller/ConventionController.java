@@ -49,9 +49,6 @@ public class ConventionController {
     @Value("${file.root}")
     public String root;
 
-	@Autowired
-	private EmailSender emailSender;
-
     @GetMapping
     public ResponseEntity<Map> conventionMain() {
         LocalDate date = LocalDate.now();
