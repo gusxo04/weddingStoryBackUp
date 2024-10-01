@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { companyNoState } from "../utils/RecoilData";
 
-const CompanyProduct = () => {
+const CompanyProductInsert = () => {
   //   const [productName, setProductName] = useState("");
   //   const [productImg, setProductImg] = useState("");
   //   const [productContent, setProductContent] = useState("");
@@ -60,6 +60,7 @@ const CompanyProduct = () => {
       form.append("productName", productName);
       form.append("productPrice", productPrice);
       form.append("productContent", productContent);
+      form.append("companyCategory", companyCategory);
       form.append("thumbFile", productImg);
       if (coronation !== "" && diningRoom !== "" && numberPeople !== "") {
         form.append("coronation", coronation);
@@ -130,4 +131,4 @@ const CompanyProduct = () => {
     </div>
   );
 };
-export default CompanyProduct;
+export default CompanyProductInsert;

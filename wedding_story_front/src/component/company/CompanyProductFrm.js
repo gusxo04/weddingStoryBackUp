@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ToastEditor from "../utils/ToastEditor";
+import { useLocation } from "react-router-dom";
 
 const CompanyProductFrm = (props) => {
   const productName = props.productName;
@@ -24,6 +25,10 @@ const CompanyProductFrm = (props) => {
   const imageRef = useRef();
   /*img = 대표사진 1장  => productImg("")*/
   /*thumbnails = 상품 사진 (최대 10장) => productThumbs[]*/
+  const location = useLocation();
+  const url = location.pathname;
+  console.log(url);
+
   const changeImg = (e) => {
     const files = e.currentTarget.files;
     if (files.length !== 0 && files[0] !== 0) {
@@ -89,7 +94,9 @@ const CompanyProductFrm = (props) => {
 
   return (
     <div className="companyProduct-wrap">
-      <div className="company-title">상품 등록</div>
+      <div className="company-title">
+        {url === "/company/product/update/number" ? "상품 등록" : "상품 수정"}
+      </div>
       <section className="company-section">
         <div className="thumbnail-zone">
           <div className="company-thumbnail image">
