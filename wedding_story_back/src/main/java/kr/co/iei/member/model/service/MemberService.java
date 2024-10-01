@@ -1,10 +1,13 @@
 package kr.co.iei.member.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -145,5 +148,10 @@ public class MemberService {
 	public int checkEmail(String checkEmail) {
 		int result = memberDao.checkEmail(checkEmail);
 		return result;
+	}
+
+	public List<ConsultDTO> consultList(int memberNo) {
+		List<ConsultDTO> list = memberDao.consultList(memberNo);
+		return list;
 	}
 }

@@ -1,5 +1,6 @@
 package kr.co.iei.member.controller;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.service.MemberService;
@@ -131,5 +133,11 @@ public class MemberController {
 	public ResponseEntity<Integer> deleteMember(@RequestBody MemberDTO member){
 		int result = memberService.deleteMember(member);
 		return ResponseEntity.ok(result);
+	}
+	@GetMapping(value="/consultList/{memberNo}")
+	public ResponseEntity<List<ConsultDTO>> consultList(@PathVariable int memberNo){
+		System.out.println(memberNo);
+		List<ConsultDTO> list = memberService.consultList(memberNo);
+		return ResponseEntity.ok(list);
 	}
 }
