@@ -57,7 +57,7 @@
     <select id="selectPayment" resultType="memberPay">
         select pay_no, ticket_no, pay_price, merchant_uid
             from member_pay where member_no = #{memberNo} and 
-            ticket_no = (select ticket_no from convention_member where convention_no = #{conventionNo}) and
+            ticket_no = (select ticket_no from convention_member where convention_no = #{conventionNo} and member_no = ${memberNo}) and
             sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = #{conventionNo})
             and progress = 0
     </select>
@@ -146,5 +146,12 @@
     <delete id="deleteConventionCompany">
         delete from convention_company where convention_company_no = #{conventionCompanyNo}
     </delete>
+
+
+    <select id="selectAlarmTicket" resultType="member">
+        select member_no, member_email 
+            from convention_member 
+            where member_email is not null and convention_no = (select max(convention_no) from convention where to_char(convention_start - 3) = to_char(sysdate))
+    </select>
 
 </mapper>

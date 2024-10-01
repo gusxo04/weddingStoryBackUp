@@ -62,7 +62,7 @@ const BuyTicket = (props) => {
     personalMsgRef.current.style.color = "black";
     checkEmailRef.current.textContent = "알림받을 이메일을 입력해주세요";
     checkEmailRef.current.style.color = "black";
-    const emailRegex = /^[a-zA-Z]{3,30}$/;
+    const emailRegex = /^[a-zA-Z0-9]{3,30}$/;
 
     if(!personalRef.current.checked || !selectDate || (noticeEmail.trim() !== "" && !emailRegex.test(noticeEmail))){
       if(!selectDate) {

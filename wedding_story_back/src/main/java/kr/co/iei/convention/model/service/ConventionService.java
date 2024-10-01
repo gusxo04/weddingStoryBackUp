@@ -266,9 +266,13 @@ public class ConventionService {
         // cancelRequest.setAmount(request.getCancelRequestAmount());
         // cancelRequest.setMerchant_uid(request.getMerchantUid());
 
+        // System.out.println("merchant_uid : "+request.getMerchantUid());
+
         Map<String, Object> cancelRequest = new HashMap<>();
         cancelRequest.put("merchant_uid", request.getMerchantUid());
         cancelRequest.put("amount", request.getCancelRequestAmount());
+
+        System.out.println(cancelRequest);
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
 
@@ -290,7 +294,13 @@ public class ConventionService {
 
 
     //이메일 보내는 로직
-    
+    public void sendTicketEmail(){
+        List<MemberDTO> list = conventionDao.selectAlarmTicket();
+        for(MemberDTO emailList : list){
+            System.out.println("email : "+emailList.getMemberEmail());
+            emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), "박람회가 3일 남았습니다!");
+        }
+    }
 
 
 
