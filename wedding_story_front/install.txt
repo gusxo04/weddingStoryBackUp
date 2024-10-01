@@ -48,3 +48,9 @@ npm install react-datepicker --force
 김연우
 2024-09-30 오후 12:55
 npm i date-fns --force
+
+김세영
+2024-10-01 오전 10:45
+npm install --save @fullcalendar/react @fullcalendar/core @fullcalendar/daygrid --force
+2024-10-01 오전 11:17
+npm install --save @fullcalendar/interaction --force

@@ -237,3 +237,60 @@
 .mypage-info-delbtn {
   background-color: #fff;
 }
+:root {
+  --fc-event-bg-color: var(--hover3);
+  --fc-event-border-color: transparent;
+  --fc-today-bg-color: #f3f3f3;
+}
+.fc .fc-toolbar div:nth-child(1) {
+  flex-grow: 2;
+}
+.fc .fc-toolbar div:nth-child(2) {
+  flex-grow: 2;
+}
+.fc .fc-toolbar div:nth-child(3) {
+  flex-grow: 1;
+}
+
+.fc-toolbar-chunk > div {
+  display: flex;
+  justify-content: center;
+}
+.fc .fc-button {
+  border: none;
+  background-color: transparent;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: var(--main1);
+  color: #202020;
+  border: none;
+}
+.fc .fc-button-group {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+.fc .fc-button-group > .fc-button {
+  flex: none;
+}
+.fc .fc-button-group .fc-button-primary {
+  width: 3em;
+  background-color: #fff;
+  border: 1px solid var(--main1);
+  color: #202020;
+}
+.fc .fc-button-group .fc-button-primary:hover {
+  border: 1px solid var(--main1);
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active:focus,
+.fc .fc-button-primary:not(:disabled):active:focus,
+.fc .fc-button-primary:focus {
+  box-shadow: none;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #fff;
+  border: none;
+  box-shadow: none;
+}
