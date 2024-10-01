@@ -53,7 +53,7 @@ public interface MemberDao {
 
 	int checkEmail(String checkEmail);
 
-	String selectCompanyNo(int loginNo);
+//	String selectCompanyNo(int loginNo);
 
 	String selectInsertCompanyNo(int memberNo);
 

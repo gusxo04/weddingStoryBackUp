@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CompanyProductFrm from "./CompanyProductFrm";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -18,48 +18,57 @@ const CompanyProduct = () => {
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
-  const [product, setProduct] = useState({
-    productName: "",
-    productImg: "",
-    productPrice: "",
-    productThumb: [],
-    coronation: "",
-    diningRoom: "",
-    numberPeople: "",
-  });
-
+  const [productName, setProductName] = useState("");
   const [productContent, setProductContent] = useState("");
+  const [productImg, setProductImg] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productThumb, setProductThumb] = useState([]);
+  const [coronation, setCoronation] = useState("");
+  const [diningRoom, setDiningRoom] = useState("");
+  const [numberPeople, setNumberPeople] = useState("");
+
+  const [companyCategory, setCompanyCategory] = useState("");
+  /*카테고리를 조회 해서 담기위한 state*/
+  useEffect(() => {
+    if (companyCategory === "") {
+      axios
+        .get(`${backServer}/company/category/${companyNo}`)
+        .then((res) => {
+          console.log(res);
+          setCompanyCategory(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [companyNo]);
+
   const insertProduct = () => {
     console.log("서브밋 버튼");
-    console.log(product);
-    console.log(productContent);
+
     if (
-      product.productName !== "" &&
-      product.productImg !== "" &&
-      product.productPrice !== "" &&
-      product.productThumb !== null &&
+      productName !== "" &&
+      productImg !== "" &&
+      productPrice !== "" &&
+      productThumb !== null &&
       productContent !== null
     ) {
       const form = new FormData();
-      console.log(product);
+
       console.log(companyNo);
       form.append("companyNo", companyNo);
-      form.append("productName", product.productName);
-      form.append("productPrice", product.productPrice);
+      form.append("productName", productName);
+      form.append("productPrice", productPrice);
       form.append("productContent", productContent);
-      form.append("thumbFile", product.productImg);
-      if (
-        product.coronation !== "" &&
-        product.diningRoom !== "" &&
-        product.numberPeople !== ""
-      ) {
-        form.append("coronation", product.coronation);
-        form.append("diningRoom", product.diningRoom);
-        form.append("numberPeople", product.numberPeople);
+      form.append("thumbFile", productImg);
+      if (coronation !== "" && diningRoom !== "" && numberPeople !== "") {
+        form.append("coronation", coronation);
+        form.append("diningRoom", diningRoom);
+        form.append("numberPeople", numberPeople);
       }
-      if (product.productThumb !== null) {
-        for (let i = 0; i < product.productThumb.length; i++) {
-          form.append("thumbnailFiles", product.productThumb[i]);
+      if (productThumb !== null) {
+        for (let i = 0; i < productThumb.length; i++) {
+          form.append("thumbnailFiles", productThumb[i]);
         }
       }
       axios
@@ -96,10 +105,23 @@ const CompanyProduct = () => {
         }}
       >
         <CompanyProductFrm
-          product={product}
-          setProduct={setProduct}
+          productName={productName}
+          setProductName={setProductName}
+          productImg={productImg}
+          setProductImg={setProductImg}
+          productPrice={productPrice}
+          setProductPrice={setProductPrice}
           productContent={productContent}
           setProductContent={setProductContent}
+          productThumb={productThumb}
+          setProductThumb={setProductThumb}
+          coronation={coronation}
+          setCoronation={setCoronation}
+          diningRoom={diningRoom}
+          setDiningRoom={setDiningRoom}
+          numberPeople={numberPeople}
+          setNumberPeople={setNumberPeople}
+          companyCategory={companyCategory}
         />
         <div className="btn-zone">
           <button type="submit">등록 하기</button>

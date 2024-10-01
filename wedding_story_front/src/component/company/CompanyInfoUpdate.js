@@ -126,7 +126,7 @@ const CompanyInfoUpdate = () => {
           telNumber={telNumber}
         />
         <div className="btn-zone">
-          <button type="submit">등록 하기</button>
+          <button type="submit">수정 하기</button>
         </div>
       </form>
     </div>

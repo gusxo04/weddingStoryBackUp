@@ -28,4 +28,6 @@ public interface CompanyDao {
 
 	int updateCompanyKeyWord(KeyWordDTO keyWord);
 
+	String selectCategory(String companyNo);
+
 }
