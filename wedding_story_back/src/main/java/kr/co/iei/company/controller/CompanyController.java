@@ -2,6 +2,7 @@ package kr.co.iei.company.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,6 +66,18 @@ public class CompanyController {
 		return ResponseEntity.ok(resultCompany); 
 	}
 	
+	//업체 정보 업데이트 (수정)
+	@PatchMapping
+	public ResponseEntity<Boolean> updateCompanyInfo(@ModelAttribute CompanyDTO company,@ModelAttribute KeyWordDTO keyWord, @ ModelAttribute MultipartFile thumbFile){
+		if(thumbFile != null) {
+			String savepath = root+"/product/image/";
+			String filepath = fileUtil.upload(savepath, thumbFile);
+			company.setCompanyThumb(filepath);
+		}
+		int result = companyService.updateCompanyInfo(company,keyWord);
+		
+		return ResponseEntity.ok(result == 2);
+	}
 	
 	//업체 상품 등록
 	@PostMapping(value="/product")
@@ -90,28 +104,48 @@ public class CompanyController {
 		return ResponseEntity.ok(result == 1+productFile.size());
 	}
 	
-	//업체 정보 업데이트 (수정)
-	@PatchMapping
-	public ResponseEntity<Boolean> updateCompanyInfo(@ModelAttribute CompanyDTO company,@ModelAttribute KeyWordDTO keyWord, @ ModelAttribute MultipartFile thumbFile){
-		if(thumbFile != null) {
-			String savepath = root+"/product/image/";
-			String filepath = fileUtil.upload(savepath, thumbFile);
-			company.setCompanyThumb(filepath);
-		}
-		int result = companyService.updateCompanyInfo(company,keyWord);
-		
-		return ResponseEntity.ok(result == 2);
-	}
 	
-	@GetMapping(value="/select/{loginNo}")
-	public ResponseEntity<String> selectCompanyNo(@PathVariable int loginNo){
-		System.out.println(loginNo);
-		String result = companyService.selectCompanyNo(loginNo);
+	//
+//	@GetMapping(value="/select/{loginNo}")
+//	public ResponseEntity<String> selectCompanyNo(@PathVariable int loginNo){
+//		System.out.println(loginNo);
+//		String result = companyService.selectCompanyNo(loginNo);
+//		
+//		return ResponseEntity.ok(result);
+//	}
+	
+	//상품페이지 이동시 카테고리 조회 
+	@GetMapping(value="/category/{companyNo}")
+	public ResponseEntity<String> selectCategory(@PathVariable String companyNo){
+		System.out.println(companyNo);
+		String result = companyService.selectCategory(companyNo);
 		
-		System.out.println(result);
 		return ResponseEntity.ok(result);
 	}
-	
 
+	//ToastEditor 사용시 이미지 업로드 
+	@PostMapping(value="/editorImage")
+	public ResponseEntity<String> editorImage(@ModelAttribute MultipartFile image){
+		String savepath = root+"/product/editor/"; //파일경로 지정 
+		String filepath = fileUtil.upload(savepath, image); //파일 실제경로에 업로드 
+		return ResponseEntity.ok("/product/editor/"+filepath); // 미리보기를 위해 경로값 리턴
+	}
 	
+	//상품 페이지 리스트 생성
+	@GetMapping(value="/list/{companyNo}/{reqPage}")
+	public ResponseEntity<Map> list(@PathVariable String companyNo,@PathVariable int reqPage){
+		System.out.println(reqPage);
+		System.out.println(companyNo);
+		Map map = companyService.productList(reqPage,companyNo);
+		
+		return ResponseEntity.ok(map);
+	}
+	
+	//상품번호로 상품 DTO 조회
+	@GetMapping(value="/product/{productNo}")
+	public ResponseEntity<Map> selectOneProduct(@PathVariable int productNo){
+		System.out.println("controll : "+ productNo);
+		Map product = companyService.selectOneProduct(productNo);
+		return ResponseEntity.ok(product);
+	}
 }

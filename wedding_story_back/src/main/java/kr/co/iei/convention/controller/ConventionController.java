@@ -32,6 +32,7 @@ import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
+import kr.co.iei.util.EmailSender;
 import kr.co.iei.util.FileUtils;
 
 @RestController
@@ -193,6 +194,7 @@ public class ConventionController {
         System.out.println(conventionCompany);
         System.out.println(companyPay);
         boolean result = conventionService.conventionCompanyPay(conventionCompany, companyPay);
+        
         return ResponseEntity.ok(result);
     }
 

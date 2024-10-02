@@ -159,7 +159,7 @@ const ShowConvention = (props) => {
       :
       <ConventionLayout convention={convention} payment={payment} isPayment={isPayment} 
       setIsPayment={setIsPayment} permission={loginMemberType === 2 ? 2 : 1} 
-      buyable={type}
+      buyable={type} startDate={startDate}
       />
       }
 

@@ -28,6 +28,7 @@ import kr.co.iei.convention.model.dto.ConventionSeatDTO;
 import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
+import kr.co.iei.util.EmailSender;
 
 @Service
 public class ConventionService {
@@ -37,6 +38,9 @@ public class ConventionService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+	private EmailSender emailSender;
 
 
     private final String restApi = "0054761064210788";
@@ -137,6 +141,12 @@ public class ConventionService {
     @Transactional
     public Boolean refundPayment(RefundRequest request) {
         String accessToken = getAccessToken();
+        try {
+            Thread.sleep(2000);
+            // 2초 지연시켜서 환불이 바로 가능하도록 했음
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         String code = cancelPayment(accessToken, request);
         int result = -2;
         if(code.equals("0")){
@@ -194,6 +204,16 @@ public class ConventionService {
         return result == 2;
 	}
 
+    @Transactional
+    public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
+        int result = conventionDao.updateSeatInfo(conventionSeat);
+        return result == 1;
+    }
+
+	public CompanyPayDTO getPayment(String companyNo, int conventionNo) {
+        return conventionDao.selectCompanyPayment(companyNo, conventionNo);
+	}
+
 
 
 
@@ -246,9 +266,13 @@ public class ConventionService {
         // cancelRequest.setAmount(request.getCancelRequestAmount());
         // cancelRequest.setMerchant_uid(request.getMerchantUid());
 
+        // System.out.println("merchant_uid : "+request.getMerchantUid());
+
         Map<String, Object> cancelRequest = new HashMap<>();
         cancelRequest.put("merchant_uid", request.getMerchantUid());
         cancelRequest.put("amount", request.getCancelRequestAmount());
+
+        System.out.println(cancelRequest);
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
 
@@ -268,16 +292,15 @@ public class ConventionService {
         return code;
     }
 
-    @Transactional
-    public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
-        int result = conventionDao.updateSeatInfo(conventionSeat);
-        return result == 1;
+
+    //이메일 보내는 로직
+    public void sendTicketEmail(){
+        List<MemberDTO> list = conventionDao.selectAlarmTicket();
+        for(MemberDTO emailList : list){
+            System.out.println("email : "+emailList.getMemberEmail());
+            emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), "박람회가 3일 남았습니다!");
+        }
     }
-
-	public CompanyPayDTO getPayment(String companyNo, int conventionNo) {
-        return conventionDao.selectCompanyPayment(companyNo, conventionNo);
-	}
-
 
 
 

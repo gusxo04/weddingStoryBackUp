@@ -19,7 +19,7 @@ public class ConsultDTO {
 	private Date consultDate;	//진행날짜
 	private String consultTime;	//진행시간
 	private int contract;	//계약상태 (0:계약전,1:가계약,2:계약완료)
-	private Date reservation;	//예식예정일
+	private String reservation;	//예식예정일
 	private String consultTitle;	//상담제목
 	private String consultWrite;	//상담내용
 }

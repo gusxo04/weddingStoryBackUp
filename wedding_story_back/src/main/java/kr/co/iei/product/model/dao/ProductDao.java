@@ -1,5 +1,6 @@
 package kr.co.iei.product.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -20,6 +21,18 @@ public interface ProductDao {
 	int insertProductFile(ProductFileDTO list);
 
 	ProductDTO selectOneProduct(int productNo);
+
+	ProductDTO selectProductName(int productNo);
+
+	List getProductHallList(PageInfo pi, String category);
+	
+	List selectProductList(String companyNo, PageInfo pi);
+
+	ProductDTO selectProduct(int productNo);
+
+	List selectProductFile(int productNo);
+	
+	
 
 
 

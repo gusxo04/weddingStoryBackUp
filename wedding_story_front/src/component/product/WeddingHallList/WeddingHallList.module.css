@@ -21,11 +21,11 @@
 .board-list > .page-title > ul > li {
   padding-right: 10px;
 }
-.board-list > .page-title > .name-title {
-  padding-left: 42%;
+.board-list > .page-title > .title-name {
+  text-align: center;
   margin: 0 auto;
 }
-.name-title :hover {
-  color: #c19975;
-  cursor: pointer;
+
+.posting-item {
+  display: flex;
 }

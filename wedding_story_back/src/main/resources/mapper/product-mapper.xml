@@ -2,17 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.product.model.dao.ProductDao">
   <select id="TotalCount" resultType="int">
-  	select count(*) from product
+  	select count(*) from product where product_state=1
   </select>
   <select id="getProductList" resultType="product">
   select * from
 		(select rownum as rnum, b.* from
-		(select
-		product_thumb,
-		product_name,
-		product_price
-		from product where product_state=1 order by product_no desc) b)
+			(select
+				product_no,
+				product_thumb,
+				product_name,
+				product_price
+			from product where product_state=1 order by product_no desc) b)
 		where rnum between #{start} and#{end}
+  </select>
+  
+  <select id="getProductHallList" resultType="product">
+  	 select * from
+		(select rownum as rnum, b.* from
+			(select
+				company_category,
+				product_no,
+				product_thumb,
+				product_name,
+				product_price
+			from product where company_category = #{category} order by product_no desc) b)
+		where rnum between #{pi.start} and#{pi.end}
   </select>
   
   <insert id="insertProduct">
@@ -26,8 +40,30 @@
   </insert>
   
   <select id="selectOneProduct" resultType="product">
-  	select company_no, product_name,product_thumb,product_price from product where company_no
+  	select company_no, product_name,product_thumb,product_price from product where company_no=#{companyNo]}
   </select>
   
+  <select id="selectProductName" resultType="product">
+  	select * from product
+  </select>
+  	
+  <select id="selectProductList" resultType="product">
+	  select * from
+			(select rownum as rnum, b.* from
+			(select
+			product_no,
+			company_no,
+			product_name,
+			product_price
+			from product where companyNo=#{companyNo} order by product_no desc) b)
+			where rnum between #{pi.start} and #{pi.end} 
+  </select>
   
+  <select id="selectProduct" resultType="product">
+  		select * from product where product_no = #{productNo}
+  </select>
+  <select id="selectProductFile" resultType="String">
+  		select file_path from product_file where product_no =#{productNo}
+  
+  </select>
 </mapper>

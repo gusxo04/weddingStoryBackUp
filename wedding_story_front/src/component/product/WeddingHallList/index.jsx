@@ -24,22 +24,22 @@ const WeddingHallList = () => {
   }, [reqPage]);
 
   return (
-  <section className={styles['board-list']}>
-    <div className={styles['page-title']}>
-      <div className={styles['title-name']}>웨딩홀</div>
-    </div>
+    <section className={styles["board-list"]}>
+      <div className={styles["page-title"]}>
+        <div className={styles["title-name"]}>웨딩홀</div>
+      </div>
 
-    <div className={styles['product-list-wrap']}>
-      <ul className={styles['posting-wrap']}>
-        {productList.map((product, i) => {
-          return <BoardItem key={"product-" + i} product={product} />;
-        })}
-      </ul>
-    </div>
-    <div className={styles['board-paging-wrap']}>
-      <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
-    </div>
-  </section>
+      <div className={styles["product-list-wrap"]}>
+        <ul className={styles["posting-wrap"]}>
+          {productList.map((product, i) => {
+            return <BoardItem key={"product-" + i} product={product} />;
+          })}
+        </ul>
+      </div>
+      <div className={styles["board-paging-wrap"]}>
+        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+      </div>
+    </section>
   );
 };
 
@@ -49,28 +49,28 @@ const BoardItem = (props) => {
   const navigate = useNavigate();
   return (
     <li
-    className={styles['posting-item']}
-    onClick={() => {
-      navigate(`/product/list/${product.priductNo}`);
-    }}
-  >
-    <div>
-      <img
-        src={
-          product.productThumb
-            ? `${backServer}/product/thumb/${product.productThumb}`
-            : "/image/default_img.png"
-        }
-      />
-    </div>
-    <div className={styles['posting-info']}>
-      <div className={styles['posting-title']}>{product.productTitle}</div>
-      <div className={styles['posting-sub-info']}>
-        <span>{product.productWriter}</span>
-        <span>{product.productDate}</span>
+      className={styles["posting-item"]}
+      onClick={() => {
+        navigate(`/product/hallInfo/${product.productNo}`);
+      }}
+    >
+      <div>
+        <img
+          src={
+            product.productThumb
+              ? `${backServer}/product/thumb/${product.productThumb}`
+              : "/image/default_img.png"
+          }
+        />
       </div>
-    </div>
-  </li>
+      <div className={styles["posting-info"]}>
+        <div className={styles["posting-title"]}>{product.productTitle}</div>
+        <div className={styles["posting-sub-info"]}>
+          <span>{product.productWriter}</span>
+          <span>{product.productDate}</span>
+        </div>
+      </div>
+    </li>
   );
 };
 

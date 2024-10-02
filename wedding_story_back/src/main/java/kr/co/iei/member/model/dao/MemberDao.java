@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.member.model.dto.MemberDTO;
 
@@ -53,10 +54,11 @@ public interface MemberDao {
 
 	int checkEmail(String checkEmail);
 
-	String selectCompanyNo(int loginNo);
+//	String selectCompanyNo(int loginNo);
 
 	String selectInsertCompanyNo(int memberNo);
 
 	int insertAdmin(int selectedType, String insertId);
+	List<ConsultDTO> consultList(int memberNo);
 
 }

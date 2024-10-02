@@ -92,7 +92,7 @@ const BoardItem = (props) => {
     <li
       className={styles["posting-item"]}
       onClick={() => {
-        navigate(`/product/list/${product.productNo}`);
+        navigate(`/product/${product.productNo}`);
       }}
     >
       <div>

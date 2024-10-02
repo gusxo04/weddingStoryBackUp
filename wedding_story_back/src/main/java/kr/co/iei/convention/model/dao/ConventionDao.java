@@ -69,6 +69,8 @@ public interface ConventionDao {
 
 	int deleteConventionCompany(RefundRequest request);
 
+    List selectAlarmTicket();
+
 
 
 }

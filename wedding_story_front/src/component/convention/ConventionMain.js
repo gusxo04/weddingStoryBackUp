@@ -12,7 +12,7 @@ import ConventionLoading from "./ConventionLoading";
 const ConventionMain = () => {
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
@@ -38,7 +38,6 @@ const ConventionMain = () => {
 
   const [showType, setShowType] = useState(true);
   const [isPayment, setIsPayment] = useState(true);
-
 
   // const [payment, setPayment] = useState({
   //   // merchantUid : "",
@@ -164,7 +163,10 @@ const ConventionMain = () => {
         payment={payment} isPayment={isPayment} setIsPayment={setIsPayment} 
         />
         : 
-        <EmptyConvention navigate={navigate} />
+        <EmptyConvention/>
+        :
+        memberType === 0 || memberType === 3 ?
+        <EmptyConvention/>
         :
         <ConventionLoading />
         }
@@ -175,8 +177,9 @@ const ConventionMain = () => {
 
 
 //박람회가 없을 경우
-const EmptyConvention = (props) => {
-  const navigate = props.navigate;
+const EmptyConvention = () => {
+  // const navigate = props.navigate;
+  const navigate = useNavigate();
   return (
     <div className="empty-convention-wrap">
       <span>현재 진행중이거나 예정인 박람회가 없습니다</span>

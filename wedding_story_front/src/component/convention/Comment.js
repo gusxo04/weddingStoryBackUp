@@ -135,7 +135,7 @@ const Comment = (props) => {
   const removeComment = () => {
     axios.delete(`${backServer}/convention/${c.conventionCommentNo}`,)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if(res.data){
         setChangedComment(!changedComment);
       }
@@ -154,7 +154,7 @@ const Comment = (props) => {
     form.append("conventionCommentContent", editCommentContent);
     axios.patch(`${backServer}/convention`,form)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if(res.data){
         setChangedComment(!changedComment);
         contentRef.current.style.display = "inline";
@@ -168,7 +168,7 @@ const Comment = (props) => {
       console.error(err); 
     })
   }
-  const commentLineHeight = 20;
+  const commentLineHeight = 24;
 
   // useEffect(() => {
   //   setLineType(false);
@@ -192,16 +192,48 @@ const Comment = (props) => {
   //   }
   // }, [c]);
   
+  // line-height 없애고 100이 아니라 120으로 해야할듯 (답글도 해야 함)
   const [isOverFlowing, setIsOverFlowing] = useState(false);
-  
+  const [heightType, setHeightType] = useState(120);
+  let width = window.innerWidth;
+
+
   useEffect(() => {
     setIsOverFlowing(false);
-    if(c.conventionCommentContent.split("\n").length > 5 || (contentContainerRef.current && contentContainerRef.current.offsetHeight > 100)){
+    // if(c.conventionCommentContent.split("\n").length > 5 || (contentContainerRef.current && contentContainerRef.current.offsetHeight > 120)){
+      if(contentContainerRef.current && contentContainerRef.current.scrollHeight > heightType){
       setIsOverFlowing(true);
       setLineType(false);
-      contentContainerRef.current.style.height = commentLineHeight*5 +"px";
+      // contentContainerRef.current.style.height = commentLineHeight*5 +"px";
+      contentContainerRef.current.style.height = heightType;
     }
-  }, [c]);
+  }, [c, heightType]);
+
+  // 1은 기본 (1920사이즈) , 2는 1200이하 , 3은 768 이하 , 4는 480 이하
+  // 이 아니고 그냥 120 , 105 , 110 , 95
+  const handleResize = () => {
+    // setWidth(window.innerWidth);
+    width = window.innerWidth;
+    // console.log(width);
+    //사용자 너비가 1200, 768 , 480 으로 될때마다 heightType 변경
+    if(width > 1200) setHeightType(120);
+    else if(width > 768 && width <= 1200) setHeightType(105);
+    else if(width > 480 && width <= 768) setHeightType(110);
+    else if(width < 480) setHeightType(95);
+    
+  };
+  
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  useEffect(() => {
+    setChangedComment(!changedComment);
+  }, [heightType]);
 
   return (
     <div className="convention-comment">
@@ -244,7 +276,8 @@ const Comment = (props) => {
       {/* {c.conventionCommentContent.split("\n").length > 5 ?  */}
       {isOverFlowing ?
       <>
-        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*5 +"px"}} >
+        {/* <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : commentLineHeight*5 +"px"}} > */}
+        <div className="convention-comment-content-zone-container" ref={contentContainerRef} style={{height : heightType}} >
           <span id="white-space" ref={contentRef}>{c.conventionCommentContent}</span>
         </div>
 
@@ -267,7 +300,8 @@ const Comment = (props) => {
         <div className="long-convention-comment" ref={longContentRef} >
           <span className="cursor-p" ref={lineTypeRef} onClick={() => {
             if(lineType){
-              contentContainerRef.current.style.height = commentLineHeight*5 +"px";
+              contentContainerRef.current.style.height = heightType+"px";
+              console.log(heightType);
             }
             else{
               // contentContainerRef.current.style.height = commentLineHeight*c.conventionCommentContent.split("\n").length +"px";

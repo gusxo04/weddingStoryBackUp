@@ -98,7 +98,7 @@ const CompanyHeader = () => {
         ) : (
           <ul>
             <li>
-              <Link to="#" className="nav-item">
+              <Link to="/company/product" className="nav-item">
                 <div>
                   <span className="material-icons">view_in_ar</span>
                 </div>

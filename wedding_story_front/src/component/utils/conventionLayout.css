@@ -208,7 +208,8 @@
 
 .convention-seat-alert-wrap>.convention-seat-alert{
     width: 25%;
-    min-width: 220px;
+    /* min-width: 220px; */
+    min-width: 280px;
     height: 35%;
     background-color:white;
     position: fixed;
@@ -235,6 +236,40 @@
     border-bottom: 1px solid #ccc;
 }
 
+.company-personal-container{
+    width: 100vw;
+    height: 100vh;
+    /* position: absolute; */
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    overflow: auto;
+}
+.company-personal-container>.company-personal{
+    width: 50%;
+    min-width: 330px;
+    height: 60%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    line-height: 25px;
+    overflow: auto;
+    text-wrap: pretty;
+    padding: 10px;
+    flex-wrap: wrap;
+    text-align: center;
+    overscroll-behavior: contain;
+}
+
+#convention-personal-btn{
+    margin-top: 15px;
+    width: 30%;
+    height: 5%;
+}
 
 .convention-seat-info-wrap>.convention-seat-info-content{
     height: 40%;
@@ -263,9 +298,11 @@
 .convention-seat-info-wrap>.convention-seat-info-btn{
     height: 20%;
     border-top: 1px solid #ccc;
+    gap: 10px;
 }
 .convention-seat-info-btn>button{
     width: 40%;
+    max-width: 130px;
     height: 50%;
     border-radius: 20px;
     border: none;
@@ -480,4 +517,20 @@
     background-color: var(--main1);
     color: white;
     font-size: 1.1rem;
+}
+
+/* 이미 환불 버튼을 눌렀을때 css */
+#refunding{
+    background-color: #ccc;
+}
+.refunding{
+    background-color: #ccc !important;
+}
+#convention-loading{
+    position: absolute;
+    /* bottom: -100px;
+    left: 50%; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

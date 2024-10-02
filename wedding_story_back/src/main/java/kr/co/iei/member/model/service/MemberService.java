@@ -1,10 +1,13 @@
 package kr.co.iei.member.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -96,8 +99,8 @@ public class MemberService {
 	public LoginMemberDTO refresh(String token) {
 		try {
 			LoginMemberDTO loginMember = jwtUtil.checkToken(token);
-			System.out.println(loginMember);
-			String companyNo = memberDao.selectInsertCompanyNo(loginMember.getMemberNo()); //
+			String companyNo = memberDao.selectInsertCompanyNo(loginMember.getMemberNo()); 
+			/* 업체등록을 누른시점에서 리프레쉬 토큰은 기존에 companyNo == null 인걸로 재생성하기에 companyNo가 발급 된 후 조회를 다시해서 리프레쉬 토큰 발행 */
 			loginMember.setCompanyNo(companyNo);
 			String accessToken = jwtUtil.createAccessToken(loginMember.getMemberNo(), loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
 			String refreshToken = jwtUtil.createRefreshToken(loginMember.getMemberNo(),loginMember.getMemberId(), loginMember.getMemberType(),loginMember.getMemberCode(), loginMember.getCompanyNo());
@@ -145,5 +148,10 @@ public class MemberService {
 	public int checkEmail(String checkEmail) {
 		int result = memberDao.checkEmail(checkEmail);
 		return result;
+	}
+
+	public List<ConsultDTO> consultList(int memberNo) {
+		List<ConsultDTO> list = memberDao.consultList(memberNo);
+		return list;
 	}
 }

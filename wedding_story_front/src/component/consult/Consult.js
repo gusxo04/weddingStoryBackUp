@@ -3,32 +3,36 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./consult.css";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../utils/RecoilData";
+import { loginNoState } from "../utils/RecoilData";
 
 const Consult = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  const [memberNo, setMemberNo] = useRecoilState(loginIdState);
+  const [memberNo, setMemberNo] = useRecoilState(loginNoState);
   const [member, setMember] = useState({
     memberName: "",
     memberPhone: "",
   });
-  console.log(memberNo);
+  const [productNo, setProductNo] = useState({
+    productNo: null,
+    productName: "",
+  });
 
   const [consult, setConsult] = useState({
-    consultDate: "",
-    consultTime: "",
-    reservation: "",
-    consultTitle: "",
-    consultWrite: "",
+    consultDate: "", //상담날짜
+    consultTime: "", //상담시간
+    reservation: "", //결혼식예정일(미정체크일시 null)
+    consultTitle: "", //상담제목
+    consultWrite: "", //상담내용
   });
   const [isDateUndefined, setIsDateUndefined] = useState(false);
+
   const changeConsult = (e) => {
     const { name, value } = e.target;
     setConsult({ ...consult, [name]: value });
   };
+
   useEffect(() => {
-    console.log(memberNo);
     axios
       .get(`${backServer}/consult/memberNo/${memberNo}`)
       .then((res) => {
@@ -37,13 +41,28 @@ const Consult = () => {
           memberName: res.data.memberName,
           memberPhone: res.data.memberPhone,
         });
-        console.log(res);
-        console.log(member);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [backServer, memberNo]);
+
+  // productNo를 기반으로 상품명 가져오기
+  useEffect(() => {
+    if (productNo) {
+      axios
+        .get(`${backServer}/consult/productNo/${productNo}`)
+        .then((res) => {
+          setProductNo({
+            productNo: productNo,
+            productName: res.data.productName,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [backServer, productNo]);
 
   const requestData = {
     ...consult,
@@ -62,12 +81,7 @@ const Consult = () => {
     form.append("consultWrite", consult.consultWrite);
 
     axios
-      .post(`${backServer}/consult`, form, {
-        headers: {
-          contentType: "multipart/form-data",
-          processData: false,
-        },
-      })
+      .post(`${backServer}/consult`, form)
       .then((res) => {
         console.log(res);
       })
@@ -83,7 +97,7 @@ const Consult = () => {
   };
 
   return (
-    <section className="counselt-wrap">
+    <section className="consult-wrap">
       <div className="title-name">상담신청</div>
       <form
         onSubmit={(e) => {
@@ -95,7 +109,21 @@ const Consult = () => {
         <Link to="/">
           <span className="material-icons">arrow_back</span>
         </Link>
-        <div className="counselt-content">
+        <div className="consult-content">
+          <div className="input-wrap">
+            <div className="input-title">
+              <label htmlFor="productName">상품명</label>
+            </div>
+            <div className="input-item">
+              <input
+                type="text"
+                name="productName"
+                id="productName"
+                value={productNo.productName} // 상품명 표시
+                readOnly // 읽기 전용으로 설정
+              />
+            </div>
+          </div>
           <div className="input-wrap">
             <div className="input-title">
               <label htmlFor="memberName">이름</label>
@@ -105,7 +133,8 @@ const Consult = () => {
                 type="text"
                 name="memberName"
                 id="memberName"
-                defaultValue={member.memberName}
+                value={member.memberName}
+                readOnly // 읽기 전용으로 설정
               />
             </div>
           </div>
@@ -119,6 +148,7 @@ const Consult = () => {
                 name="memberPhone"
                 id="memberPhone"
                 value={member.memberPhone}
+                readOnly // 읽기 전용으로 설정
               />
             </div>
           </div>
@@ -208,7 +238,7 @@ const Consult = () => {
             </div>
           </div>
         </div>
-        <div className="consolt-button">
+        <div className="consult-button">
           <button type="submit" className="btn">
             상담신청하기
           </button>
