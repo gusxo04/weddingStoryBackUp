@@ -60,4 +60,8 @@ public interface MemberDao {
 
 	List<ConsultDTO> consultList(int memberNo);
 
+	CompanyDTO consultCompanyList(String companyNo);
+
+	CompanyDTO conventionList();
+
 }

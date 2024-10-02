@@ -138,6 +138,7 @@ public class MemberController {
 	public ResponseEntity<List<ConsultDTO>> consultList(@PathVariable int memberNo){
 		System.out.println(memberNo);
 		List<ConsultDTO> list = memberService.consultList(memberNo);
+		System.out.println(list);
 		return ResponseEntity.ok(list);
 	}
 }

@@ -1,12 +1,15 @@
 package kr.co.iei.member.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
@@ -152,6 +155,17 @@ public class MemberService {
 
 	public List<ConsultDTO> consultList(int memberNo) {
 		List<ConsultDTO> list = memberDao.consultList(memberNo);
+		for(ConsultDTO consult : list) {
+			if(consult.getCompanyNo().equals("0")) {
+				CompanyDTO company = memberDao.conventionList();
+				company.setCompanyAddr("서울 영등포구 선유동2로 57");
+				company.setCompanyTel("02-4153-3449");
+				consult.setCompany(company);
+			}else {				
+				CompanyDTO company = memberDao.consultCompanyList(consult.getCompanyNo());				
+				consult.setCompany(company);
+			}
+		}
 		return list;
 	}
 }
