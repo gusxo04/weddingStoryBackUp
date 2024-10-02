@@ -6,50 +6,61 @@ import { FaStar } from "react-icons/fa";
 import styles from "./WeddingHallInfo.module.css";
 import { KakaoMap, ReviewForm } from "../components";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../../utils/RecoilData";
+import { companyNoState, loginIdState } from "../../utils/RecoilData";
 import ProductReview from "../ProductReview";
 
 const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
-  const productNo = params.productNo;
+  const productNo = params.productNo; // URL에서 상품 번호 가져오기
+  const companyNo = params.companyNo; // URL에서 회사 번호 가져오기 (이 부분 추가)
   const [product, setProduct] = useState({});
   const [loginId, setLoginId] = useRecoilState(loginIdState);
-  const [company, setCompany] = useState({ companyAddr: "" });
+  const [company, setCompany] = useState({ companyAddr: "", companyName: "" });
   const navigator = useNavigate();
+
+  //console.log(companyNo); // companyNo가 제대로 출력되는지 확인
+  //console.log(productNo); // productNo가 제대로 출력되는지 확인
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/productNo/${productNo}`)
+      .get(`${backServer}/product/productInfo/${productNo}`)
       .then((res) => {
         console.log(res);
-        setProduct(res.data);
+        setProduct(res.data.product);
+        setCompany(res.data.company);
+        //console.log(companyNo);
+        //console.log(productNo);
+        // 회사 정보를 별도로 설정
+        if (res.data.companyAddr) {
+          setCompany({ companyAddr: res.data.companyAddr });
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [backServer, productNo, companyNo]); // 의존성 배열에 companyNo 추가
 
   return (
     <section className={styles["product-view-wrap"]}>
       <div className={styles["product-title"]}>
-        <h3>{product.productName}상세보기</h3>
+        <h3>웨딩홀 상세보기</h3>
       </div>
       <div className={styles["product-view-content"]}>
         <div className={styles["product-view-info"]}>
           <div className={styles["product-thumbnail"]}>
             <img
               src={
-                product.productThumb
-                  ? `${backServer}/product/thumb/${product.productThumb}`
+                product.productImg
+                  ? `${backServer}/product/thumb/${product.productImg}`
                   : "/image/default_img.png"
               }
-              alt={product.productTitle}
+              alt={product.productName}
             />
           </div>
           <div className={styles["product-view-preview"]}>
             <div className={styles["prduct-report"]}>
-              <Link to="/product/list">
+              <Link to="/product/hallList">
                 <h5>뒤로가기/</h5>
               </Link>
               <Link to="/report">
@@ -60,7 +71,7 @@ const WeddingHallInfo = () => {
               <tbody>
                 <tr>
                   <th style={{ width: "20%" }}>회사명</th>
-                  <td style={{ width: "30%" }}>{product.companyName}</td>
+                  <td style={{ width: "30%" }}>{company.companyName}</td>
                 </tr>
                 <tr>
                   <th style={{ width: "20%" }}>상품명</th>
@@ -76,10 +87,10 @@ const WeddingHallInfo = () => {
         </div>
         <div className={styles["product-btn-zone"]}>
           <button type="button" className={styles["btn"]}>
-            <Link to="/consult/consult">상담하기</Link>
+            <Link to={`/consult/consult/:${productNo}`}>상담하기</Link>
           </button>
           <button type="button" className={styles["btn"]}>
-            <Link to="/product/pay">결제하기</Link>
+            <Link to="/product/weddingHall">예약하기</Link>
           </button>
         </div>
         <div className={styles["product-content-wrap"]}>
@@ -111,8 +122,6 @@ const WeddingHallInfo = () => {
           ) : (
             "회사위치 뷰"
           )}
-          {/* 지도 구성 요소에 대한 자리 표시자입니다. 여기에 지도 API를 통합하세요 */}
-          {/* <MapComponent location={product.companyLocation} /> */}
           <KakaoMap />
         </div>
       </div>
@@ -120,39 +129,4 @@ const WeddingHallInfo = () => {
   );
 };
 
-//첨부파일
-const FileItem = ({ file }) => {
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-
-  const filedown = () => {
-    axios
-      .get(`${backServer}/product/file/${file.boardFileNo}`, {
-        responseType: "blob",
-      })
-      .then((res) => {
-        const blob = new Blob([res.data]);
-        const fileObjectUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = fileObjectUrl;
-        link.style.display = "none";
-        link.download = file.filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(fileObjectUrl);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  return (
-    <div className={styles["board-file"]}>
-      <span className="material-icons" onClick={filedown}>
-        file_download
-      </span>
-      <span className={styles["file-name"]}>{file.filename}</span>
-    </div>
-  );
-};
 export default WeddingHallInfo;

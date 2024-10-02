@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { companyNoState } from "../../../utils/RecoilData";
 
 const Report = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +33,7 @@ const Report = () => {
 const ReportForm = ({ onClose }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [reportText, setReportText] = useState("");
-  const [companyNo, setCompanyNo] = useState(); //업체번호
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState); //업체번호
   const [productNo, setProduct] = useState();
   const navigator = useNavigate();
 

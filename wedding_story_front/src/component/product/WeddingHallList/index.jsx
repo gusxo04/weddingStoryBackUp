@@ -22,7 +22,6 @@ const WeddingHallList = () => {
         console.log(err);
       });
   }, [reqPage]);
-
   return (
     <section className={styles["board-list"]}>
       <div className={styles["page-title"]}>
@@ -46,28 +45,45 @@ const WeddingHallList = () => {
 const BoardItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const product = props.product;
+  const productNo = product.productNo;
   const navigate = useNavigate();
+  const [liked, setLiked] = useState(false);
+  const handleLikeToggle = (e) => {
+    e.stopPropagation(); //클릭 시 상품정보로 이동되는 것을 방지
+    setLiked((prev) => !prev);
+    // 선택적으로 여기에서 좋아요 상태를 서버에 보낼 수 있습니다.
+    // axios.post(`${backServer}/product/favorite, { productNo: product.productNo, liked: !liked });
+  };
+
   return (
     <li
       className={styles["posting-item"]}
       onClick={() => {
-        navigate(`/product/hallInfo/${product.productNo}`);
+        navigate(`/product/hallInfo/${productNo}`);
       }}
     >
       <div>
         <img
           src={
-            product.productThumb
-              ? `${backServer}/product/thumb/${product.productThumb}`
+            product.productImg
+              ? `${backServer}/product/thumb/${product.productImg}`
               : "/image/default_img.png"
           }
         />
       </div>
       <div className={styles["posting-info"]}>
-        <div className={styles["posting-title"]}>{product.productTitle}</div>
+        <div className={styles["favirite"]} onClick={handleLikeToggle}>
+          <span className={"material-icons-outlined"}>
+            {liked ? "favorite" : "favorite_border"}
+          </span>
+        </div>
+        <div className={styles["posting-title"]}>
+          상품명:{product.productName}
+        </div>
         <div className={styles["posting-sub-info"]}>
-          <span>{product.productWriter}</span>
-          <span>{product.productDate}</span>
+          <span>대관료:{product.coronation}</span>
+          <span>식비:{product.dinningRoom}</span>
+          <span>가격:{product.productPrice}</span>
         </div>
       </div>
     </li>

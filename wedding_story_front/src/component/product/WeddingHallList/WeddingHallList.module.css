@@ -1,6 +1,7 @@
 /*제품 스드메제품 보기 전체css*/
 .board-list {
-  width: 100%;
+  /*width: 100%;*/
+  min-width: 1200px;
   padding: 30px;
   border-radius: 10px;
   background-color: var(--main2);
@@ -26,6 +27,21 @@
   margin: 0 auto;
 }
 
-.posting-item {
+.product-list-wrap {
+  margin: 0 auto;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  min-width: 800px;
+  position: relative;
+  background-color: var(--box-bg);
+}
+
+/*페이지내비*/
+.board-paging-wrap {
+  cursor: pointer;
+}
+/*좋아요*/
+.favirite {
+  cursor: pointer;
 }

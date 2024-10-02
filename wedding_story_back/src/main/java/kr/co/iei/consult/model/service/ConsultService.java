@@ -23,19 +23,27 @@ public class ConsultService {
 	@Autowired
 	private ProductDao productDao;
 	
+	//상담신청
 	@Transactional
 	public int insertConsult(ConsultDTO consult, MemberDTO member, ProductDTO product) {
 		int result = consultDao.insertConsult(consult,member,product);
 		return result;
 	}
-
+	
+	//회원 정보 
 	public MemberDTO selectMemberConsult(int memberNo) {
 		MemberDTO member = memberDao.selectMemberConsult(memberNo);
 		return member;
 	}
-
+	
+	//상품불러오기
 	public ProductDTO selectProductName(int productNo) {
 		ProductDTO product = productDao.selectProductName(productNo);
-		return null;
+		return product;
+	}
+
+	public ConsultDTO selectConsult(int consultNo) {
+		ConsultDTO consult = consultDao.selectConsult(consultNo);
+		return consult;
 	}
 }
