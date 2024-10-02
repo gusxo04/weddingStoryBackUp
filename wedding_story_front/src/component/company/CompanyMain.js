@@ -34,7 +34,7 @@ const CompanyMain = () => {
             <Route path="join" element={<CompanyJoin />} />
             <Route path="info" element={<CompanyInfo />} />
             <Route path="info/update/" element={<CompanyInfoUpdate />} />
-            <Route path="product" element={<CompanyProductList />} />
+            <Route path="product/list" element={<CompanyProductList />} />
             <Route path="product/insert" element={<CompanyProductInsert />} />
             <Route
               path="product/update/:productNo"

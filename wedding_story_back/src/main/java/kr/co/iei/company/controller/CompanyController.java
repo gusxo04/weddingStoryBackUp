@@ -47,8 +47,6 @@ public class CompanyController {
 		//썸네일 파일은 String으로 받을수 없음 -> MultipartFile로 thumbFile라는 객체로 받은 후 
 		//아래 로직을 통해서 savepath 로 실제 저장장소경로를 등록해주고  fileUtil을 통해서 savepath(저장경로)에thumbFile(실제 파일)을 업로드 해주고 저장된 경로를 filepath리턴받는다.
 		//리턴받은 값을 company.CompanyThumb에 set 해준다. 
-		System.out.println(company);
-		System.out.println(keyWord);
 		if(thumbFile != null) {
 			String savepath = root+"/company/thumb/";					//경로 등록
 			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
@@ -82,7 +80,6 @@ public class CompanyController {
 	//업체 상품 등록
 	@PostMapping(value="/product")
 	public ResponseEntity<Boolean> insertProduct(@ModelAttribute ProductDTO product, @ModelAttribute MultipartFile thumbFile ,@ModelAttribute MultipartFile[] thumbnailFiles){
-		
 		if(thumbFile != null) {
 			String savepath = root+"/product/image/";					//경로 등록
 			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
@@ -108,7 +105,6 @@ public class CompanyController {
 	//
 //	@GetMapping(value="/select/{loginNo}")
 //	public ResponseEntity<String> selectCompanyNo(@PathVariable int loginNo){
-//		System.out.println(loginNo);
 //		String result = companyService.selectCompanyNo(loginNo);
 //		
 //		return ResponseEntity.ok(result);
@@ -117,7 +113,6 @@ public class CompanyController {
 	//상품페이지 이동시 카테고리 조회 
 	@GetMapping(value="/category/{companyNo}")
 	public ResponseEntity<String> selectCategory(@PathVariable String companyNo){
-		System.out.println(companyNo);
 		String result = companyService.selectCategory(companyNo);
 		
 		return ResponseEntity.ok(result);
@@ -134,8 +129,6 @@ public class CompanyController {
 	//상품 페이지 리스트 생성
 	@GetMapping(value="/list/{companyNo}/{reqPage}")
 	public ResponseEntity<Map> list(@PathVariable String companyNo,@PathVariable int reqPage){
-		System.out.println(reqPage);
-		System.out.println(companyNo);
 		Map map = companyService.productList(reqPage,companyNo);
 		
 		return ResponseEntity.ok(map);
@@ -144,7 +137,6 @@ public class CompanyController {
 	//상품번호로 상품 DTO 조회
 	@GetMapping(value="/product/{productNo}")
 	public ResponseEntity<Map> selectOneProduct(@PathVariable int productNo){
-		System.out.println("controll : "+ productNo);
 		Map product = companyService.selectOneProduct(productNo);
 		return ResponseEntity.ok(product);
 	}

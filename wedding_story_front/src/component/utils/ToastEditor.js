@@ -1,13 +1,14 @@
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import axios from "axios";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ToastEditor = (props) => {
   // 키 값만 boardContent, setBoardcontent로 맞춰주면 됨
   // type은 적을 필요 없음 (1인 경우는 박람회에서 쓰는 경우임)
   const { boardContent, setBoardContent, writeType } = props;
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [ex, setEx] = useState("sdsdasdasdas");
   let type = props.type;
 
   type = type === undefined ? 0 : type;
@@ -63,7 +64,9 @@ const ToastEditor = (props) => {
           language="ko-KR"
           height="600px"
           onChange={changeValue}
-          hooks={{ addImageBlobHook: uploadImage }}
+          hooks={{
+            addImageBlobHook: uploadImage,
+          }}
         />
       )}
       {/* 밑에 있는 Editor 컴포넌트 props 수정해서 쓰시면 됩니다 위에꺼는 박람회 용이라서 조금 달라요 */}
