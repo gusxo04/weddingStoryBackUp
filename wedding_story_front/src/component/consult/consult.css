@@ -75,7 +75,7 @@
   height: 40px;
   border: 1px #c19975;
 }
-
+/*
 .consult-content > .input-wrap > .input-item > textarea {
   padding: 12px 16px;
   border-radius: 8px;
@@ -85,7 +85,7 @@
   height: 100px;
   border: 1px var(--main1) solid;
 }
-
+*/
 .btn {
   border: 1px solid #fff;
   padding: 10px 25px;

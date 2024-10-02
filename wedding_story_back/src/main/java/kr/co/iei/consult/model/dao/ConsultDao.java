@@ -11,5 +11,7 @@ public interface ConsultDao {
 
 	int insertConsult(ConsultDTO consult, MemberDTO member, ProductDTO product);
 
+	ConsultDTO selectConsult(int consultNo);
+
 
 }
