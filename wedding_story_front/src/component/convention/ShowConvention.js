@@ -75,9 +75,9 @@ const ShowConvention = (props) => {
           text : "티켓 환불을 취소하시겠습니까?",
           showCancelButton : true,
           cancelButtonText : "계속하기",
-          cancelButtonColor : "var(--main2)",
+          cancelButtonColor : "var(--main1)",
           confirmButtonText : "환불취소",
-          confirmButtonColor : "var(--main1)"
+          confirmButtonColor : "var(--main2)"
         }).then((data) => {
           if(data.isConfirmed){
             setAlertType(0);
@@ -91,9 +91,9 @@ const ShowConvention = (props) => {
           text : "결제를 취소하시겠습니까?",
           showCancelButton : true,
           cancelButtonText : "계속하기",
-          cancelButtonColor : "var(--main2)",
+          cancelButtonColor : "var(--main1)",
           confirmButtonText : "결제취소",
-          confirmButtonColor : "var(--main1)",
+          confirmButtonColor : "var(--main2)",
           // reverseButtons : true
           // willOpen: () => {
           //   document.body.style.overflow = 'visible';

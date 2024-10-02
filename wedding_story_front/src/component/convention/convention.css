@@ -270,11 +270,11 @@
     border-radius: 15px;
 }
 .convention-btn-wrap>.convention-cancel-btn{
-    background-color: var(--main1);
+    background-color: var(--main2);
     
 }
 .convention-btn-wrap>.convention-submit-btn{
-    background-color: var(--main2);
+    background-color: var(--main1);
     
 }
 
