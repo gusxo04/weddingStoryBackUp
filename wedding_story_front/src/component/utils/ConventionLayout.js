@@ -481,11 +481,14 @@ const SeatAdminAlert = (props) => {
 
   const [seatPrice, setSeatPrice] = useState(seatInfo.conventionSeatPrice);
   const [selectStatus, setSelectStatus] = useState(seatInfo.seatStatus);
+  const [warning, setWarning] = useState(false);
 
   const wrongPriceRef = useRef(null);
   const wrongContainerRef = useRef(null);
   const showWrongRef = useRef(null);
   
+  const [payment, setPayment] = useState(null);
+  const [result, setResult] = useState(-1);
 
   const closeSeatAlert = (e) => {
     if(e.target.className === "convention-seat-alert-wrap"){
@@ -493,7 +496,46 @@ const SeatAdminAlert = (props) => {
     }
   }
 
+  const refundSeat = () => {
+    if(isNaN(seatPrice)){
+      wrongPriceRef.current.classList.add("wrong-price");
+      showWrongRef.current.style.display = "flex";
+      wrongContainerRef.current.id = "wrong-price-zone";
+      return;
+    }
+    
+    if(seatPrice < 99){
+      wrongPriceRef.current.classList.add("wrong-price");
+      showWrongRef.current.style.display = "flex";
+      wrongContainerRef.current.id = "wrong-price-zone";
+      // 최소 100원은 해야함
+      return;
+    }
+
+    // form.append("companyNo", seatInfo.companyNo);
+    axios.get(`${backServer}/convention/payment/company/${seatInfo.companyNo}/${seatInfo.conventionNo}`)
+    .then((res) => {
+      console.log(res);
+      if(res.data.payNo){
+        setPayment({
+          merchantUid: res.data.merchantUid,
+          payNo: res.data.payNo,
+          payPrice: res.data.payPrice,
+          conventionCompanyNo: res.data.conventionCompanyNo
+        })
+      }
+      else{
+        // 조회실패임 (중간에 뭐 탈퇴했거나 그런 이유로 실패함)
+        console.log("조회실패");
+      }
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+  }
+
   const updatePrice = () => {
+
     if(isNaN(seatPrice)){
       wrongPriceRef.current.classList.add("wrong-price");
       showWrongRef.current.style.display = "flex";
@@ -515,10 +557,12 @@ const SeatAdminAlert = (props) => {
     form.append("conventionSeatPrice", seatPrice);
     form.append("seatStatus", selectStatus);
 
+
     axios.patch(`${backServer}/convention/update/seatInfo`, form)
     .then((res) => {
       // console.log(res);
       if(res.data){
+        setWarning(false);
         setSeatAdminAlert(false);
         setChangedSeatInfo(!changedSeatInfo);
         Swal.fire({
@@ -533,10 +577,25 @@ const SeatAdminAlert = (props) => {
     .catch((err) => {
       console.error(err); 
     })
-
-
-    
   }
+
+  useEffect(() => {
+    // 환불 위한 useEffect
+    if(payment){
+      cancelPay(0, seatInfo.companyNo, payment, "부스 폐쇄", setResult);
+    }
+  }, [payment]);
+
+  useEffect(() => {
+    if(result === 0){
+      console.log("환불 실패");
+    }
+    else if(result === 1){
+      console.log(" 환 불 성공");
+      setWarning(false);
+      updatePrice();
+    }
+  }, [result]);
 
 
 
@@ -573,38 +632,55 @@ const SeatAdminAlert = (props) => {
           </div>
 
           <div className="convention-seat-info-status">
-            <div className="convention-seat-info-status-title">
-              <span>자리 상태</span>
+            {warning ?
+            <div className="convention-seat-inf-warning" style={{textAlign:"center"}}>
+              <span>이미 구입된 부스입니다</span>
+              <br />
+              <span>정말로 수정하시겠습니까?</span>
+              <br />
+              <span style={{color:"#bbb"}}>결제는 자동으로 환불됩니다</span>
             </div>
-            
-            <div className="convention-seat-info-status-content df-basic">
-              <div className="convention-seat-info-status-ok status-container">
-                <div className="status-ok-container">
-                  <label htmlFor="status-ok">정상</label>
-                </div>
-                <div className="status-ok-input-container">
-                  <input type="radio" id="status-ok" name="status" checked={selectStatus === 0 ? true : false} onChange={() => {
-                    setSelectStatus(0);
-                  }} />
-                </div>
+            :
+            <>
+              <div className="convention-seat-info-status-title">
+                <span>자리 상태</span>
               </div>
+              
+              <div className="convention-seat-info-status-content df-basic">
+                <div className="convention-seat-info-status-ok status-container">
+                  <div className="status-ok-container">
+                    <label htmlFor="status-ok">정상</label>
+                  </div>
+                  <div className="status-ok-input-container">
+                    <input type="radio" id="status-ok" name="status" checked={selectStatus === 0 ? true : false} onChange={() => {
+                      setSelectStatus(0);
+                    }} />
+                  </div>
+                </div>
 
-              <div className="convention-seat-info-status-bad status-container">
-                <div className="status-bad-container">
-                  <label htmlFor="status-bad">비정상</label>
-                </div>
-                <div className="status-bad-input-container">
-                  <input type="radio" id="status-bad" name="status" checked={selectStatus === 1 ? true : false} onChange={() => {
-                    setSelectStatus(1);
-                  }} />
+                <div className="convention-seat-info-status-bad status-container">
+                  <div className="status-bad-container">
+                    <label htmlFor="status-bad">비정상</label>
+                  </div>
+                  <div className="status-bad-input-container">
+                    <input type="radio" id="status-bad" name="status" checked={selectStatus === 1 ? true : false} onChange={() => {
+                      setSelectStatus(1);
+                    }} />
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
+            }
 
           </div>
 
           <div className="convention-seat-info-btn df-basic">
-            <button onClick={updatePrice}>수정하기</button>
+            <button onClick={() => setSeatAdminAlert(false)}>취소</button>
+            <button onClick={() => {
+              if(warning) refundSeat();
+              else if(seatInfo.companyNo) setWarning(true);
+              else if(!seatInfo.companyNo) updatePrice()
+            }}>수정하기</button>
           </div>
           
         </div>

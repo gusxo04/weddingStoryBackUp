@@ -313,6 +313,7 @@
 }
 .convention-seat-info-btn>.cant-buy{
     background-color: #ccc;
+    /* background-color: var(--main2); */
 }
 
 
