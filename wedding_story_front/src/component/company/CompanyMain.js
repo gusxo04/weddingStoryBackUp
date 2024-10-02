@@ -1,11 +1,18 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import CompanyJoin from "./CompanyJoin";
 import "./company.css";
 import CompanyInfo from "./CompanyInfo";
 import CompanyProduct from "./CompanyProductInsert";
 import CompanyHeader from "../common/CompanyHeader";
-import { useRecoilState } from "recoil";
-import { companyNoState, loginNoState } from "../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  companyNoState,
+  isLoginState,
+  loginIdState,
+  loginNoState,
+  memberCodeState,
+  memberTypeState,
+} from "../utils/RecoilData";
 import CompanyNoNull from "./CompanyNoNull";
 import CompanyInfoUpdate from "./CompanyInfoUpdate";
 import axios from "axios";
@@ -24,7 +31,9 @@ const CompanyMain = () => {
       <div className="company-wrap">
         <div className="side-info">
           <section className="section">
-            <div className="side-info-content">사이드 정보 테스트</div>
+            <div className="side-info-content">
+              <HeaderLink />
+            </div>
           </section>
         </div>
 
@@ -47,3 +56,40 @@ const CompanyMain = () => {
   );
 };
 export default CompanyMain;
+
+const HeaderLink = () => {
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  const [loginNo, setLoginNo] = useRecoilState(loginNoState);
+  const isLogin = useRecoilValue(isLoginState);
+  const logout = () => {
+    setLoginNo(0);
+    setLoginId("");
+    setMemberType(-1);
+    setMemberCode("");
+    setCompanyNo(null);
+    delete axios.defaults.headers.common["Authorization"];
+    window.localStorage.removeItem("refreshToken");
+  };
+  return (
+    <>
+      {isLogin ? (
+        <div className="">
+          <Link to="/logout" onClick={logout}>
+            로그아웃
+          </Link>
+          <span>|</span>
+          <Link to="#">고객센터</Link>
+        </div>
+      ) : (
+        <div className="">
+          <Link to="/join/agree">회원가입</Link>
+          <span>|</span>
+          <Link to="#">고객센터</Link>
+        </div>
+      )}
+    </>
+  );
+};
