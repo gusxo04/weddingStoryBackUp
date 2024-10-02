@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.iei.admin.model.dto.NoticeDTO;
 import kr.co.iei.admin.model.service.AdminService;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.FileUtils;
@@ -73,12 +74,24 @@ public class AdminController {
 		for(String companyNo : deleteCompany) {
 			int del = adminService.deleteCom(companyNo);
 			if(del>0) {
-				System.err.println(companyNo+"삭제 성공");
+//				System.err.println(companyNo+"삭제 성공");
 				result++;
 			}
 		}
 		return result;
 	}
+	@GetMapping(value = "/refuse/{loginId}/{companyNo}/{refuse}/{adNo}")
+    public ResponseEntity<Integer> refuseAd(@PathVariable String loginId, @PathVariable String companyNo, @PathVariable String refuse, @PathVariable int adNo){
+    	int result = adminService.refuseAd(loginId, companyNo, refuse,adNo);
+    	return ResponseEntity.ok(result);
+    }
 	
+	@GetMapping(value = "/updateAdmin/{insertId}/{selectedType}")
+    public ResponseEntity<Integer> insertAdmin(@PathVariable String insertId, @PathVariable int selectedType){
+    	System.out.println("관리자 등록");
+    	System.out.println("insertId:"+insertId+", selectedType :"+selectedType);
+    	int result = adminService.insertAdmin(selectedType, insertId);
+    	return ResponseEntity.ok(result);
+    }
 	
 }

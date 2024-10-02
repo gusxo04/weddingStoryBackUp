@@ -17,7 +17,7 @@ const NoticeWrite = () => {
   const [noticeContent, setNoticeContent] = useState(""); //사용자가 입력할 내용
   const [noticeFile, setNoticeFile] = useState([]); //첨부파일(여러개일 수 있으므로 배열로 처리)
   const [noticeVisible, setNoticeVisible] = useState(1); //공개여부 1 모든업체 2 특정업체 3 관리자끼리만
-  const [companyNo, setCompanyNo] = useState(0); //특정 업체 대상으로 공개 시 회사 코드 입력
+  const [companyNo, setCompanyNo] = useState(""); //특정 업체 대상으로 공개 시 회사 코드 입력
 
   const writeNotice = () => {
     if (noticeTitle !== "" && noticeContent !== "") {

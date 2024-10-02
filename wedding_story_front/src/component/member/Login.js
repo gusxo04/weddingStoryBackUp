@@ -47,7 +47,7 @@ const Login = () => {
           setMemberNo(res.data.memberNo);
           axios.defaults.headers.common["Authorization"] = res.data.accessToken;
           window.localStorage.setItem("refreshToken", res.data.refreshToken);
-          if (res.data.memberType === 0) {
+          if (res.data.memberType === 0 || res.data.memberType === 3) {
             navigate("/admin");
           } else if (res.data.memberType === 1) {
             navigate("/");

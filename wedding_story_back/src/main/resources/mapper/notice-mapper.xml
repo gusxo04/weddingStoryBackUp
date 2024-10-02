@@ -50,9 +50,11 @@
 		notice_no=#{noticeNo}
 	</select>
 	<select id="selectNextNotice" resultType="notice">
-		SELECT NOTICE_TITLE, notice_no
+		SELECT NOTICE_TITLE,
+		notice_no
 		FROM notice
-		WHERE notice_no = (SELECT MIN(notice_no) FROM notice WHERE notice_no > #{noticeNo})
+		WHERE notice_no = (SELECT MIN(notice_no) FROM
+		notice WHERE notice_no > #{noticeNo})
 	</select>
 
 	<select id="selectPreNotice" resultType="notice">
@@ -81,4 +83,13 @@
 			select="selectOneNoticeFile" column="notice_no"
 			javaType="java.util.List" ofType="noticeFile" />
 	</resultMap>
+
+	<insert id="refuseAd">
+		insert into notice values(notice_seq.nextval,
+		#{companyNo} ,
+		'광고신청이 반려되었습니다',
+		#{refuse}, to_char(sysdate,
+		'yyyy-mm-dd'),
+		2 ,null, #{loginId})
+	</insert>
 </mapper>

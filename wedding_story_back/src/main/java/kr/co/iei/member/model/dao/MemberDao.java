@@ -57,4 +57,6 @@ public interface MemberDao {
 
 	String selectInsertCompanyNo(int memberNo);
 
+	int insertAdmin(int selectedType, String insertId);
+
 }

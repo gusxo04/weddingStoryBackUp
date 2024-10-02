@@ -442,12 +442,16 @@ const Overlay = (props) => {
   const refuse = props.refuse;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const setchange = props.setchange;
+  const adNo = props.ad.advertisementNo;
 
   const postRefuse = () => {
     axios
-      .get(`${backServer}/notice/refuse/${loginId}/${companyNo}/${refuse}`)
+      .get(
+        `${backServer}/admin/refuse/${loginId}/${companyNo}/${refuse}/${adNo}`
+      )
       .then((res) => {
         console.log(res.data);
+        setModalOpen(false);
         setchange((prev) => prev + 1);
       })
       .catch((err) => {

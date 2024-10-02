@@ -75,6 +75,7 @@ const NoticeFrm = (props) => {
       <div className="notice-thumb-wrap">
         {noticeImg ? (
           <img
+            className="notice-thumb"
             src={noticeImg}
             onClick={() => {
               thumbnailRef.current.click();

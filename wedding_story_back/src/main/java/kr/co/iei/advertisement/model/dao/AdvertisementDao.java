@@ -21,5 +21,7 @@ public interface AdvertisementDao {
 
 	int acceptAdvertisement(int advertisementNo);
 
+	int refuseAd(int adNo);
+
 
 }

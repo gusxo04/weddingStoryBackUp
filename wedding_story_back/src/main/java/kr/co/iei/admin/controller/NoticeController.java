@@ -96,9 +96,4 @@ public class NoticeController {
     	Map<String, NoticeDTO> map = noticeService.selectPreNextNotice(noticeNo);
     	return ResponseEntity.ok(map);
     }
-    @GetMapping(value = "/refuse/{loginId}/{companyNo}/{refuse}")
-    public ResponseEntity<Map> refuseAd(@PathVariable int noticeNo){
-    	Map<String, NoticeDTO> map = noticeService.selectPreNextNotice(noticeNo);
-    	return ResponseEntity.ok(map);
-    }
 }

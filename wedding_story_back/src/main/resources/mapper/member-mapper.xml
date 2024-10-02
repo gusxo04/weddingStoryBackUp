@@ -6,7 +6,8 @@
 		where member_Id=#{checkId}
 	</select>
 	<select id="checkCode" resultType="int">
-		select count(*) from member where company_no=#{checkCode}
+		select count(*) from member
+		where company_no=#{checkCode}
 	</select>
 
 	<select id="adminTotalCount" resultType="int">
@@ -16,7 +17,8 @@
 
 	<select id="getMemberList" resultType="member">
 		select * from
-		(select rownum as rnum, m.* from
+		(select
+		rownum as rnum, m.* from
 		(select
 		member_no,
 		member_code,
@@ -26,7 +28,8 @@
 		member_gender,
 		member_phone,
 		member_email
-		from member where member_type=1 order by member_name)m)
+		from
+		member where member_type=1 order by member_name)m)
 		where rnum between
 		#{start} and #{end}
 	</select>
@@ -52,52 +55,72 @@
 		values(member_seq.nextval,#{companyNo},#{memberCode},#{memberType},#{memberId},#{memberPw},#{memberName},#{memberGender},#{memberPhone},#{memberEmail},#{partnerName},to_char(sysdate,'yyyy-mm-dd'),#{partnerId},#{companyBusinessNo})
 	</insert>
 	<update id="updateMember">
-		update member set partner_name=#{memberName},partner_id=#{memberId} where
+		update member set
+		partner_name=#{memberName},partner_id=#{memberId} where
 		member_id=#{partnerId}
 	</update>
 	<select id="getPartner" resultType="member">
 		SELECT * FROM member
-		WHERE member_code = #{myCode}
+		WHERE
+		member_code = #{myCode}
 		AND member_no NOT IN (#{myNo})
 	</select>
 	<update id="delete">
-		update member set member_type=4 where member_no=#{memberNo}
+		update member set member_type=4 where
+		member_no=#{memberNo}
 	</update>
 	<select id="searchPw" resultType="member">
-		select * from member where member_id=#{memberId}
+		select * from member where
+		member_id=#{memberId}
 	</select>
 	<select id="checkBusinessNo" resultType="String">
-		select company_no from member where company_business_no=#{companyBusinessNo}
+		select company_no from
+		member where company_business_no=#{companyBusinessNo}
 	</select>
-	
+
 	<select id="selectMemberConsult" resultType="member">
-		select member_name, member_phone from member where member_no=#{memberNo} 
+		select member_name,
+		member_phone from member where member_no=#{memberNo}
 	</select>
-	
+
 	<update id="updateCompanyNo">
-		update member set company_no = #{companyNo} where member_no = #{memberNo}
+		update member set company_no = #{companyNo} where
+		member_no = #{memberNo}
 	</update>
-	
+
 	<select id="selectLoginMember" resultType="member">
-		select * from member where member_no=#{memberNo}
+		select * from member
+		where member_no=#{memberNo}
 	</select>
 	<update id="modifyPw">
-		update member set member_pw=#{memberPw} where member_id=#{memberId}
+		update member set member_pw=#{memberPw} where
+		member_id=#{memberId}
 	</update>
 	<update id="updateMember2">
-		update member set member_name=#{memberName},member_phone=#{memberPhone},partner_name=#{partnerName},partner_id=#{partnerId} where member_id=#{memberId}
+		update member set
+		member_name=#{memberName},member_phone=#{memberPhone},partner_name=#{partnerName},partner_id=#{partnerId}
+		where member_id=#{memberId}
 	</update>
 	<update id="deleteMember">
-		update member set member_type=4 where member_id=#{memberId}
+		update member set member_type=4 where
+		member_id=#{memberId}
 	</update>
 	<select id="checkEmail" resultType="int">
-		select count(*) from member where member_email=#{memberEmail}
-	
+		select count(*) from member
+		where member_email=#{memberEmail}
+	</select>
+
 	<select id="selectCompanyNo" resultType="String">
-		select company_no from member where member_no=#{loginNo}
+		select company_no from
+		member where member_no=#{loginNo}
 	</select>
-	
+
 	<select id="selectInsertCompanyNo" resultType="String">
-		select company_no from member where member_no=#{memberNo}
+		select company_no
+		from member where member_no=#{memberNo}
 	</select>
+	<update id="insertAdmin">
+		update member set member_type=#{selectedType} where
+		member_id=#{insertId}
+	</update>
 </mapper>

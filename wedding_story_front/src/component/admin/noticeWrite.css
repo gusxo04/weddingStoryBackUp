@@ -8,3 +8,7 @@
   flex-direction: column;
   position: relative;
 }
+.notice-thumb {
+  max-width: 500px;
+  max-height: 500px;
+}

@@ -23,6 +23,10 @@
   <update id="acceptAdvertisement">
   	update advertisement set advertisement_state=1 where advertisement_no=#{advertisementNo}
   </update>
+  
+  <delete id="refuseAd">
+  	delete from advertisement where advertisement_no=#{adNo}
+  </delete>
 </mapper>
 
   

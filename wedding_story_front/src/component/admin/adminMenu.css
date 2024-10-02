@@ -1,21 +1,132 @@
 .admin-menu {
-  border: 1px solid black;
+  border: 1px solid #c0c0c0;
+  border-radius: 10px;
   width: 300px;
-  height: 350px;
+  height: 230px;
   text-align: center;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 .admin-menu-img img {
-  max-width: 100px;
+  max-width: 80px;
   height: auto;
-  margin-top: 25px;
+  margin-top: 20px;
 }
+
 .admin-menu-wrap {
   display: inline-block;
-  width: 303px;
+  width: 320px;
   margin-top: 100px;
   margin-left: 30px;
 }
+
 .admin-menu-tbl {
   text-align: center;
   width: 100%;
+}
+.adminOverlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.adminOverlay-content {
+  width: 30%;
+  max-width: 700px;
+  min-width: 250px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.adminOverlay-content-top {
+  border-bottom: 1px solid #dddddd;
+  padding: 20px;
+}
+
+.adminOverlay-content h3 {
+  margin: 0;
+}
+
+.adminOverlay-content-middle {
+  margin: 20px;
+  text-align: left;
+}
+
+.insert-wrap {
+  margin: auto;
+  width: 80%;
+  height: 80%;
+  border: 1px solid #dddddd;
+  position: relative;
+  top: 7%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.insert-wrap label {
+  margin-bottom: 5px;
+}
+
+.adminOverlay-content-bottom {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+.adminOverlay-content-bottom button {
+  padding: 10px 20px;
+  width: 100px;
+  background-color: #c19975;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-menu-tbl {
+  height: 50%;
+  text-align: center;
+}
+.admin-menu-tbl td {
+  width: 50%;
+}
+.insertAdminBtn,
+.logoutBtn {
+  min-width: 85%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #dddddd;
+}
+
+.insertAdminBtn {
+  background-color: white;
+  color: #c19975;
+}
+
+.logoutBtn {
+  background-color: white;
+  color: #c19975;
+}
+
+.insertAdminBtn:hover {
+  background-color: #c19975;
+  color: white;
+}
+
+.logoutBtn:hover {
+  background-color: #c19975;
+  color: white;
 }

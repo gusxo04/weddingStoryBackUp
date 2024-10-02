@@ -26,4 +26,6 @@ public interface NoticeDao {
 
 	NoticeDTO selectPreNotice(int noticeNo);
 
+	int refuseAd(String loginId, String companyNo, String refuse);
+
 }

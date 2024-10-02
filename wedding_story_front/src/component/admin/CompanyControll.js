@@ -140,9 +140,16 @@ const CompanyItem = (props) => {
     <tr className="userInfo" onClick={() => companyData(company)}>
       <td>{company.companyNo}</td>
       <td>{company.companyName}</td>
-      {company.memberList.map((c, index) => (
-        <td key={"member" + index}>{c.memberName}</td>
-      ))}
+      {company.memberList.length === 0 ? (
+        <td>사업자 미정</td>
+      ) : (
+        company.memberList.map((c, index) => (
+          <td key={"member" + index}>
+            {c.memberName ? c.memberName : "사업자 미정"}
+          </td>
+        ))
+      )}
+
       <td>{company.companyCategory}</td>
       <td>{company.companyTel}</td>
       <td>{company.companyAddr}</td>

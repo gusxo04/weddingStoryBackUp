@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import "./common.css";
+import { useRecoilState } from "recoil";
+import { memberTypeState } from "../utils/RecoilData";
 
 const AdminHeader = () => {
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
   return (
     <header className="header-c">
       <div className="header-c-logo">
@@ -62,14 +65,16 @@ const AdminHeader = () => {
               <span>Q&A</span>
             </Link>
           </li>
-          <li>
-            <Link to="/admin/adminControll" className="nav-item">
-              <div>
-                <span className="material-icons">settings</span>
-              </div>
-              <span>사용자관리</span>
-            </Link>
-          </li>
+          {memberType === 0 ? (
+            <li>
+              <Link to="/admin/adminControll" className="nav-item">
+                <div>
+                  <span className="material-icons">settings</span>
+                </div>
+                <span>관리자 현황</span>
+              </Link>
+            </li>
+          ) : null}
         </ul>
       </div>
     </header>
