@@ -59,6 +59,8 @@ const ConventionLayout = (props) => {
       setASeat(res.data.line0);
       setBSeat(res.data.line1);
       setCSeat(res.data.line2);
+
+      console.log("res : ",res);
       
     })
     .catch(err => {
@@ -72,6 +74,7 @@ const ConventionLayout = (props) => {
       // 어드민은 문제 있는 좌석도 클릭 가능
     }
   }
+
 
   // main 에서는 업체 말곤 다 permission이 1임 
   const clickedSeat = (seat) => {
