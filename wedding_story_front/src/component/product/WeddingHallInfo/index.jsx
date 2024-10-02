@@ -87,7 +87,9 @@ const WeddingHallInfo = () => {
         </div>
         <div className={styles["product-btn-zone"]}>
           <button type="button" className={styles["btn"]}>
-            <Link to={`/consult/consult/:${productNo}`}>상담하기</Link>
+            <Link to="/consult/consult/" state={{ productNo: productNo }}>
+              상담하기
+            </Link>
           </button>
           <button type="button" className={styles["btn"]}>
             <Link to="/product/weddingHall">예약하기</Link>

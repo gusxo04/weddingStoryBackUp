@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./consult.css";
 import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
 
 const Consult = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const params = useParams();
-  const productNo = params.productNo;
+  const location = useLocation();
+
+  const productNo = location.state?.productNo;
+
   console.log(productNo);
   const navigate = useNavigate();
   const [memberNo, setMemberNo] = useRecoilState(loginNoState);
