@@ -61,9 +61,17 @@ const NoticeView = () => {
     <section className="notice-view-wrap">
       <div className="notice-content-wrap">
         <div className="title-wrap">
-          <Link to="/admin/notice/list" className="gotolist">
-            <h3>공지사항 목록 &gt;</h3>
-          </Link>
+          <div className="notice-btn">
+            <Link to="/admin/notice/list" className="gotolist">
+              <h3>공지사항 목록 &gt;</h3>
+            </Link>
+            <Link
+              to={`/admin/notice/update/${notice.noticeNo}`}
+              className="gotolist"
+            >
+              <h3>수정</h3>
+            </Link>
+          </div>
           <h1>{notice.noticeTitle}</h1>
           <a className="subTitle">
             <span>{notice.noticeWriter}</span>
@@ -71,14 +79,25 @@ const NoticeView = () => {
             <span>{notice.noticeDate}</span>
           </a>
           <div className="line"></div>
-          <div className="notice-thumbnail">
-            <img
-              src={
-                notice.noticeThumb
-                  ? `${backServer}/notice/thumb/${notice.noticeThumb}`
-                  : "/image/default_img.png"
-              }
-            />
+
+          <div className="file-thumbnail-container">
+            <div className="notice-thumbnail">
+              <img
+                src={
+                  notice.noticeThumb
+                    ? `${backServer}/notice/thumb/${notice.noticeThumb}`
+                    : "/image/default_img.png"
+                }
+                alt="Notice Thumbnail"
+              />
+            </div>
+            <div className="notice-file-wrap">
+              {notice.fileList
+                ? notice.fileList.map((file, i) => {
+                    return <FileItem key={"file-" + i} file={file} />;
+                  })
+                : ""}
+            </div>
           </div>
         </div>
 
@@ -109,6 +128,42 @@ const NoticeView = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+const FileItem = (props) => {
+  const file = props.file;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const filedown = () => {
+    axios
+      .get(`${backServer}/notice/file/${file.noticeFileNo}`, {
+        responseType: "blob",
+      })
+      .then((res) => {
+        console.log(res);
+        const blob = new Blob([res.data]);
+        const fileObjectUrl = window.URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = fileObjectUrl;
+        link.style.display = "none";
+        link.download = file.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(fileObjectUrl);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <div className="notice-file">
+      <span className="material-icons file-icon" onClick={filedown}>
+        file_download
+      </span>
+      <span className="file-name">{file.filename}</span>
+    </div>
   );
 };
 export default NoticeView;

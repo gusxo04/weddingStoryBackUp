@@ -93,4 +93,9 @@ public class NoticeService {
 		return map;
 	}
 
+	public NoticeFileDTO getNoticeFile(int noticeFileNo) {
+		NoticeFileDTO noticeFile  = noticeDao.getNoticeFile(noticeFileNo);
+		return noticeFile;
+	}
+
 }

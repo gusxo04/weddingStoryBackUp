@@ -28,4 +28,6 @@ public interface NoticeDao {
 
 	int refuseAd(String loginId, String companyNo, String refuse);
 
+	NoticeFileDTO getNoticeFile(int noticeFileNo);
+
 }

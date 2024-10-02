@@ -92,4 +92,8 @@
 		'yyyy-mm-dd'),
 		2 ,null, #{loginId})
 	</insert>
+	
+	<select id="getNoticeFile" resultType="noticeFile">
+  	select * from notice_file where notice_file_no=#{noticeFileNo}
+  </select>
 </mapper>

@@ -1,11 +1,19 @@
 package kr.co.iei.admin.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -96,4 +104,22 @@ public class NoticeController {
     	Map<String, NoticeDTO> map = noticeService.selectPreNextNotice(noticeNo);
     	return ResponseEntity.ok(map);
     }
+    
+    @GetMapping(value = "/file/{noticeFileNo}")
+	public ResponseEntity<Resource> filedown(@PathVariable int noticeFileNo) throws FileNotFoundException {
+		NoticeFileDTO noticeFile = noticeService.getNoticeFile(noticeFileNo);
+		String savepath = root + "/notice/";
+		File file = new File(savepath + noticeFile.getFilepath());
+
+		Resource resource = new InputStreamResource(new FileInputStream(file));
+
+		// 파일 다운로드를 위한 헤더 설정
+		HttpHeaders header = new HttpHeaders();
+		header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		header.add("Pragma", "no-cache");
+		header.add("Expires", "0");
+
+		return ResponseEntity.status(HttpStatus.OK).headers(header).contentLength(file.length())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+	}
 }
