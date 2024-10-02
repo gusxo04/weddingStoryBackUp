@@ -28,7 +28,7 @@ const RefundTicket = (props) => {
   useEffect(() => {
     if(result === 0){
       Swal.fire({
-        title : "박람회 결제",
+        title : "박람회 환불",
         text : "잠시후 다시 시도해주세요",
         confirmButtonColor : "var(--main1)",
         confirmButtonText : "확인"
@@ -38,7 +38,7 @@ const RefundTicket = (props) => {
     else if(result === 1){
       setIsPayment(!isPayment);
       Swal.fire({
-        title : "박람회 결제",
+        title : "박람회 환불",
         text : "환불 완료",
         confirmButtonColor : "var(--main1)",
         confirmButtonText : "확인"
