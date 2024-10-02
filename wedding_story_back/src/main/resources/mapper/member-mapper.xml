@@ -101,6 +101,7 @@
 	<select id="selectInsertCompanyNo" resultType="String">
 		select company_no from member where member_no=#{memberNo}
 	</select>
+	
 	<select id="consultList" resultType="consult">
 		select * from consult where member_no=#{memberNo}
 	</select>
