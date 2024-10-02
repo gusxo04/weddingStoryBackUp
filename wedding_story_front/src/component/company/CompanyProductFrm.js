@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ToastEditor from "../utils/ToastEditor";
 import { useLocation } from "react-router-dom";
+import { Viewer } from "@toast-ui/react-editor";
 
 const CompanyProductFrm = (props) => {
   const productName = props.productName;
@@ -20,7 +21,12 @@ const CompanyProductFrm = (props) => {
   const productContent = props.productContent;
   const setProductContent = props.setProductContent;
   const companyCategory = props.companyCategory;
-
+  /*업데이트시에 삭제할 사진 담기는 state*/
+  const delThumbsFile = props.delThumbsFile;
+  const setDelThumbsFile = props.setDelThumbsFile;
+  console.log(delThumbsFile);
+  console.log(productThumb);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const [productPreImg, setProductPreImg] = useState(null);
   const imageRef = useRef();
   /*img = 대표사진 1장  => productImg("")*/
@@ -89,13 +95,64 @@ const CompanyProductFrm = (props) => {
         setProductPreThumb(newPreviews); // 미리보기 배열 업데이트
       };
     } else {
+      const cancelPreviews = [...productPreThumb]; //미리보기 배열 복사
+      cancelPreviews[index] = null; //선택된(index번째) 미리보기 배열을 null로 변경
+      setProductPreThumb(cancelPreviews); //변경된 배열로 교체
+      const cancelThumb = [...productThumb]; //썸네일 배열 복사
+      cancelThumb[index] = null; //선택된(index번째) 배열을 null로 변경
+      setProductThumb(cancelThumb); //변경된 배열로 교체
     }
   };
 
+  const updateThumb = (e, index) => {
+    const files = e.currentTarget.files;
+    if (files.length !== 0) {
+      const newFile = files[0]; //등록할때 마다 새로 생기는 파일
+      const reader = new FileReader();
+
+      reader.readAsDataURL(newFile); // 파일을 base64로 변환하여 미리보기
+      reader.onloadend = () => {
+        const newProductThumb = [...productThumb]; // 전송할 파일 객체 배열 복사
+        newProductThumb[index] = newFile; // 파일 객체 저장
+
+        const newPreviews = [...productPreThumb]; // 미리보기 이미지 배열 복사
+        newPreviews[index] = reader.result; // 미리보기 이미지 저장
+
+        setProductThumb(newProductThumb); // 파일 배열 저장
+        setProductPreThumb(newPreviews); // 미리보기 배열 업데이트
+      };
+    } else {
+    }
+  };
+
+  const deleteThumbInsert = (index) => {
+    const cancelPreviews = [...productPreThumb]; //미리보기 배열 복사
+    cancelPreviews[index] = null; //선택된(index번째) 미리보기 배열을 null로 변경
+    setProductPreThumb(cancelPreviews); //변경된 배열로 교체
+    const cancelThumb = [...productThumb]; //썸네일 배열 복사
+    cancelThumb[index] = null; //선택된(index번째) 배열을 null로 변경
+    setProductThumb(cancelThumb); //변경된 배열
+  };
+
+  const deleteThumb = (index) => {
+    const cancelPreviews = [...productPreThumb]; // 미리보기 배열 복사
+    const previousThumb = productThumb[index]; // 삭제 전 기존 이미지 추출
+
+    if (previousThumb) {
+      setDelThumbsFile((prev) => [...prev, previousThumb]); // 기존 이미지 삭제 목록에 추가
+    }
+
+    cancelPreviews[index] = null; // 미리보기 배열에서 제거
+    setProductPreThumb(cancelPreviews); // 상태 업데이트
+
+    const cancelThumb = [...productThumb]; // 썸네일 배열 복사
+    cancelThumb[index] = null; // 썸네일 배열에서 제거
+    setProductThumb(cancelThumb); // 상태 업데이트
+  };
   return (
     <div className="companyProduct-wrap">
       <div className="company-title">
-        {url === "/company/product/update/number" ? "상품 등록" : "상품 수정"}
+        {url === "/company/product/insert" ? "상품 등록" : "상품 수정"}
       </div>
       <section className="company-section">
         <div className="thumbnail-zone">
@@ -106,6 +163,13 @@ const CompanyProductFrm = (props) => {
                   imageRef.current.click();
                 }}
                 src={productPreImg}
+              />
+            ) : productImg ? (
+              <img
+                onClick={() => {
+                  imageRef.current.click();
+                }}
+                src={`${backServer}/product/image/${productImg}`}
               />
             ) : (
               <img
@@ -133,6 +197,7 @@ const CompanyProductFrm = (props) => {
                 type="text"
                 id="productName"
                 name="productName"
+                value={productName}
                 onChange={(e) => {
                   setProductName(e.target.value);
                 }}
@@ -207,13 +272,24 @@ const CompanyProductFrm = (props) => {
         <ThumbnailDiv
           productPreThumb={productPreThumb}
           onChangeThumb={changeThumb}
+          productThumb={productThumb}
+          backServer={backServer}
+          onUpdateThumb={updateThumb}
+          url={url}
+          deleteThumbInsert={deleteThumbInsert}
+          deleteThumb={deleteThumb}
         />
       </div>
       <div className="editor-zone">
-        <ToastEditor
-          boardContent={productContent}
-          setBoardContent={setProductContent}
-        />
+        {url === "/company/product/insert" ||
+        (url !== "/company/product/insert" && productContent !== "") ? (
+          <ToastEditor
+            boardContent={productContent}
+            setBoardContent={setProductContent}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
@@ -221,26 +297,86 @@ const CompanyProductFrm = (props) => {
 export default CompanyProductFrm;
 
 const ThumbnailDiv = (props) => {
-  const { productPreThumb, onChangeThumb } = props;
+  const {
+    productPreThumb,
+    onChangeThumb,
+    productThumb,
+    backServer,
+    url,
+    onUpdateThumb,
+    deleteThumbInsert,
+    deleteThumb,
+  } = props;
   const thumbRefs = useRef([]);
 
   return (
     <>
-      {productPreThumb.map((thumb, index) => (
-        <div key={index} className="productThumb">
-          <img
-            src={thumb || "/image/default_img.png"}
-            onClick={() => thumbRefs.current[index].click()}
-          />
-          <input
-            type="file"
-            accept="image/*"
-            ref={(el) => (thumbRefs.current[index] = el)}
-            onChange={(e) => onChangeThumb(e, index)}
-            style={{ display: "none" }}
-          />
-        </div>
-      ))}
+      {url === "/company/product/insert"
+        ? productPreThumb.map((thumb, index) => (
+            <div key={index} className="productThumb">
+              {thumb ? (
+                <>
+                  <img src={thumb} />
+                  <span
+                    className="product-delete 
+              material-icons"
+                    onClick={() => deleteThumbInsert(index)}
+                  >
+                    delete
+                  </span>
+                </>
+              ) : (
+                <img
+                  src={"/image/default_img.png"}
+                  onClick={() => thumbRefs.current[index].click()}
+                />
+              )}
+
+              <input
+                type="file"
+                accept="image/*"
+                ref={(el) => (thumbRefs.current[index] = el)}
+                onChange={(e) => onChangeThumb(e, index)}
+                onClick={(e) => deleteThumb(e, index)}
+                style={{ display: "none" }}
+              />
+            </div>
+          ))
+        : productThumb.map((thumb, index) => (
+            <div key={index} className="productThumb">
+              {thumb ? (
+                <>
+                  <img
+                    src={
+                      typeof thumb === "string"
+                        ? `${backServer}/product/thumb/${thumb}` // 서버 이미지 경로
+                        : productPreThumb[index] // base64로 변환된 미리보기 이미지
+                    }
+                  />
+                  <span
+                    className="product-delete 
+                  material-icons"
+                    onClick={(e) => deleteThumb(index, e)}
+                  >
+                    delete
+                  </span>
+                </>
+              ) : (
+                <img
+                  src={"/image/default_img.png"}
+                  onClick={() => thumbRefs.current[index].click()}
+                />
+              )}
+
+              <input
+                type="file"
+                accept="image/*"
+                ref={(el) => (thumbRefs.current[index] = el)}
+                onChange={(e) => onUpdateThumb(e, index)}
+                style={{ display: "none" }}
+              />
+            </div>
+          ))}
     </>
   );
 };

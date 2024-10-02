@@ -30,7 +30,7 @@
   </select>
   
   <insert id="insertProduct">
-  	insert into product values(product_seq.nextval,#{companyNo},#{productName},#{productImg},#{productContent},#{productPrice},null,#{coronation},#{diningRoom},#{numberPeople})
+  	insert into product values(product_seq.nextval,#{companyNo},#{productName},#{productImg},#{productContent},#{productPrice},null,#{coronation},#{diningRoom},#{numberPeople},null,#{companyCategory})
   	<selectKey resultType="int" keyProperty="productNo" order="AFTER">
   		select max(product_no) from product  
   	</selectKey> 
@@ -46,7 +46,7 @@
   <select id="selectProductName" resultType="product">
   	select product_no, product_name from product where product_no = #{productNo}
   </select>
-  	
+
   <select id="selectProductList" resultType="product">
 	  select * from
 			(select rownum as rnum, b.* from
@@ -56,7 +56,7 @@
 			product_img,
 			product_name,
 			product_price
-			from product where companyNo=#{companyNo} order by product_no desc) b)
+			from product where company_no=#{companyNo} order by product_no desc) b)
 			where rnum between #{pi.start} and #{pi.end} 
   </select>
   

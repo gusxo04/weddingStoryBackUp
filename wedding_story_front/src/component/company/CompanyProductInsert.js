@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { companyNoState } from "../utils/RecoilData";
+import { useNavigate } from "react-router-dom";
 
 const CompanyProductInsert = () => {
   //   const [productName, setProductName] = useState("");
@@ -26,9 +27,10 @@ const CompanyProductInsert = () => {
   const [coronation, setCoronation] = useState("");
   const [diningRoom, setDiningRoom] = useState("");
   const [numberPeople, setNumberPeople] = useState("");
-
   const [companyCategory, setCompanyCategory] = useState("");
   /*카테고리를 조회 해서 담기위한 state*/
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (companyCategory === "") {
       axios
@@ -84,6 +86,8 @@ const CompanyProductInsert = () => {
             title: "상품 등록 성공",
             text: "상품등록을 완료하였습니다.",
             icon: "success",
+          }).then(() => {
+            navigate("/company/product/list");
           });
         })
         .catch((err) => {
