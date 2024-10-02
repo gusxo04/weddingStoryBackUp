@@ -163,6 +163,7 @@ const BuyTicket = (props) => {
         <div className="convention-email-wrap">
           <div className="convention-email-info-wrap">
             <label htmlFor="email" ref={checkEmailRef} >알림받을 이메일을 입력해주세요</label>
+            <span style={{color:"#ccc", fontSize:"0.9rem", "fontWeight":"500"}}>(개최 3일전 알림이 갑니다)</span>
           </div>
 
           <div className="convention-email-input-wrap">
@@ -177,7 +178,7 @@ const BuyTicket = (props) => {
             <div className="email-last-input-wrap">
               <select name="" id="convention-email-last" onChange={changeLastEmail}>
                 <option value="naver.com" >naver.com</option>
-                <option value="google.com" >google.com</option>
+                <option value="gmail.com" >gmail.com</option>
               </select>
             </div>
           </div>

@@ -72,7 +72,7 @@ public class ConventionService {
         // convention.setConventionEnd(conventionEndDate);
         // 아니 이거 안 해도 되는건데 뭐임..1시간 가까이 개고생했네
         boolean result = conventionDao.insertConvention(convention);
-        System.out.println("박람회 등록 : "+result);
+        //원래는 삽입하면 1행을 삽입했습니다긴 한데 true로도 값을 받을 수 있음 
         return result;
     }
 
@@ -142,12 +142,18 @@ public class ConventionService {
     public Boolean refundPayment(RefundRequest request) {
         String accessToken = getAccessToken();
         try {
-            Thread.sleep(2000);
-            // 2초 지연시켜서 환불이 바로 가능하도록 했음
+            Thread.sleep(3000);
+            // 3초 지연시켜서 환불이 바로 가능하도록 했음
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        String code = cancelPayment(accessToken, request);
+        String code = "-1";
+        //환불이 한 번에 안 되니까 for문으로 10번 돌려서 웬만하면 바로 환불가능하게 구현
+        for(int i = 0; i < 10; i ++){
+            code = cancelPayment(accessToken, request);
+            System.out.println(i+"번 돌았음");
+            if(code.equals("0")) break;
+        }
         int result = -2;
         if(code.equals("0")){
             if(request.getMemberNo() != 0){
@@ -235,7 +241,6 @@ public class ConventionService {
         ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, entity, String.class);
 
         String responseBody = response.getBody();
-        System.out.println("token test"+responseBody);
         ObjectMapper om = new ObjectMapper();
         String accessToken = "";
         try {
@@ -272,19 +277,15 @@ public class ConventionService {
         cancelRequest.put("merchant_uid", request.getMerchantUid());
         cancelRequest.put("amount", request.getCancelRequestAmount());
 
-        System.out.println(cancelRequest);
-
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
-        System.out.println("response 에요!!! : "+response.getBody());
         ObjectMapper om = new ObjectMapper();
         String code = "-1";
         try {
             JsonNode json = om.readTree(response.getBody());
             code = json.get("code").asText();
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         System.out.println("code : "+code);
@@ -295,10 +296,10 @@ public class ConventionService {
 
     //이메일 보내는 로직
     public void sendTicketEmail(){
+        String emailContent = "<h1>웨딩 스토리 박람회</h1><br/><span>박람회 시작하기 3일전입니다.</span>";
         List<MemberDTO> list = conventionDao.selectAlarmTicket();
         for(MemberDTO emailList : list){
-            System.out.println("email : "+emailList.getMemberEmail());
-            emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), "박람회가 3일 남았습니다!");
+            emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), emailContent);
         }
     }
 

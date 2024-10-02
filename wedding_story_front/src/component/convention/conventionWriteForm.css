@@ -177,8 +177,11 @@
 .update-convention-container #convention-start-date,
 .update-convention-container #convention-end-date,
 .update-convention-container #convention-price,
-.update-convention-container #convention-limit{
+.update-convention-container #convention-limit,
+.update-convention-container .convention-date-icon{
+
   color: #8f8f8f;
+  cursor: not-allowed;
 }
 .convention-info-wrap .input-zone input{
   border: none;
@@ -188,6 +191,7 @@
   /* font-size: 20px; */
   font-size: 1.2rem;
   /* padding: 5px; */
+  cursor: pointer;
 }
 /* .convention-info-wrap .input-zone>.convention-date-container>input{
   margin: 0 10%;
