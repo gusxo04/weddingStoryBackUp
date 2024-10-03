@@ -58,7 +58,7 @@ const ProductAllList = () => {
             </Link>
           </li>
           <li>
-            <Link to="/product/hallinfo" onClick={() => setBusinessCode(4)}>
+            <Link to="/product/hallList" onClick={() => setBusinessCode(4)}>
               예복
             </Link>
           </li>
