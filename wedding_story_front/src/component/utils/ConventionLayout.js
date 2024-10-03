@@ -108,6 +108,8 @@ const ConventionLayout = (props) => {
       Swal.fire({
         title : "박람회 부스 구매",
         text : "부스는 한 개만 구입가능합니다",
+        icon : "info",
+        iconColor : "var(--main1)",
         confirmButtonText : "확인",
         confirmButtonColor : "var(--main1)"
       })
@@ -235,6 +237,12 @@ const ConventionLayout = (props) => {
             <span>업체 좌석</span>
             <div className="convention-main-box"></div>
           </div>
+        </div>
+      </div>
+
+      <div className="convention-exit-wrap df-basic">
+        <div className="convention-exit">
+          <pre>입구 : A10 ~ B13  |  출구 : B16 ~ C10</pre>
         </div>
       </div>
     
@@ -493,6 +501,7 @@ const SeatAdminAlert = (props) => {
   const [seatPrice, setSeatPrice] = useState(seatInfo.conventionSeatPrice);
   const [selectStatus, setSelectStatus] = useState(seatInfo.seatStatus);
   const [warning, setWarning] = useState(false);
+  const [refundStatus, setRefundStatus] = useState(false);
 
   const wrongPriceRef = useRef(null);
   const wrongContainerRef = useRef(null);
@@ -523,6 +532,9 @@ const SeatAdminAlert = (props) => {
       return;
     }
 
+    setRefundStatus(true);
+
+
     // form.append("companyNo", seatInfo.companyNo);
     axios.get(`${backServer}/convention/payment/company/${seatInfo.companyNo}/${seatInfo.conventionNo}`)
     .then((res) => {
@@ -546,6 +558,7 @@ const SeatAdminAlert = (props) => {
   }
 
   const updatePrice = () => {
+    showWrongRef.current.style.display = "none";
 
     if(isNaN(seatPrice)){
       wrongPriceRef.current.classList.add("wrong-price");
@@ -562,6 +575,8 @@ const SeatAdminAlert = (props) => {
       return;
     }
 
+
+
     const form = new FormData();
 
     form.append("seatNo", seatInfo.seatNo);
@@ -576,6 +591,7 @@ const SeatAdminAlert = (props) => {
         setWarning(false);
         setSeatAdminAlert(false);
         setChangedSeatInfo(!changedSeatInfo);
+        if(result === 0 || result === 1) return;
         Swal.fire({
           title : "부스 정보",
           text : "정보 수정 완료",
@@ -599,15 +615,28 @@ const SeatAdminAlert = (props) => {
 
   useEffect(() => {
     if(result === 0){
-      console.log("환불 실패");
+      Swal.fire({
+        title : "박람회 부스",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     }
     else if(result === 1){
-      console.log(" 환 불 성공");
+      Swal.fire({
+        title : "박람회 부스",
+        text : "환불에 성공했습니다 해당업체에 연락해주세요",
+        icon : "success",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
       setWarning(false);
       updatePrice();
     }
   }, [result]);
 
+  console.log(seatInfo);
 
 
   return (
@@ -624,19 +653,35 @@ const SeatAdminAlert = (props) => {
             </div>
 
             <div className="convention-seat-info-wrong-price df-basic" style={{display:"none"}} ref={showWrongRef}>
-              <span>잘못된 가격임</span>
+              <span>잘못된 가격입니다.</span>
             </div>
+
+            {refundStatus ?
+            <div id="convention-loading">
+              <ConventionLoading loadingTime={0} />
+            </div>
+            :
+            ""
+            }
             
             <div className="convention-seat-info-price df-basic">
               <div className="convention-seat-info-price-child">
+                {refundStatus ?
+                <span>업체번호 : </span>
+                :
                 <label className="cursor-p" ref={wrongPriceRef} htmlFor="seat-price">가격 : </label>
+                }
               </div>
               <div className="convention-seat-info-price-input">
+                {refundStatus ?
+                <span>{seatInfo.companyTel}</span>
+                :
                 <input type="text" id="seat-price" value={seatPrice} onChange={(e) => {
                   if(isFinite(e.target.value)){
                     setSeatPrice(e.target.value)
                   }
                 }}/>
+                }
               </div>
 
             </div>
@@ -649,7 +694,11 @@ const SeatAdminAlert = (props) => {
               <br />
               <span>정말로 수정하시겠습니까?</span>
               <br />
+              {refundStatus ?
+              <span>환불에는 다소 시간이 소요될 수 있습니다.</span>
+              :
               <span style={{color:"#bbb"}}>결제는 자동으로 환불됩니다</span>
+              }
             </div>
             :
             <>

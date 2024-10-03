@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="conventionSeat")
+@Alias(value = "conventionSeat")
 public class ConventionSeatDTO {
 
     private int seatNo;
@@ -22,5 +22,6 @@ public class ConventionSeatDTO {
     private int conventionNo;
     private String companyNo;
     private String companyCategory;
-    private String CompanyName;
+    private String companyName;
+    private String companyTel;
 }

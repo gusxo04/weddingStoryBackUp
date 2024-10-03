@@ -13,7 +13,7 @@
     <select id="selectConventionSeat" resultType="conventionSeat">
         select seat_no, convention_seat_price, seat_code, seat_status
         <if test="searchType == 0">
-        ,convention_company_no, convention_no, company_no, company_category, company_name
+        ,convention_company_no, convention_no, company_no, company_category, company_name, company_tel
         </if>
         from convention_seat
         <if test="searchType == 0">
