@@ -217,7 +217,7 @@ const InsertConvention = () => {
           />
           :
           formType === 3 ?
-          <CheckLayout />
+          <CheckLayout insert={1} />
           :
           "아무것도 없성"
         }

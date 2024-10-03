@@ -86,6 +86,7 @@ const ConventionMain = () => {
         })
       }
       else if(memberType === 2){
+        console.log(res.data.convention.conventionNo);
         // 업체일 경우
         axios.get(`${backServer}/convention/payment/company/${loginCompanyNoState}/${res.data.convention.conventionNo}`)
         .then((res) => {
@@ -179,11 +180,16 @@ const ConventionMain = () => {
 //박람회가 없을 경우
 const EmptyConvention = () => {
   // const navigate = props.navigate;
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  console.log(memberType);
   const navigate = useNavigate();
   return (
     <div className="empty-convention-wrap">
       <span>현재 진행중이거나 예정인 박람회가 없습니다</span>
+      {memberType === 0 || memberType === 3 ?  
       <Link to="/convention/write" className="locate">박람회 등록하기</Link>
+      : 
+      ""}
       <button className="locate" onClick={() => {
           navigate(-1);
         }}>돌아가기</button>

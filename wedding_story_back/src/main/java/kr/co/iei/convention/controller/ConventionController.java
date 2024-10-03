@@ -74,9 +74,10 @@ public class ConventionController {
         return ResponseEntity.ok(map);
     }
 
-    @GetMapping("/layout")
-    public ResponseEntity<Map> layput() {
-        Map map = conventionService.selectConventionSeat();
+    @GetMapping("/layout/{searchType}")
+    public ResponseEntity<Map> layout(@PathVariable int searchType) {
+        System.out.println(searchType);
+        Map map = conventionService.selectConventionSeat(searchType);
         return ResponseEntity.ok(map);
 
     }
@@ -130,14 +131,14 @@ public class ConventionController {
             convention.setConventionImg(filepath);
         }
         boolean result = conventionService.updateConvention(convention);
-        if(result && image != null){
+        if (result && image != null) {
             //파일 삭제
             // 업데이트에 성공하고, 수정된 사진이 있을 경우에만 기존 사진 삭제
-            String savepath = root+"/convention/";
+            String savepath = root + "/convention/";
             File delFile = new File(savepath + oldThumb);
             delFile.delete();
         }
-        
+
         return ResponseEntity.ok(result);
     }
 
@@ -194,7 +195,7 @@ public class ConventionController {
         System.out.println(conventionCompany);
         System.out.println(companyPay);
         boolean result = conventionService.conventionCompanyPay(conventionCompany, companyPay);
-        
+
         return ResponseEntity.ok(result);
     }
 
@@ -209,6 +210,5 @@ public class ConventionController {
         CompanyPayDTO companyPay = conventionService.getPayment(companyNo, conventionNo);
         return ResponseEntity.ok(companyPay);
     }
-    
 
 }

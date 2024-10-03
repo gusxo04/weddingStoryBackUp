@@ -40,22 +40,21 @@ public class ConventionService {
     private RestTemplate restTemplate;
 
     @Autowired
-	private EmailSender emailSender;
-
+    private EmailSender emailSender;
 
     private final String restApi = "0054761064210788";
     private final String restApiSecret = "kzLRR2Iatp4DqnWs05I1lb4JQvhSmFs1xhV8s9UJQa6DkoBvdhnZfwZzry3KgYHrNcXggHVxNdmTEitq";
-    
+
     public ConventionDTO getTime() {
         ConventionDTO conventionDate = conventionDao.getTime();
         return conventionDate;
     }
 
-    public Map selectConventionSeat() {
+    public Map selectConventionSeat(int searchType) {
         Map<String, Object> map = new HashMap<String, Object>();
-        for(int i = 0; i < 3; i++){
-            List list = conventionDao.selectConventionSeat(i);
-            map.put("line"+i, list);
+        for (int i = 0; i < 3; i++) {
+            List list = conventionDao.selectConventionSeat(i, searchType);
+            map.put("line" + i, list);
         }
         return map;
     }
@@ -76,29 +75,26 @@ public class ConventionService {
         return result;
     }
 
-    
-	public MemberDTO selectMemberInfo(int memberNo) {
+    public MemberDTO selectMemberInfo(int memberNo) {
         MemberDTO memberDTO = conventionDao.selectMemberInfo(memberNo);
         return memberDTO;
-	}
+    }
 
     @Transactional
     public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay) {
         //티켓 코드 생성
         Random random = new Random();
         conventionMember.setTicketCode("");
-        while(true){
-            for(int i = 0; i < 30; i++){
+        while (true) {
+            for (int i = 0; i < 30; i++) {
                 int randomType = random.nextInt(3);
-                if(randomType == 0){
-                    String randomCode = String.valueOf((char)(random.nextInt(26)+97));
+                if (randomType == 0) {
+                    String randomCode = String.valueOf((char) (random.nextInt(26) + 97));
                     conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
-                }
-                else if(randomType == 1){
-                    String randomCode = String.valueOf((char)(random.nextInt(26)+65));
+                } else if (randomType == 1) {
+                    String randomCode = String.valueOf((char) (random.nextInt(26) + 65));
                     conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
-                }
-                else if(randomType == 2){
+                } else if (randomType == 2) {
                     String randomCode = random.nextInt(10) + "";
                     conventionMember.setTicketCode(conventionMember.getTicketCode() + randomCode);
                 }
@@ -106,17 +102,16 @@ public class ConventionService {
 
             //티켓코드 중복체크
             ConventionMemberDTO checkTicket = conventionDao.checkTicketDupelicate(conventionMember);
-            if(checkTicket == null){
+            if (checkTicket == null) {
                 break;
-            }
-            else{
+            } else {
                 conventionMember.setTicketCode("");
             }
-                
+
         }
-        
+
         int result = conventionDao.insertConventionMember(conventionMember);
-        if(result > 0){
+        if (result > 0) {
             memberPay.setTicketNo(conventionMember.getTicketNo());
             result += conventionDao.insertMemberPay(memberPay);
         }
@@ -131,7 +126,7 @@ public class ConventionService {
     @Transactional
     public boolean updateConvention(ConventionDTO convention) {
         return conventionDao.updateConvention(convention);
-        
+
     }
 
     public MemberPayDTO getPayment(int memberNo, int conventionNo) {
@@ -149,20 +144,21 @@ public class ConventionService {
         }
         String code = "-1";
         //환불이 한 번에 안 되니까 for문으로 10번 돌려서 웬만하면 바로 환불가능하게 구현
-        for(int i = 0; i < 10; i ++){
+        for (int i = 0; i < 10; i++) {
             code = cancelPayment(accessToken, request);
-            System.out.println(i+"번 돌았음");
-            if(code.equals("0")) break;
+            System.out.println(i + "번 돌았음");
+            if (code.equals("0")) {
+                break;
+            }
         }
         int result = -2;
-        if(code.equals("0")){
-            if(request.getMemberNo() != 0){
+        if (code.equals("0")) {
+            if (request.getMemberNo() != 0) {
                 result = conventionDao.updateMemberPayKind(request);
                 result += conventionDao.deleteConventionMember(request);
-                result += conventionDao.updateMemberPay(request); 
+                result += conventionDao.updateMemberPay(request);
                 return result == 3;
-            }
-            else if(request.getCompanyNo() != null){
+            } else if (request.getCompanyNo() != null) {
                 result = conventionDao.updateCompanyPay(request);
                 result += conventionDao.deleteConventionCompany(request);
                 return result == 2;
@@ -170,8 +166,6 @@ public class ConventionService {
         }
         return false;
     }
-
-    
 
     public Map<String, List> selectConventionComments(int conventionNo) {
         List commentList = conventionDao.selectConventionCommentList(conventionNo);
@@ -202,13 +196,13 @@ public class ConventionService {
     }
 
     @Transactional
-	public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
+    public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
         int result = conventionDao.insertConventionCompany(conventionCompany);
-        if(result > 0){
+        if (result > 0) {
             result += conventionDao.insertCompanyPay(companyPay);
         }
         return result == 2;
-	}
+    }
 
     @Transactional
     public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
@@ -216,19 +210,16 @@ public class ConventionService {
         return result == 1;
     }
 
-	public CompanyPayDTO getPayment(String companyNo, int conventionNo) {
+    public CompanyPayDTO getPayment(String companyNo, int conventionNo) {
         return conventionDao.selectCompanyPayment(companyNo, conventionNo);
-	}
-
-
-
+    }
 
     // 환불 기능 메서드 2개 
     private String getAccessToken() {
         // 토큰 발급받는 코드
         String clientId = restApi;
         String clientSecret = restApiSecret;
-        
+
         String tokenUrl = "https://api.iamport.kr/users/getToken";
 
         String tokenRequest = "imp_key=" + clientId + "&imp_secret=" + clientSecret;
@@ -247,7 +238,7 @@ public class ConventionService {
             JsonNode jsonNode = om.readTree(responseBody);
             JsonNode responseObject = jsonNode.get("response");
             accessToken = responseObject.get("access_token").asText();
-            System.out.println("파싱 토큰임 : "+accessToken);
+            System.out.println("파싱 토큰임 : " + accessToken);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -259,7 +250,6 @@ public class ConventionService {
 
     private String cancelPayment(String accessToken, RefundRequest request) {
 
-
         String cancelUrl = "https://api.iamport.kr/payments/cancel";
 
         HttpHeaders headers = new HttpHeaders();
@@ -270,9 +260,7 @@ public class ConventionService {
         // cancelRequest.setReason(request.getReason());
         // cancelRequest.setAmount(request.getCancelRequestAmount());
         // cancelRequest.setMerchant_uid(request.getMerchantUid());
-
         // System.out.println("merchant_uid : "+request.getMerchantUid());
-
         Map<String, Object> cancelRequest = new HashMap<>();
         cancelRequest.put("merchant_uid", request.getMerchantUid());
         cancelRequest.put("amount", request.getCancelRequestAmount());
@@ -288,26 +276,18 @@ public class ConventionService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println("code : "+code);
-        
+        System.out.println("code : " + code);
+
         return code;
     }
 
-
     //이메일 보내는 로직
-    public void sendTicketEmail(){
+    public void sendTicketEmail() {
         String emailContent = "<h1>웨딩 스토리 박람회</h1><br/><span>박람회 시작하기 3일전입니다.</span>";
         List<MemberDTO> list = conventionDao.selectAlarmTicket();
-        for(MemberDTO emailList : list){
+        for (MemberDTO emailList : list) {
             emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), emailContent);
         }
     }
-
-
-
-
-
-    
-
 
 }

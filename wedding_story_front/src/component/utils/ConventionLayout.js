@@ -23,8 +23,12 @@ const ConventionLayout = (props) => {
     buyable,
     startDate,
     // buyable이 true면 부스 구매 가능 
+    insert, 
+    // insert가 1이면 현재 박람회를 개최하기 위한 것이므로 부스에서 업체 관련 정보는 조회하면 안 됨
   } = props;
   
+
+
 
 
 
@@ -52,8 +56,12 @@ const ConventionLayout = (props) => {
   // companyNo는 int가 아닌 String임 -> like C0001 
 
   useEffect(() => {
+    let searchType = 1;
+    if(insert === undefined){
+      searchType = 0;
+    }
     // 나중에 업체인지 조건걸기
-    axios.get(`${backServer}/convention/layout`)
+    axios.get(`${backServer}/convention/layout/${searchType}`)
     .then(res => {
       // console.log(res);
       setASeat(res.data.line0);
