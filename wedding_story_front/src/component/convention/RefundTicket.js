@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { loginNoState } from "../utils/RecoilData";
 import { cancelPay } from "./conventionRefund";
+import ConventionLoading from "./ConventionLoading";
 
 const RefundTicket = (props) => {
 
@@ -17,11 +18,13 @@ const RefundTicket = (props) => {
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
   const [refundReason, setRefundReason] = useState("");
+  const [refundStatus, setRefundStatus] = useState(false);
 
   const reasonRef = useRef(null);
 
   const [result, setResult] = useState(-1);
   const refundTicket = () => {
+    setRefundStatus(true);
     cancelPay(memberNoState, null, payment, refundReason, setResult);
   }
 
@@ -44,6 +47,7 @@ const RefundTicket = (props) => {
         confirmButtonText : "확인"
       })
       closeAlert(0, true);
+      setRefundStatus(false);
     }
   }, [result]);
   
@@ -57,7 +61,11 @@ const RefundTicket = (props) => {
 
         <div className="convention-refund-content">
           <div className="convention-refund-span df-basic">
+            {refundStatus ?
+            <span>환불에는 다소 시간이 소요될 수 있습니다.</span>
+            :
             <span>티켓 환불 사유</span>
+            }
           </div>
 
           <div className="convention-refund-reason df-basic">
@@ -70,6 +78,13 @@ const RefundTicket = (props) => {
                 reasonRef.current.style.borderRadius = "20px";
               }
             }}></textarea>
+            {refundStatus ?
+            <div id="convention-loading">
+              <ConventionLoading loadingTime={0} />
+            </div>
+            :
+            ""
+            }
           </div>
           
         </div>
