@@ -180,15 +180,17 @@ const ConventionLayout = (props) => {
         });
         
       }
-      setSeatCompanyAlert(false);
-      setChangedSeatInfo(!changedSeatInfo);
-      Swal.fire({
-        title : "박람회 부스",
-        text : "잠시후 다시 시도해주세요",
-        timer : 2500,
-        confirmButtonColor : "var(--main1)",
-        confirmButtonText : "확인",
-      })
+      else{
+        setSeatCompanyAlert(false);
+        setChangedSeatInfo(!changedSeatInfo);
+        Swal.fire({
+          title : "박람회 부스",
+          text : "잠시후 다시 시도해주세요",
+          timer : 2500,
+          confirmButtonColor : "var(--main1)",
+          confirmButtonText : "확인",
+        })
+      }
     })
     .catch((err) => {
       console.error(err); 
