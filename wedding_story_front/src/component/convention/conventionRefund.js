@@ -2,7 +2,7 @@ import axios from "axios";
 
 class CancelPay {
   cancelPay = (payment, backUrl, setResult, refundReason) => {
-    console.log("payment : ",payment);
+    console.log("payment : ", payment);
     // 받아야할 파라미터
     // 1. payment 객체 : 밑에 data : {} 에 있는 데이터들 주면 되는데 상품 (productNo는 필요하면 추가하면 됨)
     // 필요없는 얘들은 안 만들어도 됨 (null이여도 된다는 소리)
@@ -12,9 +12,7 @@ class CancelPay {
     // 이유는 환불 성공 실패여부를 저거를 통해서 알 수 있음 1이면 성공 0이면 실패임
     // 그러면 원래 컴포넌트에서는 if(result === 1 or 0) 으로 여부를 로직작성 가능
     // 4. 그닥 중요하지는 않음 그냥 "환불이유" 적으면 됨 or 사용자에게 받거나 db에 따로 넣지는 않았음
-    
-    
-    
+
     // memberNo : 회원번호 (없으면 0 줘야함)
     // companyNo : 업체 번호 (없으면 null 줘야함)
     // payment : payment 객체 (memberPayDTO나 companyPayDTO 조회해서 필요한 데이터 가져오면 됨)
@@ -38,18 +36,16 @@ class CancelPay {
         reason: refundReason, // 환불사유
       },
     })
-    .then((res) => {
-      if(res.data){
-        setResult(1);
-      }
-      else{
-        setResult(0);
-      }
-      
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        if (res.data) {
+          setResult(1);
+        } else {
+          setResult(0);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
 

@@ -5,6 +5,7 @@ import { loginNoState } from "../utils/RecoilData";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { refundPay } from "./mypageRefund";
+import { cancelPay } from "../convention/conventionRefund";
 
 const MyPayment = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -13,6 +14,8 @@ const MyPayment = (props) => {
   const [activeButton, setActiveButton] = useState("all");
   const memberNo = useRecoilValue(loginNoState);
   const [paymentList, setPaymentList] = useState([]);
+  const [result, setResult] = useState(-1);
+  console.log(result);
   console.log(paymentList);
 
   const stateChange = (e) => {
@@ -116,12 +119,11 @@ const MyPayment = (props) => {
                                 confirmButtonText: "확인",
                               }).then((res) => {
                                 if (res.isConfirmed) {
-                                  refundPay(
-                                    memberNo,
-                                    pay.companyNo,
+                                  cancelPay(
                                     pay,
-                                    "",
-                                    -1
+                                    "convention/refund",
+                                    setResult,
+                                    ""
                                   );
                                 }
                               })

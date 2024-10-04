@@ -144,7 +144,7 @@
 		from convention where #{date} BETWEEN convention_start AND convention_end
 	</select>
 	<select id="paymentList" resultType="memberPay">
-		select progress,merchant_uid,SUBSTR(pay_date,1,8)as pay_date,PROGRESS_DATE,PROGRESS_TIME,pay_price,product_no,ticket_no from member_pay where member_no=#{memberNo}
+		select progress,merchant_uid,SUBSTR(pay_date,1,8)as pay_date,PROGRESS_DATE,PROGRESS_TIME,pay_price,product_no,ticket_no,member_no from member_pay where member_no=#{memberNo}
 		<if test="state == 'payment'">
 		 and (progress=0 or progress=1)
 		</if>

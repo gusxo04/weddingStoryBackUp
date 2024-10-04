@@ -279,6 +279,7 @@ public class ConventionService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
+        System.out.println(response);
         ObjectMapper om = new ObjectMapper();
         String code = "-1";
         try {
