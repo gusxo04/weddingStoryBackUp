@@ -135,13 +135,16 @@ public class ConventionService {
 
     @Transactional
     public Boolean refundPayment(RefundRequest request) {
+        System.out.println("request : "+request);
         String accessToken = getAccessToken();
         try {
             Thread.sleep(3000);
             // 3초 지연시켜서 환불이 바로 가능하도록 했음
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            // Thread.currentThread().interrupt();
+            e.printStackTrace();
         }
+
         String code = "-1";
         //환불이 한 번에 안 되니까 for문으로 10번 돌려서 웬만하면 바로 환불가능하게 구현
         for (int i = 0; i < 10; i++) {
@@ -154,10 +157,11 @@ public class ConventionService {
         int result = -2;
         if (code.equals("0")) {
             if (request.getMemberNo() != 0) {
-                result = conventionDao.updateMemberPayKind(request);
-                result += conventionDao.deleteConventionMember(request);
-                result += conventionDao.updateMemberPay(request);
-                return result == 3;
+                // result = conventionDao.updateMemberPayKind(request);
+                // result += conventionDao.deleteConventionMember(request);
+                result = conventionDao.updateMemberPay(request);
+                result += conventionDao.updateConventionMemberTicket(request);
+                return result == 2;
             } else if (request.getCompanyNo() != null) {
                 result = conventionDao.updateCompanyPay(request);
                 result += conventionDao.deleteConventionCompany(request);

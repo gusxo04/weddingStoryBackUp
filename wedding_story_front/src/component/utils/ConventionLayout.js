@@ -686,6 +686,7 @@ const SeatAdminAlert = (props) => {
         confirmButtonText : "확인",
         confirmButtonColor : "var(--main1)"
       })
+      setSeatAdminAlert(false);
     }
     else if(result === 1){
       Swal.fire({
