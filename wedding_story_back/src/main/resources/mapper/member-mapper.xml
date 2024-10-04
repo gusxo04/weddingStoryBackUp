@@ -125,6 +125,24 @@
 	</update>
 	
 	<select id="consultList" resultType="consult">
-		select * from consult where member_no=#{memberNo}
+		select consult_date,consult_time,company_no from(SELECT consult.*, product.company_no 
+		FROM consult 
+		JOIN product ON consult.product_no = product.product_no) where member_no=#{memberNo} 
+		UNION 
+		SELECT  PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),company_no from(SELECT member_pay.*, product.company_no 
+		FROM member_pay 
+		JOIN product ON member_pay.product_no = product.product_no) where member_no=#{memberNo} 
+		UNION 
+		SELECT  PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no, 0)) from member_pay where product_no is null and member_no=#{memberNo} and kind=0
+	</select>
+	
+	<select id="consultCompanyList" resultType="company">
+		select * from company where company_no=#{companyNo}
+	</select>
+	<select id="conventionList" resultType="company">
+		select convention_title as company_name,SUBSTR(convention_time, 1, 5)as start_time,SUBSTR(convention_time,9) as end_time 
+		from member_pay 
+		join convention_member using(ticket_no) 
+		join convention using(convention_no)
 	</select>
 </mapper>

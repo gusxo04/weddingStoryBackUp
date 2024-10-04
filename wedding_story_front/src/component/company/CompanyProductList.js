@@ -30,6 +30,9 @@ const CompanyProductList = () => {
       <section className="section">
         <div className="list-wrap">
           <div className="title">상품 목록</div>
+          <Link to={"/company/product/insert"}>
+            <button>글쓰기</button>
+          </Link>
           <div className="product-list-wrap">
             <table className="tbl">
               <thead border={1}>

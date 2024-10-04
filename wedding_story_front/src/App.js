@@ -80,7 +80,6 @@ function App() {
           <Route path="/join/*" element={<Join />} />
           <Route path="/myPage/*" element={<MyPage />} />
           <Route path="/convention/*" element={<ConventionLobby />} />
-          {/* <Route path="/test" element={<ConventionLayout />} /> */}
           <Route path="/product/*" element={<ProductMain />} />
           <Route path="/consult/*" element={<Consult />} />
           <Route path="/admin/*" element={<Admin />} />

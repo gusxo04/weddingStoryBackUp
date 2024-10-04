@@ -43,23 +43,27 @@ public class ProductController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping("/hallList/{reqPage}")
-	public ResponseEntity<Map> getProductHallList(@PathVariable int reqPage) {
-		Map map = productService.getProducthallList(reqPage);
-		return ResponseEntity.ok(map);
-	}
-	
 	@PostMapping(value = "/editorImage")
 	public ResponseEntity<String> editorImage(@ModelAttribute MultipartFile image){
 		String savepath = root+"/editor/";
 		String filepath = fileUtils.upload(savepath, image);
 		return ResponseEntity.ok("/editor/"+filepath);
 	}
-
-	@GetMapping("/productNo/{productNo}")
-	public ResponseEntity<ProductDTO> productList(@PathVariable int productNo){
-		ProductDTO product = productService.productList(productNo);
-		return ResponseEntity.ok(product);
+	
+	//웨딩홀리스트
+	@GetMapping("/hallList/{reqPage}")
+	public ResponseEntity<Map> getProductHallList(@PathVariable int reqPage) {
+		Map map = productService.getProducthallList(reqPage);
+		return ResponseEntity.ok(map);
 	}
-
+		
+	//제품 상세페이
+	@GetMapping(value="/productInfo/{productNo}")
+	public ResponseEntity<Map> productList(@PathVariable int productNo){
+		Map map = productService.productList(productNo);
+		//System.out.println(productNo);
+		return ResponseEntity.ok(map);
+	}
+	
+	
 }

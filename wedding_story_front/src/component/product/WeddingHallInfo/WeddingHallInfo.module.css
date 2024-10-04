@@ -13,6 +13,10 @@
 .product-back > .material-icons {
   text-align: left;
 }
+.product-thumbnail {
+  width: 400px;
+  /*height: 400px;*/
+}
 .product-thumbnail > img {
   width: 300px;
   height: 300px;
@@ -79,4 +83,19 @@
 .product-btn-zone {
   display: flex;
   padding-bottom: 5%;
+}
+.btn {
+  border: 1px solid #fff;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  font-family: ns-b;
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+.btn:hover {
+  background-color: var(--main1);
+  color: #fff;
+  cursor: pointer;
 }

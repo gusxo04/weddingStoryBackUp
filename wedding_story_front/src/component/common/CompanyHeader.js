@@ -28,7 +28,7 @@ const CompanyHeader = () => {
         {companyNo !== null ? (
           <ul>
             <li>
-              <Link to="/company/product" className="nav-item">
+              <Link to="/company/product/list" className="nav-item">
                 <div>
                   <span className="material-icons">view_in_ar</span>
                 </div>

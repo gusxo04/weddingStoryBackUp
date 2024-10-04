@@ -6,4 +6,7 @@
 			insert into consult values(consult_seq.nextval,#{memberNo},#{productNo},#{consultDate},#{consultTime},#{reservation},#{consultTitle},#{consultWrite})
 		</insert>
 		
+		<select id="selectConsult" resultType="consult">
+			select * from consult
+		</select>
 </mapper>

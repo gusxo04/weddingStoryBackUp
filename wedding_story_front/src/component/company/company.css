@@ -215,6 +215,9 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   margin: 10px 10px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row-reverse;
 }
 .productThumb > img {
   width: 100%;
@@ -224,6 +227,12 @@
   width: 100px;
   height: 100px;
   border: 1px solid black;
+}
+.product-delete {
+  color: #bddaed;
+  font-size: 30px;
+  position: absolute;
+  cursor: pointer;
 }
 
 /*-----product List*/

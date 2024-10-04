@@ -61,4 +61,8 @@ public interface MemberDao {
 	int insertAdmin(int selectedType, String insertId);
 	List<ConsultDTO> consultList(int memberNo);
 
+	CompanyDTO consultCompanyList(String companyNo);
+
+	CompanyDTO conventionList();
+
 }

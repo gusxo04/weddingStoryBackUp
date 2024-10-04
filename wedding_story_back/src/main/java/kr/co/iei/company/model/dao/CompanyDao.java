@@ -30,4 +30,7 @@ public interface CompanyDao {
 
 	String selectCategory(String companyNo);
 
+	CompanyDTO selectCompanyNo(String string);
+
+
 }

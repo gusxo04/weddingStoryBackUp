@@ -1,7 +1,5 @@
 package kr.co.iei.convention.model.dao;
 
-
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -23,7 +21,7 @@ public interface ConventionDao {
 
     List selectConventionSeat();
 
-    List selectConventionSeat(int i);
+    List selectConventionSeat(int i, int searchType);
 
     boolean insertConvention(ConventionDTO convention);
 
@@ -55,22 +53,20 @@ public interface ConventionDao {
 
     public int insertConventionCompany(ConventionCompanyDTO conventionCompany);
 
-	int insertCompanyPay(CompanyPayDTO companyPay);
+    int insertCompanyPay(CompanyPayDTO companyPay);
 
-	int updateSeatInfo(ConventionSeatDTO conventionSeat);
+    int updateSeatInfo(ConventionSeatDTO conventionSeat);
 
-	MemberDTO selectMemberInfo(int memberNo);
+    MemberDTO selectMemberInfo(int memberNo);
 
-	ConventionMemberDTO checkTicketDupelicate(ConventionMemberDTO conventionMember);
+    ConventionMemberDTO checkTicketDupelicate(ConventionMemberDTO conventionMember);
 
-	CompanyPayDTO selectCompanyPayment(String companyNo, int conventionNo);
+    CompanyPayDTO selectCompanyPayment(String companyNo, int conventionNo);
 
-	int updateCompanyPay(RefundRequest request);
+    int updateCompanyPay(RefundRequest request);
 
-	int deleteConventionCompany(RefundRequest request);
+    int deleteConventionCompany(RefundRequest request);
 
     List selectAlarmTicket();
-
-
 
 }

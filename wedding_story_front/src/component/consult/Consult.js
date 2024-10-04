@@ -1,20 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./consult.css";
 import { useRecoilState } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
 
 const Consult = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const location = useLocation();
+
+  const productNo = location.state?.productNo;
+
+  console.log(productNo);
   const navigate = useNavigate();
   const [memberNo, setMemberNo] = useRecoilState(loginNoState);
   const [member, setMember] = useState({
     memberName: "",
     memberPhone: "",
   });
-  const [productNo, setProductNo] = useState({
-    productNo: null,
+
+  const [product, setProduct] = useState({
+    productNo: "",
     productName: "",
   });
 
@@ -22,11 +28,11 @@ const Consult = () => {
     consultDate: "", //상담날짜
     consultTime: "", //상담시간
     reservation: "", //결혼식예정일(미정체크일시 null)
-    consultTitle: "", //상담제목
-    consultWrite: "", //상담내용
   });
   const [isDateUndefined, setIsDateUndefined] = useState(false);
 
+  console.log(memberNo);
+  console.log(product);
   const changeConsult = (e) => {
     const { name, value } = e.target;
     setConsult({ ...consult, [name]: value });
@@ -36,6 +42,7 @@ const Consult = () => {
     axios
       .get(`${backServer}/consult/memberNo/${memberNo}`)
       .then((res) => {
+        console.log(memberNo);
         setMember({
           ...member,
           memberName: res.data.memberName,
@@ -49,19 +56,14 @@ const Consult = () => {
 
   // productNo를 기반으로 상품명 가져오기
   useEffect(() => {
-    if (productNo) {
-      axios
-        .get(`${backServer}/consult/productNo/${productNo}`)
-        .then((res) => {
-          setProductNo({
-            productNo: productNo,
-            productName: res.data.productName,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    axios
+      .get(`${backServer}/consult/productNo/${productNo}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [backServer, productNo]);
 
   const requestData = {
@@ -77,13 +79,12 @@ const Consult = () => {
     form.append("consultDate", consult.consultDate);
     form.append("consultTime", consult.consultTime);
     form.append("reservation", consult.reservation);
-    form.append("consultTitle", consult.consultTitle);
-    form.append("consultWrite", consult.consultWrite);
 
     axios
       .post(`${backServer}/consult`, form)
       .then((res) => {
         console.log(res);
+        //console.log(form);
       })
       .catch((err) => {
         console.error(err);
@@ -119,7 +120,7 @@ const Consult = () => {
                 type="text"
                 name="productName"
                 id="productName"
-                value={productNo.productName} // 상품명 표시
+                value={product.productName} // 상품명 표시
                 readOnly // 읽기 전용으로 설정
               />
             </div>
@@ -204,36 +205,6 @@ const Consult = () => {
                 type="checkbox"
                 checked={isDateUndefined}
                 onChange={() => setIsDateUndefined(!isDateUndefined)}
-              />
-            </div>
-          </div>
-          <div className="input-wrap">
-            <div className="input-title">
-              <label htmlFor="consultTitle">상담제목</label>
-            </div>
-            <div className="input-item">
-              <input
-                type="text"
-                name="consultTitle"
-                id="consultTitle"
-                value={consult.consultTitle}
-                onChange={changeConsult}
-                required
-              />
-            </div>
-          </div>
-          <div className="input-wrap">
-            <div className="input-title">
-              <label htmlFor="consultWrite">상담내용</label>
-            </div>
-            <div className="input-item">
-              <textarea
-                className="consultWrite"
-                id="consultWrite"
-                name="consultWrite"
-                value={consult.consultWrite}
-                onChange={changeConsult}
-                required
               />
             </div>
           </div>

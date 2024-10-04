@@ -31,6 +31,8 @@ public interface ProductDao {
 	ProductDTO selectProduct(int productNo);
 
 	List selectProductFile(int productNo);
+
+	ProductDTO productHallList(int productNo);
 	
 	
 

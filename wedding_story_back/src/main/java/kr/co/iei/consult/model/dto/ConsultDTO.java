@@ -1,9 +1,11 @@
 package kr.co.iei.consult.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.iei.company.model.dto.CompanyDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +24,8 @@ public class ConsultDTO {
 	private String reservation;	//예식예정일
 	private String consultTitle;	//상담제목
 	private String consultWrite;	//상담내용
+	
+	//마이페이지 일정관리 모달에 들어갈 내용
+	private String companyNo;
+	private CompanyDTO company;
 }
