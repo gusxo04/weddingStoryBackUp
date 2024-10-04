@@ -74,7 +74,8 @@ const ConventionMain = () => {
               merchantUid: res.data.merchantUid,
               payNo: res.data.payNo,
               payPrice: res.data.payPrice,
-              ticketNo: res.data.ticketNo
+              ticketNo: res.data.ticketNo,
+              memberNo: memberNoState
             })
           }
           else{
@@ -95,7 +96,8 @@ const ConventionMain = () => {
             merchantUid: res.data.merchantUid,
             payNo: res.data.payNo,
             payPrice: res.data.payPrice,
-            conventionCompanyNo: res.data.conventionCompanyNo
+            conventionCompanyNo: res.data.conventionCompanyNo,
+            companyNo : loginCompanyNoState
           })
         })
         .catch((err) => {
