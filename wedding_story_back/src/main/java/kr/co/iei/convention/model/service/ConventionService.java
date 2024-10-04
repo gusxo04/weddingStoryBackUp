@@ -197,6 +197,8 @@ public class ConventionService {
 
     @Transactional
     public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
+        ConventionSeatDTO conventionSeatDTO = conventionDao.getConventionSeat(conventionCompany);
+        if(conventionSeatDTO == null) return false;
         int result = conventionDao.insertConventionCompany(conventionCompany);
         if (result > 0) {
             result += conventionDao.insertCompanyPay(companyPay);
@@ -206,6 +208,10 @@ public class ConventionService {
 
     @Transactional
     public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
+        if(conventionSeat.getConventionNo() != 0){
+            ConventionCompanyDTO conventionCompanyDTO = conventionDao.checkConventionCompany(conventionSeat);
+            if(conventionCompanyDTO != null) return false;
+        }
         int result = conventionDao.updateSeatInfo(conventionSeat);
         return result == 1;
     }
@@ -288,6 +294,15 @@ public class ConventionService {
         for (MemberDTO emailList : list) {
             emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), emailContent);
         }
+    }
+
+    @Transactional
+    public boolean deleteSeatInfo(int conventionNo, String companyNo) {
+        int result = conventionDao.deleteCompanyPay(conventionNo, companyNo);
+        if(result == 1){
+            result += conventionDao.cancelConventionCompany(conventionNo, companyNo);
+        }
+        return result == 2;
     }
 
 }
