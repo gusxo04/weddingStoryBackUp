@@ -158,5 +158,10 @@
             from convention_member 
             where member_email is not null and convention_no = (select max(convention_no) from convention where to_char(convention_start - 3) = to_char(sysdate))
     </select>
+    <select id="selectConventInfo" resultType="convention">
+    	select convention_title, convention_img 
+    	from convention_member 
+    	join convention using(convention_no) where ticket_no=#{ticketNo}
+    </select>
 
 </mapper>

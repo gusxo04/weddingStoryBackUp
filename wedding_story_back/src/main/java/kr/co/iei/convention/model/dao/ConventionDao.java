@@ -69,4 +69,6 @@ public interface ConventionDao {
 
     List selectAlarmTicket();
 
+	ConventionDTO selectConventInfo(int ticketNo);
+
 }

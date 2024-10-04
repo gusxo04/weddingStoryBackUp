@@ -1,5 +1,6 @@
 package kr.co.iei.member.model.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -8,6 +9,7 @@ import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 
 @Mapper
 public interface MemberDao {
@@ -63,6 +65,8 @@ public interface MemberDao {
 
 	CompanyDTO consultCompanyList(String companyNo);
 
-	CompanyDTO conventionList();
+	CompanyDTO conventionList(Date date);
+
+	List<MemberPayDTO> paymentList(int memberNo, String state);
 
 }
