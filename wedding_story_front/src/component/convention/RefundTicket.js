@@ -9,6 +9,8 @@ import ConventionLoading from "./ConventionLoading";
 const RefundTicket = (props) => {
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const backUrl = "convention/refund";
+  
   const {
     closeAlert,
     payment,
@@ -25,7 +27,7 @@ const RefundTicket = (props) => {
   const [result, setResult] = useState(-1);
   const refundTicket = () => {
     setRefundStatus(true);
-    cancelPay(memberNoState, null, payment, refundReason, setResult);
+    cancelPay(payment, backUrl, setResult, refundReason);
   }
 
   useEffect(() => {

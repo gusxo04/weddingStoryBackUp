@@ -1,7 +1,8 @@
 import axios from "axios";
 
 class CancelPay {
-  cancelPay = (memberNo, companyNo, payment, refundReason, setResult) => {
+  cancelPay = (payment, backUrl, setResult, refundReason) => {
+    console.log("payment : ",payment);
     // 받아야할 파라미터
     // memberNo : 회원번호 (없으면 0 줘야함)
     // companyNo : 업체 번호 (없으면 null 줘야함)
@@ -10,14 +11,14 @@ class CancelPay {
     // setResult : setResult state 넘겨주면 됨 (환불성공시 result state는 1이 들어가고 실패시 0이 들어감 그래서 초기세팅을 -1로 하는게 좋음)
     const backServer = process.env.REACT_APP_BACK_SERVER;
     axios({
-      url: `${backServer}/convention/refund`,
+      url: `${backServer}/${backUrl}`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       data: {
-        memberNo: memberNo,
-        companyNo: companyNo,
+        memberNo: payment.memberNo,
+        companyNo: payment.companyNo,
         //티켓환불은 memberNo랑 ticketNo / 업체 부스 환불은 companyNo랑 conventionComanyNo
         ticketNo: payment.ticketNo,
         conventionCompanyNo: payment.conventionCompanyNo,

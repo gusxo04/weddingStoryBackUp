@@ -362,9 +362,9 @@ const SeatCompanyAlert = (props) => {
     startDate,
   } = props;
 
-
+  const backUrl = "convention/refund";
   // console.log(seatInfo);
-  const [loginCompanyNoState, setLoginCompanyNoState] = useRecoilState(companyNoState);
+  // const [loginCompanyNoState, setLoginCompanyNoState] = useRecoilState(companyNoState);
   const [result, setResult] = useState(-1);
 
   const [showType, setShowType] = useState(true);
@@ -383,7 +383,7 @@ const SeatCompanyAlert = (props) => {
   }
 
   const refundSeat = () => {
-    cancelPay(0, loginCompanyNoState, payment, "부스 환불", setResult);
+    cancelPay(payment, backUrl, setResult, "부스 환불");
     
   }
 
@@ -525,6 +525,7 @@ const SeatAdminAlert = (props) => {
 
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const backUrl = "convention/refund";
 
   const [seatPrice, setSeatPrice] = useState(seatInfo.conventionSeatPrice);
   const [selectStatus, setSelectStatus] = useState(seatInfo.seatStatus);
@@ -572,7 +573,8 @@ const SeatAdminAlert = (props) => {
           merchantUid: res.data.merchantUid,
           payNo: res.data.payNo,
           payPrice: res.data.payPrice,
-          conventionCompanyNo: res.data.conventionCompanyNo
+          conventionCompanyNo: res.data.conventionCompanyNo,
+          companyNo : seatInfo.companyNo
         })
       }
       else{
@@ -673,7 +675,7 @@ const SeatAdminAlert = (props) => {
   useEffect(() => {
     // 환불 위한 useEffect
     if(payment){
-      cancelPay(0, seatInfo.companyNo, payment, "부스 폐쇄", setResult);
+      cancelPay(payment, backUrl, setResult, "부스 폐쇄");
     }
   }, [payment]);
 
