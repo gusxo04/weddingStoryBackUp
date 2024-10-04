@@ -31,7 +31,7 @@ const CompanyProductList = () => {
     <div>
       <section className="section">
         <div className="list-wrap">
-          <div className="title">상품 목록</div>
+          <div className="list-title">상품 목록</div>
           <Link to={"/company/product/insert"}>
             <button>글쓰기</button>
           </Link>

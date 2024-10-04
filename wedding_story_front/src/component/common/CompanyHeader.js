@@ -36,7 +36,7 @@ const CompanyHeader = () => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="nav-item">
+              <Link to="/company/customer" className="nav-item">
                 <div>
                   <span className="material-icons">account_box</span>
                 </div>
@@ -44,7 +44,7 @@ const CompanyHeader = () => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="nav-item">
+              <Link to="/company/counsel" className="nav-item">
                 <div>
                   <span className="material-icons">event</span>
                 </div>

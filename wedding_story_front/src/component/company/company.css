@@ -243,22 +243,22 @@
   margin: 50px 90px;
   margin-top: 90px;
 }
-.title {
+.list-title {
   font-size: 30px;
-  width: 100%;
+  width: 1000px;
   height: 50px;
   padding: 15px 100px;
   line-height: 50px;
   border-bottom: 1px solid #ccc;
 }
-.title + a > button {
+.list-title + a > button {
   width: 60px;
   height: 35px;
   border: 1px solid #ccc;
   margin: 20px 30px;
   border-radius: 10px;
 }
-.title + a > button:hover {
+.list-title + a > button:hover {
   font-weight: 800;
   background-color: #bddaed;
 }
