@@ -4,12 +4,13 @@ import ConventionLayout from './../utils/ConventionLayout';
 const CheckLayout = (props) => {
 
   const{
-    insert
+    insert,
+    conventionNo
   } = props;
   
   return (
     <div className='convention-check-layout'>
-      <ConventionLayout permission={0} insert={insert} />
+      <ConventionLayout permission={0} insert={insert} conventionNo={conventionNo} />
     </div>
   )
 }
