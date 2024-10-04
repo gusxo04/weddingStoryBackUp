@@ -1,5 +1,6 @@
 package kr.co.iei.admin.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,8 +95,31 @@ public class NoticeService {
 	}
 
 	public NoticeFileDTO getNoticeFile(int noticeFileNo) {
-		NoticeFileDTO noticeFile  = noticeDao.getNoticeFile(noticeFileNo);
+		NoticeFileDTO noticeFile = noticeDao.getNoticeFile(noticeFileNo);
 		return noticeFile;
+	}
+
+	@Transactional
+	public List<NoticeFileDTO> updateNotice(NoticeDTO notice, List<NoticeFileDTO> noticeFileList) {
+		int result = noticeDao.updateNotice(notice);
+		if(result>0) {
+			List<NoticeFileDTO> delFileList = new ArrayList<NoticeFileDTO>();
+			if(notice.getDelNoticeFileNo() != null) {
+				delFileList=noticeDao.selectNoticeFile(notice.getDelNoticeFileNo());
+				result += noticeDao.deleteNoticeFile(notice.getDelNoticeFileNo());
+			}
+			for(NoticeFileDTO noticeFile : noticeFileList) {
+				result += noticeDao.insertNoticeFile(noticeFile);
+			}
+			
+			int updateTotal = notice.getDelNoticeFileNo() == null
+			?1+noticeFileList.size()
+			:1+noticeFileList.size()+notice.getDelNoticeFileNo().length;
+			if(result==updateTotal) {
+				return delFileList;
+			}
+		}
+		return null;
 	}
 
 }

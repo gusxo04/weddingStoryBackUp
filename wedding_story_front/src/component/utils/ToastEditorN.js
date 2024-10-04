@@ -9,6 +9,7 @@ const ToastEditorN = (props) => {
   const setNoticeContent = props.setNoticeContent;
   const type = props.type;
   const editorRef = useRef(null);
+  console.log(noticeContent);
   const changeValue = () => {
     const editorData = editorRef.current.getInstance().getHTML();
     setNoticeContent(editorData);

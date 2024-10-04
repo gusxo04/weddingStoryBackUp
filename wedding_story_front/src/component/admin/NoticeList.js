@@ -14,7 +14,6 @@ const NoticeList = () => {
     axios
       .get(`${backServer}/notice/list/${reqPage}/${userState}`)
       .then((res) => {
-        console.log(res.data);
         setNoticeList(res.data.list);
         setPi(res.data.pi);
       })

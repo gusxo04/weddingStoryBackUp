@@ -96,4 +96,27 @@
 	<select id="getNoticeFile" resultType="noticeFile">
   	select * from notice_file where notice_file_no=#{noticeFileNo}
   </select>
+  <update id="updateNotice">
+  	update notice set
+  	notice_title=#{noticeTitle},
+  	notice_content=#{noticeContent},
+  	notice_thumb=#{noticeThumb}
+  	where notice_no=#{noticeNo}
+  </update>
+  
+  <select id="selectNoticeFile" resultType="noticeFile">
+  	select * from notice_file
+  	where notice_file_no in
+  	<foreach collection="array" item="noticeFileNo" open="(" close=")" separator=",">
+  	#{noticeFileNo}
+  	</foreach>
+  </select>
+  
+  <delete id="deleteNoticeFile">
+  delete from notice_file
+  where notice_file_no in
+  <foreach collection="array" item="noticeFileNo" open="(" close=")" separator=",">
+  #{noticeFileNo}
+  </foreach>
+  </delete>
 </mapper>

@@ -1,20 +1,14 @@
 import { useRef, useState } from "react";
-import { useRecoilState } from "recoil";
-import { loginIdState, memberTypeState } from "../utils/RecoilData";
 
 const NoticeFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [loginId, setLoginId] = useRecoilState(loginIdState);
-  const memberType = useRecoilState(memberTypeState);
+  const loginId = props.loginId;
   const noticeTitle = props.noticeTitle;
   const setNoticeTitle = props.setNoticeTitle;
   const thumbnail = props.thumbnail;
   const setThumbnail = props.setThumbnail;
   const noticeFile = props.noticeFile;
   const setNoticeFile = props.setNoticeFile;
-  const noticeVisible = props.noticeVisible;
-  const setNoticeVisible = props.setNoticeVisible;
-
   //수정인경우에 추가로 전송되는 데이터
   const noticeThumb = props.noticeThumb;
   const setNoticeThumb = props.setNoticeThumb;
@@ -24,12 +18,12 @@ const NoticeFrm = (props) => {
   const setDelNoticeFileNo = props.setDelNoticeFileNo;
   const companyNo = props.companyNo;
   const setCompanyNo = props.setCompanyNo;
-
+  const noticeVisible = props.noticeVisible;
+  const setNoticeVisible = props.setNoticeVisible;
   const thumbnailRef = useRef(null);
   //썸네일 미리보기용 state(데이터전송하지 않음)
   const [noticeImg, setNoticeImg] = useState(null);
 
-  console.log(loginId + "로그인 아이디");
   //썸네일 이미지 첨부파일이 변경되면 동작할 함수
   const changeThumbnail = (e) => {
     //요소들이 겹쳐있는 상태에서 해당 요소를 선택할 때는 currentTarget(target을사용하면 여러요소가 한번에 선택)
@@ -48,16 +42,8 @@ const NoticeFrm = (props) => {
       setNoticeImg(null);
     }
   };
-
   //첨부파일 화면에 띄울 state
   const [showNoticeFile, setShowNoticeFile] = useState([]);
-
-  const setNoticeVisibleChange = (event) => {
-    const value = event.target.value;
-    console.log("value: " + value);
-    setNoticeVisible(value);
-  };
-
   //첨부파일 추가시 동작할 함수
   const addNoticeFile = (e) => {
     const files = e.currentTarget.files;
@@ -69,6 +55,11 @@ const NoticeFrm = (props) => {
     }
     setNoticeFile([...noticeFile, ...fileArr]);
     setShowNoticeFile([...showNoticeFile, ...filenameArr]);
+  };
+
+  const setNoticeVisibleChange = (event) => {
+    const value = event.target.value;
+    setNoticeVisible(value);
   };
   return (
     <div>
@@ -83,6 +74,7 @@ const NoticeFrm = (props) => {
           />
         ) : noticeThumb ? (
           <img
+            className="notice-thumb"
             src={`${backServer}/notice/thumb/${noticeThumb}`}
             onClick={() => {
               thumbnailRef.current.click();
@@ -90,6 +82,7 @@ const NoticeFrm = (props) => {
           />
         ) : (
           <img
+            className="notice-thumb"
             src="/image/default_img.png"
             onClick={() => {
               thumbnailRef.current.click();
@@ -118,33 +111,14 @@ const NoticeFrm = (props) => {
                     id="noticeTitle"
                     name="noticeTitle"
                     value={noticeTitle}
-                    onChange={(e) => setNoticeTitle(e.target.value)} // 수정된 부분
+                    onChange={setNoticeTitle}
                   />
                 </div>
               </td>
             </tr>
             <tr>
               <th>작성자</th>
-              <td className="left">
-                <div className="input-item">
-                  <a id="loginId" name="loginId">
-                    {loginId}
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>파일</th>
-              <td className="left">
-                <div className="input-item">
-                  <input
-                    type="file"
-                    id="noticeFile"
-                    onChange={addNoticeFile}
-                    multiple
-                  />
-                </div>
-              </td>
+              <td className="left">{loginId}</td>
             </tr>
             <tr>
               <th>공개여부</th>
@@ -161,7 +135,7 @@ const NoticeFrm = (props) => {
                 </div>
               </td>
             </tr>
-            {noticeVisible === "2" && ( // 특정 업체 선택 시 텍스트 입력 필드 표시
+            {noticeVisible === "2" && (
               <tr>
                 <th>업체 코드</th>
                 <td className="left">
@@ -176,7 +150,19 @@ const NoticeFrm = (props) => {
                 </td>
               </tr>
             )}
-
+            <tr>
+              <th>파일</th>
+              <td className="left">
+                <div className="input-item">
+                  <input
+                    type="file"
+                    id="noticeFile"
+                    onChange={addNoticeFile}
+                    multiple
+                  />
+                </div>
+              </td>
+            </tr>
             <tr>
               <th>첨부파일 목록</th>
               <td>
@@ -195,17 +181,20 @@ const NoticeFrm = (props) => {
                           ]);
                         };
                         return (
-                          <p key={"oldFile-" + i}>
-                            <span className="filename">
-                              {noticeFile.filename}
-                            </span>
-                            <span
-                              className="material-icons del-file-icon"
-                              onClick={deleteFile}
-                            >
-                              delete
-                            </span>
-                          </p>
+                          <div
+                            className="filename"
+                            key={noticeFile.noticeFileNo}
+                          >
+                            <p className="file-wrap">
+                              <span>{noticeFile.filename}</span>
+                              <span
+                                className="material-icons del-file-icon"
+                                onClick={deleteFile}
+                              >
+                                delete
+                              </span>
+                            </p>
+                          </div>
                         );
                       })
                     : ""}
@@ -217,15 +206,17 @@ const NoticeFrm = (props) => {
                       setShowNoticeFile([...showNoticeFile]);
                     };
                     return (
-                      <p key={"newFile-" + i}>
-                        <span className="filename">{filename}</span>
-                        <span
-                          className="material-icons del-file-icon"
-                          onClick={deleteFile}
-                        >
-                          delete
-                        </span>
-                      </p>
+                      <div className="file-wrap">
+                        <p key={"newFile-" + i}>
+                          <span className="filename">{filename}</span>
+                          <span
+                            className="material-icons del-file-icon"
+                            onClick={deleteFile}
+                          >
+                            delete
+                          </span>
+                        </p>
+                      </div>
                     );
                   })}
                 </div>

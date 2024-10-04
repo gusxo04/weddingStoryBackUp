@@ -30,4 +30,10 @@ public interface NoticeDao {
 
 	NoticeFileDTO getNoticeFile(int noticeFileNo);
 
+	int updateNotice(NoticeDTO notice);
+
+	List<NoticeFileDTO> selectNoticeFile(int[] delNoticeFileNo);
+
+	int deleteNoticeFile(int[] delNoticeFileNo);
+
 }

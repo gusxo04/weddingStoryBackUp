@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,4 +123,40 @@ public class NoticeController {
 		return ResponseEntity.status(HttpStatus.OK).headers(header).contentLength(file.length())
 				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
+    
+    @PatchMapping
+    public ResponseEntity<Boolean> updateNotice(@ModelAttribute NoticeDTO notice,
+    											@ModelAttribute MultipartFile thumbnail,
+    											@ModelAttribute MultipartFile[] noticeFile){
+    	if(thumbnail !=null) {
+    		String savepath = root+"/notice/thumb/";
+    		String filepath = fileUtils.upload(savepath,thumbnail);
+    		notice.setNoticeThumb(filepath);
+    	}
+    	List<NoticeFileDTO> noticeFileList = new ArrayList<NoticeFileDTO>();
+    	if(noticeFile != null) {
+    		String savepath = root+"/notice/thumb/";
+    		for(MultipartFile file : noticeFile) {
+    			NoticeFileDTO noticeFileDTO = new NoticeFileDTO();
+    			String filename = file.getOriginalFilename();
+    			String filepath = fileUtils.upload(savepath,file);
+    			noticeFileDTO.setFilename(filename);
+    			noticeFileDTO.setFilepath(filepath);
+    			noticeFileDTO.setNoticeNo(notice.getNoticeNo());
+    			noticeFileList.add(noticeFileDTO);
+    		}
+    	}
+    	List<NoticeFileDTO> delFileList = noticeService.updateNotice(notice,noticeFileList);
+    	if(delFileList != null) {
+    		String savepath = root+"/board/";
+    		for(NoticeFileDTO deleteFile : delFileList) {
+    			File delFile = new File(savepath+deleteFile.getFilepath());
+    			delFile.delete();
+    		}
+    		return ResponseEntity.ok(true);
+    	}else {
+    		return ResponseEntity.ok(false);
+    	}
+    }
+    
 }

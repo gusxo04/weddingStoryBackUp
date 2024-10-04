@@ -22,4 +22,5 @@ public class NoticeDTO {
 	private String noticeThumb;
 	private String noticeWriter;//받아야함
 	private List<NoticeFileDTO> fileList;
+	private int[] delNoticeFileNo;
 }

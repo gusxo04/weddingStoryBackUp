@@ -22,7 +22,6 @@ const NoticeView = () => {
     axios
       .get(`${backServer}/notice/noticeNo/${noticeNo}`)
       .then((res) => {
-        console.log(res);
         setNotice(res.data);
         setchange((prev) => prev + 1);
       })
@@ -33,14 +32,13 @@ const NoticeView = () => {
     axios
       .get(`${backServer}/notice/prenextnoticeNo/${noticeNo}`)
       .then((res) => {
-        console.log(res);
         setPreviousNotice(res.data.previousNotice);
         setNextNotice(res.data.nextNotice);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [noticeNo, change]);
+  }, [change]);
   const handlePreviousClick = () => {
     if (previousNotice && previousNotice.noticeNo) {
       navigate(`/admin/notice/view/${previousNotice.noticeNo}`);
@@ -140,7 +138,6 @@ const FileItem = (props) => {
         responseType: "blob",
       })
       .then((res) => {
-        console.log(res);
         const blob = new Blob([res.data]);
         const fileObjectUrl = window.URL.createObjectURL(blob);
 
