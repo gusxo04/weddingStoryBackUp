@@ -161,11 +161,11 @@ public class CompanyService {
 	public Map deleteProduct(int productNo) {
 		
 
-		String img = productDao.selectProductImg(productNo);
+		List img = productDao.selectProductImg(productNo);
 		List thumbs = productDao.selectProductFile(productNo);
 
-		Map<String, Object> deleteFile = new HashMap<String, Object>();
-		deleteFile.put("img", img);
+		Map<String, List<String>> deleteFile = new HashMap<String, List<String>>();
+		deleteFile.put("img",img);
 		deleteFile.put("thumbs", thumbs);
 		System.out.println(deleteFile);
 		int result = productDao.deleteProduct(productNo);

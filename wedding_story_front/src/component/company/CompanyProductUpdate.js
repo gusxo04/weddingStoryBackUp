@@ -23,6 +23,7 @@ const CompanyProductUpdate = () => {
   const [numberPeople, setNumberPeople] = useState("");
   const [companyCategory, setCompanyCategory] = useState("");
   const [delThumbsFile, setDelThumbsFile] = useState([null]);
+  console.log(productNo);
   useEffect(() => {
     axios
       .get(`${backServer}/company/product/${productNo}`)

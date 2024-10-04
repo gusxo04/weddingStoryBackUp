@@ -182,17 +182,34 @@ public class CompanyController {
 	@DeleteMapping(value = "/product/{productNo}")
 	public ResponseEntity<Boolean> deleteProduct(@PathVariable int productNo) {
 			System.out.println(productNo);
-		Map deleteFile = companyService.deleteProduct(productNo);
+		Map<String ,List<String>> deleteFile = companyService.deleteProduct(productNo);
 		System.out.println("controller : "+ deleteFile);
-		if(deleteFile != null) {
-			String imgSavepath = root+"/product/image";
-			Object Img = deleteFile.get("img");
-			File delFile = new File(imgSavepath + Img);
-			delFile.delete();
-			String thumbsSavepath = root+"product/thumb/";
-			Object thumbs = deleteFile.get("thumbs");
-			System.out.println(thumbs);
-			
+		 if (deleteFile != null) {
+	        // 이미지 파일 경로
+	        String imgSavepath = root + "/product/image/";
+	        
+	        // 'img'에 대한 파일 처리
+	        List<String> imgList = deleteFile.get("img"); //Service에서 List<Object>인것을 List<String>으로 형변환
+	        if (imgList != null) {
+	            for (String img : imgList) {
+	                File delFile = new File(imgSavepath + img);
+	                if (delFile.exists()) {
+	                    delFile.delete();
+	                }
+	            }
+	        }
+	        // 썸네일 파일 경로
+	        String thumbsSavepath = root + "/product/thumb/";
+	        // 'thumbs'에 대한 파일 처리
+	        List<String> thumbsList = deleteFile.get("thumbs");
+	        if (thumbsList != null) {
+	            for (String thumb : thumbsList) {
+	                File delFile = new File(thumbsSavepath + thumb);
+	                if (delFile.exists()) { //exists() : 파일 존재여부 확인
+	                   delFile.delete(); //있으면 삭제 
+	                }    
+	            }
+	        }
 		}
 		
 		return ResponseEntity.ok(null);

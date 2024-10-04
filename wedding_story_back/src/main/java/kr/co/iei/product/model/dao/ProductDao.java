@@ -40,7 +40,7 @@ public interface ProductDao {
 
 	int deleteThumbnails(List<Object> delThumbsFile);
 
-	String selectProductImg(int productNo);
+	List selectProductImg(int productNo);
 
 	int deleteProduct(int productNo);
 
