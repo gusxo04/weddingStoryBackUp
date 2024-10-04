@@ -78,5 +78,7 @@ public interface ConventionDao {
     ConventionSeatDTO getConventionSeat(ConventionCompanyDTO conventionCompany);
 
     int updateConventionMemberTicket(RefundRequest request);
+    
+	ConventionDTO selectConventInfo(int ticketNo);
 
 }

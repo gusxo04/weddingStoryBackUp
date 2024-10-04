@@ -180,5 +180,10 @@
     <select id="getConventionSeat" resultType="conventionSeat">
         select * from convention_seat where seat_no = #{seatNo} and seat_status = 0
     </select>
+    <select id="selectConventInfo" resultType="convention">
+    	select convention_title, convention_img 
+    	from convention_member 
+    	join convention using(convention_no) where ticket_no=#{ticketNo}
+    </select>
 
 </mapper>

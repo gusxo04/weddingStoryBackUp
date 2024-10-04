@@ -1,25 +1,39 @@
 package kr.co.iei.member.model.service;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.consult.model.dto.ConsultDTO;
+import kr.co.iei.convention.model.dao.ConventionDao;
+import kr.co.iei.convention.model.dto.ConventionDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
+import kr.co.iei.product.model.dao.ProductDao;
+import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.util.JwtUtils;
 
 @Service
 public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private ProductDao productDao;
+	@Autowired
+	private ConventionDao conventionDao;
+	@Autowired
+	private CompanyDao companyDao;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	@Autowired
@@ -157,13 +171,58 @@ public class MemberService {
 		List<ConsultDTO> list = memberDao.consultList(memberNo);
 		for(ConsultDTO consult : list) {
 			if(consult.getCompanyNo().equals("0")) {
-				CompanyDTO company = memberDao.conventionList();
+				System.out.println(consult.getConsultDate());
+				CompanyDTO company = memberDao.conventionList(consult.getConsultDate());
 				company.setCompanyAddr("서울 영등포구 선유동2로 57");
 				company.setCompanyTel("02-4153-3449");
 				consult.setCompany(company);
 			}else {				
 				CompanyDTO company = memberDao.consultCompanyList(consult.getCompanyNo());				
 				consult.setCompany(company);
+			}
+		}
+		return list;
+	}
+
+	public List<MemberPayDTO> paymentList(int memberNo, String state) {
+		List<MemberPayDTO> list = memberDao.paymentList(memberNo,state);
+		for(MemberPayDTO pay : list) {
+			
+			StringTokenizer sT = new StringTokenizer(pay.getPayDate(), "/");
+			while (sT.hasMoreElements()) {
+				int year = 0, month = 0, day = 0;
+			    if (sT.hasMoreElements()) {
+			    year = Integer.parseInt(sT.nextToken());  // 년도 (24)
+			    }
+			    if (sT.hasMoreElements()) {
+			    month = Integer.parseInt(sT.nextToken());  // 월 (10)
+			    }
+			    if (sT.hasMoreElements()) {
+			    day = Integer.parseInt(sT.nextToken());  // 일 (04)
+			    }
+
+			    // 연도를 2024년으로 맞추기 위해 조정
+			    if (year < 100) {
+			    year += 2000;  // 24는 2024년으로 변환
+			    }
+			    String formattedDateString = String.format("%04d.%02d.%02d", year, month, day);
+			    
+			    pay.setPayDate(formattedDateString);
+			}		
+			
+			if(pay.getProductNo() != 0) {
+				//상품 구매 시
+				ProductDTO product = productDao.selectProduct(pay.getProductNo());
+				CompanyDTO company = companyDao.selectCompanyNo(product.getCompanyNo());
+				pay.setProduct(product);
+				pay.setCompanyName(company.getCompanyName());
+			}else {
+				//박람회 티켓 구매 시
+				ConventionDTO convention = conventionDao.selectConventInfo(pay.getTicketNo());
+				ProductDTO product = new ProductDTO();
+				product.setProductName(convention.getConventionTitle());
+				product.setProductImg(convention.getConventionImg());
+				pay.setProduct(product);
 			}
 		}
 		return list;

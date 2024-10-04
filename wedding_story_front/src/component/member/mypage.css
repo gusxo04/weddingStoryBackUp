@@ -1,5 +1,6 @@
+/*마이페이지 전체적으로 반영(구조,범위)*/
 .mypage-wrap {
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   border: none;
@@ -89,6 +90,8 @@
 .mypage-content {
   width: 100%;
 }
+
+/*마이페이지 정보 수정,비밀번호 변경 CSS*/
 .mypage-info-wrap,
 .mypage-password-wrap {
   padding-bottom: 10px;
@@ -237,6 +240,8 @@
 .mypage-info-delbtn {
   background-color: #fff;
 }
+
+/*마이페이지 일정관리,모달 CSS*/
 :root {
   --fc-event-bg-color: var(--hover3);
   --fc-event-border-color: transparent;
@@ -362,4 +367,86 @@
 }
 .sd-tr2 td {
   padding-top: 10px;
+}
+
+/*마이페이지 구매 내역 CSS*/
+.mypage-payment-wrap {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+.mypage-payment-wrap > div {
+  width: 100%;
+}
+.mypage-payment-state {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.mypage-payment-state > div {
+  width: calc(100% / 4);
+  display: flex;
+  justify-content: center;
+}
+.mypage-payment-state button {
+  width: 80%;
+  height: 40px;
+  border: 1px solid #c9c9c9;
+  border-radius: 20px;
+  background-color: var(--main2);
+  font-size: 14px;
+  color: #808080;
+}
+.stateHere > button {
+  background-color: var(--main1);
+  border: 1px solid var(--main1);
+  color: #fff;
+}
+.paymentList-tbl {
+  width: 100%;
+  margin: 30px 0;
+  box-shadow: rgba(0, 0, 0, 0.07) 2px 3px 4px 2px;
+  border-radius: 5px;
+}
+.paymentList-tbl td {
+  padding: 10px 10px;
+}
+.payment-title td {
+  border-bottom: 1px solid var(--main2);
+}
+.payment-info td {
+  height: 100px;
+}
+.payment-productImg {
+  width: 100%;
+  height: 100%;
+}
+.payment-productImg > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.payment-info-text > span {
+  color: #777777;
+  font-size: 14px;
+}
+.payment-info-text > p {
+  color: #777777;
+  font-size: 14px;
+}
+.payment-info-price {
+  text-align: right;
+}
+.payment-info-btnBox {
+  text-align: center;
+}
+.payment-info-btnBox button {
+  width: 70%;
+  height: 30px;
+  border: 1px solid #c9c9c9;
+  border-radius: 7px;
+  background-color: var(--main2);
+  font-size: 14px;
+  font-weight: 700;
+  font-weight: 300;
 }
