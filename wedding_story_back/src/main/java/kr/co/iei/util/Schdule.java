@@ -21,10 +21,15 @@ public class Schdule {
 // from convention_member 
 // where member_email is not null and convention_no = (select max(convention_no) from convention where to_char(convention_start - 3) = to_char(sysdate))
 
-	@Scheduled(cron = "0 00 9 * * *")
+	@Scheduled(cron = "0 0 9 * * *")
 	public void sendAlarmTicket(){
 		//박람회 알림받을 이메일 설정한 사람들 알림 보내기
 		conventionService.sendTicketEmail();
+	}
+
+	@Scheduled(cron = "0 0 0 * * *")
+	public void updateProgress(){
+		
 	}
 	
 }

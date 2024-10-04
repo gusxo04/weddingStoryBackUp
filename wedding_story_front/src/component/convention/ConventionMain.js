@@ -189,9 +189,11 @@ const EmptyConvention = (props) => {
   console.log(memberType);
   const navigate = useNavigate();
 
-  if(lazy === undefined){
-    setLoading(false);
-  }
+  useEffect(() => {
+    if(lazy === undefined){
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

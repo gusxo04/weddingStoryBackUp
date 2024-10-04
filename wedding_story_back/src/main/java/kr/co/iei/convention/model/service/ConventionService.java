@@ -143,7 +143,8 @@ public class ConventionService {
         } catch (InterruptedException e) {
             // Thread.currentThread().interrupt();
             e.printStackTrace();
-        }
+            return false;
+        } 
 
         String code = "-1";
         //환불이 한 번에 안 되니까 for문으로 10번 돌려서 웬만하면 바로 환불가능하게 구현
@@ -225,7 +226,7 @@ public class ConventionService {
     }
 
     // 환불 기능 메서드 2개 
-    private String getAccessToken() {
+    public String getAccessToken() {
         // 토큰 발급받는 코드
         String clientId = restApi;
         String clientSecret = restApiSecret;
@@ -258,7 +259,7 @@ public class ConventionService {
         return accessToken;
     }
 
-    private String cancelPayment(String accessToken, RefundRequest request) {
+    public String cancelPayment(String accessToken, RefundRequest request) {
 
         String cancelUrl = "https://api.iamport.kr/payments/cancel";
 
