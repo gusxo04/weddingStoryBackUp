@@ -5,6 +5,7 @@ import CompanyProductFrm from "./CompanyProductFrm";
 import { companyNoState } from "../utils/RecoilData";
 import { useParams } from "react-router-dom";
 import ToastEditor from "../utils/ToastEditor";
+import Swal from "sweetalert2";
 
 const CompanyProductUpdate = () => {
   const params = useParams();
@@ -21,7 +22,7 @@ const CompanyProductUpdate = () => {
   const [diningRoom, setDiningRoom] = useState("");
   const [numberPeople, setNumberPeople] = useState("");
   const [companyCategory, setCompanyCategory] = useState("");
-  const [delThumbsFile, setDelThumbsFile] = useState([]);
+  const [delThumbsFile, setDelThumbsFile] = useState([null]);
   useEffect(() => {
     axios
       .get(`${backServer}/company/product/${productNo}`)
@@ -49,6 +50,53 @@ const CompanyProductUpdate = () => {
   }, [companyNo]);
   const updateProduct = () => {
     const form = new FormData();
+    console.log(productThumb);
+    console.log(delThumbsFile);
+    if (productName !== "" && productPrice !== "" && productContent !== null) {
+      if (companyCategory === "웨딩홀") {
+        if (coronation !== "" && diningRoom !== "" && numberPeople !== "") {
+          form.append("coronation", coronation);
+          form.append("diningRoom", diningRoom);
+          form.append("numberPeople", numberPeople);
+        }
+      }
+      form.append("productNo", productNo);
+      form.append("companyNo", companyNo);
+      form.append("productName", productName);
+      form.append("productPrice", productPrice);
+      form.append("productContent", productContent);
+      form.append("companyCategory", companyCategory);
+      form.append("thumbFile", productImg);
+      for (let i = 0; i < productThumb.length; i++) {
+        form.append("thumbnailFiles", productThumb[i]);
+      }
+      for (let i = 0; i < delThumbsFile.length; i++) {
+        form.append("delThumbsFile", delThumbsFile[i]);
+      }
+      axios
+        .patch(`${backServer}/company/product`, form, {
+          headers: {
+            contentType: "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            title: "수정완료",
+            text: "정보를 변경하였습니다.",
+            icon: "success",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      Swal.fire({
+        title: "정보입력 오류",
+        text: "정보를 모두 입력해주세요",
+        icon: "error",
+      });
+    }
   };
 
   return (

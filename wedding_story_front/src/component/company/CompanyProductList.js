@@ -52,6 +52,7 @@ const CompanyProductList = () => {
                       key={"product" + index}
                       product={product}
                       index={index}
+                      backServer={backServer}
                     />
                   );
                 })}
@@ -70,6 +71,17 @@ const CompanyProductList = () => {
 const ProductItem = (props) => {
   const product = props.product;
   const index = props.index;
+  const backServer = props.backServer;
+  const deleteProduct = (e) => {
+    axios
+      .delete(`${backServer}/company/product/${product.productNo}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <tr>
       <td style={{ width: "10%" }}>{product.productNo}</td>
@@ -81,7 +93,13 @@ const ProductItem = (props) => {
         </button>
       </td>
       <td style={{ width: "10%" }}>
-        <button>삭제</button>
+        <button
+          onClick={() => {
+            deleteProduct();
+          }}
+        >
+          삭제
+        </button>
       </td>
     </tr>
   );

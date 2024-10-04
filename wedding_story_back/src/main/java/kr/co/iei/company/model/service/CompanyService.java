@@ -1,5 +1,6 @@
 package kr.co.iei.company.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +123,7 @@ public class CompanyService {
 		return map;
 	}
 	
-	//
+	//상품 한개 정보 조회 
 	public Map selectOneProduct(int productNo) {
 		ProductDTO product = productDao.selectProduct(productNo);
 		List file = productDao.selectProductFile(productNo);
@@ -130,6 +131,53 @@ public class CompanyService {
 		map.put("product", product);
 		map.put("thumbsFile", file);
 		return map;
+	}
+	
+	//상품 정보 수정
+	@Transactional
+	public int updateProductInfo(ProductDTO product, List<ProductFileDTO> productFile, List<Object> delThumbsFile) {
+		//상품정보 수정
+		int result = productDao.updateProductInfo(product);
+		if(result > 0) {
+			//파일 삭제 로직 
+			if(delThumbsFile != null) {
+				System.out.println("service1212 : "+delThumbsFile);
+				result += productDao.deleteThumbnails(delThumbsFile);
+				
+			}
+			System.out.println("service + list : "+ productFile);
+			for(ProductFileDTO list : productFile) {//서비스에서 productNo를 부여받음
+				result += productDao.insertProductFile(list);//list를 하나씩 DB에 저장 리턴의 결과값을 resultProduct에 더함 
+			}
+			int updateTotal = delThumbsFile == null 
+					? 1 + productFile.size() : 1 + productFile.size() + delThumbsFile.size();
+			if(result == updateTotal) {
+				return result;
+			}
+		}
+		return 0;
+	}
+	@Transactional
+	public Map deleteProduct(int productNo) {
+		
+
+		String img = productDao.selectProductImg(productNo);
+		List thumbs = productDao.selectProductFile(productNo);
+
+		Map<String, Object> deleteFile = new HashMap<String, Object>();
+		deleteFile.put("img", img);
+		deleteFile.put("thumbs", thumbs);
+		System.out.println(deleteFile);
+		int result = productDao.deleteProduct(productNo);
+		int fileResult = productDao.deleteProductFile(productNo);
+		int totalResult = result + fileResult;
+		if(totalResult >1) {
+			
+			return deleteFile;
+		}else {
+			return null;
+		}
+		
 	}
 	
 

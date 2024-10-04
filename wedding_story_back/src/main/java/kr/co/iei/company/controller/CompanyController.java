@@ -1,5 +1,6 @@
 package kr.co.iei.company.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -139,5 +141,61 @@ public class CompanyController {
 	public ResponseEntity<Map> selectOneProduct(@PathVariable int productNo){
 		Map product = companyService.selectOneProduct(productNo);
 		return ResponseEntity.ok(product);
+	}
+	
+	//상품 정보 수정
+	@PatchMapping(value="/product")
+	public ResponseEntity<Boolean> updateProductInfo(@ModelAttribute ProductDTO product, @ModelAttribute MultipartFile thumbFile,@ModelAttribute MultipartFile[] thumbnailFiles ,@RequestParam List<Object> delThumbsFile){
+	
+		if(thumbFile != null) {
+			String savepath = root+"/product/image/";					//경로 등록
+			String filepath = fileUtil.upload(savepath, thumbFile); //경로에 저장
+			product.setProductImg(filepath); 						//company에 추가
+		}
+		List<ProductFileDTO> productFile = new ArrayList<ProductFileDTO>();
+		if(thumbnailFiles != null) {
+			String savepath = root+"/product/thumb/";
+			for(MultipartFile files : thumbnailFiles) {
+				ProductFileDTO fileDTO = new ProductFileDTO();
+					String filename = files.getOriginalFilename();
+					String filepath = fileUtil.upload(savepath, files);
+					fileDTO.setFileName(filename);
+					fileDTO.setFilePath(filepath);
+					fileDTO.setProductNo(product.getProductNo());
+					productFile.add(fileDTO);
+					System.out.println("1 :"+productFile);
+			}
+		}
+		//front에서 보내준것은 filepath이므로 조회를 하지않고 바로 삭제
+		int result  = companyService.updateProductInfo(product,productFile,delThumbsFile);
+		if(delThumbsFile != null) {
+			String savepath = root+"/product/thumb/";
+			for(Object delete : delThumbsFile) {
+				File delFile = new File(savepath + delete);
+				delFile.delete();
+			}
+			return ResponseEntity.ok(true);
+		}else {
+			return ResponseEntity.ok(false);
+		}
+	}
+	@DeleteMapping(value = "/product/{productNo}")
+	public ResponseEntity<Boolean> deleteProduct(@PathVariable int productNo) {
+			System.out.println(productNo);
+		Map deleteFile = companyService.deleteProduct(productNo);
+		System.out.println("controller : "+ deleteFile);
+		if(deleteFile != null) {
+			String imgSavepath = root+"/product/image";
+			Object Img = deleteFile.get("img");
+			File delFile = new File(imgSavepath + Img);
+			delFile.delete();
+			String thumbsSavepath = root+"product/thumb/";
+			Object thumbs = deleteFile.get("thumbs");
+			System.out.println(thumbs);
+			
+		}
+		
+		return ResponseEntity.ok(null);
+				
 	}
 }

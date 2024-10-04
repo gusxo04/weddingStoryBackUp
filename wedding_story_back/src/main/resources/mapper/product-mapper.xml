@@ -72,6 +72,38 @@
   	select * from product 
   </select>
   
+  <update id="updateProductInfo">
+  	update product 
+  	set
+  	product_name = #{productName},
+	  	<if test="productImg != null">
+		  	product_img = #{productImg},
+	  	</if>
+  	product_content = #{productContent},
+  	product_price = #{productPrice},
+  	coronation = #{coronation},
+  	dining_room = #{diningRoom},
+  	number_people =#{numberPeople}
+  	where product_no =#{productNo}
+  </update>
   
+  <delete id="deleteThumbnails">
+  	delete from product_file
+  	where file_path in
+  	 <foreach collection="delThumbsFile" item="file" open="(" close=")" separator=",">
+  		#{file}
+  	</foreach>
+  </delete>
+  
+  <select id="selectProductImg" resultType="String">
+  	select product_img from product where product_No =#{productNo}
+  </select>
+  
+  <delete id="deleteProduct">
+  	delete from product where product_no =#{productNo}
+  </delete> 
+  <delete id="deleteProductFile">
+  	delete from product_file where product_no =#{productNo}
+  </delete>
   
 </mapper>
