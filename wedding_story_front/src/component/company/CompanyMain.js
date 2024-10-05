@@ -20,6 +20,8 @@ import { useEffect } from "react";
 import CompanyProductList from "./CompanyProductList";
 import CompanyProductInsert from "./CompanyProductInsert";
 import CompanyProductUpdate from "./CompanyProductUpdate";
+import CompanyCustomer from "./CompanyCustomer";
+import CompanyCounsel from "./CompanyCounsel";
 
 const CompanyMain = () => {
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
@@ -45,6 +47,8 @@ const CompanyMain = () => {
             <Route path="info/update/" element={<CompanyInfoUpdate />} />
             <Route path="product/list" element={<CompanyProductList />} />
             <Route path="product/insert" element={<CompanyProductInsert />} />
+            <Route path="customer" element={<CompanyCustomer />} />
+            <Route path="counsel" element={<CompanyCounsel />} />
             <Route
               path="product/update/:productNo"
               element={<CompanyProductUpdate />}

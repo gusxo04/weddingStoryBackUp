@@ -69,4 +69,16 @@ public interface ConventionDao {
 
     List selectAlarmTicket();
 
+    int deleteCompanyPay(int conventionNo, String companyNo);
+
+    int cancelConventionCompany(int conventionNo, String companyNo);
+
+    ConventionCompanyDTO checkConventionCompany(ConventionSeatDTO conventionSeat);
+
+    ConventionSeatDTO getConventionSeat(ConventionCompanyDTO conventionCompany);
+
+    int updateConventionMemberTicket(RefundRequest request);
+    
+	ConventionDTO selectConventInfo(int ticketNo);
+
 }

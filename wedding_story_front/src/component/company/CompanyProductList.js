@@ -3,7 +3,8 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { companyNoState } from "../utils/RecoilData";
 import PageNavi from "../utils/PagiNavi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CompanyProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -11,6 +12,7 @@ const CompanyProductList = () => {
   const [productList, setProductList] = useState([]); //조회한 리스트 결과가 들어갈 state
   const [reqPage, setReqPage] = useState(1); //페이지 시작 번호
   const [pi, setPi] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -29,7 +31,7 @@ const CompanyProductList = () => {
     <div>
       <section className="section">
         <div className="list-wrap">
-          <div className="title">상품 목록</div>
+          <div className="list-title">상품 목록</div>
           <Link to={"/company/product/insert"}>
             <button>글쓰기</button>
           </Link>
@@ -52,6 +54,10 @@ const CompanyProductList = () => {
                       key={"product" + index}
                       product={product}
                       index={index}
+                      backServer={backServer}
+                      navigate={navigate}
+                      productList={productList}
+                      setProductList={setProductList}
                     />
                   );
                 })}
@@ -70,18 +76,63 @@ const CompanyProductList = () => {
 const ProductItem = (props) => {
   const product = props.product;
   const index = props.index;
+  const backServer = props.backServer;
+  const navigate = props.navigate;
+  const productList = props.productList;
+  const setProductList = props.setProductList;
+  const deleteProduct = (item) => {
+    console.log(item);
+    Swal.fire({
+      title: "상품 삭제",
+      text: "상품을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "승인",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${backServer}/company/product/${product.productNo}`)
+          .then((res) => {
+            console.log(res);
+            Swal.fire({
+              title: "삭제완료",
+              text: "삭제가 정상적으로 완료되었습니다.",
+              icon: "success",
+            }).then(() => {
+              const UpdateProductList = productList.filter(
+                (item) => item.productNo !== product.productNo
+              );
+
+              console.log(UpdateProductList);
+              setProductList(UpdateProductList);
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else if (result.isDenied) {
+      }
+    });
+  };
   return (
     <tr>
       <td style={{ width: "10%" }}>{product.productNo}</td>
       <td style={{ width: "50%" }}>{product.productName}</td>
       <td style={{ width: "20%" }}>{product.productPrice}</td>
       <td style={{ width: "10%" }}>
-        <button>
-          <Link to={`/company/product/update/${product.productNo}`}>수정</Link>
-        </button>
+        <Link to={`/company/product/update/${product.productNo}`}>
+          <button className="update">수정</button>
+        </Link>
       </td>
       <td style={{ width: "10%" }}>
-        <button>삭제</button>
+        <button
+          onClick={() => {
+            deleteProduct(product);
+          }}
+        >
+          삭제
+        </button>
       </td>
     </tr>
   );

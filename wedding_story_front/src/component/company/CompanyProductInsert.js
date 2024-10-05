@@ -47,13 +47,13 @@ const CompanyProductInsert = () => {
 
   const insertProduct = () => {
     console.log("서브밋 버튼");
-
+    console.log(productThumb);
     if (
       productName !== "" &&
       productImg !== "" &&
       productPrice !== "" &&
-      productThumb !== null &&
-      productContent !== null
+      productThumb.length !== 0 &&
+      productContent !== ""
     ) {
       const form = new FormData();
 

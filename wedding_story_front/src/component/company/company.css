@@ -238,17 +238,43 @@
 /*-----product List*/
 .list-wrap {
   width: 1200px;
+  min-height: 300px;
   border: 1px solid #ccc;
   margin: 50px 90px;
   margin-top: 90px;
 }
-.tbl > tbody > tr > td > button {
+.list-title {
+  font-size: 30px;
+  width: 1000px;
+  height: 50px;
+  padding: 15px 100px;
+  line-height: 50px;
+  border-bottom: 1px solid #ccc;
+}
+.list-title + a > button {
+  width: 60px;
+  height: 35px;
+  border: 1px solid #ccc;
+  margin: 20px 30px;
+  border-radius: 10px;
+}
+.list-title + a > button:hover {
+  font-weight: 800;
+  background-color: #bddaed;
+}
+.tbl > tbody > tr > td button {
   color: red;
   width: 60px;
   height: 35px;
   border: 1px solid #ccc;
   margin: 0px 30px;
+  border-radius: 10px;
 }
+.tbl > tbody > tr > td button:hover {
+  font-weight: 800;
+  background-color: #bddaed;
+}
+
 .tbl > tbody > tr > td {
   text-align: center;
 }

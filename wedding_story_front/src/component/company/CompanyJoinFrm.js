@@ -46,7 +46,7 @@ const CompanyJoinFrm = (props) => {
   const setDayOff = props.setDayOff;
   const keyWord = props.keyWord;
   const setKeyWord = props.setKeyWord;
-
+  console.log(companyAddr);
   const thumbnail = props.thumbnail;
   const setThumbnail = props.setThumbnail;
 
@@ -63,40 +63,33 @@ const CompanyJoinFrm = (props) => {
     { value: "본식", label: "본식" },
   ];
 
-  const tel1Ref = useRef();
-  const tel2Ref = useRef();
-  const tel3Ref = useRef();
-
-  // const [tel1, tel2, tel3] = telNumber;
-  //DB에서 조회후 split으로 자른 데이터
-
-  // if (tel1Ref.current) tel1Ref.current.value = tel1;
-  // if (tel2Ref.current) tel2Ref.current.value = tel2;
-  // if (tel3Ref.current) tel3Ref.current.value = tel3;
-
-  // 상태에도 전화번호 전체를 설정
-  // setCompanyTel(telNumber);
-
-  //전화번호 input 나뉘어져 있는거 합치기
-  const changeTel = () => {
-    const tel1 = tel1Ref.current.value;
-    const tel2 = tel2Ref.current.value;
-    const tel3 = tel3Ref.current.value;
-    const combinedTel = `${tel1}-${tel2}-${tel3}`; /*tel1-tel2-tel3 의형식대로 값을 모두 합침*/
-
-    setCompanyTel(combinedTel);
-  };
-
   //전화번호 input 번호만 입력하게 하기
-  const handleTelInput = (e, ref) => {
-    const value = e.target.value;
-    // 숫자만 허용
-    if (/^\d*$/.test(value) || value === "") {
-      ref.current.value = value;
-      changeTel(); // 전화번호 업데이트
-    } else {
-      ref.current.value = value.replace(/\D/g, ""); // 숫자가 아닌 문자는 제거
+  const handleTelInput = (e) => {
+    let value = e.target.value;
+
+    // 숫자만 남기기
+    value = value.replace(/[^0-9]/g, "");
+
+    // 백스페이스로 삭제할 때 하이픈도 함께 지워지도록 처리
+    if (
+      e.nativeEvent.inputType === "deleteContentBackward" &&
+      companyTel.endsWith("-")
+    ) {
+      value = value.slice(0, -1); // 마지막 하이픈 제거
     }
+
+    // 000-0000-0000 형식으로 변환
+    if (value.length < 4) {
+      value = value;
+    } else if (value.length < 7) {
+      value = value.slice(0, 3) + "-" + value.slice(3);
+    } else {
+      value =
+        value.slice(0, 3) + "-" + value.slice(3, 7) + "-" + value.slice(7, 11); // 최대 11자리까지만
+    }
+
+    // 상태 업데이트
+    setCompanyTel(value); // 부모 컴포넌트로 전달
   };
 
   //주소를 담기위한 state
@@ -104,8 +97,9 @@ const CompanyJoinFrm = (props) => {
     address: "",
     detailAddress: "",
   });
+
   //DB에서 조회하 데이터 자른값
-  // const [addr1, addr2] = companyAddr.split("-");
+  const [addr1, addr2] = companyAddr.split("-");
 
   //썸네일 관리
   const thumbnailRef = useRef(null);
@@ -227,25 +221,9 @@ const CompanyJoinFrm = (props) => {
               <input
                 type="text"
                 id="companyTel"
-                ref={tel1Ref}
-                onChange={(e) => handleTelInput(e, tel1Ref)}
-                maxLength={3}
-              />
-              <span>-</span>
-              <input
-                type="text"
-                id="companyTel"
-                ref={tel2Ref}
-                onChange={(e) => handleTelInput(e, tel2Ref)}
-                maxLength={4}
-              />
-              <span>-</span>
-              <input
-                type="text"
-                id="companyTel"
-                ref={tel3Ref}
-                onChange={(e) => handleTelInput(e, tel3Ref)}
-                maxLength={4}
+                value={companyTel}
+                onChange={(e) => handleTelInput(e)}
+                maxLength={13}
               />
             </div>
             <div className="company-input-wrap">
@@ -265,7 +243,6 @@ const CompanyJoinFrm = (props) => {
                 type="text"
                 id="companyAddr-detail"
                 defaultValue={address.detailAddress}
-                // value={addr2}
                 onChange={(e) => {
                   setAddress({ ...address, detailAddress: e.target.value });
                 }}

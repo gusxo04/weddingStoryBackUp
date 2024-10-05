@@ -48,7 +48,7 @@
     </insert>
 
     <insert id="insertMemberPay">
-        insert into member_pay values(member_pay_seq.nextval, #{memberNo}, null, #{ticketNo}, sysdate, #{progressDate}, #{progressTime}, #{payPrice}, 0, #{merchantUid}, 0)
+        insert into member_pay values(member_pay_seq.nextval, #{memberNo}, null, #{ticketNo}, sysdate, #{progressDate}, #{progressTime}, #{payPrice}, 0, #{merchantUid})
     </insert>
 
     <select id="selectOneConvention" resultType="convention">
@@ -62,21 +62,25 @@
     <select id="selectPayment" resultType="memberPay">
         select pay_no, ticket_no, pay_price, merchant_uid
             from member_pay where member_no = #{memberNo} and 
-            ticket_no = (select ticket_no from convention_member where convention_no = #{conventionNo} and member_no = ${memberNo}) and
+            ticket_no = (select ticket_no from convention_member where convention_no = #{conventionNo} and member_no = #{memberNo} and ticket_code is not null) and
             sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = #{conventionNo})
             and progress = 0
     </select>
 
-    <update id="updateMemberPayKind">
+    <!-- <update id="updateMemberPayKind">
         update member_pay set kind = 2 where ticket_no = #{ticketNo} and member_no = #{memberNo}
-    </update>
+    </update> -->
 
-    <delete id="deleteConventionMember">
+    <!-- <delete id="deleteConventionMember">
         delete from convention_member where ticket_no = #{ticketNo} and member_no = #{memberNo}
-    </delete>
+    </delete> -->
 
     <update id="updateMemberPay">
         update member_pay set progress = 2 where merchant_uid = #{merchantUid} and member_no = #{memberNo}
+    </update>
+
+    <update id="updateConventionMemberTicket">
+        update convention_member set ticket_code = null where ticket_no = #{ticketNo}
     </update>
 
     <select id="selectConventionCommentList" resultType="conventionComment">
@@ -139,7 +143,7 @@
 
     <select id="selectCompanyPayment" resultType="companyPay">
         select pay_no, (select convention_company_no from convention_company where convention_no = #{conventionNo} and company_no = #{companyNo}) as convention_company_no, pay_price, merchant_uid 
-            from company_pay where company_no = #{companyNo} and convention_no = ${conventionNo} and
+            from company_pay where company_no = #{companyNo} and convention_no = #{conventionNo} and
             sysdate <![CDATA[ < ]]> (select convention_start from convention where convention_no = #{conventionNo}) and
             progress = 0
     </select>
@@ -156,7 +160,30 @@
     <select id="selectAlarmTicket" resultType="member">
         select member_no, member_email 
             from convention_member 
-            where member_email is not null and convention_no = (select max(convention_no) from convention where to_char(convention_start - 3) = to_char(sysdate))
+            where member_email is not null and ticket_code is not null and convention_no = (select max(convention_no) from convention where to_char(convention_start - 3) = to_char(sysdate))
+    </select>
+
+    <delete id="deleteCompanyPay">
+        delete from company_pay 
+            where pay_no = (select max(pay_no) from company_pay where convention_no = #{conventionNo} and company_no = #{companyNo})
+    </delete>
+
+    <delete id="cancelConventionCompany">
+        delete from convention_company 
+            where convention_company_no = (select max(convention_company_no) from convention_company where convention_no = #{conventionNo} and company_no = #{companyNo})
+    </delete>
+
+    <select id="checkConventionCompany" resultType="conventionCompany">
+        select convention_company_no from convention_company where convention_no = #{conventionNo} and seat_no = #{seatNo}
+    </select>
+
+    <select id="getConventionSeat" resultType="conventionSeat">
+        select * from convention_seat where seat_no = #{seatNo} and seat_status = 0
+    </select>
+    <select id="selectConventInfo" resultType="convention">
+    	select convention_title, convention_img 
+    	from convention_member 
+    	join convention using(convention_no) where ticket_no=#{ticketNo}
     </select>
 
 </mapper>

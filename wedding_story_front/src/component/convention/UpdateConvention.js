@@ -239,7 +239,7 @@ const UpdateConvention = () => {
           />
           :
           formType === 3 ?
-          <CheckLayout />
+          <CheckLayout conventionNo={conventionNo} />
           :
           "아무것도 업서"
         }

@@ -132,7 +132,7 @@ public class ConventionController {
         }
         boolean result = conventionService.updateConvention(convention);
         if (result && image != null) {
-            //파일 삭제
+            // 파일 삭제
             // 업데이트에 성공하고, 수정된 사진이 있을 경우에만 기존 사진 삭제
             String savepath = root + "/convention/";
             File delFile = new File(savepath + oldThumb);
@@ -192,10 +192,14 @@ public class ConventionController {
     @PostMapping("/buy/seat")
     public ResponseEntity<Boolean> conventionCompanyPay(@ModelAttribute ConventionCompanyDTO conventionCompany,
             @ModelAttribute CompanyPayDTO companyPay) {
-        System.out.println(conventionCompany);
-        System.out.println(companyPay);
         boolean result = conventionService.conventionCompanyPay(conventionCompany, companyPay);
 
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/buy/seat/{conventionNo}/{companyNo}")
+    public ResponseEntity<Boolean> deleteSeatInfo(@PathVariable int conventionNo, @PathVariable String companyNo) {
+        boolean result = conventionService.deleteSeatInfo(conventionNo, companyNo);
         return ResponseEntity.ok(result);
     }
 
@@ -206,7 +210,8 @@ public class ConventionController {
     }
 
     @GetMapping("/payment/company/{companyNo}/{conventionNo}")
-    public ResponseEntity<CompanyPayDTO> getPaymentAsCompany(@PathVariable String companyNo, @PathVariable int conventionNo) {
+    public ResponseEntity<CompanyPayDTO> getPaymentAsCompany(@PathVariable String companyNo,
+            @PathVariable int conventionNo) {
         CompanyPayDTO companyPay = conventionService.getPayment(companyNo, conventionNo);
         return ResponseEntity.ok(companyPay);
     }

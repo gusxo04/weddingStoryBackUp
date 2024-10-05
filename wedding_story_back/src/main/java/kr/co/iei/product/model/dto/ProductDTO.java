@@ -26,4 +26,5 @@ public class ProductDTO {
 	private List<ProductFileDTO> fileList; //썸네일이미지 여러장이 들어가는 ProductFileDTO 타입의 List;
 	private int productState;
 	private String companyCategory;	//카테고리
+	
 }

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.consult.model.dto.ConsultDTO;
+import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.util.EmailSender;
 
@@ -95,7 +97,6 @@ public class MemberController {
 			return ResponseEntity.status(404).build();
 		}
 	}
-	
 	@PostMapping(value="/refresh")
 	public ResponseEntity<LoginMemberDTO> refresh(@RequestHeader("Authorization") String token){
 		LoginMemberDTO loginMember = memberService.refresh(token);
@@ -136,9 +137,12 @@ public class MemberController {
 	}
 	@GetMapping(value="/consultList/{memberNo}")
 	public ResponseEntity<List<ConsultDTO>> consultList(@PathVariable int memberNo){
-		System.out.println(memberNo);
 		List<ConsultDTO> list = memberService.consultList(memberNo);
-		System.out.println(list);
+		return ResponseEntity.ok(list);
+	}
+	@GetMapping(value = "/paymentList/{memberNo}/{state}")
+	public ResponseEntity<List<MemberPayDTO>> paymentList(@PathVariable int memberNo,@PathVariable String state){
+		List<MemberPayDTO> list = memberService.paymentList(memberNo,state);
 		return ResponseEntity.ok(list);
 	}
 }

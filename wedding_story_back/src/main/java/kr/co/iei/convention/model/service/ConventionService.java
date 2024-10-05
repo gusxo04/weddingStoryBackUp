@@ -135,13 +135,17 @@ public class ConventionService {
 
     @Transactional
     public Boolean refundPayment(RefundRequest request) {
+        System.out.println("request : "+request);
         String accessToken = getAccessToken();
         try {
             Thread.sleep(3000);
             // 3초 지연시켜서 환불이 바로 가능하도록 했음
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+            // Thread.currentThread().interrupt();
+            e.printStackTrace();
+            return false;
+        } 
+
         String code = "-1";
         //환불이 한 번에 안 되니까 for문으로 10번 돌려서 웬만하면 바로 환불가능하게 구현
         for (int i = 0; i < 10; i++) {
@@ -154,10 +158,11 @@ public class ConventionService {
         int result = -2;
         if (code.equals("0")) {
             if (request.getMemberNo() != 0) {
-                result = conventionDao.updateMemberPayKind(request);
-                result += conventionDao.deleteConventionMember(request);
-                result += conventionDao.updateMemberPay(request);
-                return result == 3;
+                // result = conventionDao.updateMemberPayKind(request);
+                // result += conventionDao.deleteConventionMember(request);
+                result = conventionDao.updateMemberPay(request);
+                result += conventionDao.updateConventionMemberTicket(request);
+                return result == 2;
             } else if (request.getCompanyNo() != null) {
                 result = conventionDao.updateCompanyPay(request);
                 result += conventionDao.deleteConventionCompany(request);
@@ -197,6 +202,8 @@ public class ConventionService {
 
     @Transactional
     public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
+        ConventionSeatDTO conventionSeatDTO = conventionDao.getConventionSeat(conventionCompany);
+        if(conventionSeatDTO == null) return false;
         int result = conventionDao.insertConventionCompany(conventionCompany);
         if (result > 0) {
             result += conventionDao.insertCompanyPay(companyPay);
@@ -206,6 +213,10 @@ public class ConventionService {
 
     @Transactional
     public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
+        if(conventionSeat.getConventionNo() != 0){
+            ConventionCompanyDTO conventionCompanyDTO = conventionDao.checkConventionCompany(conventionSeat);
+            if(conventionCompanyDTO != null) return false;
+        }
         int result = conventionDao.updateSeatInfo(conventionSeat);
         return result == 1;
     }
@@ -215,7 +226,7 @@ public class ConventionService {
     }
 
     // 환불 기능 메서드 2개 
-    private String getAccessToken() {
+    public String getAccessToken() {
         // 토큰 발급받는 코드
         String clientId = restApi;
         String clientSecret = restApiSecret;
@@ -248,7 +259,7 @@ public class ConventionService {
         return accessToken;
     }
 
-    private String cancelPayment(String accessToken, RefundRequest request) {
+    public String cancelPayment(String accessToken, RefundRequest request) {
 
         String cancelUrl = "https://api.iamport.kr/payments/cancel";
 
@@ -268,6 +279,7 @@ public class ConventionService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
+        System.out.println(response);
         ObjectMapper om = new ObjectMapper();
         String code = "-1";
         try {
@@ -288,6 +300,15 @@ public class ConventionService {
         for (MemberDTO emailList : list) {
             emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), emailContent);
         }
+    }
+
+    @Transactional
+    public boolean deleteSeatInfo(int conventionNo, String companyNo) {
+        int result = conventionDao.deleteCompanyPay(conventionNo, companyNo);
+        if(result == 1){
+            result += conventionDao.cancelConventionCompany(conventionNo, companyNo);
+        }
+        return result == 2;
     }
 
 }

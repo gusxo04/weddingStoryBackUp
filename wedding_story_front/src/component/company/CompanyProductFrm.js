@@ -124,7 +124,7 @@ const CompanyProductFrm = (props) => {
     } else {
     }
   };
-
+  //deleteThumbInsert == 상품 등록 -> 이미지 삭제 버튼
   const deleteThumbInsert = (index) => {
     const cancelPreviews = [...productPreThumb]; //미리보기 배열 복사
     cancelPreviews[index] = null; //선택된(index번째) 미리보기 배열을 null로 변경
@@ -133,21 +133,28 @@ const CompanyProductFrm = (props) => {
     cancelThumb[index] = null; //선택된(index번째) 배열을 null로 변경
     setProductThumb(cancelThumb); //변경된 배열
   };
-
+  //deleteThumb == 상품 수정 ->  이미지 삭제버튼
+  // deleteThumb == 상품 수정 -> 이미지 삭제 버튼
   const deleteThumb = (index) => {
     const cancelPreviews = [...productPreThumb]; // 미리보기 배열 복사
     const previousThumb = productThumb[index]; // 삭제 전 기존 이미지 추출
 
-    if (previousThumb) {
-      setDelThumbsFile((prev) => [...prev, previousThumb]); // 기존 이미지 삭제 목록에 추가
+    // 기존 이미지 경로는 string, 새로 추가된 파일은 File 객체이므로 타입으로 구분
+    if (typeof previousThumb === "string") {
+      // 기존 이미지 경로는 삭제 목록에 추가
+      setDelThumbsFile((prev) => {
+        const updatedList = prev.filter((item) => item !== null && item !== ""); // null과 빈 값 제거
+        return [...updatedList, previousThumb]; // 기존 파일 경로 추가
+      });
     }
+    // 미리보기에서 제거
+    cancelPreviews[index] = null;
+    setProductPreThumb(cancelPreviews);
 
-    cancelPreviews[index] = null; // 미리보기 배열에서 제거
-    setProductPreThumb(cancelPreviews); // 상태 업데이트
-
-    const cancelThumb = [...productThumb]; // 썸네일 배열 복사
-    cancelThumb[index] = null; // 썸네일 배열에서 제거
-    setProductThumb(cancelThumb); // 상태 업데이트
+    // 썸네일 배열에서도 제거
+    const cancelThumb = [...productThumb];
+    cancelThumb[index] = null;
+    setProductThumb(cancelThumb);
   };
   return (
     <div className="companyProduct-wrap">

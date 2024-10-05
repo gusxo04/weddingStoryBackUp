@@ -33,6 +33,18 @@ public interface ProductDao {
 	List selectProductFile(int productNo);
 
 	ProductDTO productHallList(int productNo);
+
+	int updateProductInfo(ProductDTO product);
+
+	
+
+	int deleteThumbnails(List<Object> delThumbsFile);
+
+	List selectProductImg(int productNo);
+
+	int deleteProduct(int productNo);
+
+	int deleteProductFile(int productNo);
 	
 	
 

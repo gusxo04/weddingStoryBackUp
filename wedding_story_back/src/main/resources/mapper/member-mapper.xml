@@ -131,18 +131,28 @@
 		UNION 
 		SELECT  PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),company_no from(SELECT member_pay.*, product.company_no 
 		FROM member_pay 
-		JOIN product ON member_pay.product_no = product.product_no) where member_no=#{memberNo} 
+		JOIN product ON member_pay.product_no = product.product_no) where member_no=#{memberNo} and progress !=2
 		UNION 
-		SELECT  PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no, 0)) from member_pay where product_no is null and member_no=#{memberNo} and kind=0
+		SELECT  PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no, 0)) from member_pay where product_no is null and member_no=#{memberNo} and progress !=2
 	</select>
 	
 	<select id="consultCompanyList" resultType="company">
 		select * from company where company_no=#{companyNo}
 	</select>
 	<select id="conventionList" resultType="company">
-		select convention_title as company_name,SUBSTR(convention_time, 1, 5)as start_time,SUBSTR(convention_time,9) as end_time 
-		from member_pay 
-		join convention_member using(ticket_no) 
-		join convention using(convention_no)
+		select convention_title as company_name,SUBSTR(convention_time, 1, 5) as start_time,SUBSTR(convention_time,9) as end_time 
+		from convention where #{date} BETWEEN convention_start AND convention_end
+	</select>
+	<select id="paymentList" resultType="memberPay">
+		select progress,merchant_uid,SUBSTR(pay_date,1,8)as pay_date,PROGRESS_DATE,PROGRESS_TIME,pay_price,product_no,ticket_no,member_no from member_pay where member_no=#{memberNo}
+		<if test="state == 'payment'">
+		 and (progress=0 or progress=1)
+		</if>
+		<if test="state == 'complet'">
+		 and progress=3
+		</if>
+		<if test="state == 'cancel'">
+		 and progress=2
+		</if>
 	</select>
 </mapper>
