@@ -101,7 +101,7 @@
 
 .convention-input-alert{
     width: 50%;
-    /* min-width: 280px; */
+    max-width: 750px;
     min-width: 370px;
     height: 70%;
     background-color:white;
