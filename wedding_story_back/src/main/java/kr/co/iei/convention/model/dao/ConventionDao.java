@@ -81,4 +81,12 @@ public interface ConventionDao {
     
 	ConventionDTO selectConventInfo(int ticketNo);
 
+  void updateMemberPayProgress1(List updateList);
+
+  List selectMemberPayProgress0();
+
+  List<MemberPayDTO> selectMemberPayProgress1();
+
+  void updateMemberPayProgress3(List<MemberPayDTO> updateList);
+
 }

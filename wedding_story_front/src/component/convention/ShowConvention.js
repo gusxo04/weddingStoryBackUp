@@ -142,7 +142,6 @@ const ShowConvention = (props) => {
   
   // 나중에 다른걸로 대체 (swal 띄우면 스크롤 사라지는거 때매 alert창이 뜨면 스크롤을 사라지게 만듦)
   const [alertType, setAlertType] = useState(0);
-
   const navigate = useNavigate();
   
   return (
@@ -185,6 +184,7 @@ const ShowConvention = (props) => {
         
         {/* 회원인경우 */}
         {loginMemberType === 1 ?
+        type ?
         startDate === 0 ? 
         "" 
         :
@@ -202,27 +202,38 @@ const ShowConvention = (props) => {
           }}>환불하기</button>
         </div>
         :
+        // "신청/환불"
+        ""
+        :
         ""
         }
         
         {/* 어드민인 경우 */}
         {loginMemberType === 0 ?
+        type ? 
         <div className="convention-inner-preview-info convention-buy-btn" >
           <button onClick={() => {
             navigate("/convention/update/"+convention.conventionNo);
           }}>박람회 수정</button>
         </div>
         :
+        // "수정버튼"
+        ""
+        :
         ""
         }
 
         {/* 업체인 경우 */}
         {loginMemberType === 2 ?
+        type ?
         <div className="convention-inner-preview-info convention-buy-btn" >
           <button onClick={() => {
             setShowType(!showType);
           }}>{showType ? "부스 구매" : "박람회 보기"}</button>
         </div>
+        :
+        // "부스 구매"
+        ""
         :
         ""
         }

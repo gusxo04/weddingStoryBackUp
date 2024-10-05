@@ -135,7 +135,7 @@ public class ConventionService {
 
     @Transactional
     public Boolean refundPayment(RefundRequest request) {
-        System.out.println("request : "+request);
+        System.out.println("request : " + request);
         String accessToken = getAccessToken();
         try {
             Thread.sleep(3000);
@@ -144,7 +144,7 @@ public class ConventionService {
             // Thread.currentThread().interrupt();
             e.printStackTrace();
             return false;
-        } 
+        }
 
         String code = "-1";
         //환불이 한 번에 안 되니까 for문으로 10번 돌려서 웬만하면 바로 환불가능하게 구현
@@ -203,7 +203,9 @@ public class ConventionService {
     @Transactional
     public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
         ConventionSeatDTO conventionSeatDTO = conventionDao.getConventionSeat(conventionCompany);
-        if(conventionSeatDTO == null) return false;
+        if (conventionSeatDTO == null) {
+            return false;
+        }
         int result = conventionDao.insertConventionCompany(conventionCompany);
         if (result > 0) {
             result += conventionDao.insertCompanyPay(companyPay);
@@ -213,9 +215,11 @@ public class ConventionService {
 
     @Transactional
     public boolean updateSeatInfo(ConventionSeatDTO conventionSeat) {
-        if(conventionSeat.getConventionNo() != 0){
+        if (conventionSeat.getConventionNo() != 0) {
             ConventionCompanyDTO conventionCompanyDTO = conventionDao.checkConventionCompany(conventionSeat);
-            if(conventionCompanyDTO != null) return false;
+            if (conventionCompanyDTO != null) {
+                return false;
+            }
         }
         int result = conventionDao.updateSeatInfo(conventionSeat);
         return result == 1;
@@ -298,6 +302,7 @@ public class ConventionService {
         String emailContent = "<h1>웨딩 스토리 박람회</h1><br/><span>박람회 시작하기 3일전입니다.</span>";
         List<MemberDTO> list = conventionDao.selectAlarmTicket();
         for (MemberDTO emailList : list) {
+            System.out.println(emailList);
             emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), emailContent);
         }
     }
@@ -305,10 +310,29 @@ public class ConventionService {
     @Transactional
     public boolean deleteSeatInfo(int conventionNo, String companyNo) {
         int result = conventionDao.deleteCompanyPay(conventionNo, companyNo);
-        if(result == 1){
+        if (result == 1) {
             result += conventionDao.cancelConventionCompany(conventionNo, companyNo);
         }
         return result == 2;
     }
+
+    @Transactional
+    public void updateMemberPayStartProgress() {
+        List<MemberPayDTO> updateList = conventionDao.selectMemberPayProgress0();
+        // System.out.println("updateList : "+updateList);
+        if(updateList.isEmpty()) return;
+        conventionDao.updateMemberPayProgress1(updateList);
+    }
+
+    @Transactional
+    public void selectMemberPayEndProgress() {
+        List<MemberPayDTO> updateList = conventionDao.selectMemberPayProgress1();
+        // System.out.println(updateList);
+        if(updateList.isEmpty()) return;
+        conventionDao.updateMemberPayProgress3(updateList);
+    }
+
+
+
 
 }
