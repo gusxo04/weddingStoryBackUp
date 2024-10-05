@@ -181,9 +181,43 @@
         select * from convention_seat where seat_no = #{seatNo} and seat_status = 0
     </select>
     <select id="selectConventInfo" resultType="convention">
-    	select convention_title, convention_img 
-    	from convention_member 
-    	join convention using(convention_no) where ticket_no=#{ticketNo}
+        select convention_title, convention_img 
+        from convention_member 
+        join convention using(convention_no) where ticket_no=#{ticketNo}
     </select>
+
+    <select id="selectMemberPayProgress0" resultType="memberPay">
+        select pay_no from member_pay
+        join convention_member using(ticket_no)
+        where ticket_code is not null and
+            progress = 0 and
+            convention_no = 
+            (select max(convention_no) from convention
+            where convention_start <![CDATA[ <= ]]> sysdate and convention_end <![CDATA[ > ]]> sysdate)
+    </select>
+
+    <update id="updateMemberPayProgress1">
+        update member_pay set progress = 1 where pay_no in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item.payNo}
+        </foreach>
+    </update>
+
+    <select id="selectMemberPayProgress1" resultType="memberPay">
+        select pay_no from member_pay 
+        join convention_member using (ticket_no)
+        where ticket_code is not null and
+            progress = 1 and
+            convention_no = 
+            (select max(convention_no) from convention 
+            where convention_end + 1 <![CDATA[ < ]]> sysdate)
+    </select>
+
+    <update id="updateMemberPayProgress3">
+        update member_pay set progress = 3 where pay_no in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+        ${item.payNo}
+        </foreach>
+    </update>
 
 </mapper>
