@@ -28,6 +28,7 @@ import AdminMenu from "./component/admin/AdminMenu";
 import MyPage from "./component/member/MyPage";
 import { Report } from "./component/product/components";
 import Consult from "./component/consult/Consult";
+import Home from "./component/common/Home";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -76,6 +77,7 @@ function App() {
 
       <main className="content-wrap">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/join/*" element={<Join />} />
           <Route path="/myPage/*" element={<MyPage />} />
