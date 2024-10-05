@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.iei.admin.model.dto.NoticeDTO;
 import kr.co.iei.admin.model.service.AdminService;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.product.model.dto.ReportDTO;
 import kr.co.iei.util.FileUtils;
 
 @RestController
@@ -93,5 +94,7 @@ public class AdminController {
     	int result = adminService.insertAdmin(selectedType, insertId);
     	return ResponseEntity.ok(result);
     }
+	
+	
 	
 }

@@ -1,5 +1,7 @@
 package kr.co.iei.product.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,11 @@ public class ReportService {
 	public int deleteReport(int reportNo) {
 		int result = reportDao.deleteReport(reportNo);
 		return result;
+	}
+
+	public List<ReportDTO> getReport(String currentCompanyNo) {
+		List<ReportDTO> report = reportDao.getReport(currentCompanyNo);
+		return report;
 	}
 	
 	

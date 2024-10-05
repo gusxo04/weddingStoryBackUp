@@ -1,5 +1,7 @@
 package kr.co.iei.product.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,4 +41,11 @@ public class ReportController {
         int result = reportService.deleteReport(reportNo);
         return ResponseEntity.ok(result);
     }
+    
+    @GetMapping(value="/getReport/{currentCompanyNo}")
+	public ResponseEntity<List<ReportDTO>> getReport(@PathVariable String currentCompanyNo){
+		System.out.println("신고내역을 조회할 회사 코드"+currentCompanyNo);
+		List<ReportDTO> report = reportService.getReport(currentCompanyNo);
+		return ResponseEntity.ok(report);
+	}
 }

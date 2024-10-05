@@ -14,6 +14,7 @@ import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.product.model.dto.ReportDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 

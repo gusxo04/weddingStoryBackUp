@@ -9,7 +9,13 @@ const CompanyControll = () => {
   const [reqPage, setReqPage] = useState(1);
   const [seeInfo, setSeeInfo] = useState(0);
   const [selectedCompany, setSelectedCompany] = useState(null);
-  const [deleteCompany, setDeleteCompany] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [delCompany, setDelCompany] = useState(null);
+
+  const [currentCompanyNo, setCurrentCompanyNo] = useState(null); // 상태 선언
+  const [report, setReport] = useState([]);
+
+  console.log("modalOpen" + modalOpen);
   useEffect(() => {
     axios
       .get(`${backServer}/admin/company/${reqPage}`)
@@ -29,31 +35,21 @@ const CompanyControll = () => {
         setCompanyList([]);
       });
   }, [reqPage]);
-  useEffect(() => {
-    console.log(deleteCompany);
-  }, [deleteCompany]);
   const companyData = (company) => {
     console.log(company);
     setSelectedCompany(company);
   };
-
-  const delCom = () => {
-    if (deleteCompany.length > 0) {
-      axios
-        .post(`${backServer}/admin/deleteCom/${deleteCompany}`)
-        .then((res) => {
-          console.log(res);
-          setDeleteCompany([]);
-          setCompanyList((prevList) =>
-            prevList.filter(
-              (company) => !deleteCompany.includes(company.companyNo)
-            )
-          );
-        })
-        .catch((err) => {
-          console.log("회원탈퇴 실패");
-        });
-    }
+  useEffect(() => {}, [modalOpen]);
+  const delCom = (props) => {
+    const delCompany = props.delCompany;
+    axios
+      .post(`${backServer}/admin/deleteCom/${delCompany}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("회원탈퇴 실패");
+      });
   };
   return (
     <div className="company-controll-wrap">
@@ -61,7 +57,7 @@ const CompanyControll = () => {
         <h2>업체 관리</h2>
       </div>
       <div>
-        <table className="tbl">
+        <table className="tbl company_tbl">
           <thead>
             <tr>
               <th style={{ width: "10%" }}>업체번호</th>
@@ -71,7 +67,6 @@ const CompanyControll = () => {
               <th style={{ width: "20%" }}>업체 전화번호</th>
               <th style={{ width: "20%" }}>사업자 이메일</th>
               <th style={{ width: "10%" }}>신고 수</th>
-              <th style={{ width: "10%" }}>선택</th>
             </tr>
           </thead>
           <tbody>
@@ -84,8 +79,15 @@ const CompanyControll = () => {
                   companyData={companyData}
                   seeInfo={seeInfo}
                   setSeeInfo={setSeeInfo}
-                  setDeleteCompany={setDeleteCompany}
-                  deleteCompany={deleteCompany}
+                  setModalOpen={setModalOpen}
+                  modalOpen={modalOpen}
+                  setCurrentCompanyNo={setCurrentCompanyNo}
+                  currentCompanyNo={currentCompanyNo}
+                  setReport={setReport}
+                  report={report}
+                  delCompany={delCompany}
+                  setDelCompany={setDelCompany}
+                  delCom={delCom}
                 />
               ))
             ) : (
@@ -95,11 +97,6 @@ const CompanyControll = () => {
             )}
           </tbody>
         </table>
-        <div className="del-btn-wrap">
-          <button className="member-delBtn" onClick={delCom}>
-            업체 탈퇴
-          </button>
-        </div>
         <div style={{ marginTop: "30px", marginBottom: "30px" }}>
           <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
         </div>
@@ -107,6 +104,8 @@ const CompanyControll = () => {
       <CompanyInfo
         selectedCompany={selectedCompany}
         setSelectedCompany={setSelectedCompany}
+        setModalOpen={setModalOpen}
+        modalOpen={modalOpen}
       />
     </div>
   );
@@ -119,23 +118,23 @@ const CompanyItem = (props) => {
   const companyData = props.companyData;
   const seeInfo = props.seeInfo;
   const setSeeInfo = props.setSeeInfo;
-  const setDeleteCompany = props.setDeleteCompany;
-  const deleteCompany = props.deleteCompany;
-  const click = (e) => {
-    if (e.target.type !== "checkbox") {
-      companyData(company);
-    }
-  };
-  const checkBoxClick = (e) => {
-    e.stopPropagation();
-    const companyNo = company.companyNo;
 
-    if (deleteCompany.includes(companyNo)) {
-      setDeleteCompany(deleteCompany.filter((no) => no !== companyNo));
-    } else {
-      setDeleteCompany([...deleteCompany, companyNo]);
-    }
+  const modalOpen = props.modalOpen;
+  const setModalOpen = props.setModalOpen;
+  const currentCompanyNo = props.currentCompanyNo;
+  const setCurrentCompanyNo = props.setCurrentCompanyNo;
+  const report = props.report;
+  const setReport = props.setReport;
+  const setDelCompany = props.setDelCompany;
+  const delCompany = props.delCompany;
+  const delCom = props.delCom;
+
+  const handleReportClick = (e) => {
+    e.stopPropagation();
+    setModalOpen(true);
+    setCurrentCompanyNo(company.companyNo); // 클릭한 회사 번호 설정
   };
+
   return (
     <tr className="userInfo" onClick={() => companyData(company)}>
       <td>{company.companyNo}</td>
@@ -149,13 +148,25 @@ const CompanyItem = (props) => {
           </td>
         ))
       )}
-
       <td>{company.companyCategory}</td>
       <td>{company.companyTel}</td>
       <td>{company.companyAddr}</td>
-      <td>{company.companyReport}</td>
-      <td>
-        <input type="checkbox" onClick={checkBoxClick} />
+      <td onClick={handleReportClick} className="report-text">
+        {company.companyReport}
+        {modalOpen ? (
+          currentCompanyNo ? (
+            <ReportOverlay
+              setDelCompany={setDelCompany}
+              delCompany={delCompany}
+              setModalOpen={setModalOpen}
+              modalOpen={modalOpen}
+              currentCompanyNo={currentCompanyNo}
+              report={report}
+              setReport={setReport}
+              delCom={delCom}
+            />
+          ) : null
+        ) : null}
       </td>
     </tr>
   );
@@ -227,7 +238,7 @@ const CompanyInfo = (props) => {
         <div className="company-member">
           <h3>사업자 상세</h3>
           {selectedCompany === null ? (
-            <a>회원을 선택하세요</a>
+            <a>업체를 선택하세요</a>
           ) : (
             <table className="tbl2">
               <thead>
@@ -279,6 +290,77 @@ const CompanyInfo = (props) => {
         </div>
       </div>
     </>
+  );
+};
+
+const ReportOverlay = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const modalOpen = props.modalOpen;
+  const setModalOpen = props.setModalOpen;
+  const currentCompanyNo = props.currentCompanyNo;
+  const report = props.report;
+  const setReport = props.setReport;
+  const delCompany = props.delCompany;
+  const delCom = props.delCom;
+  useEffect(() => {
+    axios
+      .get(`${backServer}/report/getReport/${currentCompanyNo}`)
+      .then((res) => {
+        console.log(res.data);
+        setReport(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("광고 거절 에러");
+      });
+  }, []);
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+  return (
+    <div className="reportOverlay">
+      <div
+        className="reportOverlay-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <table className="tbl report_tbl">
+          <thead>
+            <tr>
+              <th style={{ width: "33%" }}>신고자</th>
+              <th style={{ width: "33%" }}>신고일</th>
+              <th style={{ width: "33%" }}>사유</th>
+            </tr>
+          </thead>
+          <tbody>
+            {report.length > 0 ? (
+              report.map((report, index) => (
+                <ReportItem key={"report-" + index} report={report} />
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">신고내역이 없습니다.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <button onClick={handleClose} className="close-btn">
+          닫기
+        </button>
+        <button onClick={delCom(delCompany)} className="close-btn">
+          업체 탈퇴
+        </button>
+      </div>
+    </div>
+  );
+};
+const ReportItem = (props) => {
+  const report = props.report;
+  return (
+    <tr>
+      <td>{report.memberNo}</td>
+      <td>{report.reportDate}</td>
+      <td>{report.reportContent}</td>
+    </tr>
   );
 };
 export default CompanyControll;

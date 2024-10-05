@@ -12,5 +12,8 @@
 	<delete id="deleteReport">
 		delete from report where report_no = #{reportNo}
 	</delete>
+	<select id="getReport" resultType="report">
+		select * from report where company_no=#{currentCompanyNo}
+	</select>
 	
 </mapper>

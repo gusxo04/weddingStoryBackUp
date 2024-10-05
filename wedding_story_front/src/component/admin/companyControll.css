@@ -104,3 +104,47 @@
   flex-direction: column;
   align-items: stretch;
 }
+.reportOverlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+.reportOverlay-content {
+  width: 80%;
+  max-width: 700px;
+  min-width: 400px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+.report_tbl {
+  width: 80%;
+  height: 80%;
+  margin: 15px auto;
+}
+.company_tbl > tbody > tr > td:last-child {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.close-btn {
+  padding: 10px 20px;
+  width: 100px;
+  background-color: #c19975;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: auto;
+}
