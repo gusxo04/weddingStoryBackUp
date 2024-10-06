@@ -17,7 +17,7 @@ ul.pagination {
   display: flex;
   justify-content: center;
 }
-.tbl {
+.tbl1 {
   width: 100%;
   border-collapse: collapse;
   margin: 25px 0;
@@ -26,25 +26,25 @@ ul.pagination {
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.tbl thead tr {
+.tbl1 thead tr {
   background-color: #c19975;
   color: #ffffff;
   text-align: center;
 }
-.tbl th,
-.tbl td {
+.tbl1 th,
+.tbl1 td {
   padding: 12px 15px;
 }
 
-.tbl tbody tr {
+.tbl1 tbody tr {
   border-bottom: 1px solid #dddddd;
 }
 
-.tbl tbody tr:last-of-type {
+.tbl1 tbody tr:last-of-type {
   border-bottom: 2px solid #c19975;
 }
 
-.tbl tbody tr.active-row {
+.tbl1 tbody tr.active-row {
   font-weight: bold;
   color: #dce4e9;
 }
@@ -98,7 +98,7 @@ ul.pagination {
   align-items: center;
   justify-content: center;
 }
-.tbl {
+.tbl1 {
   width: 100%;
 }
 .del-btn-wrap {

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.product.model.dao.ProductDao;
@@ -65,6 +66,6 @@ public class ProductService {
 		map.put("company",company);
 		return map;
 	}
-
+	
 	
 }

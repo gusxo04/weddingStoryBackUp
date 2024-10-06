@@ -44,7 +44,6 @@ public class ReportController {
     
     @GetMapping(value="/getReport/{currentCompanyNo}")
 	public ResponseEntity<List<ReportDTO>> getReport(@PathVariable String currentCompanyNo){
-		System.out.println("신고내역을 조회할 회사 코드"+currentCompanyNo);
 		List<ReportDTO> report = reportService.getReport(currentCompanyNo);
 		return ResponseEntity.ok(report);
 	}

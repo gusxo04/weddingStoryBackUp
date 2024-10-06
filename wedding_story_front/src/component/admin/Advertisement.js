@@ -169,7 +169,7 @@ const Advertisement = () => {
       </div>
       <div className="in-progress">
         <h3 style={{ float: "left", marginBottom: "10px" }}>진행중</h3>
-        <table className="tbl ad-tbl">
+        <table className="tbl1 ad-tbl">
           <thead>
             <tr>
               <td>업체 이름</td>
@@ -191,7 +191,7 @@ const Advertisement = () => {
 
       <div className="upComing">
         <h3 style={{ float: "left", marginBottom: "10px" }}>광고예정</h3>
-        <table className="tbl ad-tbl">
+        <table className="tbl1 ad-tbl">
           <thead>
             <tr>
               <td>업체 이름</td>
@@ -215,7 +215,7 @@ const Advertisement = () => {
 
       <div className="upComing">
         <h3 style={{ float: "left", marginBottom: "10px" }}>승인대기</h3>
-        <table className="tbl ad-tbl">
+        <table className="tbl1 ad-tbl">
           <thead>
             <tr>
               <td>업체 이름</td>
@@ -244,7 +244,7 @@ const Advertisement = () => {
 
       <div className="ended">
         <h3 style={{ float: "left", marginBottom: "10px" }}>종료</h3>
-        <table className="tbl ad-tbl">
+        <table className="tbl1 ad-tbl">
           <thead>
             <tr>
               <td>업체 이름</td>

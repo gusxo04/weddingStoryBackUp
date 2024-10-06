@@ -61,7 +61,7 @@ const MemberControll = () => {
         <h2>회원 관리</h2>
       </div>
       <div className="tbl-wrap">
-        <table className="tbl">
+        <table className="tbl1">
           <thead>
             <tr>
               <th style={{ width: "11%" }}>회원번호</th>
@@ -121,11 +121,6 @@ const MemberItem = (props) => {
   const setSeeInfo = props.setSeeInfo;
   const setDeleteMember = props.setDeleteMember;
   const deleteMember = props.deleteMember;
-  const click = (e) => {
-    if (e.target.type !== "checkbox") {
-      memberData(member);
-    }
-  };
   const checkBoxClick = (e) => {
     e.stopPropagation();
     const memberNo = member.memberNo;

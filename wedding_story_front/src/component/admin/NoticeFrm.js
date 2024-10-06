@@ -98,7 +98,7 @@ const NoticeFrm = (props) => {
         ></input>
       </div>
       <div className="notice-info-wrap">
-        <table className="tbl">
+        <table className="tbl1">
           <tbody>
             <tr>
               <th style={{ width: "30%" }}>
