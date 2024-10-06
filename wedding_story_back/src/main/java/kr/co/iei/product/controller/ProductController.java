@@ -57,7 +57,7 @@ public class ProductController {
 		return ResponseEntity.ok(map);
 	}
 		
-	//제품 상세페이
+	//제품 상세페이지
 	@GetMapping(value="/productInfo/{productNo}")
 	public ResponseEntity<Map> productList(@PathVariable int productNo){
 		Map map = productService.productList(productNo);

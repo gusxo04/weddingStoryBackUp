@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.product.model.dao.ProductDao">
   <select id="TotalCount" resultType="int">
-  	select count(*) from product where product_state=1
+  	select count(*) from product where product state = 1
   </select>
+  <select id="productTotalCount" resultType="int">
+  	select count(*) from product where company_no = #{companyNo}
+  </select>
+  
   <select id="getProductList" resultType="product">
   select * from
 		(select rownum as rnum, b.* from
@@ -105,5 +109,53 @@
   <delete id="deleteProductFile">
   	delete from product_file where product_no =#{productNo}
   </delete>
-  
+  <select id="selectProductNo" resultType="int">
+  	select product_no from product where company_no =#{companyNo}
+  </select>
+  <select id="selectCustomerList" resultMap="CustomerResultMap">
+  select * from
+  (select rownum as rnum, a.* from(select 
+    m.member_no,
+    m.member_name,
+    m.member_phone,
+    m.partner_name,
+    p.product_no,
+    p.product_name,
+    mp.pay_date
+    
+	from product p 
+	
+	join member_pay mp on p.product_no = mp.product_no 
+	
+	join member m on m.member_no = mp.member_no
+	
+	where p.product_no in
+	<foreach collection="productNo" item="No" open="(" close=")" separator=",">
+		#{No}
+	</foreach>
+	 order by pay_date desc) a) where rnum between #{pi.start} and#{pi.end}
+  </select> 
+  <resultMap id="CustomerResultMap" type="customer">
+    <result property="memberNo" column="member_no"/>
+    <result property="memberName" column="member_name"/>
+    <result property="memberPhone" column="member_phone"/>
+    <result property="partnerName" column="partner_name"/>
+    <result property="productNo" column="product_no"/>
+    <result property="productName" column="product_name"/>
+    <result property="payDate" column="pay_date"/>
+</resultMap>
+
+	<select id="TotalCustomerCount" resultType="int">
+    
+        SELECT count(*)
+        FROM product p 
+        JOIN member_pay mp ON p.product_no = mp.product_no 
+        JOIN member m ON m.member_no = mp.member_no
+        WHERE p.product_no IN
+        <foreach collection="productNo" item="No" open="(" close=")" separator=",">
+            #{No}
+        </foreach>
+
+	</select>
+ 
 </mapper>

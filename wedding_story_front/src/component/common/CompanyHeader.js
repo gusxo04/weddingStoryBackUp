@@ -25,7 +25,7 @@ const CompanyHeader = () => {
         </div>
       </div>
       <div className="header-c-content">
-        {companyNo !== null ? (
+        {companyNo !== null || companyNo !== "" ? (
           <ul>
             <li>
               <Link to="/company/product/list" className="nav-item">
@@ -44,7 +44,7 @@ const CompanyHeader = () => {
               </Link>
             </li>
             <li>
-              <Link to="/company/counsel" className="nav-item">
+              <Link to="#" className="nav-item">
                 <div>
                   <span className="material-icons">event</span>
                 </div>
@@ -52,7 +52,7 @@ const CompanyHeader = () => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="nav-item">
+              <Link to="/company/counsel" className="nav-item">
                 <div>
                   <span className="material-icons">date_range</span>
                 </div>
@@ -87,7 +87,7 @@ const CompanyHeader = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/company/Info" className="down-menu">
+                    <Link to="/company/advertisement" className="down-menu">
                       광고 요청
                     </Link>
                   </li>

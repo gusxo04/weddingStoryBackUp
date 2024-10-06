@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.advertisement.model.dao.AdvertisementDao;
+import kr.co.iei.advertisement.model.dto.AdvertisementDTO;
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.company.model.dto.CustomerDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -32,6 +35,9 @@ public class CompanyService {
 	
 	@Autowired
 	private ProductDao productDao;
+	
+	@Autowired
+	private AdvertisementDao advertisementDao;
 	
 	@Autowired
 	private PageUtil pageUtil; 
@@ -109,12 +115,11 @@ public class CompanyService {
 	//페이징 리스트 list , 페이지 목록 생성 
 	public Map productList(int reqPage, String companyNo) {
 		/*게시물 조회 및 페이징에 필요한 데이터를 모두 취합*/
-		int numPerPage = 10; //한 페이지당 게시물 수
-		int pageNaviSize = 5; //페이지 네비 길이
-		int totalPage = productDao.TotalCount(); //게시물 갯수 count(*) 조회
+		int numPerPage = 1; //한 페이지당 게시물 수
+		int pageNaviSize = 1; //페이지 네비 길이
+		int totalPage = productDao.productTotalCount(companyNo); //게시물 갯수 count(*) 조회
 		 
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);//pageUtil을 사용하여 페이지 갯수 생성
-		System.out.println("service pi : " + pi);
 		List list = productDao.selectProductList(companyNo,pi);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
@@ -178,6 +183,46 @@ public class CompanyService {
 			return null;
 		}
 		
+	}
+	
+	//고객 관리 리스트 
+	public Map selectProductNo(String companyNo, int reqPage) {
+		//업체 코드로 게시물 번호 조회
+		List productNo = productDao.selectProductNo(companyNo);
+		//조회한 게시물 번호로 구매한 회원 정보 조회
+		
+		int totalPage = 0;
+		int numPerPage = 20; //한 페이지당 게시물 수
+		int pageNaviSize = 1; //페이지 네비 길이
+		System.out.println(productNo);
+		totalPage += productDao.TotalCustomerCount(productNo); //게시물 갯수 count(*) 조회
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);//pageUtil을 사용하여 페이지 갯수 생성
+		System.out.println(pi);
+		List<CustomerDTO> result = productDao.selectCustomerList(productNo,pi);
+		System.out.println("result : " + result);
+		System.out.println(totalPage );
+		Map<String, Object> list = new HashMap<String, Object>();
+		list.put("customer", result);
+		list.put("pi",pi);
+		
+		return list;
+	}
+	@Transactional
+	public int insertAdvertisement(AdvertisementDTO advert) {
+		int result = advertisementDao.insertAdvertisement(advert);
+		return result;
+	}
+	public Map selectAdvertisement(String companyNo, int reqPage) {
+		/*게시물 조회 및 페이징에 필요한 데이터를 모두 취합*/
+		int numPerPage = 10; //한 페이지당 게시물 수
+		int pageNaviSize = 1; //페이지 네비 길이
+		int totalPage = advertisementDao.totalCount(companyNo); //게시물 갯수 count(*) 조회
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);//pageUtil을 사용하여 페이지 갯수 생성
+		List<AdvertisementDTO> advert = advertisementDao.selectAdvertisementList(pi,companyNo);
+		Map<String,Object> list = new HashMap<String, Object>();
+		list.put("advert", advert);
+		list.put("pi",pi);
+		return list;
 	}
 	
 
