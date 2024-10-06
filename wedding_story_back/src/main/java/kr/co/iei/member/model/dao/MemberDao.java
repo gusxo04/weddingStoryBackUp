@@ -69,4 +69,10 @@ public interface MemberDao {
 
 	List<MemberPayDTO> paymentList(int memberNo, String state);
 
+	int adminTotalCount2();
+
+	List getAdminList(PageInfo pi);
+
+	List<MemberPayDTO> getYear();
+
 }

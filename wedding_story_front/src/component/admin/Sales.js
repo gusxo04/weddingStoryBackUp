@@ -1,52 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./sales.css";
-import { Data } from "./Data"; // Data import
 import SalesChart from "./SalesChart"; // Chart 컴포넌트 import
+import axios from "axios";
 
 const Sales = () => {
-  const years = Object.keys(Data);
-  //Data에서 객체의 key(년도)를 배열로 저장>>차트 레이블
-  //예를 들어, Data가 { 2020: {...}, 2021: {...} }라면, years는 ["2020", "2021"]
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [year, setYear] = useState([]);
+  const [selectedYear, setSelectedYear] = useState("");
+  const [data, setData] = useState({});
 
-  const salesData = years.map((year) => {
-    //첫번째 map >> years 배열 순회 >> years배열의 각 요소를 year변수로 받음
+  useEffect(() => {
+    axios
+      .get(`${backServer}/admin/getYear`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          setYear(res.data.year);
+          setSelectedYear(res.data.year[0]?.merchantUid);
+        } else {
+          console.error("데이터 없음");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log("조회 에러");
+      });
+  }, [backServer]);
 
-    return Object.values(Data[year]).map((month) => month.sales);
-    //년도 > 월 추출, sales 데이터에 접근하여 월별 매출
-    //Object.values(Data[year])는 현재 year에 해당하는 데이터를 배열로 반환
-  });
+  const changeYear = () => {
+    axios
+      .get(`${backServer}/admin/searchYearPay/${selectedYear}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          setData(res.data);
+        } else {
+          console.error("데이터 없음");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log("조회 에러");
+      });
+  };
 
-  //차트에 전달할 데이터 설정
-  const chartData = {
-    labels: [
-      "1월",
-      "2월",
-      "3월",
-      "4월",
-      "5월",
-      "6월",
-      "7월",
-      "8월",
-      "9월",
-      "10월",
-      "11월",
-      "12월",
-    ],
-    datasets: years.map((year, index) => ({
-      //각 년도별 데이터셋
-      label: `${year}년`, //각 데이터셋의 레이블을 해당 년도로 설정
-      data: salesData[index], //각 년도에 대한 월별 매출 데이터를 data 필드에 저장
-      fill: false, //라인 차트의 영역을 채우지 않도록 설정
-      borderColor:
-        index === 0 ? "rgba(75, 192, 192, 1)" : "rgba(153, 102, 255, 1)",
-      tension: 0,
-    })),
+  // 차트 데이터 변환
+  const getChartData = () => {
+    if (!data[selectedYear]) return { labels: [], datasets: [] };
+
+    const salesData = data[selectedYear];
+    const months = Object.keys(salesData);
+    const salesValues = months.map((month) => salesData[month]?.sales || 0);
+
+    return {
+      labels: months.map((m) => `${m}월`),
+      datasets: [
+        {
+          label: `${selectedYear}년 매출`,
+          data: salesValues,
+          fill: false,
+          borderColor: "rgba(75, 192, 192, 1)",
+          tension: 0.1,
+        },
+      ],
+    };
   };
 
   return (
-    <div>
-      <h3>매출</h3>
-      <SalesChart data={chartData} /> {/* Chart에 데이터 전달 */}
+    <div className="sales-wrap">
+      <h3>연도별 매출</h3>
+      <select
+        name="year"
+        className="year-sel"
+        value={selectedYear}
+        onChange={(e) => setSelectedYear(e.target.value)}
+      >
+        {year.map((year) => (
+          <option key={year.merchantUid} value={year.merchantUid}>
+            {year.merchantUid}
+          </option>
+        ))}
+      </select>
+      <button className="year-sel-btn" onClick={changeYear}>
+        조회
+      </button>
+
+      <SalesChart data={getChartData()} />
     </div>
   );
 };

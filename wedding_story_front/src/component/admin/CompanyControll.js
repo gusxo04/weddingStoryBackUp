@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./companyControll.css";
 import axios from "axios";
 import PageNavi from "../utils/PagiNavi";
+import Swal from "sweetalert2";
 const CompanyControll = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [companyList, setCompanyList] = useState([]);
@@ -10,7 +11,7 @@ const CompanyControll = () => {
   const [seeInfo, setSeeInfo] = useState(0);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [delCompany, setDelCompany] = useState(null);
+  const [delCompany, setDelCompany] = useState("");
 
   const [currentCompanyNo, setCurrentCompanyNo] = useState(null); // 상태 선언
   const [report, setReport] = useState([]);
@@ -40,24 +41,14 @@ const CompanyControll = () => {
     setSelectedCompany(company);
   };
   useEffect(() => {}, [modalOpen]);
-  const delCom = (props) => {
-    const delCompany = props.delCompany;
-    axios
-      .post(`${backServer}/admin/deleteCom/${delCompany}`)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("회원탈퇴 실패");
-      });
-  };
+
   return (
     <div className="company-controll-wrap">
       <div className="page-title">
         <h2>업체 관리</h2>
       </div>
       <div>
-        <table className="tbl company_tbl">
+        <table className="tbl1 company_tbl">
           <thead>
             <tr>
               <th style={{ width: "10%" }}>업체번호</th>
@@ -87,7 +78,6 @@ const CompanyControll = () => {
                   report={report}
                   delCompany={delCompany}
                   setDelCompany={setDelCompany}
-                  delCom={delCom}
                 />
               ))
             ) : (
@@ -127,7 +117,6 @@ const CompanyItem = (props) => {
   const setReport = props.setReport;
   const setDelCompany = props.setDelCompany;
   const delCompany = props.delCompany;
-  const delCom = props.delCom;
 
   const handleReportClick = (e) => {
     e.stopPropagation();
@@ -163,7 +152,6 @@ const CompanyItem = (props) => {
               currentCompanyNo={currentCompanyNo}
               report={report}
               setReport={setReport}
-              delCom={delCom}
             />
           ) : null
         ) : null}
@@ -301,7 +289,7 @@ const ReportOverlay = (props) => {
   const report = props.report;
   const setReport = props.setReport;
   const delCompany = props.delCompany;
-  const delCom = props.delCom;
+
   useEffect(() => {
     axios
       .get(`${backServer}/report/getReport/${currentCompanyNo}`)
@@ -317,13 +305,33 @@ const ReportOverlay = (props) => {
   const handleClose = () => {
     setModalOpen(false);
   };
+
+  const delCom = () => {
+    console.log("탈퇴시킬 업체는" + currentCompanyNo);
+    axios
+      .post(`${backServer}/admin/deleteCom/${currentCompanyNo}`)
+      .then((res) => {
+        Swal.fire({
+          title: "탈퇴 처리 완료",
+          text: "선택한 업체의 탈퇴처리가 완료되었습니다.",
+          icon: "success",
+          iconColor: "var(--main1)",
+          confirmButtonText: "확인",
+          confirmButtonColor: "var(--main1)",
+        });
+      })
+      .catch((err) => {
+        console.log("회원탈퇴 실패");
+      });
+  };
+
   return (
     <div className="reportOverlay">
       <div
         className="reportOverlay-content"
         onClick={(e) => e.stopPropagation()}
       >
-        <table className="tbl report_tbl">
+        <table className="tbl1 report_tbl">
           <thead>
             <tr>
               <th style={{ width: "33%" }}>신고자</th>
@@ -343,12 +351,14 @@ const ReportOverlay = (props) => {
             )}
           </tbody>
         </table>
-        <button onClick={handleClose} className="close-btn">
-          닫기
-        </button>
-        <button onClick={delCom(delCompany)} className="close-btn">
-          업체 탈퇴
-        </button>
+        <div className="button-group">
+          <button onClick={handleClose} className="close-btn">
+            닫기
+          </button>
+          <button onClick={() => delCom()} className="close-btn">
+            업체 탈퇴
+          </button>
+        </div>
       </div>
     </div>
   );

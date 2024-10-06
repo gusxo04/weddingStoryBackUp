@@ -15,6 +15,11 @@
 		member where member_type=1
 	</select>
 
+	<select id="adminTotalCount2" resultType="int">
+		select count(*) from
+		member where member_type=0 or member_type=3
+	</select>
+
 	<select id="getMemberList" resultType="member">
 		select * from
 		(select
@@ -30,6 +35,29 @@
 		member_email
 		from
 		member where member_type=1 order by member_name)m)
+		where rnum between
+		#{start} and #{end}
+	</select>
+
+	<select id="getAdminList" resultType="member">
+		select * from
+		(select
+		rownum
+		as rnum, m.* from
+		(select
+		member_no,
+		member_code,
+		member_id,
+		member_pw,
+		member_name,
+		member_gender,
+		member_phone,
+		member_email,
+		member_type,
+		enroll_date
+		from
+		member where member_type=0 or member_type=3 order by
+		member_name)m)
 		where rnum between
 		#{start} and #{end}
 	</select>
@@ -109,7 +137,7 @@
 		select count(*) from member
 		where member_email=#{memberEmail}
 	</select>
-	
+
 	<select id="selectCompanyNo" resultType="String">
 		select company_no from
 		member where member_no=#{loginNo}
@@ -123,36 +151,53 @@
 		update member set member_type=#{selectedType} where
 		member_id=#{insertId}
 	</update>
-	
+
 	<select id="consultList" resultType="consult">
-		select consult_date,consult_time,company_no from(SELECT consult.*, product.company_no 
-		FROM consult 
-		JOIN product ON consult.product_no = product.product_no) where member_no=#{memberNo} 
-		UNION 
-		SELECT  PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),company_no from(SELECT member_pay.*, product.company_no 
-		FROM member_pay 
-		JOIN product ON member_pay.product_no = product.product_no) where member_no=#{memberNo} and progress !=2
-		UNION 
-		SELECT  PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no, 0)) from member_pay where product_no is null and member_no=#{memberNo} and progress !=2
+		select
+		consult_date,consult_time,company_no from(SELECT consult.*,
+		product.company_no
+		FROM consult
+		JOIN product ON consult.product_no = product.product_no) where
+		member_no=#{memberNo}
+		UNION
+		SELECT PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),company_no from(SELECT
+		member_pay.*, product.company_no
+		FROM member_pay
+		JOIN product ON member_pay.product_no = product.product_no) where
+		member_no=#{memberNo} and progress !=2
+		UNION
+		SELECT PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no, 0))
+		from member_pay where product_no is null and member_no=#{memberNo} and
+		progress !=2
 	</select>
-	
+
 	<select id="consultCompanyList" resultType="company">
-		select * from company where company_no=#{companyNo}
+		select * from company
+		where company_no=#{companyNo}
 	</select>
 	<select id="conventionList" resultType="company">
-		select convention_title as company_name,SUBSTR(convention_time, 1, 5) as start_time,SUBSTR(convention_time,9) as end_time 
+		select convention_title
+		as company_name,SUBSTR(convention_time, 1, 5) as
+		start_time,SUBSTR(convention_time,9) as end_time
 		from convention where #{date} BETWEEN convention_start AND convention_end
 	</select>
 	<select id="paymentList" resultType="memberPay">
-		select progress,merchant_uid,SUBSTR(pay_date,1,8)as pay_date,PROGRESS_DATE,PROGRESS_TIME,pay_price,product_no,ticket_no,member_no from member_pay where member_no=#{memberNo}
+		select progress,merchant_uid,SUBSTR(pay_date,1,8)as
+		pay_date,PROGRESS_DATE,PROGRESS_TIME,pay_price,product_no,ticket_no,member_no
+		from member_pay where member_no=#{memberNo}
 		<if test="state == 'payment'">
-		 and (progress=0 or progress=1)
+			and (progress=0 or progress=1)
 		</if>
 		<if test="state == 'complet'">
-		 and progress=3
+			and progress=3
 		</if>
 		<if test="state == 'cancel'">
-		 and progress=2
+			and progress=2
 		</if>
+	</select>
+	<select id="getYear" resultType="memberPay">
+		SELECT DISTINCT
+		SUBSTR(merchant_uid, 1, 4) AS merchant_uid
+		FROM member_pay
 	</select>
 </mapper>
