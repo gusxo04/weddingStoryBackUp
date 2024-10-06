@@ -278,3 +278,8 @@
 .tbl > tbody > tr > td {
   text-align: center;
 }
+.button-group button {
+  margin: 15px;
+  width: 150px;
+  height: 50px;
+}

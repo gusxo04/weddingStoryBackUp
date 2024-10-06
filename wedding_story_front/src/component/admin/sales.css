@@ -1,0 +1,25 @@
+.sales-wrap {
+  width: 75%;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 50px;
+  box-sizing: border-box;
+}
+.chart-wrap {
+  margin: auto;
+  min-width: 85%;
+  border: 1px solid #ddd;
+}
+.year-sel {
+  margin: 15px;
+}
+.year-sel-btn {
+  padding: 3px;
+  width: 70px;
+  background-color: #c19975;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

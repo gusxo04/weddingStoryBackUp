@@ -1,109 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.product.model.dao.ProductDao">
-  <select id="TotalCount" resultType="int">
-  	select count(*) from product where product_state=1
-  </select>
-  <select id="getProductList" resultType="product">
-  select * from
-		(select rownum as rnum, b.* from
-			(select
-				product_no,
-				product_thumb,
-				product_name,
-				product_price
-			from product where product_state=1 order by product_no desc) b)
-		where rnum between #{start} and#{end}
-  </select>
-  
-  <select id="getProductHallList" resultType="product">
-  	 select * from
-		(select rownum as rnum, b.* from
-			(select
-				company_category,
-				product_no,
-				product_thumb,
-				product_name,
-				product_price
-			from product where company_category = #{category} order by product_no desc) b)
-		where rnum between #{pi.start} and#{pi.end}
-  </select>
-  
-  <insert id="insertProduct">
-  	insert into product values(product_seq.nextval,#{companyNo},#{productName},#{productImg},#{productContent},#{productPrice},null,#{coronation},#{diningRoom},#{numberPeople},null,#{companyCategory})
-  	<selectKey resultType="int" keyProperty="productNo" order="AFTER">
-  		select max(product_no) from product  
-  	</selectKey> 
-  </insert>
-  <insert id="insertProductFile">
-  	insert into product_file values (product_File_seq.nextval,#{productNo},#{fileName},#{filePath})
-  </insert>
-  
-  <select id="selectOneProduct" resultType="product">
-  	select company_no, product_name, product_img, product_price from product where product_no = #{productNo}
-  </select>
-  
-  <select id="selectProductName" resultType="product">
-  	select product_no, product_name from product where product_no = #{productNo}
-  </select>
+	<select id="TotalCount" resultType="int">
+		select count(*) from product
+		where product_state=1
+	</select>
+	<select id="getProductList" resultType="product">
+		select * from
+		(select
+		rownum as rnum, b.* from
+		(select
+		product_no,
+		product_thumb,
+		product_name,
+		product_price
+		from product where product_state=1 order by product_no
+		desc) b)
+		where rnum
+		between #{start} and#{end}
+	</select>
 
-  <select id="selectProductList" resultType="product">
-	  select * from
-			(select rownum as rnum, b.* from
-			(select
-			product_no,
-			company_no,
-			product_img,
-			product_name,
-			product_price
-			from product where company_no=#{companyNo} order by product_no desc) b)
-			where rnum between #{pi.start} and #{pi.end} 
-  </select>
-  
-  <select id="selectProduct" resultType="product">
-  		select * from product where product_no = #{productNo}
-  </select>
-  
-  <select id="selectProductFile" resultType="String">
-  		select file_path from product_file where product_no =#{productNo}
-  </select>
-  
-  <select id="productHallList" resultType="product">
-  	select * from product 
-  </select>
-  
-  <update id="updateProductInfo">
-  	update product 
-  	set
-  	product_name = #{productName},
-	  	<if test="productImg != null">
-		  	product_img = #{productImg},
-	  	</if>
-  	product_content = #{productContent},
-  	product_price = #{productPrice},
-  	coronation = #{coronation},
-  	dining_room = #{diningRoom},
-  	number_people =#{numberPeople}
-  	where product_no =#{productNo}
-  </update>
-  
-  <delete id="deleteThumbnails">
-  	delete from product_file
-  	where file_path in
-  	 <foreach collection="delThumbsFile" item="file" open="(" close=")" separator=",">
-  		#{file}
-  	</foreach>
-  </delete>
-  
-  <select id="selectProductImg" resultType="String">
-  	select product_img from product where product_No =#{productNo}
-  </select>
-  
-  <delete id="deleteProduct">
-  	delete from product where product_no =#{productNo}
-  </delete> 
-  <delete id="deleteProductFile">
-  	delete from product_file where product_no =#{productNo}
-  </delete>
-  
+	<select id="getProductHallList" resultType="product">
+		select * from
+		(select
+		rownum as rnum, b.* from
+		(select
+		company_category,
+		product_no,
+		product_thumb,
+		product_name,
+		product_price
+		from product where
+		company_category = #{category} order by product_no
+		desc) b)
+		where rnum
+		between #{pi.start} and#{pi.end}
+	</select>
+
+	<insert id="insertProduct">
+		insert into product
+		values(product_seq.nextval,#{companyNo},#{productName},#{productImg},#{productContent},#{productPrice},null,#{coronation},#{diningRoom},#{numberPeople},null,#{companyCategory})
+		<selectKey resultType="int" keyProperty="productNo"
+			order="AFTER">
+			select max(product_no) from product
+		</selectKey>
+	</insert>
+	<insert id="insertProductFile">
+		insert into product_file values
+		(product_File_seq.nextval,#{productNo},#{fileName},#{filePath})
+	</insert>
+
+	<select id="selectOneProduct" resultType="product">
+		select company_no,
+		product_name, product_img, product_price from product
+		where product_no
+		= #{productNo}
+	</select>
+
+	<select id="selectProductName" resultType="product">
+		select product_no,
+		product_name from product where product_no = #{productNo}
+	</select>
+
+	<select id="selectProductList" resultType="product">
+		select * from
+		(select
+		rownum as rnum, b.* from
+		(select
+		product_no,
+		company_no,
+		product_img,
+		product_name,
+		product_price
+		from product where company_no=#{companyNo}
+		order by product_no desc) b)
+		where rnum between #{pi.start} and
+		#{pi.end}
+	</select>
+
+	<select id="selectProduct" resultType="product">
+		select * from product
+		where product_no = #{productNo}
+	</select>
+
+	<select id="selectProductFile" resultType="String">
+		select file_path from
+		product_file where product_no =#{productNo}
+	</select>
+
+	<select id="productHallList" resultType="product">
+		select * from product
+	</select>
+
+	<update id="updateProductInfo">
+		update product
+		set
+		product_name = #{productName},
+		<if test="productImg != null">
+			product_img = #{productImg},
+		</if>
+		product_content = #{productContent},
+		product_price = #{productPrice},
+		coronation = #{coronation},
+		dining_room = #{diningRoom},
+		number_people
+		=#{numberPeople}
+		where product_no =#{productNo}
+	</update>
+
+	<delete id="deleteThumbnails">
+		delete from product_file
+		where file_path in
+		<foreach collection="delThumbsFile" item="file" open="("
+			close=")" separator=",">
+			#{file}
+		</foreach>
+	</delete>
+
+	<select id="selectProductImg" resultType="String">
+		select product_img from
+		product where product_No =#{productNo}
+	</select>
+
+	<delete id="deleteProduct">
+		delete from product where product_no =#{productNo}
+	</delete>
+	<delete id="deleteProductFile">
+		delete from product_file where product_no
+		=#{productNo}
+	</delete>
+
+	<select id="getMontlySales" resultType="sales">
+		SELECT
+		SUM(pay_price) AS sales
+		FROM
+		member_pay
+		WHERE
+		SUBSTR(merchant_uid, 1, 4) = #{selectedYear} AND
+		SUBSTR(merchant_uid, 5, 2) = #{month}
+	</select>
+
+
 </mapper>

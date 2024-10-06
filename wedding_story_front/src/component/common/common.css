@@ -202,3 +202,123 @@
   justify-content: center;
   align-items: center;
 }
+
+/*메인홈 css*/
+.banner-container {
+  width: 100%;
+  height: 380px;
+  overflow: hidden; /* 이미지가 밖으로 넘치지 않도록 */
+  position: relative;
+}
+
+.banner-slider {
+  display: flex;
+  width: 100%; /* 이미지가 3개이므로 300% */
+  height: 100%;
+  transition: transform 0.5s ease-in-out; /* 슬라이드 애니메이션 */
+}
+
+.banner-imgBox {
+  width: 100%;
+  flex-shrink: 0; /* flex 컨테이너가 각 이미지를 동일한 너비로 유지 */
+}
+
+.banner-imgBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지를 div에 맞게 */
+}
+/* 화살표 버튼 스타일 */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow.left {
+  left: 250px;
+}
+
+.arrow.right {
+  right: 250px;
+}
+.banner-container a {
+  width: 100%;
+  height: 380px;
+}
+
+.home-section1-wrap,
+.home-section2-wrap {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 120px;
+  padding-top: 70px;
+}
+.home-section1-titleBox,
+.home-section2-titleBox {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+.home-section1-productBox {
+  width: 1200px;
+  display: flex;
+  justify-content: space-between;
+}
+.home-section1-product {
+  width: calc(100% / 5);
+  height: 300px;
+}
+.sec1-productImgBox {
+  width: 100%;
+  height: 80%;
+  position: relative;
+}
+.sec1-productImgBox > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-section2-wrap {
+  background-color: rgba(220, 228, 233, 0.3);
+}
+.home-section2 {
+  width: 1200px;
+}
+.home-section2-infoBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+.home-section2-infoBox > div {
+  background-color: #fff;
+}
+.home-section2-infoImg {
+  width: 100%;
+}
+.home-section2-infoImg > img {
+  width: 100%;
+}
+.home-section2-infoInfo {
+  height: 80px;
+  padding: 10px;
+}
+.arrow2 {
+  top: 50%;
+  transform: translateY(0%);
+  background-color: transparent;
+  border: none;
+  border-radius: 30px;
+  color: rgba(220, 228, 233);
+  font-size: 2rem;
+  cursor: pointer;
+}

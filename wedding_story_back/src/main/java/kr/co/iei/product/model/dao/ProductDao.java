@@ -2,9 +2,11 @@ package kr.co.iei.product.model.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
 import kr.co.iei.util.PageInfo;
@@ -45,6 +47,10 @@ public interface ProductDao {
 	int deleteProduct(int productNo);
 
 	int deleteProductFile(int productNo);
+
+	List<Map<String, Object>> getYearlyMonthlySales(int selectedYear);
+
+	SalesDTO getMontlySales(String month, String selectedYear);
 	
 	
 

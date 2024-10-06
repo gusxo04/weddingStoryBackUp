@@ -7,7 +7,7 @@ Chart.register(...registerables);
 
 const SalesChart = ({ data }) => {
   return (
-    <div>
+    <div className="chart-wrap">
       <Line data={data} />
     </div>
   );

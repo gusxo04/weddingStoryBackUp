@@ -44,7 +44,7 @@ const MainHeader = () => {
           <ul className="nav-main">
             <li className="nav-suv">
               <span className="material-icons">menu</span>
-              <NavLink to="/myPage">My Wedding</NavLink>
+              <NavLink to="/myPage/schedule">My Wedding</NavLink>
             </li>
             <li>
               <Link to="/">홈</Link>
