@@ -488,8 +488,11 @@
     overflow: hidden;
 }
 .preview-main-content *{
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 1.25rem;
     font-weight: 500;
+    line-height: inherit !important;
+    margin: 0px !important; 
 
 }
 
