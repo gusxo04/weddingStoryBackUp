@@ -40,7 +40,7 @@ const BuyTicket = (props) => {
   useEffect(() => {
     axios.get(`${backServer}/convention/get/memberInfo/${memberNoState}`)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       setMemberEmail(res.data.memberEmail);
       setMemberName(res.data.memberName);
       setMemberPhone(res.data.memberPhone);

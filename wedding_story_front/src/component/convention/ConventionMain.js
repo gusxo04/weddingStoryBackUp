@@ -68,7 +68,7 @@ const ConventionMain = () => {
       if(memberType === 1){
         axios.get(`${backServer}/convention/payment/member/${memberNoState}/${res.data.convention.conventionNo}`)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if(res.data){
             setPayment({
               merchantUid: res.data.merchantUid,

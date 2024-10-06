@@ -12,8 +12,6 @@ const ConventionLobby = () => {
   const [permission, setPermission] = useState(false);
   const isLogin = useRecoilValue(isLoginState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  console.log("p : ",permission);
-  
 
   useEffect(() => {
     if(isLogin && (memberType === 0 || memberType === 3)){

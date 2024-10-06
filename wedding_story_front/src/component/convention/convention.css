@@ -593,17 +593,17 @@
 
 
 /* 인풋검사 */
-.invalid{
+.convention-container .invalid{
     color: red;
 }
 
-img.invalid{
+.convention-container img.invalid{
     border: 1px solid red;
 }
 
 
 /* 개인정보동의 관련 css */
-.personal-container{
+.convention-container .personal-container{
     padding: 10px;
     text-wrap: pretty;
     line-height: 25px;
