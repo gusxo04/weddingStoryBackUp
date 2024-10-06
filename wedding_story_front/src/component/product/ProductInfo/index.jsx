@@ -1,7 +1,7 @@
 import { Viewer } from "@toast-ui/react-editor";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import ProductReview from "../ProductReview";
 import styles from "./ProductInfo.module.css";
@@ -13,6 +13,12 @@ const ProductInfo = () => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const params = useParams();
 	const productNo = params.productNo;
+	const location = useLocation(); // 현재 location 객체 가져오기
+	const queryParams = new URLSearchParams(location.search); // 쿼리 문자열 파라미터 파싱
+
+	const businessCode = queryParams.get("businessCode"); // '123'
+	const showConsultButton = ["weddingHall", "dressShop", "robe"].includes(businessCode); // 비즈니스 코드에 따라 버튼 보이기 여부 결정
+
 	const [product, setProduct] = useState({});
 	const [loginId, setLoginId] = useRecoilState(loginIdState);
 	const [company, setCompany] = useState({ companyAddr: "" });
@@ -71,10 +77,13 @@ const ProductInfo = () => {
 					</div>
 				</div>
 				<div className={styles["product-btn-zone"]}>
-					<Link to="/consult/consult" className={styles["btn"]}>
-						상담하기
-					</Link>
-					<Link to="/product/pay" className={styles["btn"]}>
+					{showConsultButton && (
+						<Link to="/consult/consult" className={styles["btn"]}>
+							상담하기
+						</Link>
+					)}
+
+					<Link to="/product/weddingHall" className={styles["btn"]}>
 						예약하기
 					</Link>
 				</div>

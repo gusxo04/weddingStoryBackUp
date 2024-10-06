@@ -5,27 +5,26 @@ import PageNavi from "../../utils/PagiNavi";
 import styles from "./ProductAllList.module.css";
 import { MdFavorite } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
-
 const dummyData = [
-	{ productNo: 1, productName: "웨딩홀 A", productPrice: "100000", businessCode: 0 },
-	{ productNo: 2, productName: "스튜디오 B", productPrice: "200000", businessCode: 1 },
-	{ productNo: 3, productName: "드레스 C", productPrice: "150000", businessCode: 2 },
-	{ productNo: 4, productName: "메이크업 D", productPrice: "50000", businessCode: 3 },
-	{ productNo: 5, productName: "예복 E", productPrice: "300000", businessCode: 4 },
-	{ productNo: 6, productName: "본식 F", productPrice: "250000", businessCode: 5 },
-	{ productNo: 7, productName: "웨딩홀 G", productPrice: "120000", businessCode: 0 },
-	{ productNo: 8, productName: "스튜디오 H", productPrice: "180000", businessCode: 1 },
-	{ productNo: 9, productName: "드레스 I", productPrice: "130000", businessCode: 2 },
-	{ productNo: 10, productName: "메이크업 J", productPrice: "70000", businessCode: 3 },
+	{ productNo: 1, productName: "웨딩홀 A", productPrice: "100000", businessCode: "weddingHall" },
+	{ productNo: 2, productName: "스튜디오 B", productPrice: "200000", businessCode: "studio" },
+	{ productNo: 3, productName: "드레스 C", productPrice: "150000", businessCode: "dressShop" },
+	{ productNo: 4, productName: "메이크업 D", productPrice: "50000", businessCode: "makeUp" },
+	{ productNo: 5, productName: "예복 E", productPrice: "300000", businessCode: "robe" },
+	{ productNo: 6, productName: "본식 F", productPrice: "250000", businessCode: "mainCeremony" },
+	{ productNo: 7, productName: "웨딩홀 G", productPrice: "120000", businessCode: "weddingHall" },
+	{ productNo: 8, productName: "스튜디오 H", productPrice: "180000", businessCode: "studio" },
+	{ productNo: 9, productName: "드레스 I", productPrice: "130000", businessCode: "dressShop" },
+	{ productNo: 10, productName: "메이크업 J", productPrice: "70000", businessCode: "makeUp" },
 ];
 
 const businessCodes = {
-	0: "웨딩홀",
-	1: "스튜디오",
-	2: "드레스",
-	3: "메이크업",
-	4: "예복",
-	5: "본식",
+	weddingHall: "웨딩홀",
+	studio: "스튜디오",
+	dressShop: "드레스",
+	makeUp: "메이크업",
+	robe: "예복",
+	mainCeremony: "본식",
 };
 
 const ProductAllList = () => {
@@ -33,7 +32,7 @@ const ProductAllList = () => {
 	const [productList, setProductList] = useState([]);
 	const [reqPage, setReqPage] = useState(1);
 	const [pi, setPi] = useState({});
-	const [businessCode, setBusinessCode] = useState(1); // Default to '스튜디오'
+	const [businessCode, setBusinessCode] = useState("studio"); // Default to '스튜디오'
 
 	useEffect(() => {
 		axios
@@ -58,7 +57,7 @@ const ProductAllList = () => {
 				<ul className={styles["name-title"]}>
 					{Object.entries(businessCodes).map(([code, name]) => (
 						<li key={code}>
-							<Link to="/product/list" onClick={() => setBusinessCode(Number(code))}>
+							<Link to={`/product/list?businessCode=${code}`} onClick={() => setBusinessCode(code)}>
 								{name}
 							</Link>
 						</li>
@@ -100,7 +99,7 @@ const BoardItem = (props) => {
 		<li
 			className={styles["posting-item"]}
 			onClick={() => {
-				navigate(`/product/info/${productNo}`);
+				navigate(`/product/info/${productNo}?businessCode=${product.businessCode}`);
 			}}
 		>
 			<div className={styles["posting-info"]}>
