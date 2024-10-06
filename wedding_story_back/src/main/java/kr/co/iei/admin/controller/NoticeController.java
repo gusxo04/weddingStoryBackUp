@@ -123,7 +123,7 @@ public class NoticeController {
 		return ResponseEntity.status(HttpStatus.OK).headers(header).contentLength(file.length())
 				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
-    
+   
     @PatchMapping
     public ResponseEntity<Boolean> updateNotice(@ModelAttribute NoticeDTO notice,
     											@ModelAttribute MultipartFile thumbnail,

@@ -1,12 +1,13 @@
 package kr.co.iei.product.model.dao;
 
-import java.util.HashMap;
+import java.util.HashMap;	
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.admin.model.dto.SalesDTO;
+import kr.co.iei.company.model.dto.CustomerDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
 import kr.co.iei.util.PageInfo;
@@ -14,8 +15,10 @@ import kr.co.iei.util.PageInfo;
 @Mapper
 public interface ProductDao {
 
+	int productTotalCount(String companyNo);
+	
 	int TotalCount();
-
+	
 	List getProductList(PageInfo pi);
 
 	int insertProduct(ProductDTO product);
@@ -51,6 +54,15 @@ public interface ProductDao {
 	List<Map<String, Object>> getYearlyMonthlySales(int selectedYear);
 
 	SalesDTO getMontlySales(String month, String selectedYear);
+	List selectProductNo(String companyNo);
+
+
+	int TotalCustomerCount(List productNo);
+
+	List<CustomerDTO> selectCustomerList(List productNo, PageInfo pi);
+
+
+	
 	
 	
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.mapping.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.advertisement.model.dto.AdvertisementDTO;
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.company.model.service.CompanyService;
@@ -132,7 +134,6 @@ public class CompanyController {
 	@GetMapping(value="/list/{companyNo}/{reqPage}")
 	public ResponseEntity<Map> list(@PathVariable String companyNo,@PathVariable int reqPage){
 		Map map = companyService.productList(reqPage,companyNo);
-		
 		return ResponseEntity.ok(map);
 	}
 	
@@ -179,6 +180,7 @@ public class CompanyController {
 			return ResponseEntity.ok(false);
 		}
 	}
+	//상품 게시물 삭제 
 	@DeleteMapping(value = "/product/{productNo}")
 	public ResponseEntity<Boolean> deleteProduct(@PathVariable int productNo) {
 			System.out.println(productNo);
@@ -211,8 +213,29 @@ public class CompanyController {
 	            }
 	        }
 		}
+		return ResponseEntity.ok(true);
+	}
+	
+	//고객 관리 (정보 리스트 조회) 
+	@GetMapping(value="/customer/{companyNo}/{reqPage}")
+	public ResponseEntity<Map> customer(@PathVariable String companyNo,@PathVariable int reqPage){
+		Map result = companyService.selectProductNo(companyNo,reqPage);
 		
-		return ResponseEntity.ok(null);
-				
+		
+		return ResponseEntity.ok(result);
+	}
+	//광고요청 등록
+	@PostMapping(value="/advertisement")
+	public ResponseEntity<Boolean> insertAdvertisement(@ModelAttribute AdvertisementDTO advert){
+		int result = companyService.insertAdvertisement(advert);
+		
+		return ResponseEntity.ok(result == 1);
+	}
+	//광고 요청 리스트
+	@GetMapping(value="/advertisement/{companyNo}/{reqPage}")
+	public ResponseEntity<Map> selectAdvertisement(@PathVariable String companyNo ,@PathVariable int reqPage){
+		Map map = companyService.selectAdvertisement(companyNo,reqPage);
+		
+		return ResponseEntity.ok(map);
 	}
 }
