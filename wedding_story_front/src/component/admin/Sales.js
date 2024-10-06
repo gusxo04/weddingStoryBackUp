@@ -7,7 +7,8 @@ const Sales = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [year, setYear] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  const [companyList, setCompanyList] = useState([]);
 
   useEffect(() => {
     axios
@@ -43,6 +44,22 @@ const Sales = () => {
         console.log("조회 에러");
       });
   };
+  useEffect(() => {
+    axios
+      .get(`${backServer}/admin/getComapnyRank`)
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data);
+          setCompanyList(res.data);
+        } else {
+          console.error("데이터 없음");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log("조회 에러");
+      });
+  }, [backServer]);
 
   // 차트 데이터 변환
   const getChartData = () => {
@@ -86,8 +103,60 @@ const Sales = () => {
       </button>
 
       <SalesChart data={getChartData()} />
+
+      <div className="company_rank">
+        <h3>업체 매출 TOP5</h3>
+        <table className="tbl1">
+          <thead>
+            <tr>
+              <th style={{ width: "10%" }}>업체코드</th>
+              <th style={{ width: "10%" }}>업체명</th>
+              <th style={{ width: "20%" }}>카테고리</th>
+              <th style={{ width: "20%" }}>총 매출</th>
+              <th style={{ width: "20%" }}>수수료</th>
+              <th style={{ width: "20%" }}>순이익</th>
+            </tr>
+          </thead>
+          <tbody>
+            {companyList.length > 0 ? (
+              companyList
+                .slice(0, 5)
+                .map((company, index) => (
+                  <CompanyItem
+                    key={"company-" + index}
+                    company={company}
+                    index={index}
+                  />
+                ))
+            ) : (
+              <tr>
+                <td colSpan="6">매출이 없습니다.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
+const CompanyItem = (props) => {
+  const company = props.company;
+  console.log(company.salesList);
 
+  const sales =
+    company.salesList.length > 0 && company.salesList[0]
+      ? company.salesList[0].sales
+      : "없음";
+
+  return (
+    <tr>
+      <td>{company.companyNo}</td>
+      <td>{company.companyName}</td>
+      <td>{company.companyCategory}</td>
+      <td>{sales}</td>
+      <td>{sales}</td>
+      <td>{sales}</td>
+    </tr>
+  );
+};
 export default Sales;

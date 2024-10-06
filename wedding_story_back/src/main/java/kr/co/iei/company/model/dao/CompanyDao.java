@@ -32,5 +32,7 @@ public interface CompanyDao {
 
 	CompanyDTO selectCompanyNo(String string);
 
+	List<CompanyDTO> getCompanyList2();
+
 
 }

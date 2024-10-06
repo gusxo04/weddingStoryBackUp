@@ -51,9 +51,10 @@ public interface ProductDao {
 	List<Map<String, Object>> getYearlyMonthlySales(int selectedYear);
 
 	SalesDTO getMontlySales(String month, String selectedYear);
-	
-	
 
+	SalesDTO getCompanySales(int productNo);
+
+	List<ProductDTO> selectProductList2(String companyNo);
 
 
 }

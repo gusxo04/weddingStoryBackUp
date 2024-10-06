@@ -23,3 +23,6 @@
   border-radius: 5px;
   cursor: pointer;
 }
+.company_rank > h3 {
+  margin: 20px;
+}

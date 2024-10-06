@@ -108,5 +108,9 @@ public class AdminController {
 		Map<String, Map<Integer, SalesDTO>> map = adminService.getSales(selectedYear);
 		return ResponseEntity.ok(map);
 	}
-
+	@GetMapping(value = "/getComapnyRank")
+	public ResponseEntity<List> getComapnyRank() {
+		List list = adminService.getComapnyRank();
+		return ResponseEntity.ok(list);
+	}
 }
