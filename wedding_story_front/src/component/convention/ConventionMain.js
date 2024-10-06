@@ -3,8 +3,8 @@ import "./convention.css";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ShowConvention from "./ShowConvention";
-import { companyNoState, loginNoState, memberTypeState } from "../utils/RecoilData";
-import { useRecoilState } from "recoil";
+import { companyNoState, isLoginState, loginNoState, memberTypeState } from "../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
 import ConventionLoading from "./ConventionLoading";
 
 
@@ -17,7 +17,7 @@ const ConventionMain = () => {
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
   const [loginCompanyNoState, setLoginCompanyNoState] = useRecoilState(companyNoState);
-
+  const isLogin = useRecoilValue(isLoginState);
 
   const [convention, setConvention] = useState({});
   const [startDate, setStartDate] = useState(null);
