@@ -54,3 +54,7 @@ npm i date-fns --force
 npm install --save @fullcalendar/react @fullcalendar/core @fullcalendar/daygrid --force
 2024-10-01 오전 11:17
 npm install --save @fullcalendar/interaction --force
+
+김준석
+2024-10-06 오후 17:46
+npm install --save prettier --force

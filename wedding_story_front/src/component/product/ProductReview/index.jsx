@@ -7,16 +7,80 @@ import axios from "axios";
 import styles from "./ProductReview.module.css";
 import { ReviewForm } from "../components";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+
 
 const showMaxCnt = 4;
 const arr = Array.from(new Array(3));
-const settings = {
+const settings  = {
   dots: false,
-  infinite: arr.length > showMaxCnt,
+  infinite: false,
   speed: 500,
-  slidesToShow: showMaxCnt,
-  slidesToScroll: showMaxCnt,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  adaptiveHeight:true,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
 };
+
+
+const reviewsDummy = [
+  {
+    productCommentNo: 1,
+    rating: 4,
+    review: "Great product! Really satisfied with the quality.",
+    image: "https://via.placeholder.com/300", // 이미지가 있는 경우
+  },
+  {
+    productCommentNo: 2,
+    rating: 5,
+    review: "Exceeded my expectations! Highly recommend.",
+    image: "https://via.placeholder.com/300", // 이미지가 있는 경우
+  },
+  {
+    productCommentNo: 3,
+    rating: 3,
+    review: "It's okay, but I think it could be improved.",
+    image: null, // 이미지가 없는 경우
+  },
+  {
+    productCommentNo: 4,
+    rating: 2,
+    review: "Not very satisfied, the product had some issues.",
+    image: null, // 이미지가 없는 경우
+  },
+  {
+    productCommentNo: 5,
+    rating: 5,
+    review: "Absolutely love it! Will definitely buy again.",
+    image: "https://via.placeholder.com/300", // 이미지가 있는 경우
+  },
+];
 
 const ProductReview = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -24,7 +88,7 @@ const ProductReview = () => {
   const [member, setMember] = useState({
     memberId: "",
   });
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(reviewsDummy);
   const [currentReview, setCurrentReview] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [productNo, setProductNo] = useState(); // 실제 제품번호로 교체
@@ -102,9 +166,14 @@ const ProductReview = () => {
           reviews.map((review) => (
             <div
               key={review.productCommentNo}
-              className={styles["review-item"]}
+            
             >
-              <div className={styles["review-rating"]}>
+              <div 
+              className={styles["review-item"]}
+             >
+
+                <div style={{display:'flex', flexDirection:'column'}}>
+                <div className={styles["review-rating"]}>
                 {Array.from({ length: 5 }, (_, index) => (
                   <FaStar
                     key={index}
@@ -119,19 +188,31 @@ const ProductReview = () => {
                 {loginIdState.loginId}
               </div>
               <div className={styles["review-text"]}>{review.review}</div>
+                </div>
+             
               {review.image && (
                 <img
                   src={review.image}
                   alt="Review"
-                  style={{ width: "300px", height: "300px" }}
+                  style={{
+                    width: '100%',   // 이미지가 슬라이드의 너비에 맞춰짐
+                    height: 'auto',  // 이미지의 비율을 유지하면서 높이를 자동으로 조정
+                    maxHeight: '200px',  // 이미지의 최대 높이 제한 (선택 사항)
+                    objectFit: 'contain' // 이미지가 컨테이너 안에 맞춰져서 표시됨
+                  }}
                 />
               )}
+
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', columnGap:'10px'}}>
               <button onClick={() => handleEditReview(review)}>수정</button>
               <button
                 onClick={() => handleDeleteReview(review.productCommentNo)}
               >
                 삭제
               </button>
+              </div>
+            
+            </div>
             </div>
           ))
         ) : (

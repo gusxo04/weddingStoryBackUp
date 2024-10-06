@@ -59,11 +59,11 @@ public class ProductService {
 	//웨딩홀상태페이지
 	public Map productList(int productNo) {
 		ProductDTO product = productDao.selectOneProduct(productNo);
-		CompanyDTO company = componyDao.selectCompanyNo(product.getCompanyNo());
+//		CompanyDTO company = componyDao.selectCompanyNo(product.getCompanyNo());
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("product",product);
-		map.put("company",company);
+//		map.put("company",company);
 		return map;
 	}
 	
