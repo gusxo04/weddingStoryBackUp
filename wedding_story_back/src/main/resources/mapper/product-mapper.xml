@@ -128,15 +128,33 @@
 
 	<select id="getMontlySales" resultType="sales">
 		SELECT
-		SUM(pay_price) AS sales
+		SUM(pay_price) AS
+		sales
 		FROM
 		member_pay
 		WHERE
-		SUBSTR(merchant_uid, 1, 4) = #{selectedYear} AND
+		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
+		AND
 		SUBSTR(merchant_uid, 5, 2) = #{month}
 	</select>
 
+	<select id="selectProductList2" resultType="product">
+		select
+		product_no,
+		company_no,
+		product_img,
+		product_name,
+		product_price
+		from product where
+		company_no=#{companyNo}
+	</select>
 
+	<select id="getCompanySales" resultType="sales">
+		SELECT SUM(pay_price) AS
+		sales
+		FROM member_pay
+		WHERE product_no = #{productNo}
+	</select>
 
   <select id="productTotalCount" resultType="int">
   	select count(*) from product where company_no = #{companyNo}

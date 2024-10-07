@@ -91,7 +91,7 @@ const HeaderLink = () => {
             로그아웃
           </Link>
           <span>|</span>
-          <Link to="#">고객센터</Link>
+          <Link to="/question/main">고객센터</Link>
         </div>
       ) : (
         <div className="header-link">

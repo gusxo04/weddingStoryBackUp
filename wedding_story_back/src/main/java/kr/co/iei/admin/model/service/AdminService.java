@@ -1,5 +1,6 @@
 package kr.co.iei.admin.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.admin.model.dao.NoticeDao;
+import kr.co.iei.admin.model.dto.QuestionDTO;
+import kr.co.iei.admin.model.dto.QuestionFileDTO;
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.advertisement.model.dao.AdvertisementDao;
 import kr.co.iei.company.model.dao.CompanyDao;
@@ -17,6 +20,7 @@ import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dao.ProductDao;
+import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ReportDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
@@ -143,12 +147,97 @@ public class AdminService {
 	        } else if (sales.getSales() == null) {
 	            sales.setSales(0); // sales 필드가 null인 경우 0으로 설정
 	        }
-			System.out.println(sales);
 			subMap.put(i, sales);
 		}
 		map.put(selectedYear, subMap);
 
 		return map;
+	}
+
+	public List getComapnyRank() {
+		//1. 각 회사 별로 product no 가 담긴 List 추출
+		//해당 상품의 매출들을 다 더해서 sales에 넣음
+		//매출이 높은 회사 5개까지만 걸러서 return
+		List<CompanyDTO> list = companyDao.getCompanyList2();
+		for(CompanyDTO company : list) {
+			String companyNo = company.getCompanyNo();
+			//회사 코드로 상품 조회
+			List<ProductDTO> productList = productDao.selectProductList2(companyNo);
+			
+			List<SalesDTO> salesList = new ArrayList<SalesDTO>();
+			for(ProductDTO product : productList) {
+				int productNo = product.getProductNo();
+				SalesDTO sales = productDao.getCompanySales(productNo);//매출 테이블에서 조회
+				salesList.add(sales);
+			}
+			
+			company.setSalesList(salesList);
+		}
+		
+		 list.sort((c1, c2) -> {
+		        int sales1 = (c1.getSalesList().isEmpty() || c1.getSalesList().get(0) == null) 
+		                      ? 0 : c1.getSalesList().get(0).getSales();
+		        int sales2 = (c2.getSalesList().isEmpty() || c2.getSalesList().get(0) == null) 
+		                      ? 0 : c2.getSalesList().get(0).getSales();
+		        return Integer.compare(sales2, sales1); // 내림차순 정렬
+		    });
+		System.out.println(list);
+		return list;
+	}
+
+	public int insertQuestion(QuestionDTO question, List<QuestionFileDTO> questionFileList, MemberDTO member) {
+		int memberNo = member.getMemberNo();
+		
+		String questionTitle = question.getQuestionTitle();
+		String questionContent=question.getQuestionContent();
+		int questionType=question.getQuestionType();
+		int result = noticeDao.insertQuestion(questionTitle,questionContent,questionType, memberNo);
+		
+		int questionNo = noticeDao.getQuestionNo();
+		
+		for(QuestionFileDTO questionFile : questionFileList) {
+			questionFile.setQuestionNo(question.getQuestionNo());
+			String filename = questionFile.getFilename();
+			String filepath = questionFile.getFilepath();
+			result += noticeDao.insertQuestionFile(filename,filepath, questionNo);
+		}
+		return result;
+	}
+
+	public MemberDTO getMember(String loginId) {
+		MemberDTO member = memberDao.getMember(loginId);
+		return member;
+	}
+
+	public Map selectQuestionList(int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount;
+		
+		totalCount = noticeDao.QuestionTotalCount();
+		
+		
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		
+		
+		List list = noticeDao.selectQuestionList(pi);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		System.out.println(list);
+		
+		return map;
+	}
+
+	public QuestionDTO getOneQuestion(int questionNo) {
+		QuestionDTO question = noticeDao.getOneQuestion(questionNo);
+		
+		return question;
+	}
+
+	public QuestionFileDTO getQuestionFile(int questioinFileNo) {
+		QuestionFileDTO questionFile = noticeDao.getQuestionFile(questioinFileNo);
+		return questionFile;
 	}
 
 }

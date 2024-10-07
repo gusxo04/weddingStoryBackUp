@@ -1,83 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.company.model.dao.CompanyDao">
-  <insert id="insertCompany">
-  	insert into company values(#{companyNo},#{companyCategory},#{companyName},#{companyTel},#{companyAddr},#{companyInfo},#{companyThumb},#{startTime},#{endTime},sysdate,#{dayOff},0,1)
-  	
-  </insert>
+	<insert id="insertCompany">
+		insert into company
+		values(#{companyNo},#{companyCategory},#{companyName},#{companyTel},#{companyAddr},#{companyInfo},#{companyThumb},#{startTime},#{endTime},sysdate,#{dayOff},0,1)
+
+	</insert>
 
 	<insert id="insertKeyWord">
-		insert into company_keyword values(#{companyNo},#{keyWord})
+		insert into company_keyword
+		values(#{companyNo},#{keyWord})
 	</insert>
-	
+
 	<select id="adminTotalCount" resultType="int">
-		select count(*) from company
+		select count(*) from
+		company
 	</select>
-	
+
 	<select id="getCompanyList" resultType="company">
 		select * from
-			(select rownum as rnum, m.* from
-				(select
-					company_no,
-					company_category,
-					company_name,
-					company_tel,
-					company_addr,
-					company_info,
-					company_thumb,
-					start_time,
-					end_time,
-					company_enroll_date,
-					day_off,
-					company_report,
-					company_state	
-				from company where company_state=1 order by company_name)m)
-		where rnum between #{start} and #{end}
-		</select>
-		
-	<select id="selectCompanyInfo" resultType="company">
-		select * from company  join company_keyword  on company.company_no = company_keyword.company_no where company.company_no = #{companyNo}
+		(select
+		rownum as rnum, m.* from
+		(select
+		company_no,
+		company_category,
+		company_name,
+		company_tel,
+		company_addr,
+		company_info,
+		company_thumb,
+		start_time,
+		end_time,
+		company_enroll_date,
+		day_off,
+		company_report,
+		company_state
+		from company where company_state=1 order by
+		company_name)m)
+		where rnum
+		between #{start} and #{end}
 	</select>
-	
+
+	<select id="selectCompanyInfo" resultType="company">
+		select * from company
+		join company_keyword on company.company_no =
+		company_keyword.company_no where company.company_no = #{companyNo}
+	</select>
+
 	<update id="deleteCom">
-		update company set company_state=2 where company_no=#{companyNo}
+		update company set company_state=2 where
+		company_no=#{companyNo}
 	</update>
-	
+
 	<select id="selectContainCompany">
 		select * from company where company_no=#{companyNo}
 	</select>
-	
-	
+
+
 	<update id="updateCompanyInfo">
-		update company set 
-		
-		
+		update company set
+
+
 		company_tel = #{companyTel},
-		company_addr = #{companyAddr},
-		company_info = #{companyInfo},
+		company_addr =
+		#{companyAddr},
+		company_info =
+		#{companyInfo},
 		<if test='companyThumb != null'>
-		company_thumb = #{companyThumb},
-		</if> 
+			company_thumb = #{companyThumb},
+		</if>
 		start_time = #{startTime},
 		end_time = #{endTime},
 		day_off = #{dayOff}
 		where company_no = #{companyNo}
-		
+
 	</update>
 	<update id="updateCompanyKeyWord">
-		update company_keyword set keyword = #{keyWord} where company_no =#{companyNo}
+		update company_keyword set keyword = #{keyWord} where
+		company_no =#{companyNo}
 	</update>
-	
+
 	<select id="selectCategory" resultType="String">
-		select company_category from company where company_no = #{companyNo}
+		select company_category
+		from company where company_no = #{companyNo}
 	</select>
-	
-	
+
+
 	<select id="selectCompanyNo" resultType="company">
-		select company_no, company_name, company_addr from company where company_no = #{companyNo}
+		select company_no,
+		company_name, company_addr from company where company_no =
+		#{companyNo}
 	</select>
-	
-	
+	<select id="getCompanyList2" resultType="company">
+		select 
+		company_no,
+		company_category,
+		company_name,
+		company_tel,
+		company_addr,
+		company_info,
+		company_state
+		from company where company_state=1 order by company_name
+	</select>
+
 </mapper>
 
   

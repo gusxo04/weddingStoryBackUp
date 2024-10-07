@@ -1,5 +1,8 @@
 package kr.co.iei.admin.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,18 +10,29 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.admin.model.dto.NoticeDTO;
+import kr.co.iei.admin.model.dto.NoticeFileDTO;
+import kr.co.iei.admin.model.dto.QuestionDTO;
+import kr.co.iei.admin.model.dto.QuestionFileDTO;
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.admin.model.service.AdminService;
+import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.product.model.dto.ReportDTO;
 import kr.co.iei.product.model.service.ProductService;
@@ -103,10 +117,73 @@ public class AdminController {
 		Map map = adminService.getYear();
 		return ResponseEntity.ok(map);
 	}
+
 	@GetMapping(value = "/searchYearPay/{selectedYear}")
 	public ResponseEntity<Map> searchYearPay(@PathVariable String selectedYear) {
 		Map<String, Map<Integer, SalesDTO>> map = adminService.getSales(selectedYear);
 		return ResponseEntity.ok(map);
 	}
 
+	@GetMapping(value = "/getComapnyRank")
+	public ResponseEntity<List> getComapnyRank() {
+		List list = adminService.getComapnyRank();
+		return ResponseEntity.ok(list);
+	}
+
+	@PostMapping(value = "/inputRequest")
+	public ResponseEntity<Boolean> inputRequest(@ModelAttribute QuestionDTO question, String loginId,
+			MultipartFile[] questionFile) {
+		System.err.println(question);
+		System.err.println(loginId);
+		
+		MemberDTO member = adminService.getMember(loginId);
+		List<QuestionFileDTO> questionFileList = new ArrayList<QuestionFileDTO>();
+		if (questionFile != null) {
+			String savepath = root + "/question/";
+	        for (MultipartFile file : questionFile) {
+	            QuestionFileDTO fileDTO = new QuestionFileDTO();
+	            String filename = file.getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, file);
+				fileDTO.setFilename(filename);
+				fileDTO.setFilepath(filepath);
+				questionFileList.add(fileDTO);
+	        }
+	    } 
+		int result = adminService.insertQuestion(question, questionFileList, member);
+		return ResponseEntity.ok(result == 1 + questionFileList.size());
+	}
+
+	@GetMapping(value = "/questionlist/{reqPage}")
+    public ResponseEntity<Map> list (@PathVariable int reqPage){
+//    	System.out.println("reqPage : "+reqPage);
+    	Map map = adminService.selectQuestionList(reqPage);
+    	
+    	return ResponseEntity.ok(map);
+    }
+	
+
+	@GetMapping(value = "/getOneQuestion/{questionNo}")
+    public ResponseEntity<QuestionDTO> getOneQuestion (@PathVariable int questionNo){
+    	QuestionDTO question = adminService.getOneQuestion(questionNo);
+    	return ResponseEntity.ok(question);
+    }
+	
+	 @GetMapping(value = "/file/{questioinFileNo}")
+		public ResponseEntity<Resource> filedown(@PathVariable int questioinFileNo) throws FileNotFoundException {
+		System.err.println("시발"+questioinFileNo);	
+		 QuestionFileDTO questionFile = adminService.getQuestionFile(questioinFileNo);
+			String savepath = root + "/question/";
+			File file = new File(savepath + questionFile.getFilepath());
+
+			Resource resource = new InputStreamResource(new FileInputStream(file)); 
+
+			// 파일 다운로드를 위한 헤더 설정
+			HttpHeaders header = new HttpHeaders();
+			header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+			header.add("Pragma", "no-cache");
+			header.add("Expires", "0");
+
+			return ResponseEntity.status(HttpStatus.OK).headers(header).contentLength(file.length())
+					.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+		}
 }

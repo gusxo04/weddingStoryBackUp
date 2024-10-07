@@ -29,6 +29,7 @@ import MyPage from "./component/member/MyPage";
 import { Report } from "./component/product/components";
 import Consult from "./component/consult/Consult";
 import Home from "./component/common/Home";
+import Question from "./component/question/Question";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -87,6 +88,7 @@ function App() {
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/company/*" element={<CompanyMain />} />
           <Route path="/report" element={<Report />} />
+          <Route path="/question/*" element={<Question />} />
         </Routes>
       </main>
       <Footer />

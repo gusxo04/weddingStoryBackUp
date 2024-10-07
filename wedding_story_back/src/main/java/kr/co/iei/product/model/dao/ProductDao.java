@@ -71,6 +71,9 @@ public interface ProductDao {
 	
 	
 
+	SalesDTO getCompanySales(int productNo);
+
+	List<ProductDTO> selectProductList2(String companyNo);
 
 
 }

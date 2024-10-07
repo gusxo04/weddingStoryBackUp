@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.admin.model.dao.NoticeDao">
 
+	<select id="QuestionTotalCount" resultType="int">
+		select count(*) from question
+	</select>
 	<select id="totalCount" resultType="int">
 		select count(*) from notice
 	</select>
+	
+	
 	<select id="selectNoticeList" resultType="notice">
 		select * from
 		(select
@@ -20,6 +25,19 @@
 		rnum between #{start} and
 		#{end}
 	</select>
+
+	<select id="selectQuestionList" resultType="question">
+		select * from
+		(select
+		rownum as rnum, b.* from
+		(select
+		*
+		from question order by question_no desc) b)
+		where
+		rnum between #{start} and
+		#{end}
+	</select>
+
 
 	<insert id="insertNotice">
 		insert into notice values(notice_seq.nextval, #{companyNo} ,
@@ -119,4 +137,55 @@
   #{noticeFileNo}
   </foreach>
   </delete>
+  
+  
+  <insert id="insertQuestion">
+		insert into question values(question_seq.nextval, #{memberNo} ,
+		#{questionTitle},
+		#{questionContent}, 1,
+		#{questionType} , null)
+	</insert>
+	
+	<insert id="insertQuestionFile">
+		insert into question_file
+		values(question_file_seq.nextval, #{questionNo},
+		#{filename}, #{filepath})
+	</insert>
+	<select id="getQuestionNo" resultType="int">
+		select max(question_no) from question
+	</select>
+	
+	<select id="getOneQuestion" resultMap="getQuestion">
+		select 
+			question_no,
+			member_no,
+			question_title,
+			question_content,
+			question_state,
+			question_type,
+			product_comment_no
+		from question where question_no=#{questionNo}
+	</select>
+	
+	<select id="selectOneQuestionFile" resultType="questionFile">
+		select * from
+		question_file where question_no=#{questionNo}
+	</select>
+	<resultMap type="question" id="getQuestion">
+		<result column="question_no" property="questionNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="question_title" property="questionTitle" />
+		<result column="question_content" property="questionContent" />
+		<result column="question_state" property="questionState" />
+		<result column="question_type" property="questionType" />
+		<result column="product_comment_no" property="productCommentNo" />
+		<collection property="fileList"
+			select="selectOneQuestionFile" column="question_no"
+			javaType="java.util.List" ofType="questionFile" />
+	</resultMap>
+	
+	
+  <select id="getQuestionFile" resultType="questionFile">
+  	select * from question_file where question_file_no=#{questionFileNo}
+  </select>
 </mapper>
