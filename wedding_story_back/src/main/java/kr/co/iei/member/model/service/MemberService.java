@@ -169,14 +169,14 @@ public class MemberService {
 
 	public List<ConsultDTO> consultList(int memberNo) {
 		List<ConsultDTO> list = memberDao.consultList(memberNo);
+		System.out.println("list :"+list);
 		for(ConsultDTO consult : list) {
 			if(consult.getCompanyNo().equals("0")) {
-				System.out.println(consult.getConsultDate());
 				CompanyDTO company = memberDao.conventionList(consult.getConsultDate());
 				company.setCompanyAddr("서울 영등포구 선유동2로 57");
 				company.setCompanyTel("02-4153-3449");
 				consult.setCompany(company);
-			}else {				
+			}else {
 				CompanyDTO company = memberDao.consultCompanyList(consult.getCompanyNo());				
 				consult.setCompany(company);
 			}

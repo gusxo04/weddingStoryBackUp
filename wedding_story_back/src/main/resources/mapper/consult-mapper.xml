@@ -17,4 +17,7 @@
 				#{No}
 			</foreach> 
 		</select>
+		<delete id="deleteConsult">
+			delete from consult where consult_no=#{consultNo}
+		</delete>
 </mapper>
