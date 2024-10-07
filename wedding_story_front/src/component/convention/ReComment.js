@@ -29,6 +29,7 @@ const ReComment = (props) => {
     changedComment,
     setChangedComment,
     conventionNo,
+    isOpenReComment,
   } = props;
 
 
@@ -171,13 +172,15 @@ const ReComment = (props) => {
   const [heightType, setHeightType] = useState(120);
   
   useEffect(() => {
-    setIsOverFlowing(false);
     if(contentContainerRef.current && contentContainerRef.current.scrollHeight > heightType){
       setIsOverFlowing(true);
       setLineType(false);
       contentContainerRef.current.style.height = heightType;
     }
-  }, [rc, heightType]);
+    else{
+      setIsOverFlowing(false);
+    }
+  }, [rc, heightType, isOpenReComment]);
 
   const handleResize = () => {
     // setWidth(window.innerWidth);

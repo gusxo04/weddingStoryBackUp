@@ -28,14 +28,23 @@ const Comment = (props) => {
     c,
     comment,
     index,
-    getReComment,
-    isOpenReComment,
+    // getReComment,
+    // isOpenReComment,
     cancelAllReComment,
     conventionNo,
     changedComment,
     setChangedComment,
   } = props;
 
+  const [isOpenReComment, setIsOpenReComment] = useState(false);
+
+  const getReComment = () => {
+    setIsOpenReComment(!isOpenReComment);
+  }
+
+  useEffect(() => {
+    setIsOpenReComment(false);
+  }, [c]);
 
   const reCommentBtn = () => {
     setReCommentBtnType(false);
@@ -352,7 +361,7 @@ const Comment = (props) => {
         {c.reCommentCount !== 0 ? 
         <>
           <div className="convention-comment-more-btn-zone">
-            <span id="more-recomment-btn" className="cursor-p" onClick={() => {getReComment(index)}}  >답글 {c.reCommentCount}개 {isOpenReComment[index] ? "그만보기" : "더보기"}</span>
+            <span id="more-recomment-btn" className="cursor-p" onClick={getReComment}  >답글 {c.reCommentCount}개 {isOpenReComment ? "그만보기" : "더보기"}</span>
           </div>
         </>
         : 
@@ -381,7 +390,7 @@ const Comment = (props) => {
       </div>
 
       {c.reCommentCount !== 0 ? 
-      <div className="convention-reComment-container" style={{display : isOpenReComment[index] ? "block" : "none"}}>
+      <div className="convention-reComment-container" style={{display : isOpenReComment ? "block" : "none"}}>
         {comment.reCommentList?.map((rc,index) => {
           return  (
             <Fragment key={"reComment"+index}>
@@ -389,7 +398,7 @@ const Comment = (props) => {
               <ReComment rc={rc} reCommentContent={reCommentContent} setReCommentContent={setReCommentContent} 
               cancelAllReComment={cancelAllReComment}
               conventionNo={conventionNo} changedComment={changedComment} setChangedComment={setChangedComment}
-              c={c}
+              c={c} isOpenReComment={isOpenReComment}
               />
               :
               ""

@@ -73,12 +73,12 @@ const writeCheck = () => {
 
 
 
-  const [isOpenReComment, setIsOpenReComment] = useState({});
+  // const [isOpenReComment, setIsOpenReComment] = useState({});
 
-  const getReComment = (e) => {
-    setIsOpenReComment((prev) => ({...prev, [e]: !prev[e]}))
-  }
-  console.log("is : ",isOpenReComment);
+  // const getReComment = (e) => {
+  //   setIsOpenReComment((prev) => ({...prev, [e]: !prev[e]}))
+  // }
+  // console.log("is : ",isOpenReComment);
 
 
 
@@ -122,7 +122,7 @@ const writeCheck = () => {
             return (
               <div className="convention-comment-list-zone" key={"comment"+index}>
                 <Comment c={c} comment={comment} index={index} 
-                getReComment={getReComment} isOpenReComment={isOpenReComment} 
+                // getReComment={getReComment} isOpenReComment={isOpenReComment} 
                 reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}
                 changedComment={changedComment} setChangedComment={setChangedComment}
                 conventionNo={convention.conventionNo}
