@@ -22,6 +22,8 @@ import CompanyProductInsert from "./CompanyProductInsert";
 import CompanyProductUpdate from "./CompanyProductUpdate";
 import CompanyCustomer from "./CompanyCustomer";
 import CompanyCounsel from "./CompanyCounsel";
+import CompanyAdvertisement from "./CompanyAdvertisement";
+import AdvertisementRequest from "./AdvertisementRequest";
 
 const CompanyMain = () => {
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
@@ -53,6 +55,8 @@ const CompanyMain = () => {
               path="product/update/:productNo"
               element={<CompanyProductUpdate />}
             />
+            <Route path="advertisement" element={<CompanyAdvertisement/>} />
+            <Route path="advertisementRequest" element={<AdvertisementRequest/>} />
           </Routes>
         </section>
       </div>

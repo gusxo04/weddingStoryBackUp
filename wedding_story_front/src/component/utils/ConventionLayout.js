@@ -28,7 +28,7 @@ const ConventionLayout = (props) => {
     // insert가 1이면 현재 박람회를 개최하기 위한 것이므로 부스에서 업체 관련 정보는 조회하면 안 됨
   } = props;
   
-  console.log("convention : ", conventionNo);
+  // console.log("convention : ", conventionNo);
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [aSeat, setASeat] = useState([]);
@@ -65,7 +65,7 @@ const ConventionLayout = (props) => {
       setBSeat(res.data.line1);
       setCSeat(res.data.line2);
 
-      console.log("res : ",res);
+      // console.log("res : ",res);
       
     })
     .catch(err => {

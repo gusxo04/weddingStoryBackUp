@@ -51,15 +51,11 @@
 	</insert>
 
 	<select id="selectOneProduct" resultType="product">
-		select company_no,
-		product_name, product_img, product_price from product
-		where product_no
-		= #{productNo}
+		select* from product where product_no= #{productNo}
 	</select>
 
 	<select id="selectProductName" resultType="product">
-		select product_no,
-		product_name from product where product_no = #{productNo}
+		select product_name from product where product_no = #{productNo}
 	</select>
 
 	<select id="selectProductList" resultType="product">
@@ -159,4 +155,58 @@
 		FROM member_pay
 		WHERE product_no = #{productNo}
 	</select>
+
+  <select id="productTotalCount" resultType="int">
+  	select count(*) from product where company_no = #{companyNo}
+  </select>
+  
+  <select id="selectProductNo" resultType="int">
+  	select product_no from product where company_no =#{companyNo}
+  </select>
+  <select id="selectCustomerList" resultMap="CustomerResultMap">
+  select * from
+  (select rownum as rnum, a.* from(select 
+    m.member_no,
+    m.member_name,
+    m.member_phone,
+    m.partner_name,
+    p.product_no,
+    p.product_name,
+    mp.pay_date
+    
+	from product p 
+	
+	join member_pay mp on p.product_no = mp.product_no 
+	
+	join member m on m.member_no = mp.member_no
+	
+	where p.product_no in
+	<foreach collection="productNo" item="No" open="(" close=")" separator=",">
+		#{No}
+	</foreach>
+	 order by pay_date desc) a) where rnum between #{pi.start} and#{pi.end}
+  </select> 
+  <resultMap id="CustomerResultMap" type="customer">
+    <result property="memberNo" column="member_no"/>
+    <result property="memberName" column="member_name"/>
+    <result property="memberPhone" column="member_phone"/>
+    <result property="partnerName" column="partner_name"/>
+    <result property="productNo" column="product_no"/>
+    <result property="productName" column="product_name"/>
+    <result property="payDate" column="pay_date"/>
+</resultMap>
+
+	<select id="TotalCustomerCount" resultType="int">
+    
+        SELECT count(*)
+        FROM product p 
+        JOIN member_pay mp ON p.product_no = mp.product_no 
+        JOIN member m ON m.member_no = mp.member_no
+        WHERE p.product_no IN
+        <foreach collection="productNo" item="No" open="(" close=")" separator=",">
+            #{No}
+        </foreach>
+
+	</select>
+ 
 </mapper>

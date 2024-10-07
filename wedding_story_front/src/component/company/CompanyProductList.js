@@ -21,12 +21,14 @@ const CompanyProductList = () => {
         console.log(res);
         setProductList(res.data.list);
         setPi(res.data.pi);
+        console.log(res.data.pi);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [companyNo]);
+  }, [companyNo,reqPage]);
 
+  
   return (
     <div>
       <section className="section">
@@ -90,7 +92,7 @@ const ProductItem = (props) => {
       confirmButtonText: "승인",
       cancelButtonText: "취소",
     }).then((result) => {
-      if (result.isConfirmed) {
+      if (result.value) {  // result.value로 변경
         axios
           .delete(`${backServer}/company/product/${product.productNo}`)
           .then((res) => {
@@ -103,15 +105,21 @@ const ProductItem = (props) => {
               const UpdateProductList = productList.filter(
                 (item) => item.productNo !== product.productNo
               );
-
               console.log(UpdateProductList);
               setProductList(UpdateProductList);
             });
           })
           .catch((err) => {
             console.log(err);
+            Swal.fire({
+              title: "삭제 실패",
+              text: "상품 삭제에 실패했습니다.",
+              icon: "error",
+            });
           });
-      } else if (result.isDenied) {
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // 취소 버튼을 누른 경우 처리
+        Swal.fire("취소됨", "상품 삭제가 취소되었습니다.", "info");
       }
     });
   };

@@ -13,14 +13,11 @@ const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const productNo = params.productNo; // URL에서 상품 번호 가져오기
-  const companyNo = params.companyNo; // URL에서 회사 번호 가져오기 (이 부분 추가)
+  const companyNo = params.companyNo; // URL에서 회사 번호 가져오기
   const [product, setProduct] = useState({});
   const [loginId, setLoginId] = useRecoilState(loginIdState);
-  const [company, setCompany] = useState({ companyAddr: "", companyName: "" });
+  const [company, setCompany] = useState({ companyName: "", companyAddr: "" });
   const navigator = useNavigate();
-
-  //console.log(companyNo); // companyNo가 제대로 출력되는지 확인
-  //console.log(productNo); // productNo가 제대로 출력되는지 확인
 
   useEffect(() => {
     axios
@@ -28,18 +25,26 @@ const WeddingHallInfo = () => {
       .then((res) => {
         console.log(res);
         setProduct(res.data.product);
-        setCompany(res.data.company);
-        //console.log(companyNo);
-        //console.log(productNo);
-        // 회사 정보를 별도로 설정
-        if (res.data.companyAddr) {
-          setCompany({ companyAddr: res.data.companyAddr });
+
+        // 회사 정보가 제대로 응답되는지 확인 후 설정
+        if (res.data.company) {
+          setCompany({
+            companyName: res.data.company.companyName || "", // 회사명이 없을 경우 빈 문자열로 대체
+            companyAddr: res.data.company.companyAddr || "", // 주소가 없을 경우 빈 문자열로 대체
+          });
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [backServer, productNo, companyNo]); // 의존성 배열에 companyNo 추가
+  }, [backServer, productNo, companyNo]);
+
+  const NumberFormatter = ({ number }) => {
+	const formattedNumber = new Intl.NumberFormat('ko-KR').format(number);
+	return (
+	  <span>{formattedNumber}</span>
+	)
+  };
 
   return (
     <section className={styles["product-view-wrap"]}>
@@ -71,15 +76,23 @@ const WeddingHallInfo = () => {
               <tbody>
                 <tr>
                   <th style={{ width: "20%" }}>회사명</th>
-                  <td style={{ width: "30%" }}>{company.companyName}</td>
+                  <td style={{ width: "30%" }}>{company?.companyName || ""}</td>
                 </tr>
                 <tr>
                   <th style={{ width: "20%" }}>상품명</th>
                   <td style={{ width: "30%" }}>{product.productName}</td>
                 </tr>
                 <tr>
-                  <th style={{ width: "20%" }}>가격</th>
-                  <td colSpan={4}>{product.productPrice}원</td>
+                  <th style={{ width: "20%" }}>대관료</th>
+                  <td colSpan={4}><NumberFormatter number={product.coronation} />원</td>
+                </tr>
+				<tr>
+                  <th style={{ width: "20%" }}>1인 식대</th>
+                  <td colSpan={4}><NumberFormatter number={product.diningRoom} /> 원</td>
+                </tr>
+				<tr>
+                  <th style={{ width: "20%" }}>최대 수용 인원</th>
+                  <td colSpan={4}>{product.numberPeople} 명</td>
                 </tr>
               </tbody>
             </table>
@@ -122,7 +135,7 @@ const WeddingHallInfo = () => {
           {company.companyAddr ? (
             <Viewer initialValue={company.companyAddr} />
           ) : (
-            "회사위치 뷰"
+            "회사위치 정보가 없습니다."
           )}
           <KakaoMap />
         </div>
@@ -132,3 +145,4 @@ const WeddingHallInfo = () => {
 };
 
 export default WeddingHallInfo;
+

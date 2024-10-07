@@ -49,10 +49,10 @@ public class ConsultController {
 	//상담하기
 	@PostMapping
 	 public ResponseEntity<Integer> insertConsult(@ModelAttribute ConsultDTO consult ,@ModelAttribute MemberDTO member, @ModelAttribute ProductDTO product) {
+		System.out.println("consult : "+consult);
+		System.out.println("member : "+member);
+		System.out.println("product :"+product);
         int result = consultService.insertConsult(consult,member,product);
-        System.out.println("consult : "+consult);
-        System.out.println("member : "+member);
-        System.out.println("product :"+product);
         return ResponseEntity.ok(result);
     }
 	

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import CompanyProductFrm from "./CompanyProductFrm";
 import { companyNoState } from "../utils/RecoilData";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ToastEditor from "../utils/ToastEditor";
 import Swal from "sweetalert2";
 
@@ -11,7 +11,7 @@ const CompanyProductUpdate = () => {
   const params = useParams();
   const productNo = params.productNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
-
+  const navigate = useNavigate();
   const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
   const [productName, setProductName] = useState("");
   const [productContent, setProductContent] = useState("");
@@ -86,7 +86,9 @@ const CompanyProductUpdate = () => {
             title: "수정완료",
             text: "정보를 변경하였습니다.",
             icon: "success",
-          });
+          }).then(()=>{
+            navigate("/company/product/list");
+          })
         })
         .catch((err) => {
           console.log(err);

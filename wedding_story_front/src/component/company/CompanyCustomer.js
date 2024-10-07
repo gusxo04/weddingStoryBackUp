@@ -1,11 +1,25 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { companyNoState } from "../utils/RecoilData";
+import PageNavi from "../utils/PagiNavi";
 
 const CompanyCustomer = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+  const [reqPage,setReqPage] = useState(1);
+  const [customerList ,setCustomerList] = useState([]); 
+  const [pi, setPi] = useState({});
   useEffect(() => {
-    axios.get();
-  }, []);
+    axios.get(`${backServer}/company/customer/${companyNo}/${reqPage}`).then((res)=> {
+      console.log(res);
+      setCustomerList(res.data.customer);
+      setPi(res.data.pi);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }, [companyNo,reqPage]);
+  console.log(customerList)
   return (
     <div>
       <section className="section">
@@ -16,20 +30,29 @@ const CompanyCustomer = () => {
             <table className="tbl">
               <thead border={1}>
                 <tr>
-                  <th style={{ width: "5%" }}>회원번호</th>
+                  <th style={{ width: "10%" }}>회원번호</th>
                   <th style={{ width: "10%" }}>이름</th>
                   <th style={{ width: "15%" }}>전화번호</th>
                   <th style={{ width: "10%" }}>배우자이름</th>
-                  <th style={{ width: "15%" }}>배우자 전화번호</th>
-                  <th style={{ width: "5%" }}>상품번호</th>
+                  <th style={{ width: "10%" }}>상품번호</th>
                   <th style={{ width: "30%" }}>상품명</th>
-                  <th style={{ width: "10%" }}>구매일</th>
+                  <th style={{ width: "15%" }}>구매일</th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {customerList.map((customer,index)=>{
+                  return(
+                    <CustomerItem 
+                    key = {"customer" + index}
+                    index = {index}
+                    customer={customer}
+                    />
+                  )
+                })}
+              </tbody>
             </table>
             <div className="product-page-wrap">
-              {/* <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} /> */}
+              <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
             </div>
           </div>
         </div>
@@ -37,4 +60,27 @@ const CompanyCustomer = () => {
     </div>
   );
 };
+
+
+const CustomerItem = (props) => {
+  const customer = props.customer;
+  const index = props.index;
+  console.log(customer)
+  return(
+    <tr>
+        <th style={{ width: "10%" }}>{customer.memberNo}</th>
+        <th style={{ width: "10%" }}>{customer.memberName}</th>
+        <th style={{ width: "15%" }}>{customer.memberPhone}</th>
+        <th style={{ width: "10%" }}>{customer.partnerName}</th>
+        <th style={{ width: "10%" }}>{customer.productNo}</th>
+        <th style={{ width: "30%" }}>{customer.productName}</th>
+        <th style={{ width: "15%" }}>{customer.payDate}</th>
+    </tr>
+  )
+}
+
+
+
+
+
 export default CompanyCustomer;

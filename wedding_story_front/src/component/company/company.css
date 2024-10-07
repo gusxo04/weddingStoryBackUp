@@ -283,3 +283,102 @@
   width: 150px;
   height: 50px;
 }
+
+/*--------광고요청 페이지 --------------------------*/
+.request-wrap{
+  width: 800px;
+  border: 1px solid #ccc;
+  margin: 50px 90px;
+  margin-top: 90px;
+}
+.request-title{
+  font-size: 30px;
+    width: 600px;
+    height: 50px;
+    padding: 15px 100px;
+    line-height: 50px;
+    border-bottom: 1px solid #ccc;
+}
+.ad-main-content{
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+.ad-rank{
+  margin: 30px;
+}
+.ad-rank>label{
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 20px;
+  padding-left: 10px;
+}
+.ad-date-span{
+  font-size: 20px;
+    line-height: 35px;
+    padding-left: 15px;
+    padding-right: 5px;
+}
+.ad-date-zone{
+  display: flex;
+  margin: 10px 20px;
+}
+.ad-date-input> label{
+font-size: 20px;
+margin: 0px 10px;
+}
+.ad-content-zone > div {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0px 30px;
+  margin-top: 20px;
+}
+
+.ad-content-zone> textarea{
+  resize: none;
+  width: 600px;
+  height: 70px;
+  font-size: 17px;
+  padding: 8px;
+  margin: 5px 30px;
+  border-color: #ccc;
+} 
+.ad-btn-zone{
+  display: flex;
+  justify-content: center;
+  margin: 30px 0px;
+}
+.ad-btn-zone > button{
+  color: #000;
+  width: 60px;
+  height: 35px;
+  border: 1px solid #ccc;
+  margin: 0px 30px;
+  border-radius: 10px;
+  }
+  .ad-btn-zone > button:hover{
+    font-weight: 800;
+  background-color: #bddaed;
+  }
+/*----광고 리스트 페이지 --------------*/
+.list-title > .span{
+  font-size: 15px;
+}
+
+
+.navi-request> a >button {
+  color: #000;
+  width: 80px;
+  height: 45px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  margin: 20px 30px;
+  border-radius: 10px;
+  
+}
+.navi-request> a >button:hover {
+  font-weight: 800;
+  background-color: #bddaed;
+}

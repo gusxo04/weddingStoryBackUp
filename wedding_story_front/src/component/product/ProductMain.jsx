@@ -8,18 +8,18 @@ import WeddingHallInfo from "./WeddingHallInfo";
 import ProductAllList from "./ProductAllList";
 import Consult from "../consult/Consult";
 const ProductMain = () => {
-  return (
-    <Routes>
-      <Route path="list" element={<ProductAllList />} />
-      <Route path="info" element={<ProductInfo />} />
-      <Route path="review" element={<ProductReview />} />
-      <Route path="weddingHall" element={<ProductWeddingHall />} />
-      <Route path="hallList" element={<WeddingHallList />} />
-      <Route path="hallInfo/:productNo" element={<WeddingHallInfo />} />
-      <Route path="consult/:productNo" element={<Consult />} />
-      <Route path="pay" element={<ProductPay />} />
-    </Routes>
-  );
+	return (
+		<Routes>
+			<Route path="list" element={<ProductAllList />} />
+			<Route path="info/:productNo" element={<ProductInfo />} />
+			<Route path="review" element={<ProductReview />} />
+			<Route path="weddingHall" element={<ProductWeddingHall />} />
+			<Route path="hallList" element={<WeddingHallList />} />
+			<Route path="hallInfo/:productNo" element={<WeddingHallInfo />} />
+			<Route path="consult/:productNo" element={<Consult />} />
+			<Route path="pay" element={<ProductPay />} />
+		</Routes>
+	);
 };
 
 export default ProductMain;
