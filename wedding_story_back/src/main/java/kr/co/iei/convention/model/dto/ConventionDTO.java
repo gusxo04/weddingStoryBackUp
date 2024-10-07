@@ -26,9 +26,11 @@ public class ConventionDTO {
     private int conventionPrice;
     private int conventionLimit;
     private int imgStyle;
-    
+
     // 댓글 답글
     private List<ConventionCommentDTO> commentList;
-    
+
     private List<ConventionCommentDTO> reCommentList;
+
+    private int ticketCount;
 }

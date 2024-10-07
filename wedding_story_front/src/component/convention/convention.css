@@ -74,6 +74,11 @@
     text-wrap: pretty;
     color: white;
 }
+.convention-preview-info-wrap>.convention-inner-preview-info>.full{
+    background-color: #ccc;
+    color: black;
+}
+
 .convention-preview-info-wrap>.convention-inner-preview-info>button:hover{
     /* hover */
 }

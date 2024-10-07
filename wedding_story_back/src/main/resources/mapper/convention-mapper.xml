@@ -3,12 +3,19 @@
 <mapper namespace="kr.co.iei.convention.model.dao.ConventionDao">
 
     <select id="getTime" resultType="convention">
-        select * from 
+        <!-- select * from 
             (select rownum as rnum, c1.* from 
                 (select * from convention order by 1 desc)c1) 
-        where rnum = 1
+        where rnum = 1 -->
+        select convention_no, convention_title, convention_content, convention_img,
+        convention_start, convention_end, convention_time, convention_registered_date, 
+        convention_price, convention_limit, img_style, count(convention_no) + 99 as ticket_count from 
+            (select rownum as rnum, c1.* from 
+                (select * from convention order by 1 desc)c1)
+        where rnum = 1 group by convention_no, convention_title, convention_content, convention_img, 
+        convention_start, convention_end, convention_time, convention_registered_date, 
+        convention_price, convention_limit, img_style
     </select>
-    <!-- 1 or 4 -->
 
     <select id="selectConventionSeat" resultType="conventionSeat">
         select seat_no, convention_seat_price, seat_code, seat_status
