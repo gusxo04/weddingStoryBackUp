@@ -532,6 +532,7 @@
 }
 .refunding{
     background-color: #ccc !important;
+    cursor: auto;
 }
 #convention-loading{
     position: absolute;

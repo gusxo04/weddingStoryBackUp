@@ -99,7 +99,7 @@ const writeCheck = () => {
             }
           }} spellCheck={false} placeholder="댓글을 작성해주세요"
           onKeyUp={(e) => {
-            if(e.key === "Enter" && e.keyCode === 13 && !e.shiftKey) writeComment()
+            if(e.key === "Enter" && e.keyCode === 13 && !e.shiftKey) writeComment();
             else if(e.keyCode === 13 && !e.shiftKey) writeComment();
           // e.key가 안 되는 브라우저를 위해서
           }}

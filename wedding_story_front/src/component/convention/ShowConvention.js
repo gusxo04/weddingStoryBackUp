@@ -139,8 +139,6 @@ const ShowConvention = (props) => {
     };
   }, []);
 
-  console.log(convention);
-  
   // 나중에 다른걸로 대체 (swal 띄우면 스크롤 사라지는거 때매 alert창이 뜨면 스크롤을 사라지게 만듦)
   const [alertType, setAlertType] = useState(0);
   const navigate = useNavigate();

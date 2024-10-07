@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
 import kr.co.iei.convention.model.service.ConventionService;
 
 @Component
@@ -11,6 +12,11 @@ public class Schdule {
 
     @Autowired
     private ConventionService conventionService;
+
+		@PostConstruct
+		public void startMethod() {
+			updateProgress();
+		}
 
     // @Scheduled(fixedDelay = 10 * 1000)
     // public void test1(){
