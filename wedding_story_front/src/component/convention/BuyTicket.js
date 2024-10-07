@@ -26,6 +26,8 @@ const BuyTicket = (props) => {
     setIsPayment,
   } = props;
 
+
+
   const [memberName, setMemberName] = useState("");
   const [memberPhone, setMemberPhone] = useState("");
   const [memberEmail, setMemberEmail] = useState("");
@@ -49,6 +51,18 @@ const BuyTicket = (props) => {
       console.error(err); 
     })
   }, []);
+
+  const unloadHandler = (event) => {
+    axios.delete(`${backServer}/convention/buy/ticket/${convention.conventionNo}/${memberNoState}`)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+    event.preventDefault();
+    // event.returnValue = "ㅇㅇ";
+  }
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
 
@@ -96,6 +110,8 @@ const BuyTicket = (props) => {
 
     form.append("conventionLimit", convention.conventionLimit);
 
+    window.addEventListener('beforeunload', unloadHandler);
+
     axios.post(`${backServer}/convention/buy/ticket`, form)
     .then(res => {
       console.log(res);
@@ -141,11 +157,13 @@ const BuyTicket = (props) => {
               console.error(err); 
             })
           }
+          window.removeEventListener('beforeunload', unloadHandler);
         });
         // 결제 성공시
         
       }
       else{
+        window.removeEventListener('beforeunload', unloadHandler);
         setIsPayment(!isPayment);
         Swal.fire({
           title : "박람회 티켓",
@@ -159,6 +177,7 @@ const BuyTicket = (props) => {
       closeAlert(0, true);
     })
     .catch(err => {
+      window.removeEventListener('beforeunload', unloadHandler);
       console.error(err); 
       setIsPayment(!isPayment);
       closeAlert(0, true);

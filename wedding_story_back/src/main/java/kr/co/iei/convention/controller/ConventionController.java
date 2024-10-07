@@ -34,6 +34,8 @@ import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.EmailSender;
 import kr.co.iei.util.FileUtils;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin("*")
@@ -78,7 +80,7 @@ public class ConventionController {
 
     @GetMapping("/layout/{searchType}")
     public ResponseEntity<Map> layout(@PathVariable int searchType) {
-        System.out.println(searchType);
+        // System.out.println(searchType);
         Map map = conventionService.selectConventionSeat(searchType);
         return ResponseEntity.ok(map);
 
@@ -110,8 +112,8 @@ public class ConventionController {
             @ModelAttribute MemberPayDTO memberPay, @ModelAttribute ConventionDTO convention) {
         boolean result = conventionService.conventionMemberPay(conventionMember, memberPay, convention.getConventionLimit());
 
-        System.out.println(conventionMember); // 넘어온 데이터 -> memberNo, memberEmail(알림받을)
-        System.out.println(memberPay); // 넘어온 데이터 -> progressDate, payPrice, merchantUid
+        // System.out.println(conventionMember); // 넘어온 데이터 -> memberNo, memberEmail(알림받을)
+        // System.out.println(memberPay); // 넘어온 데이터 -> progressDate, payPrice, merchantUid
         return ResponseEntity.ok(result);
     }
 
@@ -161,7 +163,7 @@ public class ConventionController {
 
     @PostMapping("/refund")
     public ResponseEntity<Boolean> refundConventionTicket(@RequestBody RefundRequest request) {
-        System.out.println(request);
+        // System.out.println(request);
         Boolean result = conventionService.refundPayment(request);
         return ResponseEntity.ok(result);
     }
@@ -225,5 +227,11 @@ public class ConventionController {
         CompanyPayDTO companyPay = conventionService.getPayment(companyNo, conventionNo);
         return ResponseEntity.ok(companyPay);
     }
+
+    @GetMapping("/ticket/unload")
+    public void getMethodName() {
+        System.out.println("닫는다");
+    }
+    
 
 }

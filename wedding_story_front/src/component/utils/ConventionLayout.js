@@ -98,6 +98,18 @@ const ConventionLayout = (props) => {
       setSeatCompanyAlert(true);
     }
   }
+
+  const unloadHandler = (event) => {
+    axios.delete(`${backServer}/convention/buy/seat/${convention.conventionNo}/${loginCompanyNoState}`,)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+    event.preventDefault();
+    // event.returnValue = "ㅇㅇ";
+  }
   
   const purchaseSeat = () => {
     console.log(payment);
@@ -138,7 +150,8 @@ const ConventionLayout = (props) => {
     form.append("merchantUid", dateString);
     form.append("payPrice", seatInfo.conventionSeatPrice);
 
-    console.log("sdsdsdsd");
+    window.addEventListener('beforeunload', unloadHandler);
+
     axios.post(`${backServer}/convention/buy/seat`, form)
     .then((res) => {
       console.log(res);
@@ -177,10 +190,12 @@ const ConventionLayout = (props) => {
               console.error(err); 
             })
           }
+          window.removeEventListener('beforeunload', unloadHandler);
         });
         
       }
       else{
+        window.removeEventListener('beforeunload', unloadHandler);
         setSeatCompanyAlert(false);
         setChangedSeatInfo(!changedSeatInfo);
         Swal.fire({
@@ -193,6 +208,7 @@ const ConventionLayout = (props) => {
       }
     })
     .catch((err) => {
+      window.removeEventListener('beforeunload', unloadHandler);
       console.error(err); 
       setSeatCompanyAlert(false);
       setChangedSeatInfo(!changedSeatInfo);

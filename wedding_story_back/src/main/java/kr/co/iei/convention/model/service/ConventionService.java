@@ -84,7 +84,7 @@ public class ConventionService {
     public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay, int conventionLimit) {
         //티켓 코드 생성
         ConventionMemberDTO conventionMemberDTO = conventionDao.checkConventionLimit(conventionMember.getConventionNo());
-        System.out.println(conventionMemberDTO);
+        // System.out.println(conventionMemberDTO);
         if(conventionMemberDTO.getTicketCount() >= conventionLimit) return false;
         
         Random random = new Random();
@@ -145,7 +145,7 @@ public class ConventionService {
 
     @Transactional
     public Boolean refundPayment(RefundRequest request) {
-        System.out.println("request : " + request);
+        // System.out.println("request : " + request);
         String accessToken = getAccessToken();
         try {
             Thread.sleep(3000);
@@ -263,7 +263,7 @@ public class ConventionService {
             JsonNode jsonNode = om.readTree(responseBody);
             JsonNode responseObject = jsonNode.get("response");
             accessToken = responseObject.get("access_token").asText();
-            System.out.println("파싱 토큰임 : " + accessToken);
+            // System.out.println("파싱 토큰임 : " + accessToken);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -293,7 +293,7 @@ public class ConventionService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(cancelRequest, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(cancelUrl, entity, String.class);
-        System.out.println(response);
+        // System.out.println(response);
         ObjectMapper om = new ObjectMapper();
         String code = "-1";
         try {
@@ -302,7 +302,7 @@ public class ConventionService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println("code : " + code);
+        // System.out.println("code : " + code);
 
         return code;
     }
@@ -312,7 +312,7 @@ public class ConventionService {
         String emailContent = "<h1>웨딩 스토리 박람회</h1><br/><span>박람회 시작하기 3일전입니다.</span>";
         List<MemberDTO> list = conventionDao.selectAlarmTicket();
         for (MemberDTO emailList : list) {
-            System.out.println(emailList);
+            // System.out.println(emailList);
             emailSender.sendMail("웨딩스토리 박람회", emailList.getMemberEmail(), emailContent);
         }
     }
