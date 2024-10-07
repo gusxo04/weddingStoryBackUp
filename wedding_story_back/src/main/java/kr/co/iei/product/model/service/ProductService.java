@@ -6,10 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.member.model.dao.MemberDao;
+import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dao.ProductDao;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.util.PageInfo;
@@ -22,6 +26,9 @@ public class ProductService {
 	
 	@Autowired
 	private CompanyDao componyDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@Autowired
 	private PageUtil pageUtil;
@@ -62,6 +69,30 @@ public class ProductService {
 		map.put("product",product);
 		map.put("company",company);
 		return map;
+	}
+
+	//웨딩홀 예약하기에서 상품명 불러오기
+	public ProductDTO selectProductOneList(int productNo) {
+		ProductDTO product = productDao.selectProductOneList(productNo);
+		return product;
+	}
+
+
+	public Map selectReservationInfo(int productNo, int memberNo) {
+		MemberDTO member = memberDao.selectOneMember(memberNo);
+		ProductDTO product = productDao.selectOneProduct(productNo);
+		Map<String, Object> list = new HashMap<String, Object>();
+		list.put("member", member);
+		list.put("product",product);
+		return list;
+	}
+
+	@Transactional
+	public Integer insertWeddingHallPay(MemberDTO member, ProductDTO product, MemberPayDTO memberPay) {
+		// 결제 관련 데이터 저장
+        int result = memberDao.insertMemberPay(memberPay,member,product);
+        
+		return result;
 	}
 	
 	

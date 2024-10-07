@@ -205,4 +205,14 @@
 	<select id="getMember" resultType="member">
 		SELECT * from member where member_id=#{loginId}
 	</select>
+	
+	<select id="selectOneMember" resultType="member">
+		select member_name,member_phone from member where member_no =#{memberNo}
+	</select>
+	
+	<insert id="insertMemberPay">
+		insert into member_pay values (member_pay_seq.nextval, #{memberNo}, #{productNo},to_char(sysdate,'yyyy-mm-dd'),#{progressDate},#{payPrice}, #{progress},#{merchant_uid})
+	</insert>
+	
+	
 </mapper>

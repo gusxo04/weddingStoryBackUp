@@ -257,4 +257,11 @@
     <result property="payDate" column="pay_date"/>
     <result property="progress" column="progress"/>
 </resultMap>
+ 
+ <select id="selectProductOneList" resultType="int">
+ 	select product_no, product_name, coronation, diningRoom,
+ </select>
+ 
+ 
+ 
 </mapper>

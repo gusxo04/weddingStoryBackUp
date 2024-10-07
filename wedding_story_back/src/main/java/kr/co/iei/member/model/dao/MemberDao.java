@@ -10,6 +10,7 @@ import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
+import kr.co.iei.product.model.dto.ProductDTO;
 
 @Mapper
 public interface MemberDao {
@@ -75,6 +76,12 @@ public interface MemberDao {
 
 	List<MemberPayDTO> getYear();
 
+
 	MemberDTO getMember(String loginId);
+
+	MemberDTO selectOneMember(int memberNo);
+
+	int insertMemberPay(MemberPayDTO memberPay, MemberDTO member, ProductDTO product);
+
 
 }

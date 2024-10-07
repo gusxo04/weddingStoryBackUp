@@ -82,12 +82,6 @@ const Consult = () => {
     form.append("reservation", consult.reservation);
     form.append("productName",product.productName);
     form.append("productNo",product.productNo);
-    console.log(memberNo);
-    console.log(member.memberName);
-    console.log(consult.consultDate);
-    console.log(consult.consultTime);
-    console.log(consult.reservation);
-    
 
     axios
       .post(`${backServer}/consult`, form)

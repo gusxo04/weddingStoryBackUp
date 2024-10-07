@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import styles from "./WeddingHallInfo.module.css";
-import { KakaoMap, ReviewForm } from "../components";
+import { ReviewForm } from "../components";
 import { useRecoilState } from "recoil";
 import { companyNoState, loginIdState } from "../../utils/RecoilData";
 import ProductReview from "../ProductReview";
+import KakaoMap from "../../utils/KakaoMap";
 
 const WeddingHallInfo = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -23,7 +24,7 @@ const WeddingHallInfo = () => {
     axios
       .get(`${backServer}/product/productInfo/${productNo}`)
       .then((res) => {
-        console.log(res);
+		console.log(res);		
         setProduct(res.data.product);
 
         // 회사 정보가 제대로 응답되는지 확인 후 설정
@@ -105,7 +106,7 @@ const WeddingHallInfo = () => {
             </Link>
           </button>
           <button type="button" className={styles["btn"]}>
-            <Link to="/product/weddingHall">예약하기</Link>
+            <Link to={`/product/weddingHall/${productNo}`}>예약하기</Link>
           </button>
         </div>
         <div className={styles["product-content-wrap"]}>
@@ -137,7 +138,7 @@ const WeddingHallInfo = () => {
           ) : (
             "회사위치 정보가 없습니다."
           )}
-          <KakaoMap />
+          <KakaoMap address={company.companyAddr} />
         </div>
       </div>
     </section>
