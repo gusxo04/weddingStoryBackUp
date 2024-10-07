@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
+import kr.co.iei.util.PageInfo;
 
 @Mapper
 public interface ConsultDao {
@@ -15,7 +16,9 @@ public interface ConsultDao {
 
 	ConsultDTO selectConsult(int consultNo);
 
-	List selectConsultList(List productNo);
+	List selectConsultList(List productNo, PageInfo pi);
+
+	int totalConsultCount(List productNo);
 
 	
 

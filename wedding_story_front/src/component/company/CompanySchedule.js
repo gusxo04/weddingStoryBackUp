@@ -5,13 +5,15 @@ import koLocale from "@fullcalendar/core/locales/ko";
 import { useRecoilState } from "recoil";
 import { companyNoState } from "../utils/RecoilData";
 import axios from "axios";
+import { startOfDay } from "@fullcalendar/core/internal";
 
 const CompanySchedule = () => {
 	// 뷰가 바뀔 때마다 호출되는 함수
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
-
+	const [reqPage, setReqPage] = useState(1);
 	const [headerFormat, setHeaderFormat] = useState({ weekday: "short" }); // 기본적으로 요일 표시
+	const [scheduleList, setScheduleList] = useState([{}]);
 	const handleDatesSet = (info) => {
 		if (info.view.type === "dayGridMonth") {
 			setHeaderFormat({ weekday: "short" }); // 요일 형식 ('일', '월', '화')
@@ -21,14 +23,24 @@ const CompanySchedule = () => {
 	};
 	useEffect(() => {
 		axios
-			.get(`${backServer}/company/schedule/${companyNo}`)
+			.get(`${backServer}/company/schedule/${companyNo}/${reqPage}`)
 			.then((res) => {
 				console.log(res);
+				setScheduleList(res.data.consult.memberDTO.memberName);
+				// const updateScheduleList = res.data.map((schedule) => ({
+				// 	title: schedule.consult.memberDTO.memberName,
+				// 	start: `${schedule.consult.consultDate}T${schedule.consult.consultTime}`,
+
+				// 	consultDate: schedule.consult.consultDate,
+				// 	time: schedule.consult.consultTime,
+				// }));
+				// setScheduleList(updateScheduleList);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, [companyNo]);
+	console.log(scheduleList);
 	return (
 		<section className="section">
 			<div className="list-wrap">
@@ -39,10 +51,7 @@ const CompanySchedule = () => {
 							plugins={[dayGridPlugin]}
 							initialView="dayGridMonth" //월 기준으로 보여줌
 							locale={koLocale}
-							events={[
-								{ title: "event 1", date: "2024-10-01" },
-								{ title: "event 2", date: "2024-10-02" },
-							]}
+							events={scheduleList}
 							headerToolbar={{
 								left: "", // will normally be on the left. if RTL, will be on the right
 								center: "prev,title,next",
