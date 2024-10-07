@@ -119,4 +119,21 @@
   #{noticeFileNo}
   </foreach>
   </delete>
+  
+  
+  <insert id="insertQuestion">
+		insert into question values(question_seq.nextval, #{memberNo} ,
+		#{questionTitle},
+		#{questionContent}, 1,
+		#{questionType} , null)
+	</insert>
+	
+	<insert id="insertQuestionFile">
+		insert into question_file
+		values(question_file_seq.nextval, #{questionNo},
+		#{filename}, #{filepath})
+	</insert>
+	<select id="getQuestionNo" resultType="int">
+		select max(question_no) from question
+	</select>
 </mapper>

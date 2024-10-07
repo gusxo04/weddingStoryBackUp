@@ -200,4 +200,7 @@
 		SUBSTR(merchant_uid, 1, 4) AS merchant_uid
 		FROM member_pay
 	</select>
+	<select id="getMember" resultType="member">
+		SELECT * from member where member_id=#{loginId}
+	</select>
 </mapper>

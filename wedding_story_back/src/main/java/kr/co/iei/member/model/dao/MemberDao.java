@@ -75,4 +75,6 @@ public interface MemberDao {
 
 	List<MemberPayDTO> getYear();
 
+	MemberDTO getMember(String loginId);
+
 }

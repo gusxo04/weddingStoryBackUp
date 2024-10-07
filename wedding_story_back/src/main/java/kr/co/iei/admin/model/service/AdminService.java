@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.admin.model.dao.NoticeDao;
+import kr.co.iei.admin.model.dto.QuestionDTO;
+import kr.co.iei.admin.model.dto.QuestionFileDTO;
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.advertisement.model.dao.AdvertisementDao;
 import kr.co.iei.company.model.dao.CompanyDao;
@@ -181,6 +183,30 @@ public class AdminService {
 		    });
 		System.out.println(list);
 		return list;
+	}
+
+	public int insertQuestion(QuestionDTO question, List<QuestionFileDTO> questionFileList, MemberDTO member) {
+		int memberNo = member.getMemberNo();
+		
+		String questionTitle = question.getQuestionTitle();
+		String questionContent=question.getQuestionContent();
+		int questionType=question.getQuestionType();
+		int result = noticeDao.insertQuestion(questionTitle,questionContent,questionType, memberNo);
+		
+		int questionNo = noticeDao.getQuestionNo();
+		
+		for(QuestionFileDTO questionFile : questionFileList) {
+			questionFile.setQuestionNo(question.getQuestionNo());
+			String filename = questionFile.getFilename();
+			String filepath = questionFile.getFilepath();
+			result += noticeDao.insertQuestionFile(filename,filepath, questionNo);
+		}
+		return result;
+	}
+
+	public MemberDTO getMember(String loginId) {
+		MemberDTO member = memberDao.getMember(loginId);
+		return member;
 	}
 
 }
