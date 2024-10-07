@@ -506,7 +506,8 @@
 /* 답글 더보기 */
 .long-convention-reComment{
   margin-top: 5px;
-  margin-left: 3%;
+  /* margin-left: 3%; */
+  margin-left: 20px;
 }
 .long-convention-reComment>span{
   color: #6c6c6c ;

@@ -28,14 +28,23 @@ const Comment = (props) => {
     c,
     comment,
     index,
-    getReComment,
-    isOpenReComment,
+    // getReComment,
+    // isOpenReComment,
     cancelAllReComment,
     conventionNo,
     changedComment,
     setChangedComment,
   } = props;
 
+  const [isOpenReComment, setIsOpenReComment] = useState(false);
+
+  const getReComment = () => {
+    setIsOpenReComment(!isOpenReComment);
+  }
+
+  useEffect(() => {
+    setIsOpenReComment(false);
+  }, [c]);
 
   const reCommentBtn = () => {
     setReCommentBtnType(false);
@@ -109,6 +118,7 @@ const Comment = (props) => {
 
   const editComment = () => {
     // setEditCommentContent(c.conventionCommentContent);
+    editTextareaRef.current.value = c.conventionCommentContent
     contentRef.current.style.display = "none";
     contentContainerRef.current.style.display = "none";
     editTextContainerRef.current.style.display = "block";
@@ -235,6 +245,8 @@ const Comment = (props) => {
     setChangedComment(!changedComment);
   }, [heightType]);
 
+
+
   return (
     <div className="convention-comment">
       <div className="convention-comment-header-zone-container">
@@ -287,7 +299,7 @@ const Comment = (props) => {
 
         <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
           <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
-          style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+          style={{display:"none"}} onChange={(e) => {
             setEditCommentContent(e.target.value);
             if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
               editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
@@ -305,7 +317,7 @@ const Comment = (props) => {
           <span className="cursor-p" ref={lineTypeRef} onClick={() => {
             if(lineType){
               contentContainerRef.current.style.height = heightType+"px";
-              console.log(heightType);
+              // console.log(heightType);
             }
             else{
               // contentContainerRef.current.style.height = commentLineHeight*c.conventionCommentContent.split("\n").length +"px";
@@ -323,7 +335,7 @@ const Comment = (props) => {
 
         <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
           <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
-          style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+          style={{display:"none"}} onChange={(e) => {
             setEditCommentContent(e.target.value);
             if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
               editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
@@ -350,7 +362,7 @@ const Comment = (props) => {
         {c.reCommentCount !== 0 ? 
         <>
           <div className="convention-comment-more-btn-zone">
-            <span id="more-recomment-btn" className="cursor-p" onClick={() => {getReComment(index)}}  >답글 {c.reCommentCount}개 {isOpenReComment[index] ? "그만보기" : "더보기"}</span>
+            <span id="more-recomment-btn" className="cursor-p" onClick={getReComment}  >답글 {c.reCommentCount}개 {isOpenReComment ? "그만보기" : "더보기"}</span>
           </div>
         </>
         : 
@@ -379,7 +391,7 @@ const Comment = (props) => {
       </div>
 
       {c.reCommentCount !== 0 ? 
-      <div className="convention-reComment-container" style={{display : isOpenReComment[index] ? "block" : "none"}}>
+      <div className="convention-reComment-container" style={{display : isOpenReComment ? "block" : "none"}}>
         {comment.reCommentList?.map((rc,index) => {
           return  (
             <Fragment key={"reComment"+index}>
@@ -387,7 +399,7 @@ const Comment = (props) => {
               <ReComment rc={rc} reCommentContent={reCommentContent} setReCommentContent={setReCommentContent} 
               cancelAllReComment={cancelAllReComment}
               conventionNo={conventionNo} changedComment={changedComment} setChangedComment={setChangedComment}
-              c={c}
+              c={c} isOpenReComment={isOpenReComment}
               />
               :
               ""
