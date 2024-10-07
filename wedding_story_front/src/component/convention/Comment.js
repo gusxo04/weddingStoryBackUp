@@ -118,6 +118,7 @@ const Comment = (props) => {
 
   const editComment = () => {
     // setEditCommentContent(c.conventionCommentContent);
+    editTextareaRef.current.value = c.conventionCommentContent
     contentRef.current.style.display = "none";
     contentContainerRef.current.style.display = "none";
     editTextContainerRef.current.style.display = "block";
@@ -298,7 +299,7 @@ const Comment = (props) => {
 
         <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
           <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
-          style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+          style={{display:"none"}} onChange={(e) => {
             setEditCommentContent(e.target.value);
             if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
               editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";
@@ -334,7 +335,7 @@ const Comment = (props) => {
 
         <div className="convention-comment-content-edit-zone-container" style={{display:"none"}} ref={editTextContainerRef}>
           <textarea spellCheck={false} ref={editTextareaRef} id="edit-textarea" 
-          style={{display:"none"}} value={editCommentContent} onChange={(e) => {
+          style={{display:"none"}} onChange={(e) => {
             setEditCommentContent(e.target.value);
             if(editTextareaRef.current.scrollHeight > editTextareaRef.current.clientHeight){
               editTextareaRef.current.style.borderRadius = "30px 0px 0px 30px";

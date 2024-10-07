@@ -116,11 +116,9 @@ const writeCheck = () => {
         <div className="convention-comment-show">
           {/* c는 comment고 rc는 reComment */}
           {comment.commentList?.map((c,index) => {
-
-
             
             return (
-              <div className="convention-comment-list-zone" key={"comment"+index}>
+              <div className={"convention-comment-list-zone"+ index} key={"comment"+index}>
                 <Comment c={c} comment={comment} index={index} 
                 // getReComment={getReComment} isOpenReComment={isOpenReComment} 
                 reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}
