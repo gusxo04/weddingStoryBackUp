@@ -1,452 +1,463 @@
 /*마이페이지 전체적으로 반영(구조,범위)*/
 .mypage-wrap {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  border: none;
-  background-color: rgba(220, 228, 233, 0.3);
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	border: none;
+	background-color: rgba(220, 228, 233, 0.3);
 }
 .mypage-wrap-content {
-  width: 1100px;
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
+	width: 1100px;
+	display: flex;
+	justify-content: center;
+	padding: 20px 0;
 }
 .mypage-wrap-content > div > div {
-  padding: 20px;
-  box-sizing: border-box;
+	padding: 20px;
+	box-sizing: border-box;
 }
 .mypage-wrap-left {
-  width: 25%;
-  margin-right: 20px;
+	width: 25%;
+	margin-right: 20px;
 }
 .mypage-wrap-right {
-  width: 75%;
+	width: 75%;
 }
 .mypage-wrap-left > div {
-  width: 100%;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
+	width: 100%;
+	background-color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
 }
 .mypage-info-box {
-  margin-top: 20px;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+	margin-top: 20px;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
 }
 .mypage-font-point {
-  background: -webkit-linear-gradient(var(--main1), #cc95c0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: -webkit-linear-gradient(var(--main1), #cc95c0);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 .mypage-menu-box {
-  margin-top: 10px;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+	margin-top: 10px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
 }
 
 .mypage-menu-box-title {
-  padding-bottom: 20px;
-  font-size: 14px;
+	padding-bottom: 20px;
+	font-size: 14px;
 }
 .mypage-menu-box-title > p {
-  color: #c9c9c9;
+	color: #c9c9c9;
 }
 .mypage-menu {
-  line-height: 50px;
-  text-align: center;
+	line-height: 50px;
+	text-align: center;
 }
 .mypage-menu:hover {
-  background-color: var(--hover3);
+	background-color: var(--hover3);
 }
 .mypage-menu-box .here {
-  background-color: var(--main1);
-  color: #fff;
+	background-color: var(--main1);
+	color: #fff;
 }
 
 .mypage-wrap-right > div {
-  margin: 20px 0;
-  width: 100%;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
+	margin: 20px 0;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 12px;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
 }
 .mypage-step {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 100%;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .mypage-step h3 {
-  font-family: ps-r;
-  font-size: 40px;
-  font-weight: 200;
-  color: var(--main1);
+	font-family: ps-r;
+	font-size: 40px;
+	font-weight: 200;
+	color: var(--main1);
 }
 .mypage-main-content {
-  width: 100%;
-  display: flex;
+	width: 100%;
+	display: flex;
 }
 .mypage-content {
-  width: 100%;
+	width: 100%;
 }
 
 /*마이페이지 정보 수정,비밀번호 변경 CSS*/
 .mypage-info-wrap,
 .mypage-password-wrap {
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: center;
+	padding-bottom: 10px;
+	display: flex;
+	justify-content: center;
 }
 .mypage-info-wrap table {
-  border-spacing: 0 30px;
+	border-spacing: 0 30px;
 }
 .mypage-info-wrap thead td {
-  vertical-align: bottom;
-  color: #a0a0a0;
+	vertical-align: bottom;
+	color: #a0a0a0;
 }
 .mypage-partner-info td {
-  height: 50px;
+	height: 50px;
 }
 .mypage-info-wrap tr {
-  border-spacing: 0 10px;
+	border-spacing: 0 10px;
 }
 .mypage-info-wrap tbody th {
-  text-align: left;
+	text-align: left;
 }
-.mypage-info-wrap tbody td {
-  border-bottom: 1px solid var(--main2);
-  padding: 5px 10px;
+.mypage-info-wrap tbody input {
+	width: 90%;
+	border-bottom: 1px solid var(--main2);
+	padding: 5px 10px;
+	padding-bottom: 10px;
 }
 .mypage-info-wrap input {
-  width: 100%;
-  border: none;
-  font-size: 16px;
+	width: 100%;
+	border: none;
+	font-size: 16px;
 }
 .mypage-info-password a {
-  line-height: 35px;
+	line-height: 35px;
 }
 .mypage-info-password div {
-  background-color: var(--main2);
-  height: 100%;
-  font-size: 14px;
-  text-align: center;
-  border-radius: 10px;
-  border: 1px solid #c9c9c9;
+	background-color: var(--main2);
+	height: 100%;
+	font-size: 14px;
+	text-align: center;
+	border-radius: 10px;
+	border: 1px solid #c9c9c9;
 }
 .mypage-labelbox {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
 }
 .mypage-labelbox div {
-  width: 40%;
-  height: 35px;
-  font-size: 14px;
-  text-align: center;
-  line-height: 35px;
-  border-radius: 10px;
-  border: 1px solid #c9c9c9;
+	width: 40%;
+	height: 35px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 35px;
+	border-radius: 10px;
+	border: 1px solid #c9c9c9;
 }
 .mypage-labelbox label {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 .mypage-labelbox input {
-  display: none;
+	display: none;
 }
 .mypage-labelbox .backGray {
-  background-color: var(--main2);
+	background-color: var(--main2);
 }
 .mypage-password-wrap > div {
-  width: 95%;
+	width: 95%;
 }
 
 .mypage-password-inputbox {
-  display: flex;
-  justify-content: center;
-  border-top: 2px solid var(--main2);
-  border-bottom: 1px solid var(--main2);
-  margin: 20px 0;
+	display: flex;
+	justify-content: center;
+	border-top: 2px solid var(--main2);
+	border-bottom: 1px solid var(--main2);
+	margin: 20px 0;
 }
 .mypage-password-inputbox > div {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  align-items: center;
-  margin: 40px 0;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	align-items: center;
+	margin: 40px 0;
 }
 .mypage-password-input input {
-  padding: 5px 15px;
-  height: 45px;
-  border: 2px solid var(--main2);
-  border-radius: 5px;
-  font-size: 16px;
-  box-sizing: border-box;
+	padding: 5px 15px;
+	height: 45px;
+	border: 2px solid var(--main2);
+	border-radius: 5px;
+	font-size: 16px;
+	box-sizing: border-box;
 }
 .mypage-password-btnbox {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .mypage-password-btnbox > button {
-  width: 30%;
-  height: 45px;
-  border: none;
-  border-radius: 7px;
-  background-color: var(--main2);
-  font-size: 16px;
+	width: 30%;
+	height: 45px;
+	border: none;
+	border-radius: 7px;
+	background-color: var(--main2);
+	font-size: 16px;
 }
 
 .mypage-newPassword-content {
-  display: flex;
-  justify-content: center;
-  border-top: 2px solid var(--main2);
-  border-bottom: 1px solid var(--main2);
-  margin: 20px 0;
+	display: flex;
+	justify-content: center;
+	border-top: 2px solid var(--main2);
+	border-bottom: 1px solid var(--main2);
+	margin: 20px 0;
 }
 .mypage-newPassword-content > div {
-  width: 100%;
+	width: 100%;
 }
 .mypage-newPassword-content > div > div {
-  margin: 40px 0;
-  width: 100%;
+	margin: 40px 0;
+	width: 100%;
 }
 .mypage-newPassword-inputBox {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	align-items: center;
 }
 .mypage-newPassword-content span {
-  margin-left: 310px;
+	margin-left: 310px;
 }
 .mypage-info-btnBox div {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	margin-top: 20px;
 }
 .mypage-info-btnBox button {
-  width: 20%;
-  height: 40px;
-  border: 1px solid #c9c9c9;
-  border-radius: 7px;
-  font-size: 14px;
-  font-weight: 700;
+	width: 20%;
+	height: 40px;
+	border: 1px solid #c9c9c9;
+	border-radius: 7px;
+	font-size: 14px;
+	font-weight: 700;
 }
 .mypage-info-modifybtn {
-  background-color: var(--main2);
+	background-color: var(--main2);
 }
 .mypage-info-delbtn {
-  background-color: #fff;
+	background-color: #fff;
 }
 
 /*마이페이지 일정관리,모달 CSS*/
 :root {
-  --fc-event-bg-color: var(--hover3);
-  --fc-event-border-color: transparent;
-  --fc-today-bg-color: #f3f3f3;
+	--fc-event-bg-color: var(--hover3);
+	--fc-event-border-color: transparent;
+	--fc-today-bg-color: #f3f3f3;
 }
 .fc .fc-toolbar div:nth-child(1) {
-  flex-grow: 2;
+	flex-grow: 2;
 }
 .fc .fc-toolbar div:nth-child(2) {
-  flex-grow: 2;
+	flex-grow: 2;
 }
 .fc .fc-toolbar div:nth-child(3) {
-  flex-grow: 1;
+	flex-grow: 1;
 }
 
 .fc-toolbar-chunk > div {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .fc .fc-button {
-  border: none;
-  background-color: transparent;
+	border: none;
+	background-color: transparent;
 }
 .fc .fc-button-primary:not(:disabled).fc-button-active,
 .fc .fc-button-primary:not(:disabled):active {
-  background-color: var(--main1);
-  color: #202020;
-  border: none;
+	background-color: var(--main1);
+	color: #202020;
+	border: none;
 }
 .fc .fc-button-group {
-  width: 100%;
-  display: flex;
-  justify-content: right;
+	width: 100%;
+	display: flex;
+	justify-content: right;
 }
 .fc .fc-button-group > .fc-button {
-  flex: none;
+	flex: none;
 }
 .fc .fc-button-group .fc-button-primary {
-  width: 3em;
-  background-color: #fff;
-  border: 1px solid var(--main1);
-  color: #202020;
+	width: 3em;
+	background-color: #fff;
+	border: 1px solid var(--main1);
+	color: #202020;
 }
 .fc .fc-button-group .fc-button-primary:hover {
-  border: 1px solid var(--main1);
+	border: 1px solid var(--main1);
 }
 .fc .fc-button-primary:not(:disabled).fc-button-active:focus,
 .fc .fc-button-primary:not(:disabled):active:focus,
 .fc .fc-button-primary:focus {
-  box-shadow: none;
+	box-shadow: none;
 }
 
 .fc .fc-button-primary:hover {
-  background-color: #fff;
-  border: none;
-  box-shadow: none;
+	background-color: #fff;
+	border: none;
+	box-shadow: none;
 }
 .fc-daygrid-event-dot {
-  display: none;
+	display: none;
 }
 .fc-event-time {
-  padding-left: 2px;
+	padding-left: 2px;
 }
 .scheduleDetail-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 2;
 }
 .scheduleDetail-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 600px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  position: relative;
-  text-align: center;
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	width: 600px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	position: relative;
+	text-align: center;
 }
 .scheduleDetail-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 24px;
+	cursor: pointer;
 }
 .scheduleDetail-table {
-  width: 100%;
-  margin: 40px 0;
-  border-spacing: 0;
-  border-top: 1px solid var(--main2);
+	width: 100%;
+	margin-top: 40px;
+	margin-bottom: 20px;
+	border-spacing: 0;
+	border-top: 1px solid var(--main2);
 }
 .scheduleDetail-table th {
-  width: 20%;
-  border-bottom: 1px solid var(--main2);
+	width: 20%;
+	border-bottom: 1px solid var(--main2);
 }
 .scheduleDetail-table td {
-  text-align: left;
-  padding-left: 10px;
-  border-bottom: 1px solid var(--main2);
+	text-align: left;
+	padding-left: 10px;
+	border-bottom: 1px solid var(--main2);
 }
 .scheduleDetail-map {
-  width: 100%;
-  height: 150px;
-  padding: 10px 0;
+	width: 100%;
+	height: 150px;
+	padding: 10px 0;
 }
 .scheduleDetail-table span {
-  color: #777777;
-  font-size: 28px;
+	color: #777777;
+	font-size: 28px;
 }
 .sd-tr2 span,
 .sd-tr3 span {
-  font-size: 32px;
+	font-size: 32px;
 }
 .sd-tr1,
 .sd-tr3 {
-  height: 50px;
+	height: 50px;
 }
 .sd-tr2 td {
-  padding-top: 10px;
+	padding-top: 10px;
+}
+.scheduleDetail-delButton button {
+	width: 20%;
+	height: 40px;
+	border: 1px solid #c9c9c9;
+	border-radius: 20px;
+	background-color: var(--main2);
+	font-size: 14px;
 }
 
 /*마이페이지 구매 내역 CSS*/
 .mypage-payment-wrap {
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: center;
+	padding-bottom: 10px;
+	display: flex;
+	justify-content: center;
 }
 .mypage-payment-wrap > div {
-  width: 100%;
+	width: 100%;
 }
 .mypage-payment-state {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 20px;
 }
 .mypage-payment-state > div {
-  width: calc(100% / 4);
-  display: flex;
-  justify-content: center;
+	width: calc(100% / 4);
+	display: flex;
+	justify-content: center;
 }
 .mypage-payment-state button {
-  width: 80%;
-  height: 40px;
-  border: 1px solid #c9c9c9;
-  border-radius: 20px;
-  background-color: var(--main2);
-  font-size: 14px;
-  color: #808080;
+	width: 80%;
+	height: 40px;
+	border: 1px solid #c9c9c9;
+	border-radius: 20px;
+	background-color: var(--main2);
+	font-size: 14px;
+	color: #808080;
 }
 .stateHere > button {
-  background-color: var(--main1);
-  border: 1px solid var(--main1);
-  color: #fff;
+	background-color: var(--main1);
+	border: 1px solid var(--main1);
+	color: #fff;
 }
 .paymentList-tbl {
-  width: 100%;
-  margin: 30px 0;
-  box-shadow: rgba(0, 0, 0, 0.07) 2px 3px 4px 2px;
-  border-radius: 5px;
+	width: 100%;
+	margin: 30px 0;
+	box-shadow: rgba(0, 0, 0, 0.07) 2px 3px 4px 2px;
+	border-radius: 5px;
 }
 .paymentList-tbl td {
-  padding: 10px 10px;
+	padding: 10px 10px;
 }
 .payment-title td {
-  border-bottom: 1px solid var(--main2);
+	border-bottom: 1px solid var(--main2);
 }
 .payment-info td {
-  height: 100px;
+	height: 100px;
 }
 .payment-productImg {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 .payment-productImg > img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
 }
 .payment-info-text > span {
-  color: #777777;
-  font-size: 14px;
+	color: #777777;
+	font-size: 14px;
 }
 .payment-info-text > p {
-  color: #777777;
-  font-size: 14px;
+	color: #777777;
+	font-size: 14px;
 }
 .payment-info-price {
-  text-align: right;
+	text-align: right;
 }
 .payment-info-btnBox {
-  text-align: center;
+	text-align: center;
 }
 .payment-info-btnBox button {
-  width: 70%;
-  height: 30px;
-  border: 1px solid #c9c9c9;
-  border-radius: 7px;
-  background-color: var(--main2);
-  font-size: 14px;
-  font-weight: 700;
-  font-weight: 300;
+	width: 70%;
+	height: 30px;
+	border: 1px solid #c9c9c9;
+	border-radius: 7px;
+	background-color: var(--main2);
+	font-size: 14px;
+	font-weight: 700;
+	font-weight: 300;
 }

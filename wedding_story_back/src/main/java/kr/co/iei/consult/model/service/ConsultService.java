@@ -46,4 +46,11 @@ public class ConsultService {
 		ConsultDTO consult = consultDao.selectConsult(consultNo);
 		return consult;
 	}
+	
+	//세영이가 마이페이지 일정관리에서 상담 일정 삭제할때 사용함
+	@Transactional
+	public int deleteConsult(int consultNo) {
+		int result = consultDao.deleteConsult(consultNo);
+		return 0;
+	}
 }

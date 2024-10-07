@@ -12,6 +12,9 @@ public interface ConsultDao {
 	int insertConsult(ConsultDTO consult, MemberDTO member, ProductDTO product);
 
 	ConsultDTO selectConsult(int consultNo);
+	
+	//세영이가 마이페이지 일정관리에서 상담 일정 삭제할때 사용함
+	int deleteConsult(int consultNo);
 
 
 }

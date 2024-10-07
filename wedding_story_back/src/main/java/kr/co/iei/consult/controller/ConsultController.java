@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,13 @@ public class ConsultController {
 	public ResponseEntity<ConsultDTO> selectConsult(@PathVariable int consultNo){
 		ConsultDTO consult = consultService.selectConsult(consultNo);
 		return ResponseEntity.ok(consult);
+	}
+	
+	//세영이가 마이페이지 일정관리에서 상담 일정 삭제할때 사용함
+	@DeleteMapping(value = "/deleteConsult/{consultNo}")
+	public ResponseEntity<Integer> deleteConsult(@PathVariable int consultNo){
+		int result = consultService.deleteConsult(consultNo);
+		return ResponseEntity.ok(result);
 	}
     
 }

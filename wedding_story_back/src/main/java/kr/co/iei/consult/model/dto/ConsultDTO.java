@@ -28,4 +28,5 @@ public class ConsultDTO {
 	//마이페이지 일정관리 모달에 들어갈 내용
 	private String companyNo;
 	private CompanyDTO company;
+	private int consultType;
 }
