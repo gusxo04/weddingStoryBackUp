@@ -228,10 +228,6 @@ public class ConventionController {
         return ResponseEntity.ok(companyPay);
     }
 
-    @GetMapping("/ticket/unload")
-    public void getMethodName() {
-        System.out.println("닫는다");
-    }
     
 
 }
