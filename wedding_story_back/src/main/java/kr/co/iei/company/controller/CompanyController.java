@@ -26,6 +26,7 @@ import kr.co.iei.advertisement.model.dto.AdvertisementDTO;
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.company.model.service.CompanyService;
+import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
@@ -164,7 +165,6 @@ public class CompanyController {
 					fileDTO.setFilePath(filepath);
 					fileDTO.setProductNo(product.getProductNo());
 					productFile.add(fileDTO);
-					System.out.println("1 :"+productFile);
 			}
 		}
 		//front에서 보내준것은 filepath이므로 조회를 하지않고 바로 삭제
@@ -183,9 +183,7 @@ public class CompanyController {
 	//상품 게시물 삭제 
 	@DeleteMapping(value = "/product/{productNo}")
 	public ResponseEntity<Boolean> deleteProduct(@PathVariable int productNo) {
-			System.out.println(productNo);
 		Map<String ,List<String>> deleteFile = companyService.deleteProduct(productNo);
-		System.out.println("controller : "+ deleteFile);
 		 if (deleteFile != null) {
 	        // 이미지 파일 경로
 	        String imgSavepath = root + "/product/image/";
@@ -238,4 +236,26 @@ public class CompanyController {
 		
 		return ResponseEntity.ok(map);
 	}
+	
+	//진행일정 (리스트 조회)
+	@GetMapping(value="/counsel/{companyNo}/{reqPage}")
+	public ResponseEntity<Map> selectCounselList(@PathVariable String companyNo,@PathVariable int reqPage){
+		Map map = companyService.selectCounselList(companyNo,reqPage);
+		System.out.println(map);
+		return ResponseEntity.ok(map);
+	}
+	//헤더 company 이름 조회
+	@GetMapping(value="/header/{companyNo}")
+	public ResponseEntity<CompanyDTO> selectCompanyName(@PathVariable String companyNo){
+		CompanyDTO company = companyService.selectCompanyInfo(companyNo);
+		return ResponseEntity.ok(company);
+	}
+	//일정 조회 
+	@GetMapping(value="/schedule/{companyNo}")
+	public ResponseEntity<List> selectConsultList(@PathVariable String companyNo){
+		List<ConsultDTO> consult = companyService.selectConsultList(companyNo);
+		System.out.println(consult);
+		return ResponseEntity.ok(consult);
+	}
+	
 }

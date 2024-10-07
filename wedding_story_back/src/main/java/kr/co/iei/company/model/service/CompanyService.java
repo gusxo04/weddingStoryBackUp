@@ -15,8 +15,11 @@ import kr.co.iei.advertisement.model.dao.AdvertisementDao;
 import kr.co.iei.advertisement.model.dto.AdvertisementDTO;
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.company.model.dto.CounselDTO;
 import kr.co.iei.company.model.dto.CustomerDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
+import kr.co.iei.consult.model.dao.ConsultDao;
+import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.product.model.dao.ProductDao;
@@ -38,6 +41,9 @@ public class CompanyService {
 	
 	@Autowired
 	private AdvertisementDao advertisementDao;
+	
+	@Autowired
+	private ConsultDao consultDao; 
 	
 	@Autowired
 	private PageUtil pageUtil; 
@@ -66,11 +72,9 @@ public class CompanyService {
 		keyWord.setCompanyNo(company.getCompanyNo());
 		
 		int keyWordResult = companyDao.insertKeyWord(keyWord);
-		System.out.println("service"+member);
 		int updateCompanyNo = memberDao.updateCompanyNo(company.getCompanyNo() ,member.getMemberNo());
 		
 		int resultTotal = companyResult + keyWordResult + updateCompanyNo ;  
-		System.out.println(resultTotal);
 		
 			
 		return companyNo;
@@ -85,9 +89,7 @@ public class CompanyService {
 	@Transactional
 	public int insertProduct(ProductDTO product, List<ProductFileDTO> productFile) {
 		int resultProduct = productDao.insertProduct(product);
-		System.out.println(product);
 		for(ProductFileDTO list : productFile) {//서비스에서 productNo를 부여받음
-			System.out.println(list);
 			list.setProductNo(product.getProductNo());// 리스트에 productNo를 하나씩 넣어줌 
 			resultProduct += productDao.insertProductFile(list);//list를 하나씩 DB에 저장 리턴의 결과값을 resultProduct에 더함 
 		}
@@ -146,11 +148,9 @@ public class CompanyService {
 		if(result > 0) {
 			//파일 삭제 로직 
 			if(delThumbsFile != null) {
-				System.out.println("service1212 : "+delThumbsFile);
 				result += productDao.deleteThumbnails(delThumbsFile);
 				
 			}
-			System.out.println("service + list : "+ productFile);
 			for(ProductFileDTO list : productFile) {//서비스에서 productNo를 부여받음
 				result += productDao.insertProductFile(list);//list를 하나씩 DB에 저장 리턴의 결과값을 resultProduct에 더함 
 			}
@@ -162,6 +162,7 @@ public class CompanyService {
 		}
 		return 0;
 	}
+	//상품 목록 삭제
 	@Transactional
 	public Map deleteProduct(int productNo) {
 		
@@ -172,7 +173,6 @@ public class CompanyService {
 		Map<String, List<String>> deleteFile = new HashMap<String, List<String>>();
 		deleteFile.put("img",img);
 		deleteFile.put("thumbs", thumbs);
-		System.out.println(deleteFile);
 		int result = productDao.deleteProduct(productNo);
 		int fileResult = productDao.deleteProductFile(productNo);
 		int totalResult = result + fileResult;
@@ -194,24 +194,24 @@ public class CompanyService {
 		int totalPage = 0;
 		int numPerPage = 20; //한 페이지당 게시물 수
 		int pageNaviSize = 1; //페이지 네비 길이
-		System.out.println(productNo);
 		totalPage += productDao.TotalCustomerCount(productNo); //게시물 갯수 count(*) 조회
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);//pageUtil을 사용하여 페이지 갯수 생성
-		System.out.println(pi);
 		List<CustomerDTO> result = productDao.selectCustomerList(productNo,pi);
-		System.out.println("result : " + result);
-		System.out.println(totalPage );
 		Map<String, Object> list = new HashMap<String, Object>();
 		list.put("customer", result);
 		list.put("pi",pi);
 		
 		return list;
 	}
+	
+	//광고요청 등록
 	@Transactional
 	public int insertAdvertisement(AdvertisementDTO advert) {
 		int result = advertisementDao.insertAdvertisement(advert);
 		return result;
 	}
+	
+	//광고요청 리스트
 	public Map selectAdvertisement(String companyNo, int reqPage) {
 		/*게시물 조회 및 페이징에 필요한 데이터를 모두 취합*/
 		int numPerPage = 10; //한 페이지당 게시물 수
@@ -223,6 +223,31 @@ public class CompanyService {
 		list.put("advert", advert);
 		list.put("pi",pi);
 		return list;
+	}
+	
+	//진행 일정 리스트
+	public Map selectCounselList(String companyNo, int reqPage) {
+		List productNo = productDao.selectProductNo(companyNo);
+		
+		int totalPage = 0;
+		int numPerPage = 10; //한 페이지당 게시물 수
+		int pageNaviSize = 1; //페이지 네비 길이
+		totalPage  += productDao.totalCounselCount(productNo);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);
+		List<CounselDTO> counsel = productDao.totalCounselList(pi,productNo);
+		Map<String, Object> list = new HashMap<String, Object>();
+		list.put("counsel",counsel);
+		list.put("pi",pi);
+		
+		return list;
+	}
+	
+	public List selectConsultList(String companyNo) {
+		List productNo = productDao.selectProductNo(companyNo);
+		System.out.println(productNo);
+		List consult = consultDao.selectConsultList(productNo);
+		
+		return consult;
 	}
 	
 

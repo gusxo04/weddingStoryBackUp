@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.admin.model.dto.SalesDTO;
+import kr.co.iei.company.model.dto.CounselDTO;
 import kr.co.iei.company.model.dto.CustomerDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
@@ -60,6 +61,10 @@ public interface ProductDao {
 	int TotalCustomerCount(List productNo);
 
 	List<CustomerDTO> selectCustomerList(List productNo, PageInfo pi);
+
+	int totalCounselCount(List productNo);
+
+	List<CounselDTO> totalCounselList(PageInfo pi, List productNo);
 
 
 	
