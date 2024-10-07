@@ -139,6 +139,7 @@ const ShowConvention = (props) => {
     };
   }, []);
 
+  console.log(convention);
   
   // 나중에 다른걸로 대체 (swal 띄우면 스크롤 사라지는거 때매 alert창이 뜨면 스크롤을 사라지게 만듦)
   const [alertType, setAlertType] = useState(0);
@@ -189,10 +190,23 @@ const ShowConvention = (props) => {
         "" 
         :
         !payment ? 
+        // convention.ticketCount <= convention.conventionLimit ?
         <div className="convention-inner-preview-info convention-buy-btn" >
-          <button onClick={() => {
-            setNoticeEmail("");
-            setAlertType(3);
+          <button className={convention.ticketCount < convention.conventionLimit ? "" : "full"} onClick={() => {
+            if(convention.ticketCount < convention.conventionLimit){
+              setNoticeEmail("");
+              setAlertType(3);
+            }
+            else{
+              Swal.fire({
+                title : "박람회",
+                text : "정원이 다 찼습니다.",
+                icon : "info",
+                iconColor : "var(--main1)",
+                confirmButtonText : "확인",
+                confirmButtonColor : "var(--main1)"
+              })
+            }
           }}>박람회 신청</button>
         </div>
         :
