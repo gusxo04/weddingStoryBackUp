@@ -209,4 +209,35 @@ public class AdminService {
 		return member;
 	}
 
+	public Map selectQuestionList(int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount;
+		
+		totalCount = noticeDao.QuestionTotalCount();
+		
+		
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		
+		
+		List list = noticeDao.selectQuestionList(pi);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		System.out.println(list);
+		
+		return map;
+	}
+
+	public QuestionDTO getOneQuestion(int questionNo) {
+		QuestionDTO question = noticeDao.getOneQuestion(questionNo);
+		
+		return question;
+	}
+
+	public QuestionFileDTO getQuestionFile(int questioinFileNo) {
+		QuestionFileDTO questionFile = noticeDao.getQuestionFile(questioinFileNo);
+		return questionFile;
+	}
+
 }

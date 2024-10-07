@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import QuestionList from "./QuestionList";
 import QuestionResponse from "./QuestionResponse";
+import "./question2.css";
 
 const Question = () => {
   return (

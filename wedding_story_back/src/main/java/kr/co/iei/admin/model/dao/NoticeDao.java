@@ -17,11 +17,11 @@ public interface NoticeDao {
 
 	List selectNoticeList(PageInfo pi);
 	
-/////////////////////////////////////
+
 	int insertNotice(NoticeDTO notice);
 
 	int insertNoticeFile(NoticeFileDTO noticeFile);
-////////////////////////////////////////
+
 	NoticeDTO selectOneNotice(int noticeNo);
 
 	List<NoticeFileDTO> selectOneNoticeFile(int noticeNo);
@@ -40,13 +40,19 @@ public interface NoticeDao {
 
 	int deleteNoticeFile(int[] delNoticeFileNo);
 
-	/////////////
+
 	int insertQuestion(String questionTitle, String questionContent, int questionType, int memberNo);
 	
-/////////////////////////////////////////////////////////
-
 	int getQuestionNo();
 
 	int insertQuestionFile(String filename, String filepath, int questionNo);
+
+	int QuestionTotalCount();
+
+	List selectQuestionList(PageInfo pi);
+
+	QuestionDTO getOneQuestion(int questionNo);
+
+	QuestionFileDTO getQuestionFile(int questioinFileNo);
 
 }
