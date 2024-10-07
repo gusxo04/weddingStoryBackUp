@@ -461,3 +461,43 @@
 	font-weight: 700;
 	font-weight: 300;
 }
+
+/**관심상품 css*/
+.mypage-favorite-wrap {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px; /* 썸네일 간 간격 조절 */
+}
+.mypage-favorite-product {
+	height: 100%;
+	flex: 0 0 calc(33.33% - 15px); /* 각 썸네일의 너비를 3개씩 배치하기 위해 33.33%로 설정, 간격 제외 */
+	box-sizing: border-box;
+	text-align: left; /* 텍스트 정렬 */
+	margin-bottom: 10px;
+}
+.favorite-productImgBox {
+	border: 1px solid #777777;
+	padding-top: 100%;
+	position: relative;
+	border: none;
+}
+.favorite-productImgBox img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.favorite-productInfo {
+	padding: 5px 10px;
+}
+.favorite-iconBox {
+	position: absolute;
+	top: 3%; /* 썸네일의 상단에서 10% 위치 */
+	right: 3%; /* 썸네일의 오른쪽에서 10% 위치 */
+	font-size: 10%; /* 부모의 크기(썸네일) 비율에 맞춰 하트 크기 설정 */
+	background-color: rgba(255, 255, 255, 0.5); /* 하트 배경 (선택 사항) */
+	border-radius: 50%; /* 하트 배경을 원형으로 */
+}

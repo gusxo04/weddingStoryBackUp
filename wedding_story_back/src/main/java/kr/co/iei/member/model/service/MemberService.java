@@ -222,7 +222,9 @@ public class MemberService {
 				ProductDTO product = new ProductDTO();
 				product.setProductName(convention.getConventionTitle());
 				product.setProductImg(convention.getConventionImg());
+				product.setCompanyCategory("박람회");
 				pay.setProduct(product);
+				
 			}
 		}
 		return list;

@@ -81,5 +81,11 @@ public interface ProductDao {
 
 	List<ProductDTO> selectProductList2(String companyNo);
 
+	List<ProductDTO> favoriteList(int memberNo);
+
+	int favoriteInsert(int productNo, int memberNo);
+
+	int favoritedelete(int productNo, int memberNo);
+
 
 }

@@ -22,6 +22,7 @@ import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.util.EmailSender;
 
 @CrossOrigin("*")
@@ -145,4 +146,6 @@ public class MemberController {
 		List<MemberPayDTO> list = memberService.paymentList(memberNo,state);
 		return ResponseEntity.ok(list);
 	}
+	
+	
 }

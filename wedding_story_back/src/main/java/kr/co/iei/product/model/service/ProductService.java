@@ -94,6 +94,26 @@ public class ProductService {
         
 		return result;
 	}
+
+	public List<ProductDTO> favoriteList(int memberNo) {
+		List<ProductDTO> list = productDao.favoriteList(memberNo);
+		return list;
+	}
+	
+	@Transactional
+	public int favorite(int productNo, int memberNo, Boolean likeState) {
+		int result = 0;
+		if(likeState) {
+			result = productDao.favoriteInsert(productNo,memberNo);
+			System.out.println("insert");
+		}else {
+			result = productDao.favoritedelete(productNo,memberNo);
+			System.out.println("델리트");
+		}
+		return result;
+	}
+
+
 	
 	
 }
