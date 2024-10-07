@@ -257,4 +257,14 @@
     <result property="payDate" column="pay_date"/>
     <result property="progress" column="progress"/>
 </resultMap>
+
+<select id="favoriteList" resultType="product">
+	 select company_no,product_no,product_name,product_IMG,product_price from favorite_product join product using(product_no) order by 2 desc
+</select>
+<insert id="favoriteInsert">
+	insert into favorite_product values(favorite_product_seq.nextval,#{memberNo},#{productNo})
+</insert>
+<delete id="favoritedelete">
+	delete from favorite_product where member_no=#{memberNo} and product_no=#{productNo}
+</delete>
 </mapper>

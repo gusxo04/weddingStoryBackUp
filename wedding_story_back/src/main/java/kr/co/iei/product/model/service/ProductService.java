@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.company.model.dao.CompanyDao;
@@ -63,6 +64,27 @@ public class ProductService {
 		map.put("company",company);
 		return map;
 	}
+
+
+	public List<ProductDTO> favoriteList(int memberNo) {
+		List<ProductDTO> list = productDao.favoriteList(memberNo);
+		return list;
+	}
+	
+	@Transactional
+	public int favorite(int productNo, int memberNo, Boolean likeState) {
+		int result = 0;
+		if(likeState) {
+			result = productDao.favoriteInsert(productNo,memberNo);
+			System.out.println("insert");
+		}else {
+			result = productDao.favoritedelete(productNo,memberNo);
+			System.out.println("델리트");
+		}
+		return result;
+	}
+
+
 	
 	
 }

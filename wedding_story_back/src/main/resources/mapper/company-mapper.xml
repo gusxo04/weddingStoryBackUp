@@ -87,7 +87,7 @@
 
 
 	<select id="selectCompanyNo" resultType="company">
-		select company_no,
+		select company_no,company_category,
 		company_name, company_addr from company where company_no =
 		#{companyNo}
 	</select>

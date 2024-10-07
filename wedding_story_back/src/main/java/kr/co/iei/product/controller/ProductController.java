@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
+import kr.co.iei.product.model.dto.ProductFavoriteDTO;
 import kr.co.iei.product.model.service.ProductService;
 import kr.co.iei.util.FileUtils;
 
@@ -63,6 +65,22 @@ public class ProductController {
 		Map map = productService.productList(productNo);
 		//System.out.println(productNo);
 		return ResponseEntity.ok(map);
+	}
+	
+	//회원이 좋아요한 제품 리스트
+	@GetMapping(value = "/favoriteList/{memberNo}")
+	public ResponseEntity<List> favoriteList(@PathVariable int memberNo){
+		List<ProductDTO> list = productService.favoriteList(memberNo);
+		return ResponseEntity.ok(list);
+	}
+	//회원이 관심상품 등록,취소하는 로직
+	@PostMapping(value = "/favorite")
+	public ResponseEntity<Integer> favorite(@RequestBody ProductFavoriteDTO favorite){
+		System.out.println(favorite);
+		System.out.println(favorite.getProductNo());
+		System.out.println(favorite.getMemberNo());
+		int result = productService.favorite(favorite.getProductNo(),favorite.getMemberNo(),favorite.getLikeState());
+		return ResponseEntity.ok(result);
 	}
 	
 	
