@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.service.ProductService;
 import kr.co.iei.util.FileUtils;
@@ -56,7 +58,24 @@ public class ProductController {
 		Map map = productService.getProducthallList(reqPage);
 		return ResponseEntity.ok(map);
 	}
+	
+	//웨딩홀 예약하기에서 상품명불러오기
+	@GetMapping(value = "/reservation/{memberNo}/{productNo}")
+	public ResponseEntity<Map> selectReservationInfo(@PathVariable int productNo,@PathVariable int memberNo){
+		Map map = productService.selectReservationInfo(productNo,memberNo);
 		
+		return ResponseEntity.ok(map);
+	}
+		
+	//웨딩홀 결제
+	@PostMapping
+	public ResponseEntity<Integer>insertWeddingHallPay(@ModelAttribute MemberDTO member, @ModelAttribute ProductDTO product, @ModelAttribute MemberPayDTO memberPay ){
+		int result = productService.insertWeddingHallPay(member,product,memberPay);
+		System.out.println();
+		return ResponseEntity.ok(result);
+	}
+	
+	
 	//제품 상세페이지
 	@GetMapping(value="/productInfo/{productNo}")
 	public ResponseEntity<Map> productList(@PathVariable int productNo){

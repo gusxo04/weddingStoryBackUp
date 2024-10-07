@@ -13,7 +13,7 @@ const ProductMain = () => {
 			<Route path="list" element={<ProductAllList />} />
 			<Route path="info/:productNo" element={<ProductInfo />} />
 			<Route path="review" element={<ProductReview />} />
-			<Route path="weddingHall" element={<ProductWeddingHall />} />
+			<Route path="weddingHall/:productNo" element={<ProductWeddingHall />} />
 			<Route path="hallList" element={<WeddingHallList />} />
 			<Route path="hallInfo/:productNo" element={<WeddingHallInfo />} />
 			<Route path="consult/:productNo" element={<Consult />} />

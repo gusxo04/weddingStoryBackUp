@@ -34,10 +34,11 @@ public class ProductReviewController {
 		MemberDTO member = productReviewService.selectMemberConsult(memberNo);
 		return ResponseEntity.ok(member);
 	}
-	
+	/*
 	@PostMapping
 	public ResponseEntity<Integer> insertReview(@ModelAttribute ProductReviewDTO review, @ModelAttribute MemberDTO member){
 		int result = productReviewService.insertReview(review,member);
 		return ResponseEntity.ok(result);
 	}
+	*/
 }

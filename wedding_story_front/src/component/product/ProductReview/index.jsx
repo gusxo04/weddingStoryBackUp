@@ -88,7 +88,8 @@ const ProductReview = () => {
   const [member, setMember] = useState({
     memberId: "",
   });
-  const [reviews, setReviews] = useState(reviewsDummy);
+  //const [reviews, setReviews] = useState(reviewsDummy);
+  const [reviews, setReviews] = useState({});
   const [currentReview, setCurrentReview] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [productNo, setProductNo] = useState(); // 실제 제품번호로 교체

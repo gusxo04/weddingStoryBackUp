@@ -55,10 +55,11 @@
 }
 
 .wedding-content > .pay {
-  text-align: end;
+  text-align: start;
 }
-.total-pay > h3 {
+.pay {
   color: red;
+  font-size: 20px;
 }
 
 .wedding-button > button {

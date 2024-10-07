@@ -191,4 +191,10 @@
 
 	</select>
  
+ <select id="selectProductOneList" resultType="int">
+ 	select product_no, product_name, coronation, diningRoom,
+ </select>
+ 
+ 
+ 
 </mapper>

@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.company.model.dto.CustomerDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
 import kr.co.iei.util.PageInfo;
@@ -60,6 +62,11 @@ public interface ProductDao {
 	int TotalCustomerCount(List productNo);
 
 	List<CustomerDTO> selectCustomerList(List productNo, PageInfo pi);
+
+	ProductDTO selectProductOneList(int productNo);
+
+	void insertProductReservation(ProductDTO product);
+
 
 
 	

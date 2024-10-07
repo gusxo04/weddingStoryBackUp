@@ -21,10 +21,10 @@ public class ProductReviewService {
 		MemberDTO member = memberDao.selectMemberConsult(memberNo);
 		return member;
 	}
-
+	/*
 	public int insertReview(ProductReviewDTO review, MemberDTO member) {
 		int result = productReviewDao.insertReview(review,member);
 		return result;
 	}
-	
+	*/
 }

@@ -17,7 +17,7 @@ const ProductInfo = () => {
 	const queryParams = new URLSearchParams(location.search); // 쿼리 문자열 파라미터 파싱
 
 	const businessCode = queryParams.get("businessCode"); // '123'
-	const showConsultButton = ["weddingHall", "dressShop", "robe"].includes(businessCode); // 비즈니스 코드에 따라 버튼 보이기 여부 결정
+	const showConsultButton = ["dressShop", "robe"].includes(businessCode); // 비즈니스 코드에 따라 버튼 보이기 여부 결정
 
 	const [product, setProduct] = useState({});
 	const [loginId, setLoginId] = useRecoilState(loginIdState);
