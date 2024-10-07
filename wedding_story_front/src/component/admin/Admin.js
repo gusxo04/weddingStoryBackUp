@@ -58,6 +58,7 @@ const Admin = () => {
           <Route path="adminControll" element={<AdminControll />} />
           <Route path="notice/*" element={<Notice />} />
           <Route path="adminMain" element={<AdminMain />} />
+          <Route path="question/*" element={<Question />} />
         </Routes>
       </div>
     </div>

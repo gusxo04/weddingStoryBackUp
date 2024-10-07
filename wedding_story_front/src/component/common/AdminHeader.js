@@ -58,7 +58,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/question" className="nav-item">
+            <Link to="/admin/question/list" className="nav-item">
               <div>
                 <span className="material-icons">help_center</span>
               </div>
