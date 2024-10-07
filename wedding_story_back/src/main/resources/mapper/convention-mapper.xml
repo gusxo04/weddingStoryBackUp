@@ -9,8 +9,12 @@
         where rnum = 1 -->
         select convention_no, convention_title, convention_content, convention_img,
         convention_start, convention_end, convention_time, convention_registered_date, 
-        convention_price, convention_limit, img_style, count(convention_no) + 99 as ticket_count from 
-            (select rownum as rnum, c1.* from 
+        convention_price, convention_limit, img_style, 
+        (select count(convention_no)
+        from convention_member 
+        where ticket_code is not null and 
+        convention_no = (select max(convention_no) from convention)) as ticket_count
+        from (select rownum as rnum, c1.* from 
                 (select * from convention order by 1 desc)c1)
         where rnum = 1 group by convention_no, convention_title, convention_content, convention_img, 
         convention_start, convention_end, convention_time, convention_registered_date, 
@@ -57,6 +61,14 @@
     <insert id="insertMemberPay">
         insert into member_pay values(member_pay_seq.nextval, #{memberNo}, null, #{ticketNo}, sysdate, #{progressDate}, #{progressTime}, #{payPrice}, 0, #{merchantUid})
     </insert>
+
+    <select id="checkConventionLimit" resultType="conventionMember">
+        select count(ticket_no) as ticket_count from convention_member where convention_no = #{conventionNo} and ticket_code is not null
+    </select>
+
+    <delete id="deleteConventionMemberPay">
+        delete from convention_member where convention_no = #{conventionNo} and member_no = #{memberNo} and ticket_code is not null
+    </delete>
 
     <select id="selectOneConvention" resultType="convention">
         select * from convention where convention_no = #{conventionNo}

@@ -89,4 +89,8 @@ public interface ConventionDao {
 
   void updateMemberPayProgress3(List<MemberPayDTO> updateList);
 
+  int deleteConventionMemberPay(int conventionNo, int memberNo);
+
+  ConventionMemberDTO checkConventionLimit(int conventionNo);
+
 }

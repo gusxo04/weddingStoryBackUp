@@ -81,8 +81,12 @@ public class ConventionService {
     }
 
     @Transactional
-    public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay) {
+    public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay, int conventionLimit) {
         //티켓 코드 생성
+        ConventionMemberDTO conventionMemberDTO = conventionDao.checkConventionLimit(conventionMember.getConventionNo());
+        System.out.println(conventionMemberDTO);
+        if(conventionMemberDTO.getTicketCount() >= conventionLimit) return false;
+        
         Random random = new Random();
         conventionMember.setTicketCode("");
         while (true) {
@@ -117,6 +121,12 @@ public class ConventionService {
         }
 
         return result == 2;
+    }
+
+    @Transactional
+    public boolean deleteConventionMemberPay(int conventionNo, int memberNo) {
+        int result = conventionDao.deleteConventionMemberPay(conventionNo, memberNo);
+        return result == 1;
     }
 
     public ConventionDTO selectOneConvention(int conventionNo) {
@@ -331,6 +341,8 @@ public class ConventionService {
         if(updateList.isEmpty()) return;
         conventionDao.updateMemberPayProgress3(updateList);
     }
+
+
 
 
 

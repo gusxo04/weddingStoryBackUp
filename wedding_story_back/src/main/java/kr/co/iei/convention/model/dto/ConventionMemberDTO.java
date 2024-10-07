@@ -18,4 +18,5 @@ public class ConventionMemberDTO {
     private String ticketCode;
     private String memberEmail;
     //이메일은 알림 원하는 회원들만 받으면 됨
+    private int ticketCount;
 }

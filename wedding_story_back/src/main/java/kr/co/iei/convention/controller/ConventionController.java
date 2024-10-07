@@ -74,6 +74,8 @@ public class ConventionController {
         return ResponseEntity.ok(map);
     }
 
+
+
     @GetMapping("/layout/{searchType}")
     public ResponseEntity<Map> layout(@PathVariable int searchType) {
         System.out.println(searchType);
@@ -105,11 +107,19 @@ public class ConventionController {
 
     @PostMapping("/buy/ticket")
     public ResponseEntity<Boolean> conventionMemberPay(@ModelAttribute ConventionMemberDTO conventionMember,
-            @ModelAttribute MemberPayDTO memberPay) {
-        boolean result = conventionService.conventionMemberPay(conventionMember, memberPay);
+            @ModelAttribute MemberPayDTO memberPay, @ModelAttribute ConventionDTO convention) {
+        boolean result = conventionService.conventionMemberPay(conventionMember, memberPay, convention.getConventionLimit());
 
         System.out.println(conventionMember); // 넘어온 데이터 -> memberNo, memberEmail(알림받을)
         System.out.println(memberPay); // 넘어온 데이터 -> progressDate, payPrice, merchantUid
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/buy/ticket/{conventionNo}/{memberNo}")
+    public ResponseEntity<Boolean> deleteConventionMemberPay(@PathVariable int conventionNo, @PathVariable int memberNo){
+        // System.out.println(conventionNo);
+        // System.out.println(memberNo);
+        boolean result = conventionService.deleteConventionMemberPay(conventionNo, memberNo);
         return ResponseEntity.ok(result);
     }
 

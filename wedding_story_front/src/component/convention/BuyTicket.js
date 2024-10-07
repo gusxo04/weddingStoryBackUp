@@ -56,7 +56,6 @@ const BuyTicket = (props) => {
     dateScrollRef.current.scrollTop = 0;
   }, [showType]);
 
-  
   const submit = () => {
     dateMsgRef.current.style.display = "none";
     personalMsgRef.current.style.color = "black";
@@ -85,40 +84,41 @@ const BuyTicket = (props) => {
     const date = new Date();
 		const dateString = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()+""+date.getHours()+""+date.getMinutes()+""+date.getSeconds();
     
-    
-    window.IMP.request_pay({
-      pg: "html5_inicis.INIpayTest",
-      pay_method: "card",
-      merchant_uid: dateString,
-      name: "박람회 티켓",
-      amount: convention.conventionPrice,
-      // 나중에 회원 DB 조회해서 다 넣기
-      buyer_email: memberEmail,
-      buyer_name: memberName,
-      buyer_tel: memberPhone,
-      // buyer_addr: "서울특별시 강남구 신사동",
-      // buyer_postcode: "123-456"
-    }, rsp => {
-      if (rsp.success) {
-        // 결제 성공 시 로직
-        console.log(rsp);
-        //줘야할 데이터
-        // 회원번호 / 회원 알림이메일 / 구매 금액 / 박람회 번호 / merchant_uid
-        const form = new FormData();
-        form.append("memberNo", memberNoState);
-        form.append("conventionNo", convention.conventionNo);
-        form.append("memberEmail", fullNoticeEmail);
+    const form = new FormData();
+    form.append("memberNo", memberNoState);
+    form.append("conventionNo", convention.conventionNo);
+    form.append("memberEmail", fullNoticeEmail);
 
-        form.append("merchantUid", rsp.merchant_uid);
-        form.append("payPrice", convention.conventionPrice);
-        form.append("progressDate", selectDate);
-        form.append("progressTime", convention.conventionTime);
-        
-        axios.post(`${backServer}/convention/buy/ticket`, form)
-        .then(res => {
-          console.log(res);
-          if(res.data){
-            // 결제 성공시
+    form.append("merchantUid", dateString);
+    form.append("payPrice", convention.conventionPrice);
+    form.append("progressDate", selectDate);
+    form.append("progressTime", convention.conventionTime);
+
+    form.append("conventionLimit", convention.conventionLimit);
+
+    axios.post(`${backServer}/convention/buy/ticket`, form)
+    .then(res => {
+      console.log(res);
+      if(res.data){
+
+        window.IMP.request_pay({
+          pg: "html5_inicis.INIpayTest",
+          pay_method: "card",
+          merchant_uid: dateString,
+          name: "박람회 티켓",
+          amount: convention.conventionPrice,
+          // 나중에 회원 DB 조회해서 다 넣기
+          buyer_email: memberEmail,
+          buyer_name: memberName,
+          buyer_tel: memberPhone,
+          // buyer_addr: "서울특별시 강남구 신사동",
+          // buyer_postcode: "123-456"
+        }, rsp => {
+          if (rsp.success) {
+          // 결제 성공 시 로직
+            console.log(rsp);
+            //줘야할 데이터
+            // 회원번호 / 회원 알림이메일 / 구매 금액 / 박람회 번호 / merchant_uid
             setIsPayment(!isPayment);
             Swal.fire({
               title : "박람회 티켓",
@@ -127,29 +127,54 @@ const BuyTicket = (props) => {
               confirmButtonColor : "var(--main1)",
               confirmButtonText : "확인",
             })
-          }
-          // 근데 이거 나중에 true false를 리턴해서 체크하는게 아니라 정원수때문인지 뭔지도 이유 알려줘야 해서 바꿔야할 듯
-          else{
-            Swal.fire({
-              title : "박람회 티켓",
-              text : "잠시후 다시 시도해주세요",
-              timer : 2500,
-              confirmButtonColor : "var(--main1)",
-              confirmButtonText : "확인",
+          } 
+          else {
+            // 결제 실패 시 로직
+            // console.log('Payment failed', rsp.error_msg);
+            // 추가로 실행할 로직을 여기에 작성
+            // DB 에서 다시 삭제
+            axios.delete(`${backServer}/convention/buy/ticket/${convention.conventionNo}/${memberNoState}`)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.error(err); 
             })
           }
-
-          closeAlert(0, true);
-        })
-        .catch(err => {
-          console.error(err); 
-        })
-      } else {
-        // 결제 실패 시 로직
-        console.log('Payment failed', rsp.error_msg);
-        // 추가로 실행할 로직을 여기에 작성
+        });
+        // 결제 성공시
+        
       }
-    });
+      else{
+        setIsPayment(!isPayment);
+        Swal.fire({
+          title : "박람회 티켓",
+          text : "잠시후 다시 시도해주세요",
+          timer : 2500,
+          confirmButtonColor : "var(--main1)",
+          confirmButtonText : "확인",
+        })
+      }
+
+      closeAlert(0, true);
+    })
+    .catch(err => {
+      console.error(err); 
+      setIsPayment(!isPayment);
+      closeAlert(0, true);
+      Swal.fire({
+        title : "박람회 티켓",
+        text : "잠시후 다시 시도해주세요",
+        timer : 2500,
+        confirmButtonColor : "var(--main1)",
+        confirmButtonText : "확인",
+      })
+    })
+
+
+
+    
+    
     
   }
 
