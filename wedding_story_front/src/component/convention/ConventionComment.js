@@ -78,6 +78,7 @@ const writeCheck = () => {
   const getReComment = (e) => {
     setIsOpenReComment((prev) => ({...prev, [e]: !prev[e]}))
   }
+  console.log("is : ",isOpenReComment);
 
 
 

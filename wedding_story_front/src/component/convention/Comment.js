@@ -235,6 +235,8 @@ const Comment = (props) => {
     setChangedComment(!changedComment);
   }, [heightType]);
 
+
+
   return (
     <div className="convention-comment">
       <div className="convention-comment-header-zone-container">
@@ -305,7 +307,7 @@ const Comment = (props) => {
           <span className="cursor-p" ref={lineTypeRef} onClick={() => {
             if(lineType){
               contentContainerRef.current.style.height = heightType+"px";
-              console.log(heightType);
+              // console.log(heightType);
             }
             else{
               // contentContainerRef.current.style.height = commentLineHeight*c.conventionCommentContent.split("\n").length +"px";
