@@ -245,7 +245,11 @@ const Comment = (props) => {
           </div>
 
           <div className="convention-comment-date">
+            {heightType === 110 || heightType === 95 ? 
+            <span>{c.conventionCommentDate.substring(2,16)}</span>
+            :
             <span>{c.conventionCommentDate.substring(0,16)}</span>
+            }
           </div>
 
           <div className="convention-comment-is-edit">

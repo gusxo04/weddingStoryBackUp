@@ -213,7 +213,11 @@ const ReComment = (props) => {
             </div>
 
             <div className="convention-reComment-date">
+              {heightType === 110 || heightType === 95 ? 
+              <span>{rc.conventionCommentDate.substring(2,16)}</span>
+              :
               <span>{rc.conventionCommentDate.substring(0,16)}</span>
+              }
             </div>
 
             <div className="convention-reComment-is-edit">

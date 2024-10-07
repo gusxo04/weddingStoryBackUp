@@ -135,7 +135,6 @@ const ConventionMain = () => {
     }
   }
 
-  
   return (
     <div className="convention-wrap">
       <div className="convention-container">
@@ -150,7 +149,7 @@ const ConventionMain = () => {
         :
         ""} */}
         {Object.keys(convention).length > 0 ? 
-        endDate > 0 ?
+        endDate >= 0 ?
         // (startDate > 0 ? 
         //   <ShowConvention convention={convention} conventionShowDate={conventionShowDate} type={true} personalRef={personalRef} setSelectDate={setSelectDate} selectDate={selectDate} dateMsgRef={dateMsgRef} personalMsgRef={personalMsgRef} noticeEmail={noticeEmail} changeEmail={changeEmail} changeLastEmail={changeLastEmail} fullNoticeEmail={fullNoticeEmail} setNoticeEmail={setNoticeEmail} showType={showType} setShowType={setShowType} startDate={startDate} />  
         //   : 

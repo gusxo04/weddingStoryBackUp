@@ -343,9 +343,11 @@
 .convention-reComment>.convention-reComment-header-zone-container>.convention-reComment-header-zone-child1{
   /* width: 70%; */
   width: 67%;
-  margin-left: 3%;
+  /* margin-left: 3%; */
+  margin-left: 20px;
   display: flex;
   /* gap: 15px; */
+  flex-wrap: wrap;
 }
 
 .convention-reComment>.convention-reComment-header-zone-container>.convention-reComment-header-zone-child2{
@@ -367,7 +369,8 @@
 .convention-reComment>.convention-reComment-content-zone-container{
   /* width: 100%; */
   width: 97%;
-  margin-left: 3%;
+  /* margin-left: 3%; */
+  margin-left: 20px;
   word-wrap: break-word;
   word-break: break-all;
   /* display: -webkit-box;
@@ -389,7 +392,8 @@
 
 .convention-reComment-reply{
   width: 97%;
-  margin-left: 3%;
+  /* margin-left: 3%; */
+  margin-left: 20px;
   margin-top: 5px;
 }
 
