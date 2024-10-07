@@ -5,8 +5,8 @@ import PageNavi from "../../utils/PagiNavi";
 import styles from "./ProductAllList.module.css";
 import { MdFavorite } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
+
 const dummyData = [
-	{ productNo: 1, productName: "웨딩홀 A", productPrice: "100000", businessCode: "weddingHall" },
 	{ productNo: 2, productName: "스튜디오 B", productPrice: "200000", businessCode: "studio" },
 	{ productNo: 3, productName: "드레스 C", productPrice: "150000", businessCode: "dressShop" },
 	{ productNo: 4, productName: "메이크업 D", productPrice: "50000", businessCode: "makeUp" },
@@ -19,7 +19,6 @@ const dummyData = [
 ];
 
 const businessCodes = {
-	weddingHall: "웨딩홀",
 	studio: "스튜디오",
 	dressShop: "드레스",
 	makeUp: "메이크업",

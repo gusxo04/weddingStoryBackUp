@@ -2,37 +2,36 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./consult.css";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { loginNoState } from "../utils/RecoilData";
 
 const Consult = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const location = useLocation();
 
-  const productNo = location.state?.productNo;
-
-  console.log(productNo);
   const navigate = useNavigate();
-  const [memberNo, setMemberNo] = useRecoilState(loginNoState);
+  const memberNo = useRecoilValue(loginNoState);
   const [member, setMember] = useState({
     memberName: "",
     memberPhone: "",
   });
+  console.log(member);
+  
 
   const [product, setProduct] = useState({
-    productNo: "",
+    productNo: location.state?.productNo,
     productName: "",
   });
-
+  console.log(product);
   const [consult, setConsult] = useState({
     consultDate: "", //상담날짜
     consultTime: "", //상담시간
     reservation: "", //결혼식예정일(미정체크일시 null)
   });
+  console.log(member);
   const [isDateUndefined, setIsDateUndefined] = useState(false);
 
-  console.log(memberNo);
-  console.log(product);
+
   const changeConsult = (e) => {
     const { name, value } = e.target;
     setConsult({ ...consult, [name]: value });
@@ -57,14 +56,15 @@ const Consult = () => {
   // productNo를 기반으로 상품명 가져오기
   useEffect(() => {
     axios
-      .get(`${backServer}/consult/productNo/${productNo}`)
+      .get(`${backServer}/consult/productNo/${product.productNo}`)
       .then((res) => {
-        console.log(res);
+        setProduct({...product,productName:res.data.productName})
+
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [backServer, productNo]);
+  }, [backServer, product.productNo]);
 
   const requestData = {
     ...consult,
@@ -74,17 +74,25 @@ const Consult = () => {
 
   const consultForm = () => {
     const form = new FormData();
+    form.append("memberNo",memberNo);
     form.append("memberName", member.memberName);
     form.append("memberPhone", member.memberPhone);
     form.append("consultDate", consult.consultDate);
     form.append("consultTime", consult.consultTime);
     form.append("reservation", consult.reservation);
+    form.append("productName",product.productName);
+    form.append("productNo",product.productNo);
+    console.log(memberNo);
+    console.log(member.memberName);
+    console.log(consult.consultDate);
+    console.log(consult.consultTime);
+    console.log(consult.reservation);
+    
 
     axios
       .post(`${backServer}/consult`, form)
       .then((res) => {
         console.log(res);
-        //console.log(form);
       })
       .catch((err) => {
         console.error(err);

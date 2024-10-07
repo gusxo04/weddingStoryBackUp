@@ -51,15 +51,11 @@
 	</insert>
 
 	<select id="selectOneProduct" resultType="product">
-		select company_no,
-		product_name, product_img, product_price from product
-		where product_no
-		= #{productNo}
+		select* from product where product_no= #{productNo}
 	</select>
 
 	<select id="selectProductName" resultType="product">
-		select product_no,
-		product_name from product where product_no = #{productNo}
+		select product_name from product where product_no = #{productNo}
 	</select>
 
 	<select id="selectProductList" resultType="product">

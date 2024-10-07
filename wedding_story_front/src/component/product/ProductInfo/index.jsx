@@ -83,8 +83,8 @@ const ProductInfo = () => {
 						</Link>
 					)}
 
-					<Link to="/product/weddingHall" className={styles["btn"]}>
-						예약하기
+					<Link to="/product/pay" className={styles["btn"]}>
+						결제하기
 					</Link>
 				</div>
 				<div className={styles["product-content-wrap"]}>
