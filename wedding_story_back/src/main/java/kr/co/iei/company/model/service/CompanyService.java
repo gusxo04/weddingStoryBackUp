@@ -242,12 +242,22 @@ public class CompanyService {
 		return list;
 	}
 	
-	public List selectConsultList(String companyNo) {
+	public Map selectConsultList(String companyNo, int reqPage) {
 		List productNo = productDao.selectProductNo(companyNo);
-		System.out.println(productNo);
-		List consult = consultDao.selectConsultList(productNo);
 		
-		return consult;
+		
+		int totalPage = 0;
+		int numPerPage = 10; //한 페이지당 게시물 수
+		int pageNaviSize = 1; //페이지 네비 길이
+		totalPage  += consultDao.totalConsultCount(productNo);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);
+		
+		List consult = consultDao.selectConsultList(productNo,pi);
+		Map<String, Object> list = new HashMap<String, Object>();
+		list.put("consult",consult);
+		list.put("pi",pi);
+		System.out.println(list);
+		return list;
 	}
 	
 

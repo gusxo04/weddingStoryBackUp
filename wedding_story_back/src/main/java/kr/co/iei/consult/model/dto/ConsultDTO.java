@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.type.Alias;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.product.model.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,10 @@ public class ConsultDTO {
 	private String reservation;	//예식예정일
 	private String consultTitle;	//상담제목
 	private String consultWrite;	//상담내용
+	
+	//
+	private MemberDTO memberDTO;
+	private ProductDTO productDTO;
 	
 	//마이페이지 일정관리 모달에 들어갈 내용
 	private String companyNo;

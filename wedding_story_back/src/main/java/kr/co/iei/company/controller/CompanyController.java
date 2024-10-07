@@ -250,10 +250,10 @@ public class CompanyController {
 		CompanyDTO company = companyService.selectCompanyInfo(companyNo);
 		return ResponseEntity.ok(company);
 	}
-	//일정 조회 
-	@GetMapping(value="/schedule/{companyNo}")
-	public ResponseEntity<List> selectConsultList(@PathVariable String companyNo){
-		List<ConsultDTO> consult = companyService.selectConsultList(companyNo);
+	//일정 조회 (리스트 및 모달창에 들어갈 모든 데이터)
+	@GetMapping(value="/schedule/{companyNo}/{reqPage}")
+	public ResponseEntity<Map> selectConsultList(@PathVariable String companyNo, @PathVariable int reqPage){
+		Map consult = companyService.selectConsultList(companyNo,reqPage);
 		System.out.println(consult);
 		return ResponseEntity.ok(consult);
 	}
