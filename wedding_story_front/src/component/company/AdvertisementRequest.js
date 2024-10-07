@@ -109,7 +109,7 @@ const AdvertisementRequest = () => {
                 }}>
                 <div className="ad-main-content">
                     <div className="ad-rank">
-                        <label htmlFor="rank1">좋은거 (2주)</label>
+                        <label htmlFor="rank1">Premium (2주)</label>
                         <input
                             type="radio"
                             value={1}
@@ -118,7 +118,7 @@ const AdvertisementRequest = () => {
                             onChange={handleRankChange}
                             checked={ad.adRank === 1}
                         />
-                        <label htmlFor="rank2">덜 좋은거 (7일)</label>
+                        <label htmlFor="rank2">basic (7일)</label>
                         <input
                             type="radio"
                             value={2}

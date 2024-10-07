@@ -9,4 +9,12 @@
 		<select id="selectConsult" resultType="consult">
 			select * from consult
 		</select>
+		
+		<select id="selectConsultList" resultType="consult">
+			select * from consult 
+			where product_no in 
+			<foreach collection="productNo" item="No" open="(" close=")" separator=",">
+				#{No}
+			</foreach> 
+		</select>
 </mapper>
