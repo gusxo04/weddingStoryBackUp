@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
+import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductReviewDTO;
 import kr.co.iei.product.model.service.ProductReviewService;
 import kr.co.iei.util.FileUtils;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/product")
+@RequestMapping("/productComment")
 public class ProductReviewController {
 	@Autowired
 	private ProductReviewService productReviewService;
@@ -28,17 +30,30 @@ public class ProductReviewController {
 	
 	@Value("${file.root}")
 	public String root;
-	
+	//회원조회
 	@GetMapping(value = "/memberNo/{memberNo}")
 	public ResponseEntity<MemberDTO>selectMemberConsult(@PathVariable int memberNo){
 		MemberDTO member = productReviewService.selectMemberConsult(memberNo);
 		return ResponseEntity.ok(member);
 	}
-	/*
+	//상품조회
+	@GetMapping(value = "/productNo/{productNo}")
+	public ResponseEntity<ProductDTO>selectProduct(@PathVariable int productNo){
+		ProductDTO product = productReviewService.selectProduct(productNo);
+		return ResponseEntity.ok(product);
+	}
+	//결제조회
+	@GetMapping(value = "/payNo/{payNo}")
+	public ResponseEntity<MemberPayDTO>selectMemberPay(@PathVariable int payNo){
+		MemberPayDTO memberPay = productReviewService.selectMemberPay(payNo);
+		return ResponseEntity.ok(memberPay);
+	}
+	
+	//리뷰인서트
 	@PostMapping
-	public ResponseEntity<Integer> insertReview(@ModelAttribute ProductReviewDTO review, @ModelAttribute MemberDTO member){
-		int result = productReviewService.insertReview(review,member);
+	public ResponseEntity<Integer>insertReview(@ModelAttribute ProductReviewDTO productReview,@ModelAttribute MemberDTO member, @ModelAttribute ProductDTO product, @ModelAttribute MemberPayDTO memberPay){
+		int result = productReviewService.insertReview(productReview,member,product,memberPay);
 		return ResponseEntity.ok(result);
 	}
-	*/
+	
 }

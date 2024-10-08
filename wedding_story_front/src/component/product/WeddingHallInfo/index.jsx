@@ -114,7 +114,7 @@ const WeddingHallInfo = () => {
 				</div>
 				<br />
 				<div>
-					<ProductReview />
+					<ProductReview productNo={product.productNo} companyNo={company.companyNo} />
 				</div>
 				<br />
 				<div className={styles["product-faq"]}>
