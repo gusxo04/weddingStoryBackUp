@@ -1,376 +1,409 @@
 .join-wrap {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  border: none;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	border: none;
 }
 .join-wrap-content {
-  width: 1200px;
+	width: 1200px;
 }
 .join-wrap-content > div {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .join-step {
-  padding: 50px 0 10px 0;
+	padding: 50px 0 10px 0;
 }
 .join-step > ul {
-  display: flex;
-  gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 .step > span {
-  font-weight: 900;
+	font-weight: 900;
 }
 .join-agree-wrap {
-  width: 60%;
+	width: 60%;
 }
 .join-agree-wrap > div {
-  margin: 20px auto;
+	margin: 20px auto;
 }
 .join-agree-check {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 .join-agree-check > label {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 .join-agree-check > label > span {
-  font-size: 32px;
+	font-size: 32px;
 }
 .join-agree-check > input {
-  display: none;
+	display: none;
 }
 .join-agree-check > div {
-  display: flex;
-  gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 .join-agree-check > div > span {
-  font-weight: 700;
+	font-weight: 700;
 }
 .join-agree-check .material-icons {
-  color: #c9c9c9;
-  cursor: pointer;
+	color: #c9c9c9;
+	cursor: pointer;
 }
 .join-agree-content {
-  margin: 5px 0px 0px 30px;
+	margin: 5px 0px 0px 30px;
 }
 .join-agree-content > div {
-  width: 95%;
-  height: 100px;
-  border: 1px solid var(--main2);
-  border-radius: 10px;
-  overflow-y: scroll;
-  padding: 5px 15px;
-  font-size: 14px;
+	width: 95%;
+	height: 100px;
+	border: 1px solid var(--main2);
+	border-radius: 10px;
+	overflow-y: scroll;
+	padding: 5px 15px;
+	font-size: 14px;
 }
 .join-agree-content > p {
-  font-size: 14px;
+	font-size: 14px;
 }
 .join-btn {
-  display: flex;
-  justify-content: center;
-  padding-top: 20px;
+	display: flex;
+	justify-content: center;
+	padding-top: 20px;
 }
 .join-btn > button {
-  width: 70%;
-  height: 45px;
-  border: none;
-  border-radius: 10px;
-  background-color: var(--main2);
-  font-weight: 900;
+	width: 70%;
+	height: 45px;
+	border: none;
+	border-radius: 10px;
+	background-color: var(--main2);
+	font-weight: 900;
 }
 .join-type-wrap {
-  width: 60%;
+	width: 60%;
 }
 .join-type-wrap > div {
-  display: flex;
-  margin-top: 50px;
+	display: flex;
+	margin-top: 50px;
 }
 .join-line {
-  border-left: 2px solid #c9c9c9;
+	border-left: 2px solid #c9c9c9;
 }
 .join-type {
-  width: 50%;
+	width: 50%;
 }
 .join-type h3 {
-  width: 100%;
-  text-align: center;
+	width: 100%;
+	text-align: center;
 }
 .join-type p {
-  font-size: 15px;
+	font-size: 15px;
 }
 .type-dec {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 50px;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 50px;
 }
 .type-dec > div {
-  width: 80%;
-  height: 250px;
-  border: 1.5px solid var(--main2);
-  border-radius: 15px;
-  text-align: center;
+	width: 80%;
+	height: 250px;
+	border: 1.5px solid var(--main2);
+	border-radius: 15px;
+	text-align: center;
 }
 .type-dec > div > div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-  margin: 15px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 150px;
+	margin: 15px 0;
 }
 .type-dec .material-icons {
-  font-size: 150px;
-  cursor: auto;
+	font-size: 150px;
+	cursor: auto;
 }
 .type-btn {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .type-btn > button {
-  margin: 25px 0 30px 0;
-  width: 80%;
-  height: 45px;
-  border: none;
-  border-radius: 10px;
-  background-color: var(--main2);
-  font-weight: 900;
+	margin: 25px 0 30px 0;
+	width: 80%;
+	height: 45px;
+	border: none;
+	border-radius: 10px;
+	background-color: var(--main2);
+	font-weight: 900;
 }
 .join-info-wrap {
-  width: 70%;
+	width: 70%;
 }
 .join-info-wrap > form {
-  margin: 50px 0;
+	margin: 50px 0;
 }
 .join-info-wrap > form > div {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 8%;
+	display: flex;
+	justify-content: space-between;
+	padding-left: 8%;
 }
 .join-info1 {
-  width: 40%;
+	width: 40%;
 }
 .join-info2 {
-  width: 50%;
+	width: 50%;
 }
 .join-infobox {
-  margin-bottom: 40px;
+	margin-bottom: 40px;
 }
 .join-inputbox,
 .join-inputbox1,
 .join-inputbox2 {
-  margin-top: 5px;
+	margin-top: 5px;
 }
 .join-inputbox > input {
-  width: 300px;
-  border: none;
-  border-bottom: 1.5px solid #c9c9c9;
-  padding: 7px;
-  font-size: 16px;
+	width: 300px;
+	border: none;
+	border-bottom: 1.5px solid #c9c9c9;
+	padding: 7px;
+	font-size: 16px;
 }
 .join-inputbox1 > input {
-  width: 230px;
-  border: none;
-  border-bottom: 1.5px solid #c9c9c9;
-  padding: 7px;
-  font-size: 16px;
+	width: 230px;
+	border: none;
+	border-bottom: 1.5px solid #c9c9c9;
+	padding: 7px;
+	font-size: 16px;
 }
 .join-inputbox1 > button {
-  width: 70px;
-  height: 30px;
-  border: none;
-  border-radius: 10px;
-  background-color: var(--main2);
-  font-size: 12px;
+	width: 70px;
+	height: 30px;
+	border: none;
+	border-radius: 10px;
+	background-color: var(--main2);
+	font-size: 12px;
 }
 .join-infobox > .hiddenInput {
-  display: none;
+	display: none;
 }
 .join-labelbox {
-  display: flex;
+	display: flex;
 }
 .join-labelbox > div {
-  width: 35%;
-  margin: 10px 10px;
+	width: 35%;
+	margin: 10px 10px;
 }
 .join-labelbox > div > label {
-  border: 1px solid #c9c9c9;
-  border-radius: 10px;
-  width: 100%;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	border: 1px solid #c9c9c9;
+	border-radius: 10px;
+	width: 100%;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .join-inputbox .join-inputbox1 > input::placeholder {
-  color: #c9c9c9;
-  font-weight: 100;
-  opacity: 0.7;
+	color: #c9c9c9;
+	font-weight: 100;
+	opacity: 0.7;
 }
 .join-labelbox > div > label > input {
-  display: none;
+	display: none;
 }
 .join-labelbox .backGray {
-  background-color: var(--main2);
+	background-color: var(--main2);
 }
 
 .joinLine2 {
-  border-top: 1px solid #c9c9c9;
-  width: 100%;
-  margin-bottom: 15px;
+	border-top: 1px solid #c9c9c9;
+	width: 100%;
+	margin-bottom: 15px;
 }
 .join-partnerInfobox > h4 {
-  font-size: 15px;
+	font-size: 15px;
 }
 .join-partnerInfobox > p {
-  font-size: 10.5px;
+	font-size: 10.5px;
 }
 .join-partnerInfo {
-  display: flex;
-  gap: 88px;
-  margin-top: 20px;
+	display: flex;
+	gap: 88px;
+	margin-top: 20px;
 }
 .join-info-wrap > div {
-  margin-top: 15px;
+	margin-top: 15px;
 }
 .join-btn2 {
-  width: 100%;
+	width: 100%;
 }
 .join-btn2 > div {
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+	width: 80%;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
 }
 .join-btn2 > div > button {
-  width: 70%;
-  height: 45px;
-  border: none;
-  border-radius: 10px;
-  background-color: var(--main2);
-  font-weight: 900;
+	width: 70%;
+	height: 45px;
+	border: none;
+	border-radius: 10px;
+	background-color: var(--main2);
+	font-weight: 900;
 }
 .joinValid {
-  font-size: 12px;
+	font-size: 12px;
 }
 .joinInvalid {
-  color: red;
-  font-size: 12px;
+	color: red;
+	font-size: 12px;
 }
 
 .join-success-wrap {
-  width: 70%;
+	width: 70%;
 }
 .join-success-wrap > div {
-  display: flex;
-  justify-content: center;
-  margin: 50px 0;
+	display: flex;
+	justify-content: center;
+	margin: 50px 0;
 }
 .join-successLogo {
-  width: 250px;
+	width: 250px;
 }
 .join-successLogo > img {
-  width: 100%;
+	width: 100%;
 }
 .join-successWord1 {
-  text-align: center;
-  line-height: 50px;
+	text-align: center;
+	line-height: 50px;
 }
 .join-movePage {
-  gap: 30px;
+	gap: 30px;
 }
 
 .join-movePage-btn {
-  width: 150px;
-  height: 45px;
-  border: none;
-  border-radius: 20px;
-  background-color: var(--main2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 150px;
+	height: 45px;
+	border: none;
+	border-radius: 20px;
+	background-color: var(--main2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .join-movePage > :last-child > div {
-  background-color: #fff;
-  border: 2px solid var(--main2);
+	background-color: #fff;
+	border: 2px solid var(--main2);
 }
 .login-wrap {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  border: none;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	border: none;
 }
 .login-wrap-content {
-  width: 1200px;
-  display: flex;
-  justify-content: center;
+	width: 1200px;
+	display: flex;
+	justify-content: center;
 }
 .login-wrap-content > div {
-  width: 60%;
+	width: 60%;
 }
 .login-wrap-content > div > div {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .login-title {
-  padding: 60px 0 10px 0;
+	padding: 60px 0 10px 0;
 }
 .login-inputbox {
-  padding: 30px 0;
+	padding: 30px 0;
 }
 .login-inputbox > form {
-  width: 100%;
+	width: 100%;
 }
 .login-input {
-  padding: 10px 0;
-  display: flex;
-  justify-content: center;
+	padding: 10px 0;
+	display: flex;
+	justify-content: center;
 }
 .login-input > input {
-  width: 50%;
-  padding: 5px 20px;
-  height: 40px;
-  border: 1px solid #c9c9c9;
-  background-color: #e0e0e0;
-  border-radius: 7px;
-  font-size: 16px;
+	width: 50%;
+	padding: 5px 20px;
+	height: 40px;
+	border: 1px solid #c9c9c9;
+	background-color: #e0e0e0;
+	border-radius: 7px;
+	font-size: 16px;
 }
 .login-input > input::placeholder {
-  color: #bbbbbb;
+	color: #bbbbbb;
 }
 .login-button > div {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 .login-button button {
-  width: 55%;
-  padding: 5px 20px;
-  height: 45px;
-  background-color: var(--main2);
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
+	width: 55%;
+	padding: 5px 20px;
+	height: 45px;
+	background-color: var(--main2);
+	border: none;
+	border-radius: 25px;
+	font-size: 16px;
 }
 .login-linkBox {
-  padding: 20px 0 30px 0;
-  gap: 30px;
-  font-size: 14px;
-  justify-content: center;
+	padding: 20px 0 30px 0;
+	gap: 30px;
+	font-size: 14px;
+	justify-content: center;
 }
 .login-simple-line > div {
-  width: 60%;
-  display: flex;
-  justify-content: center;
+	width: 60%;
+	display: flex;
+	justify-content: center;
 }
 .login-simple-info {
-  width: 50%;
-  font-size: 14px;
-  font-weight: 700;
-  text-align: center;
+	width: 50%;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
 }
 .login-simple-line .joinLine2 {
-  margin-top: 10px;
+	margin-top: 10px;
+}
+.admin-join-wrap {
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+}
+.admin-join-wrap > .join-info1 {
+	width: 314px;
+}
+.admin-join-btn {
+	display: flex;
+	justify-content: center;
+}
+.admin-join-btn button {
+	width: 55%;
+	padding: 5px 20px;
+	height: 45px;
+	background-color: var(--main2);
+	border: none;
+	border-radius: 25px;
+	font-size: 16px;
+}
+.admin-join-wrap > .join-info1 > .radio-group {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	padding: 10px 0;
+}
+.admin-join-wrap > .join-info1 > div {
+	margin-bottom: 20px;
+}
+.admin-join-wrap .join-infobox label {
+	padding-left: 5px;
 }
