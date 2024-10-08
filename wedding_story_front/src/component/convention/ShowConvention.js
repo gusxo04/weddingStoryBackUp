@@ -303,7 +303,7 @@ const ShowConvention = (props) => {
       
       
       {alertType === 2 ? 
-      <ConventionLocate closeAlert={closeAlert} />
+      <ConventionLocate closeAlert={closeAlert} setAlertType={setAlertType} />
       :
       alertType === 3 ? 
       <BuyTicket closeAlert={closeAlert}
