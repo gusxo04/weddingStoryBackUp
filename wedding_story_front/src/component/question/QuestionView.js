@@ -41,7 +41,7 @@ const QuestionView =()=>{
         <div className="question-wrap">
             <div className="question-main-wrap">
             <h2>문의 상세보기</h2>
-                <div className="card qstitle">
+                <div className="card2 qstitle">
                     <h3>{question.questionTitle}</h3>
                      <div className="content contentcard">
                         <a>{question.questionContent}</a>

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import "./noticeWrite.css";
 
 const NoticeFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -98,7 +99,7 @@ const NoticeFrm = (props) => {
         ></input>
       </div>
       <div className="notice-info-wrap">
-        <table className="tbl1">
+        <table className="tbl1 noticefrmtbl">
           <tbody>
             <tr>
               <th style={{ width: "30%" }}>

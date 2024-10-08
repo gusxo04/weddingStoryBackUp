@@ -14,10 +14,25 @@
   max-height: 75%;
   width: auto;
   height: auto;
+  
+  margin: auto;
 }
 
 .file-wrap {
   text-align: left;
   padding-left: 15px;
   box-sizing: border-box;
+}
+.notice-info-wrap{
+  text-align: left;
+}
+.tbl3 th{
+  text-align: center;
+}
+.notice-content-wrap{
+  text-align: left;
+}
+.notice-thumb-wrap{
+  width: 100%;
+  text-align: center;
 }

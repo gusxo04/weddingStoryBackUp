@@ -64,12 +64,6 @@ const QuestionMain = () => {
                                         <span>결제</span>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link to="/question/write/5">
-                                        <span className="material-icons mi" style={{ fontSize: '48px' }}>chat</span>
-                                        <span>리뷰 신고</span>
-                                    </Link>
-                                </li>
                             </ul>
                         </div>
                     </div>
