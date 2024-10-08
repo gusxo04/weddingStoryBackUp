@@ -169,7 +169,6 @@ public class MemberService {
 
 	public List<ConsultDTO> consultList(int memberNo) {
 		List<ConsultDTO> list = memberDao.consultList(memberNo);
-		System.out.println("list :"+list);
 		for(ConsultDTO consult : list) {
 			if(consult.getCompanyNo().equals("0")) {
 				CompanyDTO company = memberDao.conventionList(consult.getConsultDate());
@@ -187,7 +186,6 @@ public class MemberService {
 	public List<MemberPayDTO> paymentList(int memberNo, String state) {
 		List<MemberPayDTO> list = memberDao.paymentList(memberNo,state);
 		for(MemberPayDTO pay : list) {
-			
 			StringTokenizer sT = new StringTokenizer(pay.getPayDate(), "/");
 			while (sT.hasMoreElements()) {
 				int year = 0, month = 0, day = 0;
@@ -206,7 +204,6 @@ public class MemberService {
 			    year += 2000;  // 24는 2024년으로 변환
 			    }
 			    String formattedDateString = String.format("%04d.%02d.%02d", year, month, day);
-			    
 			    pay.setPayDate(formattedDateString);
 			}		
 			
