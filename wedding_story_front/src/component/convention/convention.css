@@ -240,7 +240,7 @@
 }
 
 .convention-personal-info-wrap{
-    height: 10%;
+    height: 7%;
     /* background-color: aquamarine; */
     display: flex;
     justify-content: center;
@@ -259,16 +259,20 @@
 }
 
 .convention-btn-wrap{
-    height: 15%;
+    height: 13%;
     /* background-color: black; */
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5%;
 }
+.convention-personal-msg{
+    height: 5%;
+    
+}
 .convention-btn-wrap>button{
     width: 15%;
-    height: 35%;
+    height: 40%;
     border: none;
     font-size: 16px;
     font-weight: 600;

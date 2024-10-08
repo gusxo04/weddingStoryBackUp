@@ -32,9 +32,7 @@ import kr.co.iei.convention.model.dto.RefundRequest;
 import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
-import kr.co.iei.util.EmailSender;
 import kr.co.iei.util.FileUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
