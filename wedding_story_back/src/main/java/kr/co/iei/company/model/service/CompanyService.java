@@ -220,6 +220,7 @@ public class CompanyService {
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);//pageUtil을 사용하여 페이지 갯수 생성
 		List<AdvertisementDTO> advert = advertisementDao.selectAdvertisementList(pi,companyNo);
 		Map<String,Object> list = new HashMap<String, Object>();
+		System.out.println(advert);
 		list.put("advert", advert);
 		list.put("pi",pi);
 		return list;

@@ -28,23 +28,27 @@
   	update advertisement set advertisement_state=5 where advertisement_no=#{advertisementNo}
   </update>
   <insert id="insertAdvertisement">
-  	insert into advertisement values(advertisement_seq.nextval,#{companyNo},#{adRank},#{adStart},#{adEnd},#{adRequest},0,#{productNo})
+  	insert into advertisement values(advertisement_seq.nextval,#{companyNo},#{adRank},#{adStart},#{adEnd},#{adRequest},0,#{productNo},to_char(sysdate,'yyyy-mm-dd'))
   </insert>
   <select id="totalCount" resultType="int">
   	select count(*) from advertisement where company_no =#{companyNo}
   </select>
   <select id="selectAdvertisementList" resultType="advertisement">
   	
-  select * from 
+    select * from 
   (select rownum as rnum, b.* from 
   (select 
-	   company_no,
-	   ad_rank,
-	   TRUNC(ad_Start) as adStart,
-       TRUNC(ad_End) as adEnd,
-  	   ad_Request,
-  	   advertisement_state
-   from advertisement where company_no = #{companyNo} order by 1 desc) b)
+	   a.company_no,
+	   a.ad_rank,
+	   to_char(a.ad_Start, 'yyyy-mm-dd') as adStart,
+       to_char(a.ad_End,'yyyy-mm-dd') as adEnd,
+  	   a.ad_Request,
+  	   a.advertisement_state,
+       p.product_no,
+       p.product_name
+   from advertisement a
+   join product p on a.product_no = p.product_no
+   where a.company_no = #{companyNo} order by 1 desc) b)
   where rnum between #{pi.start} and #{pi.end}
   </select>
 </mapper>

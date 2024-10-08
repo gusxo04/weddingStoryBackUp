@@ -58,12 +58,14 @@ const CompanyAdvertisement = () => {
 					<table className="tbl">
 						<thead border={1}>
 							<tr>
-								<th style={{ width: "10%" }}>업체코드</th>
-								<th style={{ width: "10%" }}>광고등급</th>
-								<th style={{ width: "15%" }}>광고 시작일자</th>
-								<th style={{ width: "15%" }}>광고 종료일자</th>
-								<th style={{ width: "%40" }}>요청내용</th>
-								<th style={{ width: "10%" }}>진행도</th>
+								<th style={{ width: "5%" }}>상품 번호</th>
+								<th style={{ width: "15%" }}>상품명 </th>
+								<th style={{ width: "7%" }}>광고등급</th>
+								<th style={{ width: "7%" }}>광고 시작일자</th>
+								<th style={{ width: "7%" }}>광고 종료일자</th>
+								<th style={{ width: "30%" }}>요청내용</th>
+								<th style={{ width: "7%" }}>진행도</th>
+								<th style={{ width: "6%" }}>결제.</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -87,12 +89,22 @@ const AdvertItem = (props) => {
 
 	return (
 		<tr>
-			<td style={{ width: "10%" }}>{advert.companyNo}</td>
-			<td style={{ width: "10%" }}>{advert.adRank === 1 ? "premium" : "basic"}</td>
-			<td style={{ width: "15%" }}>{advert.adStart}</td>
-			<td style={{ width: "15%" }}>{advert.adEnd}</td>
-			<td style={{ width: "%40" }}>{advert.adRequest}</td>
-			<td style={{ width: "10%" }}>{advert.advertisementState}</td>
+			<td style={{ width: "5%" }}>{advert.productNo}</td>
+			<td style={{ width: "15%" }}>{advert.productName}</td>
+			<td style={{ width: "7%" }}>{advert.adRank === 1 ? "premium" : "basic"}</td>
+			<td style={{ width: "10%" }}>{advert.adStart}</td>
+			<td style={{ width: "10%" }}>{advert.adEnd}</td>
+			<td style={{ width: "30%" }}>{advert.adRequest}</td>
+			<td style={{ width: "10%" }}>
+				{advert.advertisementState === 0
+					? "승인대기"
+					: advert.advertisementState === 1
+						? "광고대기"
+						: advert.advertisementState === 2
+							? "광고중"
+							: "광고종료"}
+			</td>
+			<td style={{ width: "10%" }}>{advert.advertisementState === 4 ? <button type="submit">결제하기</button> : "X"}</td>
 		</tr>
 	);
 };

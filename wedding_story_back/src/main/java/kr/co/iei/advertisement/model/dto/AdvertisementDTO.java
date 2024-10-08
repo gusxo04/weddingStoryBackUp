@@ -6,6 +6,7 @@ import org.apache.ibatis.type.Alias;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.product.model.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,7 @@ public class AdvertisementDTO {
 	private String adRequest;
 	private int advertisementState;
 	private int productNo;
+	private String productName;
 	private CompanyDTO company;
+	
 }
