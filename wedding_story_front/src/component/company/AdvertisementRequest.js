@@ -35,6 +35,14 @@ const AdvertisementRequest = () => {
 		}));
 	};
 
+	const getTodayDate = () => {
+		const today = new Date();
+		const year = today.getFullYear();
+		const month = (today.getMonth() + 1).toString().padStart(2, "0"); // Ensure 2 digits for month
+		const day = today.getDate().toString().padStart(2, "0"); // Ensure 2 digits for day
+		return `${year}-${month}-${day}`;
+	};
+
 	// 라디오 값에 따라 end 날짜 제한 계산 (7일 또는 14일)
 	const calculateEndDateLimit = (startDate, rank) => {
 		if (!startDate) return null;
@@ -132,7 +140,7 @@ const AdvertisementRequest = () => {
 						<div className="ad-date-zone">
 							<div className="ad-date-input">
 								<label htmlFor="start">시작일: </label>
-								<input type="date" id="start" name="adStart" value={ad.adStart} onChange={handleDateChange} />
+								<input type="date" id="start" name="adStart" value={ad.adStart} onChange={handleDateChange} min={getTodayDate()} />
 							</div>
 							<span className="ad-date-span"> ~ </span>
 							<div className="ad-date-input">

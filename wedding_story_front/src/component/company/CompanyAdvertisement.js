@@ -96,7 +96,7 @@ const CompanyAdvertisement = () => {
 			(rsp) => {
 				if (rsp.success) {
 					// 결제 성공 시 로직
-					callback(rsp);
+					callback(rsp, advert);
 					//줘야할 데이터
 					// 회원번호 / 회원 알림이메일 / 구매 금액 / 박람회 번호 / merchant_uid
 				} else {
@@ -109,14 +109,13 @@ const CompanyAdvertisement = () => {
 			},
 		);
 	};
-	const callback = (response) => {
+	const callback = (response, advert) => {
 		const form = new FormData();
 		form.append("companyNo", companyNo);
 		form.append("advertisementNo", advert.advertisementNo);
 		form.append("payDate", advert.adRequestDate);
 		form.append("merchantUid", response.merchant_uid);
-		form.append("payPrice", totalPrice);
-		console.log([...form]);
+		form.append("payPrice", totalPrice(advert));
 		axios
 			.post(`${backServer}/company/companyPay`, form)
 			.then((res) => {
@@ -146,7 +145,7 @@ const CompanyAdvertisement = () => {
 
 					<div className="navi-request">
 						<Link to={"/company/advertisementRequest"}>
-							<button type="button" ref={insertRef} disabled={disableButton}>
+							<button className="advert" type="button" ref={insertRef} disabled={disableButton}>
 								광고 신청
 							</button>
 						</Link>
@@ -200,18 +199,26 @@ const AdvertItem = (props) => {
 				{advert.advertisementState === 0
 					? "승인대기"
 					: advert.advertisementState === 1
-						? "광고대기"
+						? "결제완료"
 						: advert.advertisementState === 2
 							? "광고중"
-							: "광고종료"}
+							: advert.advertisementState === 3
+								? "광고종료"
+								: advert.advertisementState === 4
+									? "결제요청"
+									: advert.advertisementState === 5
+										? "승인 거절"
+										: ""}
 			</td>
 			<td style={{ width: "10%" }}>
 				{advert.advertisementState === 4 ? (
 					<button type="submit" onClick={() => requestPay(advert)}>
 						결제하기
 					</button>
+				) : advert.advertisementState === 1 ? (
+					"완료"
 				) : (
-					"X"
+					"-"
 				)}
 			</td>
 		</tr>
