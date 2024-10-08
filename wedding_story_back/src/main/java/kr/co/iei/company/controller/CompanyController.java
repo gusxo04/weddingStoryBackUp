@@ -29,6 +29,7 @@ import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.company.model.service.CompanyService;
 import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
 import kr.co.iei.util.FileUtils;
@@ -277,6 +278,13 @@ public class CompanyController {
 		return ResponseEntity.ok(consult);
 	}
 	
+	//매출 조회 
+	@GetMapping(value="/sales/{companyNo}")
+	public ResponseEntity<List>selectSalesData(@PathVariable String companyNo){
+		List memberPay = companyService.selectSalesData(companyNo);
+		
+		return ResponseEntity.ok(memberPay);
+	}
 	
 	
 }
