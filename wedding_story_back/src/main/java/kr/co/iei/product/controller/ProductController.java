@@ -102,5 +102,12 @@ public class ProductController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping(value = "/favorite")
+	public ResponseEntity<ProductFavoriteDTO> favoriteOneList(@ModelAttribute ProductFavoriteDTO favorite){
+		ProductFavoriteDTO productFavorite = productService.favoriteOneList(favorite);
+		return ResponseEntity.ok(productFavorite);
+	}
+	
+	
 	
 }

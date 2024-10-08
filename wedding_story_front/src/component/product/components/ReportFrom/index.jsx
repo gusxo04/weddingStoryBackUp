@@ -8,7 +8,7 @@ import { companyNoState, loginNoState } from "../../../utils/RecoilData";
 const Report = (props) => {
 	const companyNo = props.companyNo;
 	const [isOpen, setIsOpen] = useState(false);
-	console.log(companyNo);
+	//console.log(companyNo);
 	const handleOpen = () => {
 		setIsOpen(true);
 	};
@@ -36,7 +36,7 @@ const Report = (props) => {
 const ReportForm = (props, { onClose }) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const companyNo = props.companyNo;
-	console.log(companyNo);
+	//console.log(companyNo);
 
 	const [memberNo, setMemberNo] = useRecoilState(loginNoState);
 	const [report, setReport] = useState({
@@ -65,7 +65,7 @@ const ReportForm = (props, { onClose }) => {
 		formData.append("memberNo", memberNo);
 		formData.append("companyNo", companyNo);
 		formData.append("reportContent", report.reportContent); // REPORT_CONTENT 필드 추가
-		console.log([...formData]);
+		//console.log([...formData]);
 		axios
 			.post(`${backServer}/report`, formData)
 			.then((res) => {

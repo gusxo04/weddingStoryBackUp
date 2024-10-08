@@ -1,7 +1,7 @@
 /*제품 스드메제품 보기 전체css*/
 .board-list {
 	/*width: 100%;*/
-	min-width: 1200px;
+	width: 1200px;
 	padding: 30px;
 	border-radius: 10px;
 	/* background-color: var(--main2); */

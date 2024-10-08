@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 public class ProductFavoriteDTO {
 	private int productNo;	//상품번호
 	private int memberNo;	//회원번호
+	private int likes;		//좋아요(0:안누른거,1:누른거)
 	private Boolean likeState; //true, false로 체크 
 }
