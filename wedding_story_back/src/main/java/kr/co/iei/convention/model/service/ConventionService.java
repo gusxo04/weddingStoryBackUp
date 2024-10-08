@@ -155,8 +155,8 @@ public class ConventionService {
         // System.out.println("request : " + request);
         String accessToken = getAccessToken();
         try {
-            Thread.sleep(3000);
-            // 3초 지연시켜서 환불이 바로 가능하도록 했음
+            Thread.sleep(1000);
+            // 1초 지연시켜서 환불이 바로 가능하도록 했음
         } catch (InterruptedException e) {
             // Thread.currentThread().interrupt();
             e.printStackTrace();

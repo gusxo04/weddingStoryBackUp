@@ -106,7 +106,7 @@ const CompanyHeader = () => {
 										</Link>
 									</li>
 									<li>
-										<Link to="#" className="down-menu">
+										<Link to="/company/notice/list" className="down-menu">
 											공지사항
 										</Link>
 									</li>
