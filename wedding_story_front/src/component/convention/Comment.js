@@ -143,15 +143,29 @@ const Comment = (props) => {
   }
 
   const removeComment = () => {
-    axios.delete(`${backServer}/convention/${c.conventionCommentNo}`,)
-    .then((res) => {
-      // console.log(res);
-      if(res.data){
-        setChangedComment(!changedComment);
+    Swal.fire({
+      title : "박람회 댓글",
+      text : "댓글을 삭제하시겠습니까?",
+      icon : "question",
+      iconColor : "var(--main1)",
+      confirmButtonText : "삭제",
+      confirmButtonColor : "var(--main1)",
+      cancelButtonText : "취소",
+      cancelButtonColor : "#ccc",
+      showCancelButton : true
+    }).then((data) => {
+      if(data.isConfirmed){
+        axios.delete(`${backServer}/convention/${c.conventionCommentNo}`,)
+        .then((res) => {
+          // console.log(res);
+          if(res.data){
+            setChangedComment(!changedComment);
+          }
+        })
+        .catch((err) => {
+          console.error(err); 
+        })
       }
-    })
-    .catch((err) => {
-      console.error(err); 
     })
     
   }

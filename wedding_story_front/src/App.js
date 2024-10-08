@@ -17,13 +17,7 @@ import AdminHeader from "./component/common/AdminHeader";
 import Join from "./component/member/Join";
 import ConventionLobby from "./component/convention/ConventionLobby";
 import Login from "./component/member/Login";
-import {
-  companyNoState,
-  loginIdState,
-  loginNoState,
-  memberCodeState,
-  memberTypeState,
-} from "./component/utils/RecoilData";
+import { companyNoState, loginIdState, loginNoState, memberCodeState, memberTypeState } from "./component/utils/RecoilData";
 import AdminMenu from "./component/admin/AdminMenu";
 import MyPage from "./component/member/MyPage";
 import { Report } from "./component/product/components";
@@ -32,68 +26,68 @@ import Home from "./component/common/Home";
 import Question from "./component/question/Question";
 
 function App() {
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [loginNo, setLoginNo] = useRecoilState(loginNoState);
-  const [loginId, setLoginId] = useRecoilState(loginIdState);
-  const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
-  const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+	const backServer = process.env.REACT_APP_BACK_SERVER;
+	const [loginNo, setLoginNo] = useRecoilState(loginNoState);
+	const [loginId, setLoginId] = useRecoilState(loginIdState);
+	const [memberType, setMemberType] = useRecoilState(memberTypeState);
+	const [memberCode, setMemberCode] = useRecoilState(memberCodeState);
+	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
 
-  const refreshLogin = () => {
-    const refreshToken = window.localStorage.getItem("refreshToken");
-    if (refreshToken !== null) {
-      axios.defaults.headers.common["Authorization"] = refreshToken;
-      axios
-        .post(`${backServer}/member/refresh`)
-        .then((res) => {
-          setLoginNo(res.data.memberNo);
-          setLoginId(res.data.memberId);
-          setMemberType(res.data.memberType);
-          setMemberCode(res.data.memberCode);
-          setCompanyNo(res.data.companyNo);
-          axios.defaults.headers.common["Authorization"] = res.data.accessToken;
-          window.localStorage.setItem("refreshToken", res.data.refreshToken);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoginNo(0);
-          setLoginId("");
-          setMemberType(-1);
-          setMemberCode("");
-          setCompanyNo("");
-          delete axios.defaults.headers.common["Authorization"];
-          window.localStorage.removeItem("refreshToken");
-        });
-    }
-  };
-  const location = useLocation();
-  useEffect(() => {
-    refreshLogin();
-  });
-  const isAdminPage = location.pathname.startsWith("/admin");
-  return (
-    <div className="wrap">
-      <Header />
-      {/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
+	const refreshLogin = () => {
+		const refreshToken = window.localStorage.getItem("refreshToken");
+		if (refreshToken !== null) {
+			axios.defaults.headers.common["Authorization"] = refreshToken;
+			axios
+				.post(`${backServer}/member/refresh`)
+				.then((res) => {
+					setLoginNo(res.data.memberNo);
+					setLoginId(res.data.memberId);
+					setMemberType(res.data.memberType);
+					setMemberCode(res.data.memberCode);
+					setCompanyNo(res.data.companyNo);
+					axios.defaults.headers.common["Authorization"] = res.data.accessToken;
+					window.localStorage.setItem("refreshToken", res.data.refreshToken);
+				})
+				.catch((err) => {
+					console.log(err);
+					setLoginNo(0);
+					setLoginId("");
+					setMemberType(-1);
+					setMemberCode("");
+					setCompanyNo("");
+					delete axios.defaults.headers.common["Authorization"];
+					window.localStorage.removeItem("refreshToken");
+				});
+		}
+	};
+	const location = useLocation();
+	useEffect(() => {
+		refreshLogin();
+	});
+	const isAdminPage = location.pathname.startsWith("/admin");
+	return (
+		<div className="wrap">
+			<Header />
+			{/*path에 따라서 헤더 결정 common에 사용할 헤더 컴포넌트 추가후에 조건 걸어주기!! -dy*/}
 
-      <main className="content-wrap">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/join/*" element={<Join />} />
-          <Route path="/myPage/*" element={<MyPage />} />
-          <Route path="/convention/*" element={<ConventionLobby />} />
-          <Route path="/product/*" element={<ProductMain />} />
-          <Route path="/consult/*" element={<Consult />} />
-          <Route path="/admin/*" element={<Admin />} />
-          <Route path="/company/*" element={<CompanyMain />} />
-          <Route path="/report" element={<Report />} />
-          <Route path="/question/*" element={<Question />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
-  );
+			<main className="content-wrap">
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/join/*" element={<Join />} />
+					<Route path="/myPage/*" element={<MyPage />} />
+					<Route path="/convention/*" element={<ConventionLobby />} />
+					<Route path="/product/*" element={<ProductMain />} />
+					<Route path="/consult/*" element={<Consult />} />
+					<Route path="/admin/*" element={<Admin />} />
+					<Route path="/company/*" element={<CompanyMain />} />
+					<Route path="/report/:companyNo" element={<Report />} />
+					<Route path="/question/*" element={<Question />} />
+				</Routes>
+			</main>
+			<Footer />
+		</div>
+	);
 }
 
 export default App;

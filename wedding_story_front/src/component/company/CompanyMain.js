@@ -26,7 +26,29 @@ const CompanyMain = () => {
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
 	const [loginNo, setLoginNo] = useRecoilState(loginNoState);
 	console.log(companyNo);
-
+	useEffect(() => {
+		// 외부 스크립트 로드 함수
+		const loadScript = (src, callback) => {
+			const script = document.createElement("script");
+			script.type = "text/javascript";
+			script.src = src;
+			script.onload = callback;
+			document.head.appendChild(script);
+		};
+		// 스크립트 로드 후 실행
+		loadScript("https://code.jquery.com/jquery-1.12.4.min.js", () => {
+			loadScript("https://cdn.iamport.kr/js/iamport.payment-1.2.0.js", () => {
+				const IMP = window.IMP;
+				// 가맹점 식별코드
+				IMP.init("imp67386065");
+			});
+		});
+		// 컴포넌트가 언마운트될 때 스크립트를 제거하기 위한 정리 함수
+		return () => {
+			const scripts = document.querySelectorAll('script[src^="https://"]');
+			scripts.forEach((script) => script.remove());
+		};
+	}, []);
 	return (
 		<>
 			<div className="company-wrap">
