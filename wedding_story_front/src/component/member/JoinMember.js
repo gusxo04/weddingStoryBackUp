@@ -188,6 +188,20 @@ const JoinMember = (props) => {
 						icon: "info",
 					});
 				});
+		} else if (
+			idCheck !== 3 ||
+			pwCheck !== 2 ||
+			rePwCheck !== 2 ||
+			phoneCheck !== 2 ||
+			emailCheck !== 2 ||
+			codeCheck !== 1 ||
+			member.memberGender === null
+		) {
+			Swal.fire({
+				text: "정보를 기입 또는 확인해주세요.",
+				icon: "info",
+				confirmButtonText: "확인",
+			});
 		}
 	};
 	return (

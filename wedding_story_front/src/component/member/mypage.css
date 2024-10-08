@@ -461,6 +461,21 @@
 	font-weight: 700;
 	font-weight: 300;
 }
+.mypage-payment-moreBtn {
+	display: flex;
+	justify-content: center;
+}
+.mypage-payment-moreBtn button {
+	width: 40%;
+	height: 40px;
+	background-color: transparent;
+	border: 0.5px solid #c9c9c9;
+	font-size: 16px;
+	color: #808080;
+}
+.mypage-payment-moreBtn button span {
+	color: #808080;
+}
 
 /**관심상품 css*/
 .mypage-favorite-wrap {
@@ -468,6 +483,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 15px; /* 썸네일 간 간격 조절 */
+	padding: 8px;
 }
 .mypage-favorite-product {
 	height: 100%;
@@ -477,7 +493,6 @@
 	margin-bottom: 10px;
 }
 .favorite-productImgBox {
-	border: 1px solid #777777;
 	padding-top: 100%;
 	position: relative;
 	border: none;

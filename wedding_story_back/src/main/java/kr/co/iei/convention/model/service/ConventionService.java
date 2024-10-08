@@ -171,6 +171,7 @@ public class ConventionService {
                 // result = conventionDao.updateMemberPayKind(request);
                 // result += conventionDao.deleteConventionMember(request);
                 result = conventionDao.updateMemberPay(request);
+                if(request.getTicketNo() == 0) return result == 1;
                 result += conventionDao.updateConventionMemberTicket(request);
                 return result == 2;
             } else if (request.getCompanyNo() != null) {

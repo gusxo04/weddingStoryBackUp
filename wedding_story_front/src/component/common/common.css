@@ -1,324 +1,399 @@
 .wrap {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 /*고객용 css*/
 .header {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 180px;
-  border-bottom: 1px solid #c9c9c9;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
-  background-color: #fff;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 180px;
+	border-bottom: 1px solid #c9c9c9;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
+	background-color: #fff;
 }
 .header-content {
-  width: 1200px;
-  /* width: 75%; */
-  /* background-color: #808080; */
-  height: 100%;
+	width: 1200px;
+	/* width: 75%; */
+	/* background-color: #808080; */
+	height: 100%;
 }
 .header-link {
-  display: flex;
-  justify-content: flex-end;
-  height: 10%;
-  gap: 20px;
-  font-size: 12px;
-  padding-top: 10px;
+	display: flex;
+	justify-content: flex-end;
+	height: 10%;
+	gap: 20px;
+	font-size: 12px;
+	padding-top: 10px;
 }
 .header-link > a:hover {
-  font-weight: 700;
+	font-weight: 700;
 }
 .header-logo {
-  display: flex;
-  justify-content: center;
-  height: 65%;
+	display: flex;
+	justify-content: center;
+	height: 65%;
 }
 .header-logo > a {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .header-img {
-  width: 70%;
-  height: 80%;
-  margin-top: 20px;
+	width: 70%;
+	height: 80%;
+	margin-top: 10px;
 }
 .header-img > img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
 }
 .header-nav {
-  display: flex;
-  justify-content: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 .nav-main {
-  display: flex;
-  gap: 80px;
+	display: flex;
+	gap: 80px;
+	padding: 0;
+	margin: 0;
 }
-.nav-main > li:hover {
-  font-weight: 900;
-  border-bottom: 2px solid var(--main1);
+.nav-main > li {
+	position: relative;
+	cursor: pointer;
+}
+.nav-menu {
+	width: 100px;
+	text-align: center;
+}
+.nav-main > li > a {
+	width: 100%;
+}
+.nav-menu:hover > a {
+	font-weight: 900;
+	border-bottom: 2px solid var(--main1);
+}
+.nav-main > li:hover .nav-suv {
+	display: block; /* 호버 시 서브 메뉴 표시 */
+}
+.nav-suv-menu:hover > a {
+	font-weight: 900;
+}
+.nav-suv-menu span {
+	padding-bottom: 2px;
 }
 .nav-suv {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+	display: none; /* 기본적으로 숨김 */
+	position: absolute; /* 부모 li를 기준으로 위치 설정 */
+	padding-top: 8px;
+	list-style: none;
+	margin: 0;
+	z-index: 2;
+}
+.nav-suv li {
+	width: 150px;
+	display: block; /* 세로형으로 표시 */
+	padding: 10px;
+	background-color: var(--main2);
+	opacity: 0.8;
+}
+.nav-suv li:hover {
+	opacity: 1;
+}
+.nav-suv li:hover > a {
+	font-weight: 900;
+}
+.nav-suv li > a {
+	padding-left: 20px;
 }
 
 /*업체용 css*/
 .header-c {
-  display: flex;
-  width: 100%;
-  height: 120px;
-  background-color: var(--main2);
+	display: flex;
+	width: 100%;
+	height: 120px;
+	background-color: var(--main2);
 }
 .header-c-logo {
-  width: 340px;
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
-  gap: 5px;
+	width: 340px;
+	display: flex;
+	align-items: center;
+	padding-left: 20px;
+	gap: 5px;
 }
 
 .header-c-logo > div > span {
-  color: var(--main1);
-  font-weight: 700;
+	color: var(--main1);
+	font-weight: 700;
 }
 .header-c-mainlogo {
-  max-width: 40%;
+	max-width: 40%;
 }
 .header-a-mainlogo {
-  max-width: 80%;
+	max-width: 80%;
 }
 .header-c-mainlogo > img {
-  max-width: 100%;
+	max-width: 100%;
 }
 .header-a-mainlogo > img {
-  max-width: 100%;
+	max-width: 100%;
 }
 .header-c-content {
-  width: 1200px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 120px;
+	width: 1200px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 120px;
 }
 .header-c-content > ul {
-  display: flex;
-  gap: 100px;
+	display: flex;
+	gap: 100px;
 }
 .nav-item {
-  justify-content: center;
+	justify-content: center;
 }
 .nav-item > div {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .nav-item > div > span {
-  font-size: 30px;
+	font-size: 30px;
 }
 
 /*----업체 사용자메뉴 다운메뉴바 추가 2024-09-24 오전10:09 김도엽--------------------------------------------*/
 .info-menu {
-  display: flex;
-  justify-content: space-around;
+	display: flex;
+	justify-content: space-around;
 }
 .down-menu-bar {
-  position: absolute;
-  margin-top: 66px;
+	position: absolute;
+	margin-top: 66px;
 }
 .down-menu-bar > li {
-  font-size: 20px;
-  padding: 5px 0px;
-  background-color: var(--main2);
-  width: 200px;
-  text-align: center;
+	font-size: 20px;
+	padding: 5px 0px;
+	background-color: var(--main2);
+	width: 200px;
+	text-align: center;
 }
 
 .content-wrap {
-  /* width: 100%; */
-  flex-grow: 1;
-  /* margin: 0 auto; */
-  /* display: flex; */
-  /* justify-content: center; */
+	/* width: 100%; */
+	flex-grow: 1;
+	/* margin: 0 auto; */
+	/* display: flex; */
+	/* justify-content: center; */
 }
 
 .footer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 150px;
-  border-top: 1px solid #c9c9c9;
-  background-color: #fff;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 150px;
+	border-top: 1px solid #c9c9c9;
+	background-color: #fff;
 }
 .footer-content {
-  width: 1200px;
-  height: 100%;
+	width: 1200px;
+	height: 100%;
 }
 .footer-content > div {
-  padding-top: 15px;
-  display: flex;
-  gap: 15px;
+	padding-top: 15px;
+	display: flex;
+	gap: 15px;
 }
 .footer-logo {
-  width: 150px;
-  height: 30px;
+	width: 150px;
+	height: 30px;
 }
 .footer-logo > img {
-  max-width: 100%;
+	max-width: 100%;
 }
 .footer-link > ul {
-  display: flex;
-  gap: 10px;
-  font-size: 13px;
-  padding-top: 5px;
+	display: flex;
+	gap: 10px;
+	font-size: 13px;
+	padding-top: 5px;
 }
 .footer-info > p {
-  font-size: 12px;
-  color: #808080;
-  padding-left: 20px;
+	font-size: 12px;
+	color: #808080;
+	padding-left: 20px;
 }
 .footer-cs {
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 .footer-cs > p {
-  font-size: 14px;
-  padding-left: 20px;
+	font-size: 14px;
+	padding-left: 20px;
 }
 .cs-link {
-  display: flex;
-  gap: 10px;
-  padding-right: 20px;
+	display: flex;
+	gap: 10px;
+	padding-right: 20px;
 }
 
 /* 현태의 기본 display:flex css 속성  */
 .df-basic {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /*메인홈 css*/
 .banner-container {
-  width: 100%;
-  height: 380px;
-  overflow: hidden; /* 이미지가 밖으로 넘치지 않도록 */
-  position: relative;
+	width: 100%;
+	height: 380px;
+	overflow: hidden; /* 이미지가 밖으로 넘치지 않도록 */
+	position: relative;
 }
 
 .banner-slider {
-  display: flex;
-  width: 100%; /* 이미지가 3개이므로 300% */
-  height: 100%;
-  transition: transform 0.5s ease-in-out; /* 슬라이드 애니메이션 */
+	display: flex;
+	width: 100%; /* 이미지가 3개이므로 300% */
+	height: 100%;
+	transition: transform 0.5s ease-in-out; /* 슬라이드 애니메이션 */
 }
 
 .banner-imgBox {
-  width: 100%;
-  flex-shrink: 0; /* flex 컨테이너가 각 이미지를 동일한 너비로 유지 */
+	width: 100%;
+	flex-shrink: 0; /* flex 컨테이너가 각 이미지를 동일한 너비로 유지 */
 }
 
 .banner-imgBox img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 이미지를 div에 맞게 */
+	width: 100%;
+	height: 100%;
+	object-fit: cover; /* 이미지를 div에 맞게 */
 }
 /* 화살표 버튼 스타일 */
 .arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  border: none;
-  border-radius: 30px;
-  color: white;
-  font-size: 2rem;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 10;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: rgba(0, 0, 0, 0.5);
+	border: none;
+	border-radius: 30px;
+	color: white;
+	font-size: 2rem;
+	padding: 10px;
+	cursor: pointer;
+	z-index: 10;
 }
 
 .arrow.left {
-  left: 250px;
+	left: 250px;
 }
 
 .arrow.right {
-  right: 250px;
+	right: 250px;
 }
 .banner-container a {
-  width: 100%;
-  height: 380px;
+	width: 100%;
+	height: 380px;
 }
 
 .home-section1-wrap,
 .home-section2-wrap {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 120px;
-  padding-top: 70px;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 120px;
+	padding-top: 70px;
 }
 .home-section1-titleBox,
 .home-section2-titleBox {
-  display: flex;
-  justify-content: center;
-  margin: 40px 0;
+	display: flex;
+	justify-content: center;
+	margin: 40px 0;
+}
+.home-section1-slider {
+	width: 1200px;
+	display: flex;
+	justify-content: space-between;
+	overflow: hidden;
+	margin: 0 auto;
+}
+.home-section1-productBox-wrapper {
+	overflow: hidden;
+	width: 1100px; /* 보여줄 영역의 너비 */
 }
 .home-section1-productBox {
-  width: 1200px;
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
+	gap: 20px; /* 썸네일 간 간격 조절 */
+	transition: transform 0.3s ease-in-out;
 }
 .home-section1-product {
-  width: calc(100% / 5);
-  height: 300px;
+	height: 100%;
+	flex: 0 0 calc(25% - 20px); /* 각 썸네일의 너비를 3개씩 배치하기 위해 33.33%로 설정, 간격 제외 */
+	box-sizing: border-box;
+	text-align: left; /* 텍스트 정렬 */
+	margin-bottom: 10px;
+	cursor: pointer;
 }
 .sec1-productImgBox {
-  width: 100%;
-  height: 80%;
-  position: relative;
+	padding-top: 100%;
+	position: relative;
+	border: none;
+	overflow: hidden;
 }
 .sec1-productImgBox > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 1s ease;
+}
+.sec1-productImgBox:hover img {
+	transform: scale(1.05);
+}
+.home-section1-slider button {
+	transform: translateY(-10%);
+	background-color: transparent;
+	color: var(--main2);
+	font-size: 28px;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
 }
 .home-section2-wrap {
-  background-color: rgba(220, 228, 233, 0.3);
+	background-color: rgba(220, 228, 233, 0.3);
 }
 .home-section2 {
-  width: 1200px;
+	width: 1200px;
 }
 .home-section2-infoBox {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 50px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 50px;
 }
 .home-section2-infoBox > div {
-  background-color: #fff;
+	background-color: #fff;
 }
 .home-section2-infoImg {
-  width: 100%;
+	width: 100%;
 }
 .home-section2-infoImg > img {
-  width: 100%;
+	width: 100%;
 }
 .home-section2-infoInfo {
-  height: 80px;
-  padding: 10px;
+	height: 80px;
+	padding: 10px;
 }
 .arrow2 {
-  top: 50%;
-  transform: translateY(0%);
-  background-color: transparent;
-  border: none;
-  border-radius: 30px;
-  color: rgba(220, 228, 233);
-  font-size: 2rem;
-  cursor: pointer;
+	top: 50%;
+	transform: translateY(0%);
+	background-color: transparent;
+	border: none;
+	border-radius: 30px;
+	color: rgba(220, 228, 233);
+	font-size: 2rem;
+	cursor: pointer;
 }
