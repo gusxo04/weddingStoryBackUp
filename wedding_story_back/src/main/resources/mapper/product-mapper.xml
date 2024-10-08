@@ -85,7 +85,7 @@
 	</select>
 
 	<select id="productHallList" resultType="product">
-		select * from product
+		select * from product 
 	</select>
 
 	<update id="updateProductInfo">

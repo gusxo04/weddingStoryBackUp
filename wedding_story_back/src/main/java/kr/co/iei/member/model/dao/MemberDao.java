@@ -84,5 +84,8 @@ public interface MemberDao {
 	int insertMemberPay(MemberPayDTO memberPay, MemberDTO member, ProductDTO product);
 
 	MemberDTO getMemberNo(int memberNo);
+	
+	//리뷰결제번호조회
+	MemberPayDTO selectMemberPay(int payNo);
 
 }
