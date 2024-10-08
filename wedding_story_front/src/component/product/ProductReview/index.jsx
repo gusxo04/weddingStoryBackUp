@@ -53,7 +53,6 @@ const ProductReview = () => {
 	const [member, setMember] = useState({
 		memberId: "",
 	});
-
 	const [reviews, setReviews] = useState({});
 	const [currentReview, setCurrentReview] = useState(null);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -90,7 +89,6 @@ const ProductReview = () => {
 			memberNo, //회원번호
 			rating: reviewData.rating, //별점
 			review: reviewData.review, //리뷰내용
-			creationDate: new Date(), //작성일
 			image: reviewData.image || null, // 리뷰 객체에 이미지 추가
 		};
 
@@ -150,7 +148,6 @@ const ProductReview = () => {
 										}}
 									/>
 								)}
-
 								<div style={{ display: "flex", justifyContent: "center", alignItems: "center", columnGap: "10px" }}>
 									<button onClick={() => handleEditReview(review)}>수정</button>
 									<button onClick={() => handleDeleteReview(review.productCommentNo)}>삭제</button>

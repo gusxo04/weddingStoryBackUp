@@ -265,13 +265,17 @@
 	 select company_no,product_no,product_name,product_IMG,product_price from favorite_product join product using(product_no) order by 2 desc
 </select>
 <insert id="favoriteInsert">
-	insert into favorite_product values(favorite_product_seq.nextval,#{memberNo},#{productNo})
+	insert into favorite_product values(favorite_product_seq.nextval,#{memberNo},#{productNo},#{likes})
 </insert>
 <delete id="favoritedelete">
 	delete from favorite_product where member_no=#{memberNo} and product_no=#{productNo}
 </delete>
 <select id="selectAdvertProductNo" resultType="product">
 	select product_no ,product_name from product where company_no = #{companyNo}
+</select>
+
+<select id="favoriteOneList" resultType="productFavorite">
+	select * from favorite_product where member_no = #{memberNo}
 </select>
 
 </mapper>

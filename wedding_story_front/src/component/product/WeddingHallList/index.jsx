@@ -13,6 +13,7 @@ const WeddingHallList = () => {
 	const [productList, setProductList] = useState([]);
 	const [reqPage, setReqPage] = useState(1);
 	const [pi, setPi] = useState({});
+	const [visibleCount, setVisibleCount] = useState(12);
 
 	useEffect(() => {
 		axios
@@ -21,11 +22,27 @@ const WeddingHallList = () => {
 				console.log(res);
 				setProductList(res.data.list); //게시물
 				setPi(res.data.pi); //페이지넘버링
+				console.log(pi);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, [reqPage]);
+
+	const handleScroll = () => {
+		if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
+			// 페이지 하단에 도달하면 8개 더 로드
+			setVisibleCount((prevCount) => prevCount + 8);
+		}
+	};
+	useEffect(() => {
+		// 컴포넌트가 마운트되면 스크롤 이벤트 리스너 추가
+		window.addEventListener("scroll", handleScroll);
+		return () => {
+			// 컴포넌트가 언마운트될 때 스크롤 이벤트 리스너 제거
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
 
 	return (
 		<section className={styles["board-list"]}>
@@ -35,14 +52,10 @@ const WeddingHallList = () => {
 
 			<div className={styles["product-list-wrap"]}>
 				<ul className={styles["posting-wrap"]}>
-					{productList.map((product, i) => {
+					{productList.slice(0, visibleCount).map((product, i) => {
 						return <BoardItem key={"product-" + i} product={product} />;
 					})}
 				</ul>
-			</div>
-
-			<div className={styles["board-paging-wrap"]}>
-				<PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
 			</div>
 		</section>
 	);
@@ -56,13 +69,25 @@ const BoardItem = (props) => {
 	const navigate = useNavigate();
 	const [liked, setLiked] = useState(false);
 
+	// 서버에서 좋아요 상태 받아오기
+	useEffect(() => {
+		axios
+			.get(`${backServer}/product/favorite/${productNo}/${memberNo}`)
+			.then((res) => {
+				setLiked(res.data.liked); // 서버에서 받은 좋아요 상태 설정
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [productNo, memberNo]);
+
 	const handleLikeToggle = (e) => {
 		e.stopPropagation(); //클릭 시 상품정보로 이동되는 것을 방지
 
 		setLiked((prev) => !prev);
 		// 선택적으로 여기에서 좋아요 상태를 서버에 보낼 수 있습니다.
 		axios
-			.post(`${backServer}/product/favorite`, { productNo: productNo, memberNo: memberNo, likeState: !liked })
+			.post(`${backServer}/product/favorite`, { productNo: productNo, memberNo: memberNo, likes: 1 })
 			.then((res) => {
 				console.log(res);
 			})
@@ -70,6 +95,7 @@ const BoardItem = (props) => {
 				console.log(err);
 			});
 	};
+
 	const NumberFormatter = ({ number }) => {
 		const formattedNumber = new Intl.NumberFormat("ko-KR").format(number);
 		return <span>{formattedNumber}</span>;
