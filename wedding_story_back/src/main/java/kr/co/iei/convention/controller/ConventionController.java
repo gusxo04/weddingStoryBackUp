@@ -33,6 +33,8 @@ import kr.co.iei.convention.model.service.ConventionService;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.util.FileUtils;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -74,7 +76,12 @@ public class ConventionController {
         return ResponseEntity.ok(map);
     }
 
-
+    @GetMapping("/check/writePermission")
+    public ResponseEntity<Boolean> checkWritePermission() {
+        boolean result = conventionService.checkWritePermission();
+        return ResponseEntity.ok(result);
+    }
+    
 
     @GetMapping("/layout/{searchType}")
     public ResponseEntity<Map> layout(@PathVariable int searchType) {

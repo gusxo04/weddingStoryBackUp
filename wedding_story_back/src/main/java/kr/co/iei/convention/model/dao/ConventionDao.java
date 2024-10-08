@@ -95,4 +95,6 @@ public interface ConventionDao {
 
   ConventionDTO checkConventionDate(int conventionNo);
 
+  ConventionDTO checkWritePermission();
+
 }

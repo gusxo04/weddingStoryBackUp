@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./conventionWriteForm.css";
 import CheckLayout from "./CheckLayout";
+import Swal from "sweetalert2";
 
 const InsertConvention = () => {
   
@@ -35,6 +36,27 @@ const InsertConvention = () => {
   const priceRef = useRef(null);
   const imgRef = useRef(null);
 
+
+  useEffect(() => {
+    axios.get(`${backServer}/convention/check/writePermission`)
+    .then((res) => {
+      console.log(res.data);
+      if(res.data) {
+        Swal.fire({
+          title : "박람회 작성",
+          text : "이미 박람회가 개최되어있습니다.",
+          confirmButtonText : "돌아가기",
+          confirmButtonColor : "var(--main1)",
+          icon : "info",
+          iconColor : "var(--main1)"
+        })
+        navigate("/convention/main");
+      }
+    })
+    .catch((err) => {
+      console.error(err); 
+    })
+  }, []);
   
   useEffect(() => {
     setConventionTime(conventionStartTime+" ~ "+conventionEndTime);
