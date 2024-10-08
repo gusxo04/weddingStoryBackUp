@@ -105,6 +105,11 @@ const CompanyHeader = () => {
 											광고 요청
 										</Link>
 									</li>
+									<li>
+										<Link to="#" className="down-menu">
+											공지사항
+										</Link>
+									</li>
 								</ul>
 							)}
 						</li>
