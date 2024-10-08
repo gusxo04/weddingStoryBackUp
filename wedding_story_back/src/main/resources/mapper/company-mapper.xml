@@ -91,6 +91,7 @@
 		company_name, company_addr from company where company_no =
 		#{companyNo}
 	</select>
+	
 	<select id="getCompanyList2" resultType="company">
 		select 
 		company_no,
@@ -101,6 +102,10 @@
 		company_info,
 		company_state
 		from company where company_state=1 order by company_name
+	</select>
+
+	<select id="selectOneCompanyNo" resultType="company">
+		select * from company where company_no = #{companyNo}
 	</select>
 
 </mapper>
