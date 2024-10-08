@@ -61,7 +61,7 @@ const BoardItem = (props) => {
 		setLiked((prev) => !prev);
 		// 선택적으로 여기에서 좋아요 상태를 서버에 보낼 수 있습니다.
 		axios
-			.post(`${backServer}/product/favorite`, { productNo: product.productNo, memberNo: memberNo, likeState: !liked })
+			.post(`${backServer}/product/favorite`, { productNo: product.productNo, memberNo: memberNo, favirite: !liked })
 			.then((res) => {
 				console.log(res);
 			})
