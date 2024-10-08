@@ -66,6 +66,12 @@
         select count(ticket_no) as ticket_count from convention_member where convention_no = #{conventionNo} and ticket_code is not null
     </select>
 
+    <select id="checkConventionDate" resultType="convention">
+        select convention_no from convention 
+        where convention_no = #{conventionNo} and 
+            sysdate <![CDATA[ < ]]> convention_start
+    </select>
+
     <delete id="deleteConventionMemberPay">
         delete from convention_member where convention_no = #{conventionNo} and member_no = #{memberNo} and ticket_code is not null
     </delete>

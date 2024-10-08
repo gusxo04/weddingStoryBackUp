@@ -93,4 +93,6 @@ public interface ConventionDao {
 
   ConventionMemberDTO checkConventionLimit(int conventionNo);
 
+  ConventionDTO checkConventionDate(int conventionNo);
+
 }

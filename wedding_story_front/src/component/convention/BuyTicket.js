@@ -38,6 +38,7 @@ const BuyTicket = (props) => {
   const checkRef = useRef(null);
   const checkEmailRef = useRef(null);
   const dateScrollRef = useRef(null);
+  const personalInfoMsgRef = useRef(null);
 
   useEffect(() => {
     axios.get(`${backServer}/convention/get/memberInfo/${memberNoState}`)
@@ -262,6 +263,7 @@ const BuyTicket = (props) => {
 
         <div className="convention-personal-info-wrap">
           <span className="material-icons cursor-p" ref={checkRef} id="convention-personal-info" onClick={() => {
+            personalInfoMsgRef.current.style.display = "none";
             checkRef.current.style.color = "black";
             setShowType(!showType);
             setCheckable(true);
@@ -271,9 +273,22 @@ const BuyTicket = (props) => {
           <input type="checkbox" id="personal" ref={personalRef} onClick={() => {
             if(checkable) return;
             // 옆에 정보 보기는 한 번은 눌러야 체크 가능함
+            personalInfoMsgRef.current.style = "flex";
             personalRef.current.checked = false;
             checkRef.current.style.color = "var(--red2)";
           }} />
+        </div>
+
+        <div className="convention-personal-msg df-basic">
+          <div ref={personalInfoMsgRef} style={{display:"none"}}>
+            <span className="material-icons cursor-p" id="convention-personal-info" onClick={() => {
+                checkRef.current.style.color = "black";
+                setShowType(!showType);
+                setCheckable(true);
+              }}>info</span>
+            <span>를 눌러 약관을 읽어주세요</span>
+
+          </div>
         </div>
 
         <div className="convention-btn-wrap">

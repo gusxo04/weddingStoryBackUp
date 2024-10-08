@@ -91,8 +91,9 @@ public class ConventionService {
     public boolean conventionMemberPay(ConventionMemberDTO conventionMember, MemberPayDTO memberPay, int conventionLimit) {
         //티켓 코드 생성
         ConventionMemberDTO conventionMemberDTO = conventionDao.checkConventionLimit(conventionMember.getConventionNo());
-        // System.out.println(conventionMemberDTO);
         if(conventionMemberDTO.getTicketCount() >= conventionLimit) return false;
+        ConventionDTO conventionDTO = conventionDao.checkConventionDate(conventionMember.getConventionNo());
+        if(conventionDTO == null) return false;
         
         Random random = new Random();
         conventionMember.setTicketCode("");
@@ -220,9 +221,10 @@ public class ConventionService {
     @Transactional
     public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
         ConventionSeatDTO conventionSeatDTO = conventionDao.getConventionSeat(conventionCompany);
-        if (conventionSeatDTO == null) {
-            return false;
-        }
+        if (conventionSeatDTO == null) return false;
+        ConventionDTO conventionDTO = conventionDao.checkConventionDate(conventionCompany.getConventionNo());
+        if(conventionDTO == null) return false;
+        
         int result = conventionDao.insertConventionCompany(conventionCompany);
         if (result > 0) {
             result += conventionDao.insertCompanyPay(companyPay);
