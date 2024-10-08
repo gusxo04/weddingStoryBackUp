@@ -23,6 +23,7 @@ import kr.co.iei.consult.model.dao.ConsultDao;
 import kr.co.iei.consult.model.dto.ConsultDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dao.ProductDao;
 import kr.co.iei.product.model.dto.ProductDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
@@ -271,6 +272,7 @@ public class CompanyService {
 	}
 	
 	//광고 결제 정보 등록
+	@Transactional
 	public int insertCompanyPayDate(CompanyPayDTO companyPay) {
 		int result = companyDao.insertCompanyPayDate(companyPay);
 		if(result > 0) {
@@ -281,6 +283,12 @@ public class CompanyService {
 		}
 		
 		
+	}
+	public List<MemberPayDTO> selectSalesData(String companyNo) {
+		List<MemberPayDTO> memberPay = memberDao.selectSalesData(companyNo);
+		
+		
+		return null;
 	}
 	
 

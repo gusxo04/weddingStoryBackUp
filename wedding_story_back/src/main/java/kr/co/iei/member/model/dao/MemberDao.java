@@ -85,4 +85,6 @@ public interface MemberDao {
 
 	MemberDTO getMemberNo(int memberNo);
 
+	List<MemberPayDTO> selectSalesData(String companyNo);
+
 }

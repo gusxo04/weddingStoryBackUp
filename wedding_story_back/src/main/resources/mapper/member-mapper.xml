@@ -220,5 +220,9 @@
 		insert into member_pay values (member_pay_seq.nextval, #{member.memberNo}, #{product.productNo},null,to_char(sysdate,'yy/mm/dd'),#{memberPay.progressDate},#{memberPay.progressTime},#{memberPay.payPrice}, #{memberPay.progress},#{memberPay.merchantUid})
 	</insert>
 	
+	<select id="selectSalesData" resultType="memberPay">
+		select 
+	</select>
+	
 	
 </mapper>

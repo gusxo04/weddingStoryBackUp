@@ -35,7 +35,7 @@ const CompanyAdvertisement = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [companyNo, reqPage]);
+	}, [companyNo, reqPage, advert]);
 
 	const totalPrice = (advert) => {
 		if (advert.advertisementState === 4) {
@@ -162,7 +162,7 @@ const CompanyAdvertisement = () => {
 									<th style={{ width: "10%" }}>요청날짜</th>
 									<th style={{ width: "20%" }}>요청내용</th>
 									<th style={{ width: "7%" }}>진행도</th>
-									<th style={{ width: "6%" }}>결제.</th>
+									<th style={{ width: "6%" }}>결제</th>
 								</tr>
 							</thead>
 							<tbody>
