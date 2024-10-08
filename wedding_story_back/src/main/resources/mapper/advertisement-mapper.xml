@@ -28,7 +28,7 @@
   	delete from advertisement where advertisement_no=#{adNo}
   </delete>
   <insert id="insertAdvertisement">
-  	insert into advertisement values(advertisement_seq.nextval,#{companyNo},#{adRank},#{adStart},#{adEnd},#{adRequest},0)
+  	insert into advertisement values(advertisement_seq.nextval,#{companyNo},#{adRank},#{adStart},#{adEnd},#{adRequest},0,#{productNo})
   </insert>
   <select id="totalCount" resultType="int">
   	select count(*) from advertisement where company_no =#{companyNo}

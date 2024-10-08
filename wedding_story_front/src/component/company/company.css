@@ -1,410 +1,419 @@
 .company-wrap {
-  display: flex;
+	display: flex;
 }
 .side-info {
-  min-width: 310px;
-  height: 300px;
-  border: 1px solid black;
-  margin-left: 50px;
-  margin-top: 100px;
+	min-width: 310px;
+	height: 300px;
+	border: 1px solid black;
+	margin-left: 50px;
+	margin-top: 100px;
 }
 
 /*---Join--------------------------------------------------------*/
 .company-join-wrap {
-  width: 1200px;
-  border: 1px solid #ccc;
-  margin: 50px 90px;
-  margin-top: 90px;
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 50px 90px;
+	margin-top: 90px;
 }
 .company-title {
-  font-size: 30px;
-  margin: 20px 0px;
-  padding-left: 100px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 20px;
+	font-size: 30px;
+	margin: 20px 0px;
+	padding-left: 100px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 20px;
 }
 .company-section {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .thumbnail-zone {
-  width: 400px;
-  height: 400px;
+	width: 400px;
+	height: 400px;
 }
 
 .company-thumbnail {
-  width: 350px;
-  height: 350px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  display: block;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-bottom: 10px;
+	width: 350px;
+	height: 350px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	display: block;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-bottom: 10px;
 
-  overflow: hidden; /* 이미지가 div 밖으로 나가지 않도록 설정 */
-  display: flex; /* Flexbox 활성화 (선택 사항) */
-  justify-content: center; /* 중앙 정렬 (선택 사항) */
-  align-items: center; /* 수직 중앙 정렬 (선택 사항) */
+	overflow: hidden; /* 이미지가 div 밖으로 나가지 않도록 설정 */
+	display: flex; /* Flexbox 활성화 (선택 사항) */
+	justify-content: center; /* 중앙 정렬 (선택 사항) */
+	align-items: center; /* 수직 중앙 정렬 (선택 사항) */
 }
 .company-thumbnail + span {
-  padding-left: 170px;
+	padding-left: 170px;
 }
 .company-input-wrap {
-  margin: 20px 0px;
-  font-size: 16px;
+	margin: 20px 0px;
+	font-size: 16px;
 }
 .company-input-wrap > label {
-  display: inline-block;
-  width: 150px;
-  text-align: center;
+	display: inline-block;
+	width: 150px;
+	text-align: center;
 }
 .company-select-wrap {
-  display: flex;
-  margin: 20px 0px;
+	display: flex;
+	margin: 20px 0px;
 }
 .company-select-wrap > label {
-  width: 150px;
-  text-align: center;
-  margin: auto 0;
+	width: 150px;
+	text-align: center;
+	margin: auto 0;
 }
 .company-select-wrap > span {
-  text-align: center;
-  font-size: 30px;
-  line-height: 30px;
-  margin: 0 10px;
+	text-align: center;
+	font-size: 30px;
+	line-height: 30px;
+	margin: 0 10px;
 }
 .time-select > div {
-  min-width: 200px;
-  width: 200px;
-  margin: auto 0;
+	min-width: 200px;
+	width: 200px;
+	margin: auto 0;
 }
 .category-select > div {
-  min-width: 200px;
-  width: 200px;
+	min-width: 200px;
+	width: 200px;
 }
 .checkbox {
-  display: inline;
+	display: inline;
 }
 .keyWord {
-  margin: 0 5px;
-  font-size: 18px;
+	margin: 0 5px;
+	font-size: 18px;
 }
 /*.material-icons {
    font-size: 16px;
   cursor: pointer; 
 }*/
 .keyWord-wrap {
-  width: 1000px;
-  margin: 0 auto;
+	width: 1000px;
+	margin: 0 auto;
 }
 .company-input-wrap > input {
-  height: 30px;
-  width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding-left: 10px;
+	height: 30px;
+	width: 400px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding-left: 10px;
 }
 .company-input-wrap > #companyTel {
-  width: 100px;
+	width: 100px;
 }
 .company-input-wrap > #companyTel + span {
-  margin: 0px 20px;
+	margin: 0px 20px;
 }
 .company-input-wrap > #companyAddr + button {
-  margin-left: 10px;
-  position: relative;
-  border: none;
-  display: inline-block;
-  padding: 6px 30px;
-  border-radius: 15px;
-  font-weight: 600;
+	margin-left: 10px;
+	position: relative;
+	border: none;
+	display: inline-block;
+	padding: 6px 30px;
+	border-radius: 15px;
+	font-weight: 600;
 }
 .checkbox > input {
-  margin-right: 15px;
-  margin-left: 4px;
+	margin-right: 15px;
+	margin-left: 4px;
 }
 .introduction-wrap {
-  margin-bottom: 50px;
+	margin-bottom: 50px;
 }
 .introduction-wrap > div,
 .introduction-wrap > textarea {
-  margin-left: 100px;
-  margin-top: 10px;
+	margin-left: 100px;
+	margin-top: 10px;
 }
 .introduction-wrap > textarea {
-  resize: none;
-  width: 1000px;
-  height: 70px;
-  font-size: 17px;
-  padding: 8px;
-  border-color: #ccc;
+	resize: none;
+	width: 1000px;
+	height: 70px;
+	font-size: 17px;
+	padding: 8px;
+	border-color: #ccc;
 }
 .btn-zone {
-  margin: 20px;
-  margin-bottom: 100px;
-  display: flex;
-  justify-content: center;
-  width: 1280px;
+	margin: 20px;
+	margin-bottom: 100px;
+	display: flex;
+	justify-content: center;
+	width: 1280px;
 }
 .btn-zone > button {
-  position: relative;
-  border: none;
-  display: inline-block;
-  padding: 15px 30px;
-  border-radius: 15px;
-  font-weight: 600;
+	position: relative;
+	border: none;
+	display: inline-block;
+	padding: 15px 30px;
+	border-radius: 15px;
+	font-weight: 600;
 }
 
 .company-thumbnail > img {
-  max-width: 100%; /* div의 너비를 초과하지 않도록 설정 */
-  height: 100%; /* div의 높이를 초과하지 않도록 설정 */
+	max-width: 100%; /* div의 너비를 초과하지 않도록 설정 */
+	height: 100%; /* div의 높이를 초과하지 않도록 설정 */
 }
 
 /*----Info-----------------------------------------------*/
 .company-info-wrap {
-  width: 1200px;
-  border: 1px solid #ccc;
-  margin: 50px 90px;
-  margin-top: 90px;
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 50px 90px;
+	margin-top: 90px;
 }
 .company-info-input-zone {
-  padding-left: 65px;
+	padding-left: 65px;
 }
 
 .company-input-wrap > #start-time,
 #end-time {
-  width: 174px;
+	width: 174px;
 }
 .company-input-wrap > .and {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0px 20px;
+	font-size: 20px;
+	font-weight: 600;
+	margin: 0px 20px;
 }
 /*----Product------------------------------------------------*/
 .companyProduct-wrap {
-  width: 1200px;
-  border: 1px solid #ccc;
-  margin: 50px 90px;
-  margin-top: 90px;
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 50px 90px;
+	margin-top: 90px;
 }
 .radio-zone > input {
-  margin-left: 5px;
-  margin-right: 20px;
+	margin-left: 5px;
+	margin-right: 20px;
 }
 .company-product-input-zone {
-  padding-top: 20px;
+	padding-top: 20px;
 }
 .editor-zone {
-  margin-bottom: 40px;
+	margin-bottom: 40px;
 }
 .editor-zone > div {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 
 .productThumb-zone {
-  width: 1000px;
-  margin: 20px auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+	width: 1000px;
+	margin: 20px auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 .productThumb {
-  width: 150px;
-  height: 150px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  margin: 10px 10px;
-  display: flex;
-  align-items: flex-end;
-  flex-direction: row-reverse;
+	width: 150px;
+	height: 150px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	margin: 10px 10px;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: row-reverse;
 }
 .productThumb > img {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 .div-container > div {
-  width: 100px;
-  height: 100px;
-  border: 1px solid black;
+	width: 100px;
+	height: 100px;
+	border: 1px solid black;
 }
 .product-delete {
-  color: #bddaed;
-  font-size: 30px;
-  position: absolute;
-  cursor: pointer;
+	color: #bddaed;
+	font-size: 30px;
+	position: absolute;
+	cursor: pointer;
 }
 
 /*-----product List*/
 .list-wrap {
-  width: 1200px;
-  min-height: 300px;
-  border: 1px solid #ccc;
-  margin: 50px 90px;
-  margin-top: 90px;
+	width: 1200px;
+	min-height: 300px;
+	border: 1px solid #ccc;
+	margin: 50px 90px;
+	margin-top: 90px;
 }
 .list-title {
-  font-size: 30px;
-  width: 1000px;
-  height: 50px;
-  padding: 15px 100px;
-  line-height: 50px;
-  border-bottom: 1px solid #ccc;
+	font-size: 30px;
+	width: 1000px;
+	height: 50px;
+	padding: 15px 100px;
+	line-height: 50px;
+	border-bottom: 1px solid #ccc;
 }
 .list-title + a > button {
-  width: 60px;
-  height: 35px;
-  border: 1px solid #ccc;
-  margin: 20px 30px;
-  border-radius: 10px;
+	width: 60px;
+	height: 35px;
+	border: 1px solid #ccc;
+	margin: 20px 30px;
+	border-radius: 10px;
 }
 .list-title + a > button:hover {
-  font-weight: 800;
-  background-color: #bddaed;
+	font-weight: 800;
+	background-color: #bddaed;
 }
 .tbl > tbody > tr > td button {
-  color: red;
-  width: 60px;
-  height: 35px;
-  border: 1px solid #ccc;
-  margin: 0px 30px;
-  border-radius: 10px;
+	color: red;
+	width: 60px;
+	height: 35px;
+	border: 1px solid #ccc;
+	margin: 0px 30px;
+	border-radius: 10px;
 }
 .tbl > tbody > tr > td button:hover {
-  font-weight: 800;
-  background-color: #bddaed;
+	font-weight: 800;
+	background-color: #bddaed;
 }
 
 .tbl > tbody > tr > td {
-  text-align: center;
+	text-align: center;
 }
 .button-group button {
-  margin: 15px;
-  width: 150px;
-  height: 50px;
+	margin: 15px;
+	width: 150px;
+	height: 50px;
 }
 
 /*--------광고요청 페이지 --------------------------*/
-.request-wrap{
-  width: 800px;
-  border: 1px solid #ccc;
-  margin: 50px 90px;
-  margin-top: 90px;
+.request-wrap {
+	width: 800px;
+	border: 1px solid #ccc;
+	margin: 50px 90px;
+	margin-top: 90px;
 }
-.request-title{
-  font-size: 30px;
-    width: 600px;
-    height: 50px;
-    padding: 15px 100px;
-    line-height: 50px;
-    border-bottom: 1px solid #ccc;
+.request-title {
+	font-size: 30px;
+	width: 600px;
+	height: 50px;
+	padding: 15px 100px;
+	line-height: 50px;
+	border-bottom: 1px solid #ccc;
 }
-.ad-main-content{
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
+.ad-main-content {
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
-.ad-rank{
-  margin: 30px;
+.ad-rank {
+	margin: 30px;
 }
-.ad-rank>label{
-  font-size: 20px;
-  font-weight: 600;
-  padding-right: 20px;
-  padding-left: 10px;
+.ad-rank > label {
+	font-size: 20px;
+	font-weight: 600;
+	padding-right: 20px;
+	padding-left: 10px;
 }
-.ad-date-span{
-  font-size: 20px;
-    line-height: 35px;
-    padding-left: 15px;
-    padding-right: 5px;
+.ad-date-span {
+	font-size: 20px;
+	line-height: 35px;
+	padding-left: 15px;
+	padding-right: 5px;
 }
-.ad-date-zone{
-  display: flex;
-  margin: 10px 20px;
+.ad-date-zone {
+	display: flex;
+	margin: 10px 20px;
 }
-.ad-date-input> label{
-font-size: 20px;
-margin: 0px 10px;
+.ad-date-input > label {
+	font-size: 20px;
+	margin: 0px 10px;
 }
 .ad-content-zone > div {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0px 30px;
-  margin-top: 20px;
+	font-size: 20px;
+	font-weight: 600;
+	margin: 0px 30px;
+	margin-top: 20px;
 }
 
-.ad-content-zone> textarea{
-  resize: none;
-  width: 600px;
-  height: 70px;
-  font-size: 17px;
-  padding: 8px;
-  margin: 5px 30px;
-  border-color: #ccc;
-} 
-.ad-btn-zone{
-  display: flex;
-  justify-content: center;
-  margin: 30px 0px;
+.ad-content-zone > textarea {
+	resize: none;
+	width: 600px;
+	height: 70px;
+	font-size: 17px;
+	padding: 8px;
+	margin: 5px 30px;
+	border-color: #ccc;
 }
-.ad-btn-zone > button{
-  color: #000;
-  width: 60px;
-  height: 35px;
-  border: 1px solid #ccc;
-  margin: 0px 30px;
-  border-radius: 10px;
-  }
-  .ad-btn-zone > button:hover{
-    font-weight: 800;
-  background-color: #bddaed;
-  }
+.ad-btn-zone {
+	display: flex;
+	justify-content: center;
+	margin: 30px 0px;
+}
+.ad-btn-zone > button {
+	color: #000;
+	width: 60px;
+	height: 35px;
+	border: 1px solid #ccc;
+	margin: 0px 30px;
+	border-radius: 10px;
+}
+.ad-btn-zone > button:hover {
+	font-weight: 800;
+	background-color: #bddaed;
+}
 /*----광고 리스트 페이지 --------------*/
-.list-title > .span{
-  font-size: 15px;
+.list-title > .span {
+	font-size: 15px;
 }
 
-
-.navi-request> a >button {
-  color: #000;
-  width: 80px;
-  height: 45px;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  margin: 20px 30px;
-  border-radius: 10px;
-  
+.navi-request > a > button {
+	color: #000;
+	width: 80px;
+	height: 45px;
+	font-size: 18px;
+	border: 1px solid #ccc;
+	margin: 20px 30px;
+	border-radius: 10px;
 }
-.navi-request> a >button:hover {
-  font-weight: 800;
-  background-color: #bddaed;
+.navi-request > a > button:hover {
+	font-weight: 800;
+	background-color: #bddaed;
+}
+
+/*-----광고 ----------------------------------------*/
+.select {
+	display: flex;
+	align-items: center;
+}
+.select > span {
+	font-size: 20px;
+	line-height: 20px;
+	padding-right: 5px;
+}
+.select > #product {
+	height: 30px;
 }
 
 /*---테이블 디자인 --------------------------------------*/
 .tbl {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	border-collapse: collapse;
+	width: 100%;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .tbl thead tr {
-  background-color: #dce4e9;
-  color: #ffffff;
-  text-align: center;
-  
+	background-color: #dce4e9;
+	color: #ffffff;
+	text-align: center;
 }
 .tbl th,
 .tbl td {
-  padding: 12px 15px;
+	padding: 12px 15px;
 }
 
 .tbl tbody tr {
-  border-bottom: 1px solid#dce4e9
+	border-bottom: 1px solid#dce4e9;
 }
-
