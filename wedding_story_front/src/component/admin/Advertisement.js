@@ -12,9 +12,11 @@ const Advertisement = () => {
 
   const [adend, setAdend] = useState([]); //광고 종료
 
-  const [adyet, setAdyet] = useState([]); //광고 대기
+  const [adyet, setAdyet] = useState([]); //결제요청
+  const [adwait, setAdwait] = useState([]);//승인대기
+  const [payAd, setPayAd] = useState([]);//(관리자가 승인 누른 상태)결제 요청, 결제 전
+
   const [modalOpen, setModalOpen] = useState(false);
-  const [adwait, setAdwait] = useState([]);
   const [change, setchange] = useState("0");
   const [refuse, setRefuse] = useState("");
   const [loginId, setLoginId] = useRecoilState(loginIdState);
@@ -30,6 +32,7 @@ const Advertisement = () => {
           setAdend(Object.values(res.data.endAd));
           setAdyet(Object.values(res.data.yetAd));
           setAdwait(Object.values(res.data.waitAd));
+          setPayAd(Object.values(res.data.payAd));
         } else {
           console.log("진행중인 광고 없음");
           setActiveAd([activeAd, adend, adyet, adwait]);
@@ -204,16 +207,12 @@ const Advertisement = () => {
             <Upcomming
               adyet={adyet}
               setAdyet={setAdyet}
-              setStartDate={setStartDate}
-              setEndDate={setEndDate}
-              convertEnd={convertEnd}
-              convertStart={convertStart}
             />
           </tbody>
         </table>
       </div>
 
-      <div className="upComing">
+      <div className="waitAd">
         <h3 style={{ float: "left", marginBottom: "10px" }}>승인대기</h3>
         <table className="tbl1 ad-tbl">
           <thead>
@@ -237,6 +236,26 @@ const Advertisement = () => {
               refuseChange={refuseChange}
               loginId={loginId}
               setchange={setchange}
+            />
+          </tbody>
+        </table>
+      </div>
+
+      <div className="payAd">
+        <h3 style={{ float: "left", marginBottom: "10px" }}>결제대기</h3>
+        <table className="tbl1 ad-tbl">
+          <thead>
+            <tr>
+              <td>업체 이름</td>
+              <td>상품 이름</td>
+              <td>광고 시작</td>
+              <td>광고 종료</td>
+            </tr>
+          </thead>
+          <tbody>
+            <PayAd
+              payAd={payAd}
+              setPayAd={setPayAd}
             />
           </tbody>
         </table>
@@ -417,6 +436,30 @@ const End = (props) => {
     <>
       {adend.length > 0 ? (
         adend.map((ad) => (
+          <tr key={ad.advertisementNo}>
+            <td>{ad.company.companyName}</td>
+            <td>{ad.adRank}</td>
+            <td>{ad.adStart}</td>
+            <td>{ad.adEnd}</td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="5">업체가 없습니다.</td>
+        </tr>
+      )}
+    </>
+  );
+};
+
+const PayAd = (props) => {
+  const setPayAd = props.setPayAd;
+  const payAd = props.payAd;
+
+  return (
+    <>
+      {payAd.length > 0 ? (
+        payAd.map((ad) => (
           <tr key={ad.advertisementNo}>
             <td>{ad.company.companyName}</td>
             <td>{ad.adRank}</td>

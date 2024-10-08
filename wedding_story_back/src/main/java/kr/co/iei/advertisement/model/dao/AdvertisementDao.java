@@ -17,6 +17,7 @@ public interface AdvertisementDao {
 	List yetAd();
 
 	List waitAd();
+	List<AdvertisementDTO> payAd();
 
 	int changeStartDate(String changeStartDate, int advertisementNo);
 
@@ -31,6 +32,7 @@ public interface AdvertisementDao {
 	int totalCount(String companyNo);
 
 	List<AdvertisementDTO> selectAdvertisementList(PageInfo pi, String companyNo);
+
 
 
 }

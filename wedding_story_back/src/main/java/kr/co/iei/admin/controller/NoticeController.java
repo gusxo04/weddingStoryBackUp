@@ -55,6 +55,18 @@ public class NoticeController {
     	return ResponseEntity.ok(map);
     }
     
+    
+    
+    @GetMapping(value = "/listCom/{reqPage}/{userState}/{companyNo}")
+    public ResponseEntity<Map> list2 (@PathVariable int reqPage, @PathVariable int userState, @PathVariable String companyNo){
+    	System.out.println("reqPage : "+reqPage);
+    	System.out.println("userState"+userState);
+    	System.out.println(companyNo);
+    	Map map = noticeService.selectNoticeList2(reqPage, userState, companyNo);
+    	
+    	return ResponseEntity.ok(map);
+    }
+    
     @PostMapping(value = "/editorImage")
     public ResponseEntity<String> editorImage(@ModelAttribute MultipartFile image){
     	String savepath = root+"/editor/";

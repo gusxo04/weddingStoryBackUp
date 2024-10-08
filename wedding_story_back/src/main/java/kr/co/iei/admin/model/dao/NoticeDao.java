@@ -66,5 +66,9 @@ public interface NoticeDao {
 
 	List selectQuestionList2(int start, int end, int loginNo);
 
+	int totalCountCom(String companyNo);
+
+	List selectNoticeList2(int start, int end, String companyNo);
+
 
 }

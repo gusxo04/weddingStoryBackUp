@@ -66,7 +66,23 @@ public class NoticeService {
 		}
 		return null;
 	}
-
+	public Map selectNoticeList2(int reqPage, int userState, String companyNo) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount;
+		
+		totalCount = noticeDao.totalCountCom(companyNo);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		int start = pi.getStart();
+		int end = pi.getEnd();
+		List list = noticeDao.selectNoticeList2(start, end, companyNo);
+		System.out.println(list);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		return map;
+	}
 	@Transactional
 	public int insertNotice(NoticeDTO notice, List<NoticeFileDTO> noticeFileList) {
 		int result = noticeDao.insertNotice(notice);
@@ -121,5 +137,7 @@ public class NoticeService {
 		}
 		return null;
 	}
+
+	
 
 }

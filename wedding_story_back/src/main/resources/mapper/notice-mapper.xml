@@ -10,6 +10,12 @@
 		select count(*) from notice
 	</select>
 
+	<select id="totalCountCom" resultType="int">
+		SELECT COUNT(*)
+		FROM notice
+		WHERE company_no = #{companyNo} OR notice_visible = 1
+	</select>
+
 
 	<select id="selectNoticeList" resultType="notice">
 		select * from
@@ -25,6 +31,32 @@
 		where
 		rnum between #{start} and
 		#{end}
+	</select>
+
+	<select id="selectNoticeList2" resultType="notice">
+		SELECT *
+		FROM (
+		SELECT
+		ROWNUM AS rnum, b.*
+		FROM (
+		SELECT
+		notice_no,
+		notice_title,
+		notice_thumb,
+		notice_writer,
+		notice_date,
+		company_no,
+		notice_visible
+		FROM
+		notice
+		WHERE
+		company_no = #{companyNo} OR notice_visible = 1
+		ORDER BY
+		notice_no DESC
+		) b
+		)
+		WHERE
+		rnum BETWEEN #{start} AND #{end}
 	</select>
 
 	<select id="selectQuestionList" resultType="question">
@@ -46,11 +78,13 @@
 		FROM (
 		SELECT *
 		FROM question
-		WHERE member_no = #{loginNo}
+		WHERE member_no =
+		#{loginNo}
 		ORDER BY question_no DESC
 		) b
 		)
-		WHERE rnum BETWEEN #{start} AND #{end}
+		WHERE rnum BETWEEN #{start} AND
+		#{end}
 	</select>
 
 	<insert id="insertNotice">
@@ -126,14 +160,16 @@
 	</insert>
 
 	<select id="getNoticeFile" resultType="noticeFile">
-		select * from notice_file where notice_file_no=#{noticeFileNo}
+		select * from notice_file
+		where notice_file_no=#{noticeFileNo}
 	</select>
 	<update id="updateNotice">
 		update notice set
 		notice_title=#{noticeTitle},
 		notice_content=#{noticeContent},
 		notice_thumb=#{noticeThumb}
-		where notice_no=#{noticeNo}
+		where
+		notice_no=#{noticeNo}
 	</update>
 
 	<select id="selectNoticeFile" resultType="noticeFile">
@@ -184,7 +220,8 @@
 		question_state,
 		question_type,
 		product_comment_no
-		from question where question_no=#{questionNo}
+		from question where
+		question_no=#{questionNo}
 	</select>
 
 	<select id="selectOneQuestionFile" resultType="questionFile">
@@ -206,7 +243,8 @@
 
 
 	<select id="getQuestionFile" resultType="questionFile">
-		select * from question_file where question_file_no=#{questionFileNo}
+		select * from
+		question_file where question_file_no=#{questionFileNo}
 	</select>
 
 	<insert id="questionRe">
@@ -219,11 +257,13 @@
 	<update id="updateQuestionState">
 		update question set
 		question_state=2
-		where question_no=#{questionNo}
+		where
+		question_no=#{questionNo}
 	</update>
 
 	<select id="getQuestionRe" resultType="QuestionRe">
-		select * from question_re where question_no=#{questionNo}
+		select * from question_re
+		where question_no=#{questionNo}
 	</select>
 
 	<select id="QuestionTotalCountMy" resultType="int">
