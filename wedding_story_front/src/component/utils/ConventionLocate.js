@@ -7,6 +7,7 @@ const ConventionLocate = (props) => {
 
   const {
     closeAlert,
+    setAlertType
   } = props;
 
   const mapRef = useRef(null);
@@ -74,7 +75,17 @@ function searchDetailAddrFromCoords(coords, callback) {
   return (
     <div className="convention-map-wrap" id="convention-close-screen" onClick={closeAlert}>
       <div className="convention-map-alert">
-        <div id="map" ref={mapRef} style={{width:"100%", height:"500px"}}></div>
+
+        <div className="convention-map">
+          <div id="map" ref={mapRef} style={{width:"100%", height:"100%"}}></div>
+        </div>
+
+        <div className="convention-btn-zone">
+          <button className='main-btn' onClick={() => {
+            setAlertType(0)
+          }}>닫기</button>
+        </div>
+        
       </div>
     </div>
   )

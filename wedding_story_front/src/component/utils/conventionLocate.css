@@ -12,11 +12,32 @@
 
 .convention-map-wrap>.convention-map-alert{
   width: 60%;
-  height: 80%;
+  height: 70%;
   background-color: white;
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.convention-map-alert>.convention-map{
+  width: 100%;
+  height: 85%;
+  /* background-color: rgb(58, 158, 245); */
+}
+
+.convention-map-alert>.convention-btn-zone{
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.convention-map-alert>.convention-btn-zone>button{
+  width: 100px;
+  width: 10%;
+  min-width: 70px;
+  max-width: 110px;
+  height: 40px;
 }
