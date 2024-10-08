@@ -33,6 +33,8 @@ public interface AdvertisementDao {
 
 	List<AdvertisementDTO> selectAdvertisementList(PageInfo pi, String companyNo);
 
+	int updateAdvertisement(int advertisementNo);
+
 
 
 }

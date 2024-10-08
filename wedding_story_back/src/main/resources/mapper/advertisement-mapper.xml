@@ -42,10 +42,12 @@
     select * from 
   (select rownum as rnum, b.* from 
   (select 
+  	   a.advertisement_no,
 	   a.company_no,
 	   a.ad_rank,
 	   to_char(a.ad_Start, 'yyyy-mm-dd') as adStart,
        to_char(a.ad_End,'yyyy-mm-dd') as adEnd,
+       to_char(a.ad_request_date,'yyyy-mm-dd') as adRequestDate,
   	   a.ad_Request,
   	   a.advertisement_state,
        p.product_no,
@@ -55,6 +57,10 @@
    where a.company_no = #{companyNo} order by 1 desc) b)
   where rnum between #{pi.start} and #{pi.end}
   </select>
+  
+  <update id="updateAdvertisement">
+  	update advertisement set advertisement_state = 1 where advertisement_no = #{advertisementNo}
+  </update>
 </mapper>
 
   

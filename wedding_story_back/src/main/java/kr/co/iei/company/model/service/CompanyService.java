@@ -15,6 +15,7 @@ import kr.co.iei.advertisement.model.dao.AdvertisementDao;
 import kr.co.iei.advertisement.model.dto.AdvertisementDTO;
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.company.model.dto.CompanyPayDTO;
 import kr.co.iei.company.model.dto.CounselDTO;
 import kr.co.iei.company.model.dto.CustomerDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
@@ -43,7 +44,8 @@ public class CompanyService {
 	private AdvertisementDao advertisementDao;
 	
 	@Autowired
-	private ConsultDao consultDao; 
+	private ConsultDao consultDao;
+	
 	
 	@Autowired
 	private PageUtil pageUtil; 
@@ -242,8 +244,8 @@ public class CompanyService {
 		
 		return list;
 	}
-	
-	public Map selectConsultList(String companyNo, int reqPage) {
+	//상담일정 조회 
+	public Map selectScheduleList(String companyNo, int reqPage) {
 		List productNo = productDao.selectProductNo(companyNo);
 		
 		
@@ -260,11 +262,25 @@ public class CompanyService {
 		System.out.println(list);
 		return list;
 	}
+	//광고 등록 페이지 업체번호 조회
 	public List selectAdvertProductNo(String companyNo) {
 		
 		List productNo = productDao.selectAdvertProductNo(companyNo);
 		
 		return productNo;
+	}
+	
+	//광고 결제 정보 등록
+	public int insertCompanyPayDate(CompanyPayDTO companyPay) {
+		int result = companyDao.insertCompanyPayDate(companyPay);
+		if(result > 0) {
+			result += advertisementDao.updateAdvertisement(companyPay.getAdvertisementNo());
+			return result;
+		}else {
+			return 0;
+		}
+		
+		
 	}
 	
 

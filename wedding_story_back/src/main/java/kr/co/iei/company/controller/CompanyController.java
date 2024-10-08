@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.advertisement.model.dto.AdvertisementDTO;
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.company.model.dto.CompanyPayDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.company.model.service.CompanyService;
 import kr.co.iei.consult.model.dto.ConsultDTO;
@@ -233,7 +234,13 @@ public class CompanyController {
 		return ResponseEntity.ok(productNo);
 	}
 	
-	
+	//광고 결제 정보 등록 
+	@PostMapping(value="/companyPay")
+	public ResponseEntity<Boolean> insertCompanyPayDate(@ModelAttribute CompanyPayDTO companyPay){
+		int result = companyService.insertCompanyPayDate(companyPay);
+		
+		return ResponseEntity.ok(result == 2);
+	}
 	//광고요청 등록
 	@PostMapping(value="/advertisement")
 	public ResponseEntity<Boolean> insertAdvertisement(@ModelAttribute AdvertisementDTO advert){
@@ -264,11 +271,12 @@ public class CompanyController {
 	}
 	//일정 조회 (리스트 및 모달창에 들어갈 모든 데이터)
 	@GetMapping(value="/schedule/{companyNo}/{reqPage}")
-	public ResponseEntity<Map> selectConsultList(@PathVariable String companyNo, @PathVariable int reqPage){
-		Map consult = companyService.selectConsultList(companyNo,reqPage);
+	public ResponseEntity<Map> selectScheduleList(@PathVariable String companyNo, @PathVariable int reqPage){
+		Map consult = companyService.selectScheduleList(companyNo,reqPage);
 		System.out.println(consult);
 		return ResponseEntity.ok(consult);
 	}
+	
 	
 	
 }
