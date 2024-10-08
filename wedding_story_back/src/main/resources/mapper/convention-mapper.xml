@@ -21,6 +21,10 @@
         convention_price, convention_limit, img_style
     </select>
 
+    <select id="checkWritePermission" resultType="convention">
+        select convention_no from convention where convention_end <![CDATA[ >= ]]> to_char(sysdate,'yy-mm-dd')
+    </select>
+
     <select id="selectConventionSeat" resultType="conventionSeat">
         select seat_no, convention_seat_price, seat_code, seat_status
         <if test="searchType == 0">

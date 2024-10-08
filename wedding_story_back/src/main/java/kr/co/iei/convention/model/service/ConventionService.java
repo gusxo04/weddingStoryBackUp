@@ -66,6 +66,14 @@ public class ConventionService {
         return map;
     }
 
+    public boolean checkWritePermission() {
+        ConventionDTO conventionDTO = conventionDao.checkWritePermission();
+        System.out.println(conventionDTO);
+        if(conventionDTO != null) return true;
+
+        return false;
+    }
+
     @Transactional
     public boolean insertConvention(ConventionDTO convention) {
 
@@ -350,6 +358,8 @@ public class ConventionService {
         if(updateList.isEmpty()) return;
         conventionDao.updateMemberPayProgress3(updateList);
     }
+
+
 
 
 
