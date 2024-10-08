@@ -270,4 +270,8 @@
 <delete id="favoritedelete">
 	delete from favorite_product where member_no=#{memberNo} and product_no=#{productNo}
 </delete>
+<select id="selectAdvertProductNo" resultType="product">
+	select product_no ,product_name from product where company_no = #{companyNo}
+</select>
+
 </mapper>
