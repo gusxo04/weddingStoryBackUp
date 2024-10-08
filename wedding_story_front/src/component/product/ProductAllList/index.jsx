@@ -5,7 +5,7 @@ import PageNavi from "../../utils/PagiNavi";
 import styles from "./ProductAllList.module.css";
 import { MdFavorite } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
-
+/*
 const dummyData = [
 	{ productNo: 2, productName: "스튜디오 B", productPrice: "200000", businessCode: "studio" },
 	{ productNo: 3, productName: "드레스 C", productPrice: "150000", businessCode: "dressShop" },
@@ -17,7 +17,7 @@ const dummyData = [
 	{ productNo: 9, productName: "드레스 I", productPrice: "130000", businessCode: "dressShop" },
 	{ productNo: 10, productName: "메이크업 J", productPrice: "70000", businessCode: "makeUp" },
 ];
-
+*/
 const businessCodes = {
 	studio: "스튜디오",
 	dressShop: "드레스",
@@ -47,8 +47,8 @@ const ProductAllList = () => {
 	}, [reqPage]);
 
 	// 비즈니스 코드를 기준으로 제품 필터링
-	// const filteredProducts = productList.filter((product) => product.businessCode === businessCode);
-	const filteredProducts = dummyData.filter((product) => product.businessCode === businessCode);
+	const filteredProducts = productList.filter((product) => product.businessCode === businessCode);
+	//const filteredProducts = dummyData.filter((product) => product.businessCode === businessCode);
 
 	return (
 		<section className={styles["board-list"]}>
@@ -83,6 +83,7 @@ const BoardItem = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const product = props.product;
 	const productNo = product.productNo;
+	const memberNo = props.memberNo;
 	const navigate = useNavigate();
 	const [liked, setLiked] = useState(false);
 
@@ -91,7 +92,14 @@ const BoardItem = (props) => {
 
 		setLiked((prev) => !prev);
 		// 선택적으로 여기에서 좋아요 상태를 서버에 보낼 수 있습니다.
-		// axios.post(`${backServer}/product/favorite`, { productNo: product.productNo, liked: !liked });
+		axios
+			.post(`${backServer}/product/favorite`, { productNo: product.productNo, memberNo: memberNo, likeState: !liked })
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (
