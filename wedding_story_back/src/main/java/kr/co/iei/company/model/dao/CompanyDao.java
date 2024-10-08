@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.company.model.dto.CompanyDTO;
+import kr.co.iei.company.model.dto.CompanyPayDTO;
 import kr.co.iei.company.model.dto.KeyWordDTO;
 import kr.co.iei.util.PageInfo;
 
@@ -33,6 +34,8 @@ public interface CompanyDao {
 	CompanyDTO selectCompanyNo(String string);
 
 	List<CompanyDTO> getCompanyList2();
+
+	int insertCompanyPayDate(CompanyPayDTO companyPay);
 
 
 }

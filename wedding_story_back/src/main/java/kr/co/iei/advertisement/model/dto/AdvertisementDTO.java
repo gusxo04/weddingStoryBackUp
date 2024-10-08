@@ -21,6 +21,7 @@ public class AdvertisementDTO {
 	private int adRank;
 	private String adStart;
 	private String adEnd;
+	private String adRequestDate;
 	private String adRequest;
 	private int advertisementState;
 	private int productNo;
