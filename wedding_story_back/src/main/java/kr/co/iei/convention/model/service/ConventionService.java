@@ -221,9 +221,10 @@ public class ConventionService {
     @Transactional
     public boolean conventionCompanyPay(ConventionCompanyDTO conventionCompany, CompanyPayDTO companyPay) {
         ConventionSeatDTO conventionSeatDTO = conventionDao.getConventionSeat(conventionCompany);
-        if (conventionSeatDTO == null) {
-            return false;
-        }
+        if (conventionSeatDTO == null) return false;
+        ConventionDTO conventionDTO = conventionDao.checkConventionDate(conventionCompany.getConventionNo());
+        if(conventionDTO == null) return false;
+        
         int result = conventionDao.insertConventionCompany(conventionCompany);
         if (result > 0) {
             result += conventionDao.insertCompanyPay(companyPay);
