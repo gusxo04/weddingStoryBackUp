@@ -71,12 +71,6 @@ public interface ProductDao {
 
 	void insertProductReservation(ProductDTO product);
 
-
-
-	
-	
-	
-
 	SalesDTO getCompanySales(int productNo);
 
 	List<ProductDTO> selectProductList2(String companyNo);

@@ -12,6 +12,7 @@ const MyFavorite = (props) => {
 	const [productList, setProductList] = useState([]);
 	const memberNo = useRecoilValue(loginNoState);
 	const [state, setState] = useState(true);
+	const [visibleCount, setVisibleCount] = useState(9); // 처음에 9개 보여줌
 
 	useEffect(() => {
 		axios
@@ -22,14 +23,31 @@ const MyFavorite = (props) => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [state]);
+	}, [state, memberNo]);
+	const handleScroll = () => {
+		if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
+			// 페이지 하단에 도달하면 9개 더 로드
+			setVisibleCount((prevCount) => prevCount + 9);
+		}
+	};
+	useEffect(() => {
+		// 컴포넌트가 마운트되면 스크롤 이벤트 리스너 추가
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			// 컴포넌트가 언마운트될 때 스크롤 이벤트 리스너 제거
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
 	return (
 		<div>
 			<div className="mypage-favorite-wrap">
 				{productList.length === 0 ? (
 					<div>관심 상품이 없습니다.</div>
 				) : (
-					productList.map((product, i) => <ProductInfo key={"product" + i} product={product} setState={setState} state={state} />)
+					productList
+						.slice(0, visibleCount)
+						.map((product, i) => <ProductInfo key={"product" + i} product={product} setState={setState} state={state} />)
 				)}
 			</div>
 		</div>
@@ -40,8 +58,6 @@ export default MyFavorite;
 const ProductInfo = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const product = props.product;
-	console.log(product);
-
 	const memberNo = useRecoilValue(loginNoState);
 	const navigate = useNavigate();
 	const [liked, setLiked] = useState(true);
@@ -62,10 +78,8 @@ const ProductInfo = (props) => {
 	});
 	const handleLikeToggle = (e) => {
 		e.stopPropagation(); //클릭 시 상품정보로 이동되는 것을 방지
+		e.preventDefault(); //링크로 이동되는 것 방지
 		setLiked((prev) => !prev);
-		console.log(!liked);
-		console.log(product.productNo);
-		console.log(memberNo);
 		axios
 			.post(`${backServer}/product/favorite`, { productNo: product.productNo, memberNo: memberNo, likeState: !liked })
 			.then((res) => {

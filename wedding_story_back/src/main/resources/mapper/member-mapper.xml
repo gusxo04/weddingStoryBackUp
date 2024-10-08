@@ -201,7 +201,7 @@
 		<if test="state == 'cancel'">
 			and progress=2
 		</if>
-		order by 1
+		order by 3 desc, 1
 	</select>
 	<select id="getYear" resultType="memberPay">
 		SELECT DISTINCT

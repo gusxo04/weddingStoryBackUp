@@ -16,7 +16,7 @@ const MyPayment = (props) => {
 	const [paymentList, setPaymentList] = useState([]);
 	const [result, setResult] = useState(-1);
 	const [refundStatus, setRefundStatus] = useState(false);
-	console.log(paymentList);
+	const [visibleCount, setVisibleCount] = useState(5); // 처음에 5개 보여줌
 
 	const stateChange = (e) => {
 		setActiveButton(e.target.name);
@@ -31,7 +31,7 @@ const MyPayment = (props) => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [memberNo, activeButton]);
+	}, [memberNo, activeButton, result]);
 
 	useEffect(() => {
 		setRefundStatus(false);
@@ -51,6 +51,11 @@ const MyPayment = (props) => {
 			});
 		}
 	}, [result]);
+
+	// 더보기 버튼 클릭 시 5개 더 보여줌
+	const handleLoadMore = () => {
+		setVisibleCount((prevCount) => prevCount + 5);
+	};
 
 	return (
 		<div className="mypage-payment-wrap">
@@ -78,7 +83,7 @@ const MyPayment = (props) => {
 					</div>
 				</div>
 				<div className="mypage-payment-list">
-					{paymentList.map((pay) => {
+					{paymentList.slice(0, visibleCount).map((pay) => {
 						return (
 							<table className="paymentList-tbl">
 								<tbody>
@@ -161,6 +166,13 @@ const MyPayment = (props) => {
 							</table>
 						);
 					})}
+					{visibleCount < paymentList.length && ( // 모든 결제 내역을 다 보여주지 않았을 때만 버튼 표시
+						<div className="mypage-payment-moreBtn">
+							<button onClick={handleLoadMore}>
+								더보기 <span> &#9660;</span>
+							</button>
+						</div>
+					)}
 					{refundStatus ? (
 						<div id="convention-loading">
 							<ConventionLoading loadingTime={0} />
