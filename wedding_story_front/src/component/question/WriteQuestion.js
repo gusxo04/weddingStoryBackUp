@@ -30,6 +30,14 @@ const WriteQuestion = () => {
     };
 
     const submit = () => {
+        if (!title.trim()) {
+            alert("제목을 입력해주세요.");
+            return;
+        }
+        if (!content.trim()) {
+            alert("내용을 입력해주세요.");
+            return;
+        }
         const formData = new FormData();
         questionFile.forEach(file => {
             formData.append('questionFile', file);

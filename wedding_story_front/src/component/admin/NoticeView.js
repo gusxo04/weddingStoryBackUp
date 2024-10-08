@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import "./noticeView.css";
+import { useRecoilState } from "recoil";
+import { loginIdState } from "../utils/RecoilData";
 
 const NoticeView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
-
+  const [loginId, setLoginId] = useRecoilState(loginIdState);
   const noticeNo = params.noticeNo;
   // const previousNoticeNo = Number(params.noticeNo) - 1;
   // const nextNoticeNo = Number(params.noticeNo) + 1;
@@ -63,12 +65,15 @@ const NoticeView = () => {
             <Link to="/admin/notice/list" className="gotolist">
               <h3>공지사항 목록 &gt;</h3>
             </Link>
-            <Link
+            {notice.noticeWriter===loginId?(
+              <Link
               to={`/admin/notice/update/${notice.noticeNo}`}
               className="gotolist"
             >
               <h3>수정</h3>
             </Link>
+            ):false}
+            
           </div>
           <h1>{notice.noticeTitle}</h1>
           <a className="subTitle">

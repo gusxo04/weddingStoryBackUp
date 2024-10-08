@@ -77,4 +77,6 @@ public interface MemberDao {
 
 	MemberDTO getMember(String loginId);
 
+	MemberDTO getMemberNo(int memberNo);
+
 }

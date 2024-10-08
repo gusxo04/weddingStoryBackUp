@@ -12,6 +12,7 @@ import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.admin.model.dao.NoticeDao;
 import kr.co.iei.admin.model.dto.QuestionDTO;
 import kr.co.iei.admin.model.dto.QuestionFileDTO;
+import kr.co.iei.admin.model.dto.QuestionReDTO;
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.advertisement.model.dao.AdvertisementDao;
 import kr.co.iei.company.model.dao.CompanyDao;
@@ -238,6 +239,49 @@ public class AdminService {
 	public QuestionFileDTO getQuestionFile(int questioinFileNo) {
 		QuestionFileDTO questionFile = noticeDao.getQuestionFile(questioinFileNo);
 		return questionFile;
+	}
+
+	public MemberDTO getMemberNo(int memberNo) {
+		MemberDTO member = memberDao.getMemberNo(memberNo);
+		return member;
+	}
+
+	public int questionRe(String content, String loginIdState, int questionNo) {
+		int result=0;
+		int result1 = noticeDao.questionRe(content,loginIdState,questionNo);
+		if(result1==1) {			
+			int result2 = noticeDao.updateQuestionState(questionNo);
+			if(result2==1) {
+				result=1;
+			}
+		}
+		return result;
+	}
+
+	public QuestionReDTO getQuestionRe(int questionNo) {
+		QuestionReDTO result = noticeDao.getQuestionRe(questionNo);
+		return result;
+	}
+
+	public Map myQsList(int reqPage, String loginId) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount;
+		
+		MemberDTO loginMember = memberDao.getMember(loginId);
+		int loginNo = loginNo = loginMember.getMemberNo();
+		totalCount = noticeDao.QuestionTotalCountMy(loginNo);
+		
+		
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		
+		int start = pi.getStart();
+		int end = pi.getEnd();
+		List list = noticeDao.selectQuestionList2(start, end, loginNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		return map;
 	}
 
 }

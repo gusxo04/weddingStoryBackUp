@@ -7,6 +7,7 @@ import ToastEditorN from "../utils/ToastEditorN";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { loginIdState } from "../utils/RecoilData";
+import NoticeFrm2 from "./NoticeFrm2";
 const NoticeWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
@@ -57,6 +58,13 @@ const NoticeWrite = () => {
         .catch((err) => {
           console.log(err);
         });
+    }else{
+      Swal.fire({
+        title: "제목/내용 입력해주세요",
+        icon: "warning",
+        confirmButtonText: "확인"
+      });
+      return;
     }
   };
   return (
@@ -72,7 +80,7 @@ const NoticeWrite = () => {
             writeNotice();
           }}
         >
-          <NoticeFrm
+          <NoticeFrm2
             loginId={loginId}
             noticeTitle={noticeTitle}
             setNoticeTitle={setNoticeTitle}

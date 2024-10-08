@@ -3,13 +3,14 @@
 <mapper namespace="kr.co.iei.admin.model.dao.NoticeDao">
 
 	<select id="QuestionTotalCount" resultType="int">
-		select count(*) from question
+		select count(*) from
+		question
 	</select>
 	<select id="totalCount" resultType="int">
 		select count(*) from notice
 	</select>
-	
-	
+
+
 	<select id="selectNoticeList" resultType="notice">
 		select * from
 		(select
@@ -32,12 +33,25 @@
 		rownum as rnum, b.* from
 		(select
 		*
-		from question order by question_no desc) b)
+		from question order by question_no
+		desc) b)
 		where
 		rnum between #{start} and
 		#{end}
 	</select>
-
+	<select id="selectQuestionList2" resultType="question">
+		SELECT *
+		FROM (
+		SELECT rownum AS rnum, b.*
+		FROM (
+		SELECT *
+		FROM question
+		WHERE member_no = #{loginNo}
+		ORDER BY question_no DESC
+		) b
+		)
+		WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
 
 	<insert id="insertNotice">
 		insert into notice values(notice_seq.nextval, #{companyNo} ,
@@ -110,63 +124,69 @@
 		'yyyy-mm-dd'),
 		2 ,null, #{loginId})
 	</insert>
-	
+
 	<select id="getNoticeFile" resultType="noticeFile">
-  	select * from notice_file where notice_file_no=#{noticeFileNo}
-  </select>
-  <update id="updateNotice">
-  	update notice set
-  	notice_title=#{noticeTitle},
-  	notice_content=#{noticeContent},
-  	notice_thumb=#{noticeThumb}
-  	where notice_no=#{noticeNo}
-  </update>
-  
-  <select id="selectNoticeFile" resultType="noticeFile">
-  	select * from notice_file
-  	where notice_file_no in
-  	<foreach collection="array" item="noticeFileNo" open="(" close=")" separator=",">
-  	#{noticeFileNo}
-  	</foreach>
-  </select>
-  
-  <delete id="deleteNoticeFile">
-  delete from notice_file
-  where notice_file_no in
-  <foreach collection="array" item="noticeFileNo" open="(" close=")" separator=",">
-  #{noticeFileNo}
-  </foreach>
-  </delete>
-  
-  
-  <insert id="insertQuestion">
-		insert into question values(question_seq.nextval, #{memberNo} ,
+		select * from notice_file where notice_file_no=#{noticeFileNo}
+	</select>
+	<update id="updateNotice">
+		update notice set
+		notice_title=#{noticeTitle},
+		notice_content=#{noticeContent},
+		notice_thumb=#{noticeThumb}
+		where notice_no=#{noticeNo}
+	</update>
+
+	<select id="selectNoticeFile" resultType="noticeFile">
+		select * from notice_file
+		where notice_file_no in
+		<foreach collection="array" item="noticeFileNo" open="("
+			close=")" separator=",">
+			#{noticeFileNo}
+		</foreach>
+	</select>
+
+	<delete id="deleteNoticeFile">
+		delete from notice_file
+		where notice_file_no in
+		<foreach collection="array" item="noticeFileNo" open="("
+			close=")" separator=",">
+			#{noticeFileNo}
+		</foreach>
+	</delete>
+
+
+	<insert id="insertQuestion">
+		insert into question values(question_seq.nextval,
+		#{memberNo} ,
 		#{questionTitle},
 		#{questionContent}, 1,
-		#{questionType} , null)
+		#{questionType} ,
+		null)
 	</insert>
-	
+
 	<insert id="insertQuestionFile">
 		insert into question_file
 		values(question_file_seq.nextval, #{questionNo},
-		#{filename}, #{filepath})
+		#{filename},
+		#{filepath})
 	</insert>
 	<select id="getQuestionNo" resultType="int">
-		select max(question_no) from question
+		select max(question_no)
+		from question
 	</select>
-	
+
 	<select id="getOneQuestion" resultMap="getQuestion">
-		select 
-			question_no,
-			member_no,
-			question_title,
-			question_content,
-			question_state,
-			question_type,
-			product_comment_no
+		select
+		question_no,
+		member_no,
+		question_title,
+		question_content,
+		question_state,
+		question_type,
+		product_comment_no
 		from question where question_no=#{questionNo}
 	</select>
-	
+
 	<select id="selectOneQuestionFile" resultType="questionFile">
 		select * from
 		question_file where question_no=#{questionNo}
@@ -183,9 +203,31 @@
 			select="selectOneQuestionFile" column="question_no"
 			javaType="java.util.List" ofType="questionFile" />
 	</resultMap>
-	
-	
-  <select id="getQuestionFile" resultType="questionFile">
-  	select * from question_file where question_file_no=#{questionFileNo}
-  </select>
+
+
+	<select id="getQuestionFile" resultType="questionFile">
+		select * from question_file where question_file_no=#{questionFileNo}
+	</select>
+
+	<insert id="questionRe">
+		insert into question_re
+		values(question_re_seq.nextval, #{questionNo},
+		#{content},
+		#{loginIdState})
+	</insert>
+
+	<update id="updateQuestionState">
+		update question set
+		question_state=2
+		where question_no=#{questionNo}
+	</update>
+
+	<select id="getQuestionRe" resultType="QuestionRe">
+		select * from question_re where question_no=#{questionNo}
+	</select>
+
+	<select id="QuestionTotalCountMy" resultType="int">
+		select count(*)
+		from question where member_no=#{loginNo}
+	</select>
 </mapper>

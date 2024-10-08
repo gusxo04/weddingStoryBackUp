@@ -14,6 +14,11 @@
 		select count(*) from
 		member where member_type=1
 	</select>
+	
+	<select id="getMemberNo" resultType="member">
+		select count(*) from
+		member where member_no=#{memberNo}
+	</select>
 
 	<select id="adminTotalCount2" resultType="int">
 		select count(*) from

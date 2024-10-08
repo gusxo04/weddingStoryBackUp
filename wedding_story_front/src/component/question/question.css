@@ -9,6 +9,7 @@
 }
 
 .card {
+    width: 650px;
     padding: 24px 20px 30px 20px;
     margin: 0 auto;
     background-color: #ffffff;
@@ -16,10 +17,35 @@
     box-shadow: 0px 4px 28px 0px rgba(0, 0, 0, 0.12);
     overflow: hidden;
 }
-
-.service {
-    width: 70%;
+.contentcard{
+    padding: 24px 20px 30px 20px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0px 4px 28px 0px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
 }
+.contentcard>*{
+    text-align: center;
+}
+.contentcard{
+    margin: 10px;
+    margin-bottom: 50px;
+}
+.concard{
+    text-align: center;
+    margin: 10px;
+}
+.wrapcard {
+    width: 650px;
+    padding: 24px 20px 30px 20px;
+    margin: 0 auto;
+    margin-top: 30p;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0px 4px 28px 0px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+} 
 .card > h3{
     padding: 15px;
     padding-top: 0;
@@ -53,8 +79,11 @@
 .question-main-wrap >h2{
     margin: 20px;
 }
+.question-main-wrap >a{
+    margin: 20px;
+}
 
-.service{
+.service , .qs-my{
     width: 75%;
 }
 
@@ -173,4 +202,84 @@
 
 .question-content, .question-title{
     margin-bottom: 20px;
+}
+.qs-paging-wrap > ul>li {
+    margin: 3px;
+}
+.page-item{
+    line-height: 20px;
+}
+.qs-table-wrap{
+    width: 80%;
+    margin: auto;
+}
+.question > ul> li> a>span{
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+.question > ul> li{
+    text-align: center;
+}
+.h2-my-card{
+    margin-top: 30px;
+}
+
+.qs-paging-wrap{
+    margin-top: 30px;
+}
+.qs-paging-wrap > ul>li>span{
+    border: tw;
+}
+.qs-tbl{
+    width: 100%;
+}
+.qs-tbl{
+    text-align: left;
+}
+
+.line2{
+    border-bottom:1px solid #DCDEE4;
+    width: 95%;
+    margin: 2px;
+}
+.qs-paging-wrap>*{
+    cursor: pointer;
+}
+.question-main-wrap>h2{
+    text-align: center;
+}
+.question-main-wrap>a{
+    text-align: center;
+}
+.question-wrap{
+    margin-bottom: 30px;
+}
+.active-page{
+    text-decoration: underline;
+}
+.reContent{
+    margin-bottom: 30px;
+}
+.gotolist2>h3{
+    font-weight: lighter;
+    margin-bottom: 20px;
+    background-color: #ddd;
+    width: 35%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 15px;
+    margin: auto;
+    margin-bottom: 30px;
+}
+.gotolist2{
+    margin: auto;
+    width: 65%;
+}
+.btn-wrap{
+    width: 100%;
+}
+.qs-item{
+    cursor: pointer;
 }
