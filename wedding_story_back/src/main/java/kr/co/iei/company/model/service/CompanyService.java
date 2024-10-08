@@ -210,7 +210,7 @@ public class CompanyService {
 		int result = advertisementDao.insertAdvertisement(advert);
 		return result;
 	}
-	
+		
 	//광고요청 리스트
 	public Map selectAdvertisement(String companyNo, int reqPage) {
 		/*게시물 조회 및 페이징에 필요한 데이터를 모두 취합*/
@@ -258,6 +258,12 @@ public class CompanyService {
 		list.put("pi",pi);
 		System.out.println(list);
 		return list;
+	}
+	public List selectAdvertProductNo(String companyNo) {
+		
+		List productNo = productDao.selectAdvertProductNo(companyNo);
+		
+		return productNo;
 	}
 	
 

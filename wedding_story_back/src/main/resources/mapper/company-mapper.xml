@@ -102,6 +102,7 @@
 		company_state
 		from company where company_state=1 order by company_name
 	</select>
+	
 
 </mapper>
 

@@ -87,5 +87,7 @@ public interface ProductDao {
 
 	int favoritedelete(int productNo, int memberNo);
 
+	List selectAdvertProductNo(String companyNo);
+
 
 }

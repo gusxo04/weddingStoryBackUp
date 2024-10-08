@@ -22,5 +22,6 @@ public class AdvertisementDTO {
 	private String adEnd;
 	private String adRequest;
 	private int advertisementState;
+	private int productNo;
 	private CompanyDTO company;
 }

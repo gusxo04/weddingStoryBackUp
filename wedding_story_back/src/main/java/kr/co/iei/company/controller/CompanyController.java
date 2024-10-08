@@ -222,6 +222,18 @@ public class CompanyController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	//광고 요청시 업체가 등록한 상품 번호 조회
+	@GetMapping(value="/advertInsert/{companyNo}")
+	public ResponseEntity<List> selectAdvertProductNo(@PathVariable String companyNo){
+		System.out.println(companyNo);
+		List productNo = companyService.selectAdvertProductNo(companyNo);
+		
+		
+		return ResponseEntity.ok(productNo);
+	}
+	
+	
 	//광고요청 등록
 	@PostMapping(value="/advertisement")
 	public ResponseEntity<Boolean> insertAdvertisement(@ModelAttribute AdvertisementDTO advert){
@@ -257,5 +269,6 @@ public class CompanyController {
 		System.out.println(consult);
 		return ResponseEntity.ok(consult);
 	}
+	
 	
 }
