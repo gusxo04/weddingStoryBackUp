@@ -7,6 +7,7 @@ import kr.co.iei.admin.model.dto.NoticeDTO;
 import kr.co.iei.admin.model.dto.NoticeFileDTO;
 import kr.co.iei.admin.model.dto.QuestionDTO;
 import kr.co.iei.admin.model.dto.QuestionFileDTO;
+import kr.co.iei.admin.model.dto.QuestionReDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.PageInfo;
 
@@ -54,5 +55,16 @@ public interface NoticeDao {
 	QuestionDTO getOneQuestion(int questionNo);
 
 	QuestionFileDTO getQuestionFile(int questioinFileNo);
+
+	int questionRe(String content, String loginIdState, int questionNo);
+
+	int updateQuestionState(int questionNo);
+
+	QuestionReDTO getQuestionRe(int questionNo);
+
+	int QuestionTotalCountMy(int loginNo);
+
+	List selectQuestionList2(int start, int end, int loginNo);
+
 
 }

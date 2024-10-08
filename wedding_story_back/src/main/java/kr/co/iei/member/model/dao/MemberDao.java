@@ -83,5 +83,6 @@ public interface MemberDao {
 
 	int insertMemberPay(MemberPayDTO memberPay, MemberDTO member, ProductDTO product);
 
+	MemberDTO getMemberNo(int memberNo);
 
 }

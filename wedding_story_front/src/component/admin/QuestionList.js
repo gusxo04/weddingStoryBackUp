@@ -23,9 +23,10 @@ const QuestionList =()=>{
     return(
         <div className="qs-wrap">
         <div className="question-page-title">
-          <h1>공지사항</h1>
+          <h1>Q&A</h1>
         </div>
         
+        <div className="qs-table-wrap">
         <table className="tbl1 question_tbl">
           <thead>
             <tr>
@@ -46,6 +47,7 @@ const QuestionList =()=>{
             )}
           </tbody>
         </table>
+        </div>
         <div className="qs-paging-wrap">
           <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
         </div>
