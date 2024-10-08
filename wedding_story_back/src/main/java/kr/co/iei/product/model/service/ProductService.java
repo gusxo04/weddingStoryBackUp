@@ -90,8 +90,7 @@ public class ProductService {
 	@Transactional
 	public Integer insertWeddingHallPay(MemberDTO member, ProductDTO product, MemberPayDTO memberPay) {
 		// 결제 관련 데이터 저장
-        int result = memberDao.insertMemberPay(memberPay,member,product);
-        
+        int result = memberDao.insertMemberPay(memberPay,member,product);   
 		return result;
 	}
 

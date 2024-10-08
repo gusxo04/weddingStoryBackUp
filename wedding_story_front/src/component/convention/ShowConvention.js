@@ -139,6 +139,9 @@ const ShowConvention = (props) => {
     };
   }, []);
 
+
+  console.log(startDate);
+
   // 나중에 다른걸로 대체 (swal 띄우면 스크롤 사라지는거 때매 alert창이 뜨면 스크롤을 사라지게 만듦)
   const [alertType, setAlertType] = useState(0);
   const navigate = useNavigate();
@@ -172,6 +175,17 @@ const ShowConvention = (props) => {
         </div>
         }
 
+        {/* 업체인데 박람회가 시작하면 디자인이 깨져서 그냥 부스보기도 포함해주기 */}
+        {loginMemberType === 2 && startDate <= 0 ? 
+        <div className="convention-inner-preview-info convention-layout-btn">
+          <button onClick={() => {
+            setShowType(!showType);
+          }}>{showType ? "부스 보기" : "박람회 보기"}</button>
+        </div>
+        :
+        ""
+        }
+
         <div className="convention-inner-preview-info convention-way-btn" >
           <button onClick={() => {
             setAlertType(2);
@@ -182,7 +196,7 @@ const ShowConvention = (props) => {
  {/* 업체면은 부스보기가 없으므로 convention-inner-preview-info div에 저 스타일을 추가 */}
         
         {/* 회원인경우 */}
-        {loginMemberType === 1 ?
+        {/* {loginMemberType === 1 ?
         type ?
         startDate === 0 ? 
         "" 
@@ -218,6 +232,37 @@ const ShowConvention = (props) => {
         ""
         :
         ""
+        } */}
+        {
+        loginMemberType === 1 && type && startDate !== 0
+          ? !payment
+            ? (
+              <div className="convention-inner-preview-info convention-buy-btn">
+                <button onClick={() => {
+                  if (convention.ticketCount < convention.conventionLimit) {
+                    setNoticeEmail("");
+                    setAlertType(3);
+                  } else {
+                    Swal.fire({
+                      title: "박람회",
+                      text: "정원이 다 찼습니다.",
+                      icon: "info",
+                      iconColor: "var(--main1)",
+                      confirmButtonText: "확인",
+                      confirmButtonColor: "var(--main1)"
+                    })
+                  }
+                }}>박람회 신청</button>
+              </div>
+            )
+            : (
+              <div className="convention-inner-preview-info convention-buy-btn">
+                <button onClick={() => {
+                  setAlertType(4);
+                }}>환불하기</button>
+              </div>
+            )
+          : ""
         }
         
         {/* 어드민인 경우 */}

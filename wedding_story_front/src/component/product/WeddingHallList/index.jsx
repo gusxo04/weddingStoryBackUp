@@ -5,6 +5,7 @@ import PageNavi from "../../utils/PagiNavi";
 import styles from "./WeddingHallList.module.css";
 import { MdFavorite } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
+import { RecoilState } from "recoil";
 
 const WeddingHallList = () => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -50,6 +51,7 @@ const BoardItem = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const product = props.product;
 	const productNo = product.productNo;
+	const memberNo = props.memberNo;
 	const navigate = useNavigate();
 	const [liked, setLiked] = useState(false);
 
@@ -58,7 +60,14 @@ const BoardItem = (props) => {
 
 		setLiked((prev) => !prev);
 		// 선택적으로 여기에서 좋아요 상태를 서버에 보낼 수 있습니다.
-		// axios.post(`${backServer}/product/favorite`, { productNo: product.productNo, liked: !liked });
+		axios
+			.post(`${backServer}/product/favorite`, { productNo: product.productNo, memberNo: memberNo, favirite: !liked })
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (
@@ -81,7 +90,7 @@ const BoardItem = (props) => {
 				<div className={styles["posting-title"]}>상품명: {product.productName}</div>
 				<div className={styles["posting-sub-info"]}>
 					<span>대관료: {product.coronation}</span>
-					<span>식비: {product.dinningRoom}</span>
+					<span>식비: {product.diningRoom}</span>
 					<span>가격: {product.productPrice}</span>
 				</div>
 			</div>

@@ -217,7 +217,7 @@
 	</select>
 	
 	<insert id="insertMemberPay">
-		insert into member_pay values (member_pay_seq.nextval, #{memberNo}, #{productNo},to_char(sysdate,'yyyy-mm-dd'),#{progressDate},#{payPrice}, #{progress},#{merchant_uid})
+		insert into member_pay values (member_pay_seq.nextval, #{member.memberNo}, #{product.productNo},null,to_char(sysdate,'yy/mm/dd'),#{memberPay.progressDate},#{memberPay.progressTime},#{memberPay.payPrice}, #{memberPay.progress},#{memberPay.merchantUid})
 	</insert>
 	
 	
