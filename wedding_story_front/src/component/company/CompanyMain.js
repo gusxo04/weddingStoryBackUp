@@ -18,9 +18,9 @@ import CompanyCounsel from "./CompanyCounsel";
 import CompanyAdvertisement from "./CompanyAdvertisement";
 import AdvertisementRequest from "./AdvertisementRequest";
 import CompanySchedule from "./CompanySchedule";
-import CompanySalesChart from "./CompanySalesChart";
 import Notice from "../admin/Notice";
 import CompanyNotice from "./CompanyNotice";
+import CompanySalesChart from "./CompanySalesChart";
 
 const CompanyMain = () => {
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);

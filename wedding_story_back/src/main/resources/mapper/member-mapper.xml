@@ -224,4 +224,9 @@
 		select * from member_pay where pay_no = #{payNo}
 	</select>
 
+	<select id="selectSalesData" resultType="memberPay">
+		select 
+	</select>
+	
+	
 </mapper>
