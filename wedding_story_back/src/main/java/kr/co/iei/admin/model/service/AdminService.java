@@ -114,8 +114,8 @@ public class AdminService {
 		int result1 = noticeDao.refuseAd(loginId, companyNo, refuse);
 		int result2 = advertisementDao.refuseAd(adNo);
 		int result = 0;
-		if (result1 == 1 || result == 1) {
-			result1 = 1;
+		if (result1 ==1 && result2==1 ) {
+			result = 1;
 		}
 		return result;
 	}
