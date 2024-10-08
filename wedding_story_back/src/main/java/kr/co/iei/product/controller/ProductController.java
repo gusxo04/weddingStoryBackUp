@@ -64,8 +64,7 @@ public class ProductController {
 	//웨딩홀 예약하기에서 상품명불러오기
 	@GetMapping(value = "/reservation/{memberNo}/{productNo}")
 	public ResponseEntity<Map> selectReservationInfo(@PathVariable int productNo,@PathVariable int memberNo){
-		Map map = productService.selectReservationInfo(productNo,memberNo);
-		
+		Map map = productService.selectReservationInfo(productNo,memberNo);		
 		return ResponseEntity.ok(map);
 	}
 		
@@ -73,7 +72,7 @@ public class ProductController {
 	@PostMapping
 	public ResponseEntity<Integer>insertWeddingHallPay(@ModelAttribute MemberDTO member, @ModelAttribute ProductDTO product, @ModelAttribute MemberPayDTO memberPay ){
 		int result = productService.insertWeddingHallPay(member,product,memberPay);
-		System.out.println();
+		System.out.println(result);
 		return ResponseEntity.ok(result);
 	}
 	
@@ -92,6 +91,7 @@ public class ProductController {
 		List<ProductDTO> list = productService.favoriteList(memberNo);
 		return ResponseEntity.ok(list);
 	}
+	
 	//회원이 관심상품 등록,취소하는 로직
 	@PostMapping(value = "/favorite")
 	public ResponseEntity<Integer> favorite(@RequestBody ProductFavoriteDTO favorite){

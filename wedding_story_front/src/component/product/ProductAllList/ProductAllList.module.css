@@ -21,6 +21,9 @@
 	text-align: center;
 }
 
+.page-title:hover {
+	color: #c19975;
+}
 .board-list > .page-title > ul > li {
 	padding-right: 10px;
 }

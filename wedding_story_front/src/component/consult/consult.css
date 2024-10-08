@@ -1,106 +1,96 @@
 /*예약상담css*/
 .consult-wrap {
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px var(--main1) solid;
-  width: 380px;
-  margin: 0 auto;
-  align-self: center;
+	padding: 20px;
+	border-radius: 10px;
+	border: 1px var(--main1) solid;
+	width: 380px;
+	margin: 0 auto;
+	align-self: center;
 }
 .consult-wrap > .title-name {
-  padding: 30px;
-  text-align: center;
-  font-family: ns-b;
-  font-size: 20px;
-  color: var(--main1);
+	padding: 30px;
+	text-align: center;
+	font-family: ns-b;
+	font-size: 20px;
+	color: var(--main1);
 }
 .consult-wrap > .material-icons {
-  margin-right: 100%;
+	margin-right: 100%;
 }
 
 .consult-content > .input-wrap {
-  padding: 15px 30px;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  border-left: 20px;
+	padding: 15px 30px;
+	border: none;
+	display: flex;
+	flex-direction: column;
+	border-left: 20px;
 }
 
 .consult-content > .input-wrap > .input-title {
-  padding-right: 30px;
+	padding-right: 30px;
 }
 
 .consult-content > .input-wrap > .input-title > label {
-  text-align: left;
-  font-size: 16px;
-  color: var(--main1);
-  font-family: ns-b;
+	text-align: left;
+	font-size: 16px;
+	color: var(--main1);
+	font-family: ns-b;
 }
 
 .consult-content > .input-wrap > .input-item {
-  text-align: left;
+	text-align: left;
 }
 .consult-content > .input-wrap > .input-item > input {
-  font-size: 16px;
-  font-family: ns-b;
-  padding: 8px 0px;
-  width: 300px;
-  border: 1px var(--main1) solid;
-  border-radius: 5px;
-  text-align: center;
+	font-size: 16px;
+	font-family: ns-b;
+	padding: 8px 0px;
+	width: 300px;
+	border: 1px var(--main1) solid;
+	border-radius: 5px;
+	text-align: center;
 }
 
 .consult-content > .input-date {
-  padding: 15px 30px;
-  border: none;
-  display: flex;
+	padding: 15px 30px;
+	border: none;
+	display: flex;
 }
 
 .consult-content > .input-date > .input-title > label {
-  font-size: 16px;
-  color: var(--main1);
-  font-family: ns-b;
+	font-size: 16px;
+	color: var(--main1);
+	font-family: ns-b;
 }
 .consult-content > .input-date > .input-item > input {
-  font-size: 16px;
-  font-family: ns-b;
-  padding: 8px 0px;
-  border: 1px var(--main1) solid;
-  border-radius: 5px;
-  text-align: center;
+	font-size: 16px;
+	font-family: ns-b;
+	padding: 8px 0px;
+	border: 1px var(--main1) solid;
+	border-radius: 5px;
+	text-align: center;
 }
 
 .input-item > input[type="checkbox"] {
-  width: 40px;
-  height: 40px;
-  border: 1px #c19975;
+	width: 40px;
+	height: 40px;
+	border: 1px #c19975;
 }
-/*
-.consult-content > .input-wrap > .input-item > textarea {
-  padding: 12px 16px;
-  border-radius: 8px;
-  resize: none;
-  margin-left: 0;
-  width: 270px;
-  height: 100px;
-  border: 1px var(--main1) solid;
-}
-*/
+
 .btn {
-  border: 1px solid #fff;
-  padding: 10px 25px;
-  font-size: 16px;
-  border: none;
-  font-family: ns-b;
-  text-align: center;
-  box-sizing: border-box;
-  width: 100%;
+	border: 1px solid #fff;
+	padding: 10px 25px;
+	font-size: 16px;
+	border: none;
+	font-family: ns-b;
+	text-align: center;
+	box-sizing: border-box;
+	width: 100%;
 }
 .btn:hover {
-  background-color: var(--main1);
-  color: #fff;
-  cursor: pointer;
+	background-color: var(--main1);
+	color: #fff;
+	cursor: pointer;
 }
 .material-icons-outlined {
-  width: 20px;
+	width: 20px;
 }
