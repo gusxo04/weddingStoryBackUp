@@ -5,7 +5,8 @@ import PageNavi from "../../utils/PagiNavi";
 import styles from "./WeddingHallList.module.css";
 import { MdFavorite } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
-import { RecoilState } from "recoil";
+import { RecoilState, useRecoilValue } from "recoil";
+import { loginNoState } from "../../utils/RecoilData";
 
 const WeddingHallList = () => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -51,7 +52,7 @@ const BoardItem = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const product = props.product;
 	const productNo = product.productNo;
-	const memberNo = props.memberNo;
+	const memberNo = useRecoilValue(loginNoState);
 	const navigate = useNavigate();
 	const [liked, setLiked] = useState(false);
 
@@ -61,13 +62,17 @@ const BoardItem = (props) => {
 		setLiked((prev) => !prev);
 		// 선택적으로 여기에서 좋아요 상태를 서버에 보낼 수 있습니다.
 		axios
-			.post(`${backServer}/product/favorite`, { productNo: product.productNo, memberNo: memberNo, favirite: !liked })
+			.post(`${backServer}/product/favorite`, { productNo: productNo, memberNo: memberNo, likeState: !liked })
 			.then((res) => {
 				console.log(res);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+	};
+	const NumberFormatter = ({ number }) => {
+		const formattedNumber = new Intl.NumberFormat("ko-KR").format(number);
+		return <span>{formattedNumber}</span>;
 	};
 
 	return (
@@ -89,9 +94,12 @@ const BoardItem = (props) => {
 				</div>
 				<div className={styles["posting-title"]}>상품명: {product.productName}</div>
 				<div className={styles["posting-sub-info"]}>
-					<span>대관료: {product.coronation}</span>
-					<span>식비: {product.diningRoom}</span>
-					<span>가격: {product.productPrice}</span>
+					<span>
+						대관료: <NumberFormatter number={product.coronation} /> 원
+					</span>
+					<span>
+						식비: <NumberFormatter number={product.diningRoom} /> 원
+					</span>
 				</div>
 			</div>
 		</li>

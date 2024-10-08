@@ -39,7 +39,7 @@ public class ProductController {
 	
 	@Value("${file.root}")
 	public String root;
-	
+		
 	
 	@GetMapping("/list/{reqPage}")
 	public ResponseEntity<Map> getProductList(@PathVariable int reqPage) {
