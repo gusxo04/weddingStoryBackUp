@@ -35,7 +35,7 @@ const CompanyAdvertisement = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [companyNo, reqPage, advert]);
+	}, [companyNo, reqPage]);
 
 	const totalPrice = (advert) => {
 		if (advert.advertisementState === 4) {

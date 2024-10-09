@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import { companyNoState } from "../utils/RecoilData";
 import axios from "axios";
 import { startOfDay } from "@fullcalendar/core/internal";
+import { useNavigate } from "react-router-dom";
 
 const CompanySchedule = () => {
 	// 뷰가 바뀔 때마다 호출되는 함수
@@ -14,6 +15,8 @@ const CompanySchedule = () => {
 	const [reqPage, setReqPage] = useState(1);
 	const [headerFormat, setHeaderFormat] = useState({ weekday: "short" }); // 기본적으로 요일 표시
 	const [scheduleList, setScheduleList] = useState([{}]);
+
+	const navigate = useNavigate();
 	const handleDatesSet = (info) => {
 		if (info.view.type === "dayGridMonth") {
 			setHeaderFormat({ weekday: "short" }); // 요일 형식 ('일', '월', '화')
@@ -27,14 +30,14 @@ const CompanySchedule = () => {
 			.then((res) => {
 				console.log(res);
 				setScheduleList(res.data.consult.memberDTO.memberName);
-				// const updateScheduleList = res.data.map((schedule) => ({
-				// 	title: schedule.consult.memberDTO.memberName,
-				// 	start: `${schedule.consult.consultDate}T${schedule.consult.consultTime}`,
+				const updateScheduleList = res.data.map((schedule) => ({
+					title: schedule.consult.memberDTO.memberName,
+					start: `${schedule.consult.consultDate}T${schedule.consult.consultTime}`,
 
-				// 	consultDate: schedule.consult.consultDate,
-				// 	time: schedule.consult.consultTime,
-				// }));
-				// setScheduleList(updateScheduleList);
+					consultDate: schedule.consult.consultDate,
+					time: schedule.consult.consultTime,
+				}));
+				setScheduleList(updateScheduleList);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -72,6 +75,19 @@ const CompanySchedule = () => {
 									};
 								}
 							}}
+							// datesSet={handleDatesSet} // 뷰 변경 시 호출
+							dayCellDidMount={(info) => {
+								// 클릭 이벤트 추가
+								info.el.addEventListener("click", () => {
+									navigate("/company/schedule/dayInfo");
+									
+								});
+						
+								// 추가적인 스타일 조정이 필요하다면 여기에 작성
+								if (info.isToday) {
+									info.el.style.backgroundColor = '#f0f8ff'; // 오늘 날짜 배경색 변경
+								}
+							}}
 							datesSet={handleDatesSet} // 뷰 변경 시 호출
 							dayHeaderFormat={headerFormat} // 요일 또는 일자 형식 적용
 						/>
@@ -81,5 +97,6 @@ const CompanySchedule = () => {
 		</section>
 	);
 };
+
 
 export default CompanySchedule;

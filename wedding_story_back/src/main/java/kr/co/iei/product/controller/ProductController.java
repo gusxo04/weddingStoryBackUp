@@ -44,6 +44,7 @@ public class ProductController {
 	@GetMapping("/list/{reqPage}")
 	public ResponseEntity<Map> getProductList(@PathVariable int reqPage) {
 		Map map = productService.getProductList(reqPage);
+		System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
 	
@@ -85,6 +86,8 @@ public class ProductController {
 		return ResponseEntity.ok(map);
 	}
 	
+	
+	
 	//회원이 좋아요한 제품 리스트
 	@GetMapping(value = "/favoriteList/{memberNo}")
 	public ResponseEntity<List> favoriteList(@PathVariable int memberNo){
@@ -101,6 +104,13 @@ public class ProductController {
 		int result = productService.favorite(favorite.getProductNo(),favorite.getMemberNo(),favorite.getLikeState());
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping(value = "/favorite")
+	public ResponseEntity<ProductFavoriteDTO> favoriteOneList(@ModelAttribute ProductFavoriteDTO favorite){
+		ProductFavoriteDTO productFavorite = productService.favoriteOneList(favorite);
+		return ResponseEntity.ok(productFavorite);
+	}
+	
 	
 	
 }

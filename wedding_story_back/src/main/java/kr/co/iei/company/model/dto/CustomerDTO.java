@@ -14,8 +14,7 @@ public class CustomerDTO {
 	private int memberNo;
     private String memberName;
     private String memberPhone;
+    private String memberGender;
+    private String memberEmail;
     private String partnerName;
-    private int productNo;
-    private String productName;
-    private String payDate;
 }

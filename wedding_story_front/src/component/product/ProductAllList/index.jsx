@@ -18,12 +18,12 @@ const dummyData = [
 	{ productNo: 10, productName: "메이크업 J", productPrice: "70000", businessCode: "makeUp" },
 ];
 */
-const businessCodes = {
-	studio: "스튜디오",
-	dressShop: "드레스",
-	makeUp: "메이크업",
-	robe: "예복",
-	mainCeremony: "본식",
+const category = {
+	스튜디오: "스튜디오",
+	드레스: "드레스",
+	메이크업: "메이크업",
+	예복: "예복",
+	본식: "본식",
 };
 
 const ProductAllList = () => {
@@ -31,7 +31,7 @@ const ProductAllList = () => {
 	const [productList, setProductList] = useState([]);
 	const [reqPage, setReqPage] = useState(1);
 	const [pi, setPi] = useState({});
-	const [businessCode, setBusinessCode] = useState("studio"); // Default to '스튜디오'
+	const [category, setCategory] = useState("스튜디오"); // Default to '스튜디오'
 
 	useEffect(() => {
 		axios
@@ -47,16 +47,16 @@ const ProductAllList = () => {
 	}, [reqPage]);
 
 	// 비즈니스 코드를 기준으로 제품 필터링
-	const filteredProducts = productList.filter((product) => product.businessCode === businessCode);
+	const filteredProducts = productList.filter((product) => product.category === category);
 	//const filteredProducts = dummyData.filter((product) => product.businessCode === businessCode);
 
 	return (
 		<section className={styles["board-list"]}>
 			<div className={styles["page-title"]}>
 				<ul className={styles["name-title"]}>
-					{Object.entries(businessCodes).map(([code, name]) => (
+					{Object.entries(category).map(([code, name]) => (
 						<li key={code}>
-							<Link to={`/product/list?businessCode=${code}`} onClick={() => setBusinessCode(code)}>
+							<Link to={`/product/list?category=${code}`} onClick={() => setCategory(code)}>
 								{name}
 							</Link>
 						</li>
@@ -106,7 +106,7 @@ const BoardItem = (props) => {
 		<li
 			className={styles["posting-item"]}
 			onClick={() => {
-				navigate(`/product/info/${productNo}?businessCode=${product.businessCode}`);
+				navigate(`/product/info/${productNo}?category=${product.category}`);
 			}}
 		>
 			<div className={styles["posting-info"]}>

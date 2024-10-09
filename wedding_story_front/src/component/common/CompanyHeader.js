@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import "./common.css";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { companyNoState } from "../utils/RecoilData";
 import axios from "axios";
 
 const CompanyHeader = () => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
+	const companyNo = useRecoilValue(companyNoState)
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const [company, setCompany] = useState({});
 	// 드롭다운을 토글하는 함수
@@ -39,7 +39,7 @@ const CompanyHeader = () => {
 				</div>
 			</div>
 			<div className="header-c-content">
-				{companyNo !== null || companyNo !== "" ? (
+				{companyNo !== null && companyNo !== 0 && companyNo !== ""? (
 					<ul>
 						<li>
 							<Link to="/company/product/list" className="nav-item">
@@ -114,10 +114,10 @@ const CompanyHeader = () => {
 							)}
 						</li>
 					</ul>
-				) : (
+				) :	(
 					<ul>
 						<li>
-							<Link to="/company/product" className="nav-item">
+							<Link to="#" className="nav-item">
 								<div>
 									<span className="material-icons">view_in_ar</span>
 								</div>
@@ -174,7 +174,8 @@ const CompanyHeader = () => {
 							)}
 						</li>
 					</ul>
-				)}
+				)
+			}
 			</div>
 		</header>
 	);

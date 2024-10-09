@@ -280,10 +280,10 @@ public class CompanyController {
 	
 	//매출 조회 
 	@GetMapping(value="/sales/{companyNo}")
-	public ResponseEntity<List>selectSalesData(@PathVariable String companyNo){
-		List memberPay = companyService.selectSalesData(companyNo);
+	public ResponseEntity<Map>selectSalesData(@PathVariable String companyNo){
+		Map monthPrice = companyService.selectSalesData(companyNo);
 		
-		return ResponseEntity.ok(memberPay);
+		return ResponseEntity.ok(monthPrice);
 	}
 	
 	

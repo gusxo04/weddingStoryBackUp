@@ -10,14 +10,16 @@
 		(select
 		rownum as rnum, b.* from
 		(select
+		company_category,
 		product_no,
 		product_thumb,
 		product_name,
 		product_price
-		from product where product_state=1 order by product_no
+		from product where
+		company_category = #{category} order by product_no
 		desc) b)
 		where rnum
-		between #{start} and#{end}
+		between #{pi.start} and#{pi.end}
 	</select>
 
 	<select id="getProductHallList" resultType="product">
@@ -165,14 +167,17 @@
   </select>
   <select id="selectCustomerList" resultMap="CustomerResultMap">
   select * from
-  (select rownum as rnum, a.* from(select 
+  (select rownum as rnum, a.* from(
+    select distinct 
     m.member_no,
     m.member_name,
     m.member_phone,
-    m.partner_name,
-    p.product_no,
-    p.product_name,
-    mp.pay_date
+    m.member_gender,
+    m.member_email,
+    m.partner_name
+
+
+
     
 	from product p 
 	
@@ -184,16 +189,15 @@
 	<foreach collection="productNo" item="No" open="(" close=")" separator=",">
 		#{No}
 	</foreach>
-	 order by pay_date desc) a) where rnum between #{pi.start} and#{pi.end}
+	 ) a) where rnum between #{pi.start} and#{pi.end}
   </select> 
   <resultMap id="CustomerResultMap" type="customer">
     <result property="memberNo" column="member_no"/>
     <result property="memberName" column="member_name"/>
     <result property="memberPhone" column="member_phone"/>
+    <result property="memberGender" column="member_gender"/>
+    <result property="memberEmail" column="member_email"/>
     <result property="partnerName" column="partner_name"/>
-    <result property="productNo" column="product_no"/>
-    <result property="productName" column="product_name"/>
-    <result property="payDate" column="pay_date"/>
 </resultMap>
 
 	<select id="TotalCustomerCount" resultType="int">
@@ -228,11 +232,12 @@
  <select id="totalCounselList" resultMap="CounselResultMap">
    select * from
   (select rownum as rnum, a.* from(select 
-		m.member_no,
+		
 		m.member_name,
 		m.member_phone,
 		p.product_no,
 		p.product_name,
+		mp.pay_no,
 		mp.pay_date,
 		mp.progress
     
@@ -249,11 +254,11 @@
 	 order by pay_date ) a) where rnum between #{pi.start} and#{pi.end}
   </select> 
   <resultMap id="CounselResultMap" type="counsel">
-    <result property="memberNo" column="member_no"/>
     <result property="memberName" column="member_name"/>
     <result property="memberPhone" column="member_phone"/>
     <result property="productNo" column="product_no"/>
     <result property="productName" column="product_name"/>
+    <result property="payNo" column="pay_no"/>
     <result property="payDate" column="pay_date"/>
     <result property="progress" column="progress"/>
 </resultMap>
@@ -265,13 +270,17 @@
 	 select company_no,product_no,product_name,product_IMG,product_price from favorite_product join product using(product_no) where member_no=#{memberNo} order by 2 desc
 </select>
 <insert id="favoriteInsert">
-	insert into favorite_product values(favorite_product_seq.nextval,#{memberNo},#{productNo})
+	insert into favorite_product values(favorite_product_seq.nextval,#{memberNo},#{productNo},#{likes})
 </insert>
 <delete id="favoritedelete">
 	delete from favorite_product where member_no=#{memberNo} and product_no=#{productNo}
 </delete>
 <select id="selectAdvertProductNo" resultType="product">
 	select product_no ,product_name from product where company_no = #{companyNo}
+</select>
+
+<select id="favoriteOneList" resultType="productFavorite">
+	select * from favorite_product where member_no = #{memberNo}
 </select>
 
 </mapper>

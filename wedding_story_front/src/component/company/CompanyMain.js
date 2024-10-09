@@ -21,6 +21,7 @@ import CompanySchedule from "./CompanySchedule";
 import Notice from "../admin/Notice";
 import CompanyNotice from "./CompanyNotice";
 import CompanySalesChart from "./CompanySalesChart";
+import DayScheduleInfo from "./DayScheduleInfo";
 
 const CompanyMain = () => {
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
@@ -61,6 +62,19 @@ const CompanyMain = () => {
 				</div>
 
 				<section className="content-wrap">
+				<div>
+					{companyNo === null || companyNo === 0 ? (
+						<CompanyNoNull />
+					) : (
+						""
+					)}
+				</div>
+					{companyNo === null && companyNo === 0?
+					<Routes>
+						<Route path="join" element={<CompanyJoin />} />
+						<Route path="null" element={<CompanyNoNull/>} />
+					</Routes>
+					:
 					<Routes>
 						<Route path="null" element={<CompanyNoNull />} />
 						<Route path="join" element={<CompanyJoin />} />
@@ -76,7 +90,14 @@ const CompanyMain = () => {
 						<Route path="sales" element={<CompanySalesChart />} />
 						<Route path="schedule" element={<CompanySchedule />} />
 						<Route path="notice/*" element={<CompanyNotice />} />
+						<Route path="schedule/dayInfo" element={<DayScheduleInfo/>} />
 					</Routes>
+					
+					
+					
+					
+					}
+					
 				</section>
 			</div>
 		</>

@@ -32,11 +32,10 @@ const CompanyCustomer = () => {
                 <tr>
                   <th style={{ width: "10%" }}>회원번호</th>
                   <th style={{ width: "10%" }}>이름</th>
+                  <th style={{ width: "10%" }}>성별</th>
                   <th style={{ width: "15%" }}>전화번호</th>
+                  <th style={{ width: "30%" }}>이메일</th>
                   <th style={{ width: "10%" }}>배우자이름</th>
-                  <th style={{ width: "10%" }}>상품번호</th>
-                  <th style={{ width: "30%" }}>상품명</th>
-                  <th style={{ width: "15%" }}>구매일</th>
                 </tr>
               </thead>
               <tbody>
@@ -70,11 +69,10 @@ const CustomerItem = (props) => {
     <tr>
         <th style={{ width: "10%" }}>{customer.memberNo}</th>
         <th style={{ width: "10%" }}>{customer.memberName}</th>
+        <th style={{ width: "10%" }}>{customer.memberGender}</th>
         <th style={{ width: "15%" }}>{customer.memberPhone}</th>
+        <th style={{ width: "30%" }}>{customer.memberEmail}</th>
         <th style={{ width: "10%" }}>{customer.partnerName}</th>
-        <th style={{ width: "10%" }}>{customer.productNo}</th>
-        <th style={{ width: "30%" }}>{customer.productName}</th>
-        <th style={{ width: "15%" }}>{customer.payDate}</th>
     </tr>
   )
 }

@@ -12,6 +12,7 @@ import kr.co.iei.company.model.dto.CustomerDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dto.ProductDTO;
+import kr.co.iei.product.model.dto.ProductFavoriteDTO;
 import kr.co.iei.product.model.dto.ProductFileDTO;
 import kr.co.iei.util.PageInfo;
 
@@ -22,7 +23,7 @@ public interface ProductDao {
 	
 	int TotalCount();
 	
-	List getProductList(PageInfo pi);
+	List getProductList(PageInfo pi, String category);
 
 	int insertProduct(ProductDTO product);
 
@@ -82,6 +83,14 @@ public interface ProductDao {
 	int favoritedelete(int productNo, int memberNo);
 
 	List selectAdvertProductNo(String companyNo);
+
+	ProductFavoriteDTO favoriteOneList(ProductFavoriteDTO favorite);
+
+	int favoriteInsert(ProductFavoriteDTO favorite);
+
+
+
+
 
 
 }

@@ -13,28 +13,42 @@ const ProductInfo = () => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const params = useParams();
 	const productNo = params.productNo;
+	const companyNo = params.companyNo; // URL에서 회사 번호 가져오기
 	const location = useLocation(); // 현재 location 객체 가져오기
 	const queryParams = new URLSearchParams(location.search); // 쿼리 문자열 파라미터 파싱
 
-	const businessCode = queryParams.get("businessCode"); // '123'
-	const showConsultButton = ["dressShop", "robe"].includes(businessCode); // 비즈니스 코드에 따라 버튼 보이기 여부 결정
+	const category = queryParams.get("category"); // '123'
+	const showConsultButton = ["드레스", "예복"].includes(category); // 비즈니스 코드에 따라 버튼 보이기 여부 결정
 
 	const [product, setProduct] = useState({});
 	const [loginId, setLoginId] = useRecoilState(loginIdState);
 	const [company, setCompany] = useState({ companyAddr: "" });
 	const navigator = useNavigate();
-
 	useEffect(() => {
 		axios
-			.get(`${backServer}/product/productNo/${productNo}`)
+			.get(`${backServer}/product/productInfo/${productNo}`)
 			.then((res) => {
 				console.log(res);
-				setProduct(res.data);
+				setProduct(res.data.product);
+
+				// 회사 정보가 제대로 응답되는지 확인 후 설정
+				if (res.data.company) {
+					setCompany({
+						companyNo: res.data.company.companyNo,
+						companyName: res.data.company.companyName, // 회사명이 없을 경우 빈 문자열로 대체
+						companyAddr: res.data.company.companyAddr, // 주소가 없을 경우 빈 문자열로 대체
+					});
+				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	}, [backServer, productNo, companyNo]);
+	console.log(company);
+	const NumberFormatter = ({ number }) => {
+		const formattedNumber = new Intl.NumberFormat("ko-KR").format(number);
+		return <span>{formattedNumber}</span>;
+	};
 
 	return (
 		<section className={styles["product-view-wrap"]}>
@@ -104,7 +118,7 @@ const ProductInfo = () => {
 				<div className={styles["product-map-view"]}>
 					<h3>회사 위치</h3>
 					{company.companyAddr ? <Viewer initialValue={company.companyAddr} /> : "회사위치 뷰"}
-					{/* <KakaoMap address={""} /> */}
+					<KakaoMap address={company.companyAddr} />
 				</div>
 			</div>
 		</section>

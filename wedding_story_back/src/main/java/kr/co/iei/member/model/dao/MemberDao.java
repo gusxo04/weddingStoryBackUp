@@ -87,7 +87,12 @@ public interface MemberDao {
 	
 	//리뷰결제번호조회
 	MemberPayDTO selectMemberPay(int payNo);
+	
 
-	List<MemberPayDTO> selectSalesData(String companyNo);
+	int selectSalesData(List productNo, String month);
+
+	String searchId(MemberDTO member);
+
+	int searchMember(MemberDTO member);
 
 }

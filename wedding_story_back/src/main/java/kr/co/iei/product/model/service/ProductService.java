@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.iei.admin.model.dto.SalesDTO;
 import kr.co.iei.company.model.dao.CompanyDao;
@@ -16,6 +18,7 @@ import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
 import kr.co.iei.product.model.dao.ProductDao;
 import kr.co.iei.product.model.dto.ProductDTO;
+import kr.co.iei.product.model.dto.ProductFavoriteDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -25,7 +28,7 @@ public class ProductService {
 	private ProductDao productDao;
 	
 	@Autowired
-	private CompanyDao componyDao;
+	private CompanyDao companyDao;
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -35,15 +38,20 @@ public class ProductService {
 	
 	//올리스트
 	public Map getProductList(int reqPage) {
+		String[] categories = {"스튜디오", "드레스", "메이크업", "예복", "예식"};
 		int numPerPage = 5;
 		int pageNaviSize = 4;
 		int totalCount = productDao.TotalCount();
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list = productDao.getProductList(pi);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("pi", pi);
-		return map;
+		Map<String, Object> categoryMap = new HashMap<>();  
+		for (String category : categories) {
+		     List list = productDao.getProductList(pi, category);
+		     categoryMap.put(category, list);
+		}
+		 Map<String, Object> resultMap = new HashMap<>();
+		 resultMap.put("category", categoryMap);
+		 resultMap.put("pi", pi);
+		 return resultMap;
 	}
 
 
@@ -64,7 +72,7 @@ public class ProductService {
 	//웨딩홀상태페이지
 	public Map productList(int productNo) {
 		ProductDTO product = productDao.selectOneProduct(productNo);
-		CompanyDTO company = componyDao.selectCompanyNo(product.getCompanyNo());	
+		CompanyDTO company = companyDao.selectCompanyNo(product.getCompanyNo());	
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("product",product);
 		map.put("company",company);
@@ -99,6 +107,13 @@ public class ProductService {
 		return list;
 	}
 	
+
+
+
+	public ProductFavoriteDTO favoriteOneList(ProductFavoriteDTO favorite) {
+		ProductFavoriteDTO productFavorite = productDao.favoriteOneList(favorite);
+		return productFavorite;
+	}
 	@Transactional
 	public int favorite(int productNo, int memberNo, Boolean likeState) {
 		int result = 0;
@@ -111,8 +126,18 @@ public class ProductService {
 		}
 		return result;
 	}
+	/*
+	@Transactional
+	public int favorite(ProductFavoriteDTO favorite) {
+		int result = productDao.favoriteInsert(favorite);
+//		빈하트 = 좋아요를 안 누른상태  if 클릭 -> 좋아요 누른거 -> DB에 insert 
+//		꽉찬하트 = 좋아요를 누른 상태 if 클릭 -> 좋아요 취소 -> DB delete
+//		좋아요를 눌렀는지 여부를 알 수 있는 방법은 select  데이터가 있으면 좋아요를 누른거 / 없으면 안 누른거
+		return result;
+		
+		
+	}
+*/
 
-
-	
 	
 }

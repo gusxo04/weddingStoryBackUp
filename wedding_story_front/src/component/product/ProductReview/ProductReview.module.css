@@ -1,91 +1,89 @@
 /*리뷰css*/
 .review-wrap > img {
-  width: 300px;
+	width: 300px;
 }
 
 .review-wrap > h2 {
-  color: var(--main1);
+	color: var(--main1);
 }
 .review-wrap > .title {
-  text-align: center;
-  padding-bottom: 200px;
+	text-align: center;
+	padding-bottom: 200px;
 }
 .title > label {
-  color: var(--main1);
+	color: var(--main1);
 }
 .review-wrap > .title > textarea {
-  margin-left: 0;
+	margin-left: 0;
 }
 
 .review-wrap > .content {
-  border-radius: 10px;
-  height: 800px;
-  padding-left: 500px;
-  background-color: var(--main2);
+	border-radius: 10px;
+	height: 800px;
+	padding-left: 500px;
+	background-color: var(--main2);
 }
 
 .review-item {
-  border: 1px solid #c19975;
-  border-radius: 5px;
-  display: flex;
-  margin-right: 20px; 
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  text-align: center;
-  height: 350px;
-  overflow: hidden;
-  padding: 10px 0px;
+	border: 1px solid #c19975;
+	border-radius: 5px;
+	display: flex;
+	margin-right: 20px;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 10px;
+	text-align: center;
+	height: 350px;
+	overflow: hidden;
+	padding: 10px 0px;
 }
 .review-item > review-rating {
-  color: gold;
+	color: gold;
 }
-
 
 .review-button {
-  padding-top: 20px;
-  padding-left: 50px;
+	padding-top: 20px;
+	padding-left: 50px;
 }
 .review-button > button {
-  width: 100px;
-  border: 1px solid #000;
-  background-color: #c19975;
-  color: #fff;
-}
-/*슬라이더 에로우표시*/
-.slick-prev,
-.slick-next {
-  /* 버튼테두리없애기*/
-  border: none;
-  /*배튼배경색 투명으로*/
-  background-color: transparent;
+	width: 100px;
+	border: 1px solid #000;
+	background-color: #c19975;
+	color: #fff;
 }
 
-.slick-prev {
-  /*절대값 부모 위치에 맞게*/
-  position: absolute;
-  left: 0;
-  bottom: -45px;
-  z-index: 1000;
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  /*텍스트 뒤로 보내기 (안보이게)*/
-  text-indent: -9999px;
+/* ProductReview.module.css */
+.product-reviews {
+	padding: 20px;
+	background-color: #f9f9f9;
 }
-.slick-next {
-  /*절대값부모위치에 맞게 */
-  position: absolute;
-  /*next는 오른쪽위치*/
-  right: 0;
-  /*아래쪽에서 45px만큼올라감*/
-  bottom: -45px;
-  /* 앞쪽나오게하기 */
-  z-index: 1000;
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  /*텍스트 뒤로보내기*/
-  text-indent: -9999px;
+
+.review-item {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 8px;
+	background-color: #fff;
+}
+
+.review-rating {
+	display: flex;
+	align-items: center;
+}
+
+.review-name {
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.review-text {
+	margin-top: 5px;
+}
+
+img {
+	width: 100%;
+	height: auto;
+	max-height: 200px;
+	object-fit: contain;
 }
