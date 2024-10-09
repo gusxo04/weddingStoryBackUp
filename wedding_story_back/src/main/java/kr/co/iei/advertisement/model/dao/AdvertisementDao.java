@@ -35,6 +35,16 @@ public interface AdvertisementDao {
 
 	int updateAdvertisement(int advertisementNo);
 
+	int yetToStart(int date);
+
+	int inProgressToEnd(int date);
+
+	AdvertisementDTO selectOneAd(int advertisementNo);
+
+	int totalInprogressCount(String start, String end);
+
+
+
 
 
 }

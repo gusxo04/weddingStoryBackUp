@@ -1,5 +1,6 @@
 package kr.co.iei.advertisement.model.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.type.Alias;
@@ -20,7 +21,7 @@ public class AdvertisementDTO {
 	private String companyNo;
 	private int adRank;
 	private String adStart;
-	private String adEnd;
+    private String adEnd;
 	private String adRequestDate;
 	private String adRequest;
 	private int advertisementState;
