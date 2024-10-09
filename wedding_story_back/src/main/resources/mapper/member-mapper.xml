@@ -224,8 +224,17 @@
 		select * from member_pay where pay_no = #{payNo}
 	</select>
 
-	<select id="selectSalesData" resultType="memberPay">
-		select 
+	<select id="selectSalesData" resultType="int">
+		 select 
+		    coalesce(SUM(pay_price), 0) as pay_price
+		    from
+		    member_pay
+    	where  product_no in 
+		<foreach collection="productNo" item="No" open="(" close=")" separator=",">
+		 	#{No}
+		</foreach> 
+ 		and SUBSTR(merchant_uid, 5, 2) = #{month}
+		
 	</select>
 	<select id="searchId" resultType="String">
 		select member_id from member where member_name=#{memberName} and member_email=#{memberEmail}

@@ -65,32 +65,50 @@ const CompanyJoinFrm = (props) => {
 
   //전화번호 input 번호만 입력하게 하기
   const handleTelInput = (e) => {
-    let value = e.target.value;
-
-    // 숫자만 남기기
-    value = value.replace(/[^0-9]/g, "");
+    let value = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 남기기
 
     // 백스페이스로 삭제할 때 하이픈도 함께 지워지도록 처리
     if (
-      e.nativeEvent.inputType === "deleteContentBackward" &&
-      companyTel.endsWith("-")
+        e.nativeEvent.inputType === "deleteContentBackward" &&
+        companyTel.endsWith("-")
     ) {
-      value = value.slice(0, -1); // 마지막 하이픈 제거
+        value = value.slice(0, -1); // 마지막 하이픈 제거
     }
 
-    // 000-0000-0000 형식으로 변환
-    if (value.length < 4) {
-      value = value;
-    } else if (value.length < 7) {
-      value = value.slice(0, 3) + "-" + value.slice(3);
+    // 전화번호 형식 설정
+    if (value.startsWith("02")) {
+        // 02로 시작하는 경우
+        if (value.length <= 2) {
+            value = value; // 02만 입력했을 경우
+        } else if (value.length < 6) {
+            value = value.slice(0, 2) + "-" + value.slice(2); // 02-xxxx
+        } else {
+            value =
+                value.slice(0, 2) +
+                "-" +
+                value.slice(2, 6) +
+                "-" +
+                value.slice(6, 10); // 02-xxxx-xxxx
+        }
     } else {
-      value =
-        value.slice(0, 3) + "-" + value.slice(3, 7) + "-" + value.slice(7, 11); // 최대 11자리까지만
+        // 02가 아닌 경우
+        if (value.length < 4) {
+            value = value; // 3자리 이하
+        } else if (value.length < 7) {
+            value = value.slice(0, 3) + "-" + value.slice(3); // 000-xxxx
+        } else {
+            value =
+                value.slice(0, 3) +
+                "-" +
+                value.slice(3, 7) +
+                "-" +
+                value.slice(7, 11); // 000-xxxx-xxxx
+        }
     }
 
     // 상태 업데이트
     setCompanyTel(value); // 부모 컴포넌트로 전달
-  };
+};
 
   //주소를 담기위한 state
   const [address, setAddress] = useState({
@@ -98,8 +116,12 @@ const CompanyJoinFrm = (props) => {
     detailAddress: "",
   });
 
-  //DB에서 조회하 데이터 자른값
-  const [addr1, addr2] = companyAddr.split("-");
+  useEffect(() => {
+    if (companyAddr) {
+      const [addr1, addr2] = companyAddr.split("-");
+      setAddress({ address: addr1, detailAddress: addr2 });
+    }
+  }, [companyAddr]);
 
   //썸네일 관리
   const thumbnailRef = useRef(null);

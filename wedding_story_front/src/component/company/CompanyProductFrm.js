@@ -205,6 +205,8 @@ const CompanyProductFrm = (props) => {
                 id="productName"
                 name="productName"
                 value={productName}
+                placeholder="상품명 10글자 이내로 입력"
+                maxLength={10}
                 onChange={(e) => {
                   setProductName(e.target.value);
                 }}

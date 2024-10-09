@@ -167,14 +167,17 @@
   </select>
   <select id="selectCustomerList" resultMap="CustomerResultMap">
   select * from
-  (select rownum as rnum, a.* from(select 
+  (select rownum as rnum, a.* from(
+    select distinct 
     m.member_no,
     m.member_name,
     m.member_phone,
-    m.partner_name,
-    p.product_no,
-    p.product_name,
-    mp.pay_date
+    m.member_gender,
+    m.member_email,
+    m.partner_name
+
+
+
     
 	from product p 
 	
@@ -186,16 +189,15 @@
 	<foreach collection="productNo" item="No" open="(" close=")" separator=",">
 		#{No}
 	</foreach>
-	 order by pay_date desc) a) where rnum between #{pi.start} and#{pi.end}
+	 ) a) where rnum between #{pi.start} and#{pi.end}
   </select> 
   <resultMap id="CustomerResultMap" type="customer">
     <result property="memberNo" column="member_no"/>
     <result property="memberName" column="member_name"/>
     <result property="memberPhone" column="member_phone"/>
+    <result property="memberGender" column="member_gender"/>
+    <result property="memberEmail" column="member_email"/>
     <result property="partnerName" column="partner_name"/>
-    <result property="productNo" column="product_no"/>
-    <result property="productName" column="product_name"/>
-    <result property="payDate" column="pay_date"/>
 </resultMap>
 
 	<select id="TotalCustomerCount" resultType="int">
@@ -230,11 +232,12 @@
  <select id="totalCounselList" resultMap="CounselResultMap">
    select * from
   (select rownum as rnum, a.* from(select 
-		m.member_no,
+		
 		m.member_name,
 		m.member_phone,
 		p.product_no,
 		p.product_name,
+		mp.pay_no,
 		mp.pay_date,
 		mp.progress
     
@@ -251,11 +254,11 @@
 	 order by pay_date ) a) where rnum between #{pi.start} and#{pi.end}
   </select> 
   <resultMap id="CounselResultMap" type="counsel">
-    <result property="memberNo" column="member_no"/>
     <result property="memberName" column="member_name"/>
     <result property="memberPhone" column="member_phone"/>
     <result property="productNo" column="product_no"/>
     <result property="productName" column="product_name"/>
+    <result property="payNo" column="pay_no"/>
     <result property="payDate" column="pay_date"/>
     <result property="progress" column="progress"/>
 </resultMap>

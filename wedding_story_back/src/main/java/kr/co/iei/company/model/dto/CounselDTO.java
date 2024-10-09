@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value="counsel")
 public class CounselDTO {
-	private int memberNo;
 	private String memberName;
 	private String memberPhone;
 	private int productNo;
 	private String productName;
+	private int payNo;
 	private String payDate;
 	private int progress;
 

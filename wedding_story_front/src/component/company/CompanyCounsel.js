@@ -33,12 +33,12 @@ const CompanyCounsel = () => {
 						<table className="tbl">
 							<thead border={1}>
 								<tr>
-									<th style={{ width: "8%" }}>회원번호</th>
-									<th style={{ width: "10%" }}>이름</th>
-									<th style={{ width: "15%" }}>전화번호</th>
 									<th style={{ width: "8%" }}>상품번호</th>
 									<th style={{ width: "30%" }}>상품이름</th>
+									<th style={{ width: "8%" }}>구매번호</th>
 									<th style={{ width: "15%" }}>구매일</th>
+									<th style={{ width: "10%" }}>이름</th>
+									<th style={{ width: "15%" }}>전화번호</th>
 									<th>진행도</th>
 								</tr>
 							</thead>
@@ -64,12 +64,12 @@ const CounselItem = (props) => {
 
 	return (
 		<tr>
-			<td style={{ width: "8%" }}>{counsel.memberNo}</td>
-			<td style={{ width: "10%" }}>{counsel.memberName}</td>
-			<td style={{ width: "15%" }}>{counsel.memberPhone}</td>
 			<td style={{ width: "8%" }}>{counsel.productNo}</td>
 			<td style={{ width: "30%" }}>{counsel.productName}</td>
+			<td style={{ width: "8%" }}>{counsel.payNo}</td>
 			<td style={{ width: "15%" }}>{counsel.payDate}</td>
+			<td style={{ width: "10%" }}>{counsel.memberName}</td>
+			<td style={{ width: "15%" }}>{counsel.memberPhone}</td>
 			<td>
 				{counsel.progress === 0
 					? "구매완료"

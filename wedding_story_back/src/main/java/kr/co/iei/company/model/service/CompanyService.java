@@ -1,5 +1,6 @@
 package kr.co.iei.company.model.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -284,11 +285,18 @@ public class CompanyService {
 		
 		
 	}
-	public List<MemberPayDTO> selectSalesData(String companyNo) {
-		List<MemberPayDTO> memberPay = memberDao.selectSalesData(companyNo);
+	public Map selectSalesData(String companyNo) {
+		//상품 번호들을 List 로 받음 
+		List productNo = productDao.selectProductNo(companyNo);
+		System.out.println("productNo :" + productNo);
 		
-		
-		return null;
+		Map<Integer, Object> result = new HashMap<Integer , Object>();
+		for(int i=1; i<13; i++) {
+			String formattedMonth = String.format("%02d", i); // "01"로 변환
+			int totalPrice = memberDao.selectSalesData(productNo,formattedMonth);
+			result.put(i,totalPrice);
+		}
+		return result;
 	}
 	
 
