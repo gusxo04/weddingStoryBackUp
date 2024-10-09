@@ -28,7 +28,7 @@ public class ProductService {
 	private ProductDao productDao;
 	
 	@Autowired
-	private CompanyDao componyDao;
+	private CompanyDao companyDao;
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -38,15 +38,20 @@ public class ProductService {
 	
 	//올리스트
 	public Map getProductList(int reqPage) {
+		String[] categories = {"스튜디오", "드레스", "메이크업", "예복", "예식"};
 		int numPerPage = 5;
 		int pageNaviSize = 4;
 		int totalCount = productDao.TotalCount();
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list = productDao.getProductList(pi);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("pi", pi);
-		return map;
+		Map<String, Object> categoryMap = new HashMap<>();  
+		for (String category : categories) {
+		     List list = productDao.getProductList(pi, category);
+		     categoryMap.put(category, list);
+		}
+		 Map<String, Object> resultMap = new HashMap<>();
+		 resultMap.put("category", categoryMap);
+		 resultMap.put("pi", pi);
+		 return resultMap;
 	}
 
 

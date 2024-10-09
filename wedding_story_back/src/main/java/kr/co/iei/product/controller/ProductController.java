@@ -44,6 +44,7 @@ public class ProductController {
 	@GetMapping("/list/{reqPage}")
 	public ResponseEntity<Map> getProductList(@PathVariable int reqPage) {
 		Map map = productService.getProductList(reqPage);
+		System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
 	
@@ -84,6 +85,8 @@ public class ProductController {
 		//System.out.println(productNo);
 		return ResponseEntity.ok(map);
 	}
+	
+	
 	
 	//회원이 좋아요한 제품 리스트
 	@GetMapping(value = "/favoriteList/{memberNo}")

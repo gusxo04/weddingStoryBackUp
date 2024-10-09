@@ -36,12 +36,14 @@ public class ProductReviewController {
 		MemberDTO member = productReviewService.selectMemberConsult(memberNo);
 		return ResponseEntity.ok(member);
 	}
+	
 	//상품조회
 	@GetMapping(value = "/productNo/{productNo}")
 	public ResponseEntity<ProductDTO>selectProduct(@PathVariable int productNo){
 		ProductDTO product = productReviewService.selectProduct(productNo);
 		return ResponseEntity.ok(product);
 	}
+	
 	//결제조회
 	@GetMapping(value = "/payNo/{payNo}")
 	public ResponseEntity<MemberPayDTO>selectMemberPay(@PathVariable int payNo){

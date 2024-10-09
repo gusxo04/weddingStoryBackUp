@@ -23,7 +23,7 @@ public interface ProductDao {
 	
 	int TotalCount();
 	
-	List getProductList(PageInfo pi);
+	List getProductList(PageInfo pi, String category);
 
 	int insertProduct(ProductDTO product);
 
