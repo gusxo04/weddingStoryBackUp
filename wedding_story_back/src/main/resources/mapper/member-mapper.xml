@@ -227,6 +227,11 @@
 	<select id="selectSalesData" resultType="memberPay">
 		select 
 	</select>
-	
+	<select id="searchId" resultType="String">
+		select member_id from member where member_name=#{memberName} and member_email=#{memberEmail}
+	</select>
+	<select id="searchMember" resultType="int">
+		select count(*) from member where member_id=#{memberId} and member_email=#{memberEmail}
+	</select>
 	
 </mapper>

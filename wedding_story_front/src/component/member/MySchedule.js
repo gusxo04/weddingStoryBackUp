@@ -76,7 +76,6 @@ const MySchedule = (props) => {
 				});
 		}
 	}, [memberNo, isModalOpen]);
-	console.log(consultList);
 
 	const [headerFormat, setHeaderFormat] = useState({ weekday: "short" }); // 기본적으로 요일 표시
 

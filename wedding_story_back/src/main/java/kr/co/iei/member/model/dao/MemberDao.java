@@ -91,4 +91,8 @@ public interface MemberDao {
 
 	List<MemberPayDTO> selectSalesData(String companyNo);
 
+	String searchId(MemberDTO member);
+
+	int searchMember(MemberDTO member);
+
 }

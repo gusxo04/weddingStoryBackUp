@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -146,6 +147,40 @@ public class MemberController {
 		List<MemberPayDTO> list = memberService.paymentList(memberNo,state);
 		return ResponseEntity.ok(list);
 	}
-	
+	@PostMapping(value = "/searchId")
+	public ResponseEntity<String> searchId(@RequestBody MemberDTO member){
+		String memberId = memberService.searchId(member);
+		System.out.println(memberId);
+		return ResponseEntity.ok(memberId);
+	}
+	@PostMapping(value = "/searchMember")
+	public ResponseEntity<String> searchMember(@RequestBody MemberDTO member){
+		System.out.println(member);
+		int result = memberService.searchMember(member);
+		if(result >0) {
+			String emailTitle = "[인증번호 발송] 웨딩스토리 인증메일입니다.";
+			Random r = new Random();
+			StringBuffer sb = new StringBuffer();
+			for(int i=0;i<6;i++) {
+				int flog = r.nextInt(3);
+				if(flog ==0) {
+					int randomCode = r.nextInt(10);
+					sb.append(randomCode);
+				}else if(flog ==1) {
+					char randomCode = (char)(r.nextInt(26)+65);
+					sb.append(randomCode);
+				}else if(flog ==2) {
+					char randomCode = (char)(r.nextInt(26)+97);
+					sb.append(randomCode);
+				}
+			}
+			String emailContent = "<h2>안녕하세요. Wedding Story입니다.</h2>"
+					+"<h3>인증번호는 [ <span style='color:red;'>"+sb.toString()+"</span> ] 입니다.</h3>";
+			emailSender.sendMail(emailTitle,member.getMemberEmail(),emailContent);
+			return ResponseEntity.ok(sb.toString());
+		}else {			
+			return ResponseEntity.ok(null);
+		}
+	}
 	
 }

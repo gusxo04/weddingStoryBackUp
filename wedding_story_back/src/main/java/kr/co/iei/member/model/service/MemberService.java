@@ -226,4 +226,14 @@ public class MemberService {
 		}
 		return list;
 	}
+
+	public String searchId(MemberDTO member) {
+		String memberId = memberDao.searchId(member);
+		return memberId;
+	}
+
+	public int searchMember(MemberDTO member) {
+		int result = memberDao.searchMember(member);
+		return result;
+	}
 }
