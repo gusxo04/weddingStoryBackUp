@@ -95,4 +95,6 @@ public interface MemberDao {
 
 	int searchMember(MemberDTO member);
 
+	MemberDTO selectMemberSideInfo(String companyNo);
+
 }

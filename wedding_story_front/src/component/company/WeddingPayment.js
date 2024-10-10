@@ -271,7 +271,7 @@ const WeddingPayment = () => {
 							<label htmlFor="coronation">대관료</label>
 						</div>
 						<div className="input-item">
-							<input type="text" name="coronation" id="coronation" value={product.coronation} readOnly />
+							<input type="text" name="coronation" id="coronation" value={product.coronation.toLocaleString()} readOnly />
 						</div>
 					</div>
 					<div className="input-wrap">
@@ -279,7 +279,7 @@ const WeddingPayment = () => {
 							<label htmlFor="diningRoom">식대</label>
 						</div>
 						<div className="input-item">
-							<input type="text" name="diningRoom" id="diningRoom" value={product.diningRoom} readOnly />
+							<input type="text" name="diningRoom" id="diningRoom" value={product.diningRoom.toLocaleString()} readOnly />
 						</div>
 					</div>
 					<div className="input-wrap">
