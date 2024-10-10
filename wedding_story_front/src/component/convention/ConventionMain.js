@@ -6,6 +6,7 @@ import ShowConvention from "./ShowConvention";
 import { companyNoState, isLoginState, loginNoState, memberTypeState } from "../utils/RecoilData";
 import { useRecoilState, useRecoilValue } from "recoil";
 import ConventionLoading from "./ConventionLoading";
+import Swal from "sweetalert2";
 
 
 
@@ -83,15 +84,22 @@ const ConventionMain = () => {
           }
         })
         .catch(err => {
-          console.error(err); 
+          Swal.fire({
+            title : "박람회",
+            text : "잠시후 다시 시도해주세요",
+            icon : "error",
+            iconColor : "var(--main1)",
+            confirmButtonText : "확인",
+            confirmButtonColor : "var(--main1)"
+          })
         })
       }
       else if(memberType === 2){
-        console.log(res.data.convention.conventionNo);
+        // console.log(res.data.convention.conventionNo);
         // 업체일 경우
         axios.get(`${backServer}/convention/payment/company/${loginCompanyNoState}/${res.data.convention.conventionNo}`)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setPayment({
             merchantUid: res.data.merchantUid,
             payNo: res.data.payNo,
@@ -101,13 +109,27 @@ const ConventionMain = () => {
           })
         })
         .catch((err) => {
-          console.error(err); 
+          Swal.fire({
+            title : "박람회",
+            text : "잠시후 다시 시도해주세요",
+            icon : "error",
+            iconColor : "var(--main1)",
+            confirmButtonText : "확인",
+            confirmButtonColor : "var(--main1)"
+          })
         })
       }
 
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
 
   }, [isPayment, memberNoState]);
@@ -188,7 +210,7 @@ const EmptyConvention = (props) => {
   // const navigate = props.navigate;
   const [loading, setLoading] = useState(true);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  console.log(memberType);
+  // console.log(memberType);
   const navigate = useNavigate();
 
   useEffect(() => {

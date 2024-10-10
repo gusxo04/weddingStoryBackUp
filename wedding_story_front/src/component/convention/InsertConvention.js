@@ -40,7 +40,7 @@ const InsertConvention = () => {
   useEffect(() => {
     axios.get(`${backServer}/convention/check/writePermission`)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if(res.data) {
         Swal.fire({
           title : "박람회 작성",
@@ -54,7 +54,14 @@ const InsertConvention = () => {
       }
     })
     .catch((err) => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }, []);
   
@@ -64,7 +71,7 @@ const InsertConvention = () => {
 
 
   const writeTest = () => {
-    console.log(conventionStart);
+    // console.log(conventionStart);
     let isTest = true;
     const titleReg = /^.{1,100}$/;
     const contentReg = /^.{1,1300}$/;
@@ -169,7 +176,7 @@ const InsertConvention = () => {
 
     axios.post(`${backServer}/convention/write`,form)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       if(res.data === 1){
         Swal.fire({
           title : "박람회 작성",
@@ -204,7 +211,14 @@ const InsertConvention = () => {
       }
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }
 

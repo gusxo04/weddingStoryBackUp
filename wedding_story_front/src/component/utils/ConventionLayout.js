@@ -69,7 +69,14 @@ const ConventionLayout = (props) => {
       
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }, [changedSeatInfo]);
 
@@ -102,17 +109,24 @@ const ConventionLayout = (props) => {
   const unloadHandler = (event) => {
     axios.delete(`${backServer}/convention/buy/seat/${convention.conventionNo}/${loginCompanyNoState}`,)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
     })
     .catch((err) => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
     event.preventDefault();
     // event.returnValue = "ㅇㅇ";
   }
   
   const purchaseSeat = () => {
-    console.log(payment);
+    // console.log(payment);
     if(payment.merchantUid){
       Swal.fire({
         title : "박람회 부스 구매",
@@ -154,7 +168,7 @@ const ConventionLayout = (props) => {
 
     axios.post(`${backServer}/convention/buy/seat`, form)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if(res.data){
         window.IMP.request_pay({
           pg: "html5_inicis.INIpayTest",
@@ -165,7 +179,7 @@ const ConventionLayout = (props) => {
         }, rsp => {
           if (rsp.success) {
             // 결제 성공 시 로직
-            console.log(rsp);
+            // console.log(rsp);
             setSeatCompanyAlert(false);
             setChangedSeatInfo(!changedSeatInfo);
             setIsPayment(!isPayment);
@@ -179,15 +193,22 @@ const ConventionLayout = (props) => {
             })
           } else {
             // 결제 실패 시 로직
-            console.log(rsp);
-            console.log('Payment failed', rsp.error_msg);
+            // console.log(rsp);
+            // console.log('Payment failed', rsp.error_msg);
             // 이때 DB에서 다시 삭제하면 될 듯
             axios.delete(`${backServer}/convention/buy/seat/${convention.conventionNo}/${loginCompanyNoState}`,)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
             })
             .catch((err) => {
-              console.error(err); 
+              Swal.fire({
+                title : "박람회",
+                text : "잠시후 다시 시도해주세요",
+                icon : "error",
+                iconColor : "var(--main1)",
+                confirmButtonText : "확인",
+                confirmButtonColor : "var(--main1)"
+              })
             })
           }
           window.removeEventListener('beforeunload', unloadHandler);
@@ -209,7 +230,7 @@ const ConventionLayout = (props) => {
     })
     .catch((err) => {
       window.removeEventListener('beforeunload', unloadHandler);
-      console.error(err); 
+      // console.error(err); 
       setSeatCompanyAlert(false);
       setChangedSeatInfo(!changedSeatInfo);
       Swal.fire({
@@ -439,6 +460,17 @@ const SeatCompanyAlert = (props) => {
   const refundMonth = refundDate.getMonth()+1;
   const refundDay = refundDate.getDate();
 
+  // 가격에 , 붙여주기 seatInfo.conventionSeatPrice : payment.payPrice
+
+  const [fixedSeatPrice, setFixedSeatPrice] = useState(seatInfo.conventionSeatPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  const [fixedPayPrice, setFixedPayPrice] = useState(payment.payPrice?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  
+  // useEffect(() => {
+  //   setFixedSeatPrice(seatInfo.conventionSeatPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  //   setFixedPayPrice(payment.payPrice?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  // }, [seatInfo, payment]);
+
+
 
   return (
     <div className="convention-seat-alert-wrap" onClick={closeSeatAlert}>
@@ -454,7 +486,7 @@ const SeatCompanyAlert = (props) => {
                 <span>좌석코드 : {seatInfo.seatCode}</span>
               </div>
               <div className="convention-seat-info-price df-basic">
-                <span>가격 : <span id="red-color">{type === 0 ? seatInfo.conventionSeatPrice : payment.payPrice}</span>원</span>
+                <span>가격 : <span id="red-color">{type === 0 ? fixedSeatPrice : fixedPayPrice}</span>원</span>
                 {/* 처음에 산 가격으로 바꿔줘야함 -> 처음 산가격도 조회해야 함 */}
               </div>
             </div>
@@ -583,7 +615,7 @@ const SeatAdminAlert = (props) => {
     // form.append("companyNo", seatInfo.companyNo);
     axios.get(`${backServer}/convention/payment/company/${seatInfo.companyNo}/${seatInfo.conventionNo}`)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if(res.data.payNo){
         setPayment({
           merchantUid: res.data.merchantUid,
@@ -629,7 +661,7 @@ const SeatAdminAlert = (props) => {
       return;
     }
     
-    if(seatPrice < 99){
+    if(seatPrice < 100 || seatPrice > 100000000){
       wrongPriceRef.current.classList.add("wrong-price");
       showWrongRef.current.style.display = "flex";
       wrongContainerRef.current.id = "wrong-price-zone";
@@ -678,7 +710,7 @@ const SeatAdminAlert = (props) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title : "부스 정보",
         text : "잠시후 다시 시도해주세요.",
@@ -718,8 +750,6 @@ const SeatAdminAlert = (props) => {
       updatePrice();
     }
   }, [result]);
-
-  console.log(seatInfo);
 
 
   return (

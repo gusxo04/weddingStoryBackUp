@@ -1,8 +1,8 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 class CancelPay {
 	cancelPay = (payment, backUrl, setResult, refundReason) => {
-		console.log("payment : ", payment);
 		// 받아야할 파라미터
 		// 1. payment 객체 : 밑에 data : {} 에 있는 데이터들 주면 되는데 상품 (productNo는 필요하면 추가하면 됨)
 		// 필요없는 얘들은 안 만들어도 됨 (null이여도 된다는 소리)
@@ -44,7 +44,14 @@ class CancelPay {
 				}
 			})
 			.catch((err) => {
-				console.log(err);
+				Swal.fire({
+					title : "박람회",
+					text : "잠시후 다시 시도해주세요",
+					icon : "error",
+					iconColor : "var(--main1)",
+					confirmButtonText : "확인",
+					confirmButtonColor : "var(--main1)"
+				})
 			});
 	};
 }

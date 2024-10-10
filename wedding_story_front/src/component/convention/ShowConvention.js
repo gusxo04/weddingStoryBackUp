@@ -57,7 +57,14 @@ const ShowConvention = (props) => {
       setComment(res.data);
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }, [changedComment]);
 
