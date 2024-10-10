@@ -1,112 +1,117 @@
 .member-controll-wrap {
-  width: 75%;
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  border-top: none;
-  padding: 50px;
-  box-sizing: border-box;
+	width: 75%;
+	margin: 0 auto;
+	border: 1px solid #ddd;
+	border-top: none;
+	padding: 50px;
+	box-sizing: border-box;
 }
 .memberInfo-wrap {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  border-top: 1px solid #dddddd;
-  padding-top: 15px;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+	border-top: 1px solid #dddddd;
+	padding-top: 15px;
 }
 ul.pagination {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .tbl1 {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	width: 100%;
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .tbl1 thead tr {
-  background-color: #c19975;
-  color: #ffffff;
-  text-align: center;
+	background-color: #c19975;
+	color: #ffffff;
+	text-align: center;
 }
 .tbl1 th,
 .tbl1 td {
-  padding: 12px 15px;
+	padding: 12px 15px;
 }
 
 .tbl1 tbody tr {
-  border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
 }
 
 .tbl1 tbody tr:last-of-type {
-  border-bottom: 2px solid #c19975;
+	border-bottom: 2px solid #c19975;
 }
 
 .tbl1 tbody tr.active-row {
-  font-weight: bold;
-  color: #dce4e9;
+	font-weight: bold;
+	color: #dce4e9;
 }
 .userInfo {
-  text-align: center;
+	text-align: center;
 }
 
 .tbl2 {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	width: 100%;
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .tbl2 tr th {
-  background-color: #c19975;
-  color: black;
-  text-align: center;
+	background-color: #c19975;
+	color: black;
+	text-align: center;
 }
 
 .tbl2 th,
 .tbl2 tr {
-  padding: 12px 15px;
-  border-bottom: 1px solid #dddddd;
-  width: 200px;
+	padding: 12px 15px;
+	border-bottom: 1px solid #dddddd;
+	width: 200px;
 }
 .tbl2 td {
-  padding-left: 15px;
-  border-bottom: 1px solid #dddddd;
+	padding-left: 15px;
+	border-bottom: 1px solid #dddddd;
 }
 
 .tbl2 tr:last-of-type {
-  border-bottom: 2px solid #c19975;
+	border-bottom: 2px solid #c19975;
 }
 
 .my,
 .partner {
-  flex: 1;
-  margin-right: 20px;
+	flex: 1;
+	margin-right: 20px;
 }
 
 .partner {
-  margin-right: 0;
+	margin-right: 0;
 }
 .tbl-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 .tbl1 {
-  width: 100%;
+	width: 100%;
 }
 .del-btn-wrap {
-  display: flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 .tbl-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.member-delBtn {
+	width: 100px;
+	height: 30px;
 }

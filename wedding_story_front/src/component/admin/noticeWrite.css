@@ -1,38 +1,43 @@
 .notice-write-wrap {
-  border: 1px solid #ddd;
-  border-top: none;
-  margin: 0 auto;
-  height: 878px;
-  width: 1200px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+	border: 1px solid #ddd;
+	border-top: none;
+	margin: 0 auto;
+	height: 878px;
+	width: 1200px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
 }
 
 .notice-thumb {
-  max-width: 75%;
-  max-height: 75%;
-  width: auto;
-  height: auto;
-  
-  margin: auto;
+	max-width: 75%;
+	max-height: 75%;
+	width: auto;
+	height: auto;
+
+	margin: auto;
 }
 
 .file-wrap {
-  text-align: left;
-  padding-left: 15px;
-  box-sizing: border-box;
+	text-align: left;
+	padding-left: 15px;
+	box-sizing: border-box;
 }
-.notice-info-wrap{
-  text-align: left;
+.notice-info-wrap {
+	text-align: left;
 }
-.tbl3 th{
-  text-align: center;
+.tbl3 th {
+	text-align: center;
 }
-.notice-content-wrap{
-  text-align: left;
+.notice-content-wrap {
+	text-align: left;
 }
-.notice-thumb-wrap{
-  width: 100%;
-  text-align: center;
+.notice-thumb-wrap {
+	width: 100%;
+	text-align: center;
+}
+
+.notice-thumb {
+	width: 200px;
+	border: 1px solid #ddd;
 }
