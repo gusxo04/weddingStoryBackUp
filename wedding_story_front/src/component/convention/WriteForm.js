@@ -46,6 +46,7 @@ const WriteForm = (props) => {
     priceRef,
     imgRef,
     writeType,
+    formType
   } = props;
 
   // useEffect(() => {
@@ -76,7 +77,7 @@ const WriteForm = (props) => {
   const [showConventionStartTime, setShowConventionStartTime] = useState("");
   const [showConventionEndTime, setShowConventionEndTime] = useState("");
   // 단순 보여주기 용 state임
-
+  
   useEffect(() => {
     if (writeType !== 2 || conventionStart === "") return;
     const formatShowConventionStart = new Date(conventionStart);
@@ -93,8 +94,25 @@ const WriteForm = (props) => {
     setShowConventionEndTime(formatShowConventionEndTime);
     // DatePicker로 바꾸면서 value에 넣을 수 있는 값이 바뀌어서 이렇게 바꿔줘야 함
   }, [conventionStart]);
-
+  
   // console.log(new Date(`${conventionStart}T${conventionStartTime}:00`));
+
+  useEffect(() => {
+    if(writeType !== 1) return;
+    if(conventionStart){
+      setShowConventionstart(new Date(conventionStart));
+    }
+    if(conventionEnd){
+      setShowConventionEnd(new Date(conventionEnd));
+    }
+    if(conventionStartTime){
+      setShowConventionStartTime(new Date(conventionStartTime));
+    }
+    if(conventionEndTime){
+      setShowConventionEndTime(new Date(conventionEndTime));
+    }
+    
+  }, [formType]);
 
   return (
     <>
