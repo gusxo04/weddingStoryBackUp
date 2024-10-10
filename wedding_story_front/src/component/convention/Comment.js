@@ -68,12 +68,12 @@ const Comment = (props) => {
     const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(testCommentContent.trim() === ""){
-      console.log("비어있음");
+      // console.log("비어있음");
       return false;
     }
     // else if(!commentRegex.test(testCommentContent.replace(/\n/g, ''))){
     else if(!commentRegex.test(testCommentContent)){
-      console.log("너무 큼");
+      // console.log("너무 큼");
       Swal.fire({
         title : "박람회 댓글",
         text : "너무 많은 내용을 입력하셨습니다",
@@ -106,7 +106,14 @@ const Comment = (props) => {
       }
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }
 
@@ -163,7 +170,14 @@ const Comment = (props) => {
           }
         })
         .catch((err) => {
-          console.error(err); 
+          Swal.fire({
+            title : "박람회",
+            text : "잠시후 다시 시도해주세요",
+            icon : "error",
+            iconColor : "var(--main1)",
+            confirmButtonText : "확인",
+            confirmButtonColor : "var(--main1)"
+          })
         })
       }
     })
@@ -189,7 +203,14 @@ const Comment = (props) => {
       }
     })
     .catch((err) => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }
   const commentLineHeight = 24;

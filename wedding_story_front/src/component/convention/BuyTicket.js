@@ -49,17 +49,31 @@ const BuyTicket = (props) => {
       setMemberPhone(res.data.memberPhone);
     })
     .catch((err) => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }, []);
 
   const unloadHandler = (event) => {
     axios.delete(`${backServer}/convention/buy/ticket/${convention.conventionNo}/${memberNoState}`)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
     })
     .catch((err) => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
     event.preventDefault();
     // event.returnValue = "ㅇㅇ";
@@ -115,7 +129,7 @@ const BuyTicket = (props) => {
 
     axios.post(`${backServer}/convention/buy/ticket`, form)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       if(res.data){
 
         window.IMP.request_pay({
@@ -133,7 +147,7 @@ const BuyTicket = (props) => {
         }, rsp => {
           if (rsp.success) {
           // 결제 성공 시 로직
-            console.log(rsp);
+            // console.log(rsp);
             //줘야할 데이터
             // 회원번호 / 회원 알림이메일 / 구매 금액 / 박람회 번호 / merchant_uid
             setIsPayment(!isPayment);
@@ -152,10 +166,17 @@ const BuyTicket = (props) => {
             // DB 에서 다시 삭제
             axios.delete(`${backServer}/convention/buy/ticket/${convention.conventionNo}/${memberNoState}`)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
             })
             .catch((err) => {
-              console.error(err); 
+              Swal.fire({
+                title : "박람회",
+                text : "잠시후 다시 시도해주세요",
+                icon : "error",
+                iconColor : "var(--main1)",
+                confirmButtonText : "확인",
+                confirmButtonColor : "var(--main1)"
+              })
             })
           }
           window.removeEventListener('beforeunload', unloadHandler);
@@ -179,7 +200,7 @@ const BuyTicket = (props) => {
     })
     .catch(err => {
       window.removeEventListener('beforeunload', unloadHandler);
-      console.error(err); 
+      // console.error(err); 
       setIsPayment(!isPayment);
       closeAlert(0, true);
       Swal.fire({

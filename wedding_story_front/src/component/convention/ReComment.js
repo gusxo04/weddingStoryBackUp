@@ -43,7 +43,7 @@ const ReComment = (props) => {
     const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(testCommentContet.trim() === ""){
-      console.log("비어있음");
+      // console.log("비어있음");
       return false;
     }
     // else if(!commentRegex.test(testCommentContet.replace(/\n/g, ''))){
@@ -106,13 +106,20 @@ const ReComment = (props) => {
       if(data.isConfirmed){
         axios.delete(`${backServer}/convention/${rc.conventionCommentNo}`,)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           if(res.data){
             setChangedComment(!changedComment);
           }
         })
         .catch((err) => {
-          console.error(err); 
+          Swal.fire({
+            title : "박람회",
+            text : "잠시후 다시 시도해주세요",
+            icon : "error",
+            iconColor : "var(--main1)",
+            confirmButtonText : "확인",
+            confirmButtonColor : "var(--main1)"
+          })
         })
       }
     })
@@ -129,7 +136,7 @@ const ReComment = (props) => {
     form.append("conventionCommentContent", editCommentContent);
     axios.patch(`${backServer}/convention`,form)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if(res.data){
         setChangedComment(!changedComment);
         contentRef.current.style.display = "inline";
@@ -139,7 +146,14 @@ const ReComment = (props) => {
       }
     })
     .catch((err) => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }
 
@@ -162,7 +176,14 @@ const ReComment = (props) => {
       }
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }
 
@@ -290,8 +311,8 @@ const ReComment = (props) => {
             <span className="cursor-p" ref={lineTypeRef} onClick={() => {
               if(lineType){
                 contentContainerRef.current.style.height = heightType+"px";
-                console.log(heightType);
-                console.log("sdasdasdasda");
+                // console.log(heightType);
+                // console.log("sdasdasdasda");
               }
               else{
                 contentContainerRef.current.style.height = "auto"

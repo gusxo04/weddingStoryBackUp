@@ -5,6 +5,7 @@ import WriteForm from "./WriteForm";
 import Preview from "./Preview";
 import axios from "axios";
 import CheckLayout from "./CheckLayout";
+import Swal from "sweetalert2";
 
 const UpdateConvention = () => {
 
@@ -62,7 +63,14 @@ const UpdateConvention = () => {
       
     })
     .catch((err) => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }, []);
   // 수정에서 체크해야할 거
@@ -198,7 +206,14 @@ const UpdateConvention = () => {
       navigate("/convention/main");
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }
   

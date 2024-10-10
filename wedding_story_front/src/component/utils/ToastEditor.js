@@ -32,11 +32,11 @@ const ToastEditor = (props) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         callbackFunc(`${backServer}${res.data}`, "이미지");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
   return (

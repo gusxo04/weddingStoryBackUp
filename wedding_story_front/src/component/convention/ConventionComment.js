@@ -30,7 +30,7 @@ const writeCheck = () => {
     const commentRegex = /^[\s\S]{0,1000}$/;
     
     if(commentContent.trim() === ""){
-      console.log("비어있음");
+      // console.log("비어있음");
       return false;
     }
     // else if(!commentRegex.test(commentContent.replace(/\n/g, ''))){
@@ -67,7 +67,14 @@ const writeCheck = () => {
       }
     })
     .catch(err => {
-      console.error(err); 
+      Swal.fire({
+        title : "박람회",
+        text : "잠시후 다시 시도해주세요",
+        icon : "error",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
     })
   }
 
