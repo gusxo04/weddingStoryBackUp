@@ -62,8 +62,8 @@ public class AdvertisementController {
 		int totalResult = advertisementService.totalInprogressCount(advertisementNo);
 		// 이게 5개 넘으면 result -1
 
-		if (totalResult >= 5) {
-			System.out.println("진행중인 광고가 이미 5개 이상입니다");
+		if (totalResult >= 10) {
+			System.out.println("진행중인 광고가 이미 10개 이상입니다");
 			return ResponseEntity.ok(totalResult);
 		} else {
 			result = advertisementService.acceptAdvertisement(advertisementNo);

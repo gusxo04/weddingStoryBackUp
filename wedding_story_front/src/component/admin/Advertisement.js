@@ -152,7 +152,7 @@ const Advertisement = () => {
 					if (res.data >= 5) {
 						Swal.fire({
 							title: "경고",
-							text: "진행 중이거나 진행예정(미결제 포함)인 광고가 5개 이상입니다. 현재 :" + res.data + "개",
+							text: "진행 중이거나 진행예정(미결제 포함)인 광고가 10개 이상입니다. 현재 :" + res.data + "개",
 							icon: "warning",
 							iconColor: "var(--main1)",
 							showCancelButton: true,
@@ -416,6 +416,7 @@ const PendingApproval = (props) => {
 						<td>{ad.adEnd}</td>
 						<td>
 							<button
+								className="main-btn bb"
 								onClick={() =>
 									acceptAdvertisement({
 										advertisementNo: ad.advertisementNo,
@@ -424,7 +425,7 @@ const PendingApproval = (props) => {
 							>
 								수락
 							</button>
-							<button className={"modal-open-btn"} onClick={() => setModalOpen(true)}>
+							<button className={"modal-open-btn main-btn bb"} onClick={() => setModalOpen(true)}>
 								거절
 							</button>
 						</td>

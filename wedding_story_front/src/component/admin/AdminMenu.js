@@ -92,6 +92,14 @@ const AdminMenu = () => {
 					</tbody>
 				</table>
 			</div>
+			<button
+				className="convention-btn"
+				onClick={() => {
+					navigate("/convention/main");
+				}}
+			>
+				박람회 페이지로
+			</button>
 			{modalOpen === true ? <JoinAdmin setModalOpen={setModalOpen} /> : <></>}
 		</div>
 	);

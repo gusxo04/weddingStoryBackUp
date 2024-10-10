@@ -195,7 +195,6 @@ public class AdminController {
 
 	@GetMapping(value = "/file/{questioinFileNo}")
 	public ResponseEntity<Resource> filedown(@PathVariable int questioinFileNo) throws FileNotFoundException {
-		System.err.println("시발" + questioinFileNo);
 		QuestionFileDTO questionFile = adminService.getQuestionFile(questioinFileNo);
 		String savepath = root + "/question/";
 		File file = new File(savepath + questionFile.getFilepath());
