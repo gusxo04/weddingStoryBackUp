@@ -76,9 +76,9 @@ const ReportForm = (props, { onClose }) => {
 			});
 		console.log("신고 내용:", report);
 		setReport(""); // 폼 초기화
-		navigator("/list"); // 신고후 이동
-		e.preventDefault();
+		navigator("/"); // 신고후 이동
 		//onClose(); // 닫기
+		e.preventDefault();
 	};
 
 	return (

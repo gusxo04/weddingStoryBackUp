@@ -33,8 +33,6 @@ public interface ProductDao {
 
 	ProductDTO selectProductName(int productNo);
 
-	List getProductHallList(PageInfo pi, String category);
-	
 	List selectProductList(String companyNo, PageInfo pi);
 
 	ProductDTO selectProduct(int productNo);
@@ -93,6 +91,12 @@ public interface ProductDao {
 	SalesDTO getMontlySalesCompany(String month, String selectedYear);
 
 	Integer getAdSales(String month);
+
+	List getProductHallList(String category);
+
+	List<ProductDTO> getProductList(String state);
+
+	int favoriteState(int memberNo, int productNo);
 
 
 

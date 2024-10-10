@@ -4,4 +4,12 @@
 	<insert id="insertReview">
 		insert into product_comment values(product_comment_seq.nextval,#{productNo},#{payNo},#{memberNo},#{rating},#{review},to_char(sysdate,'yy/mm/dd'))
 	</insert>
+	
+	<delete id="deleteReview">
+		delete from product_comment where product_comment_no = #{productCommentNo}
+	</delete>
+	<select id="selectProductReview" resultType="productComment">
+		select product_comment_no, product_no ,pay_no, member_no, rating, review, to_char(creation_date,'YY/MM/DD') as creation_date from product_comment where product_no =#{productNo}
+	</select>
+	
 </mapper>

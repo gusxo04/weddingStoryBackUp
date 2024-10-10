@@ -7,7 +7,6 @@ import styles from "./WeddingHallInfo.module.css";
 import { Report, ReviewForm } from "../components";
 import { useRecoilState } from "recoil";
 import { companyNoState, loginIdState } from "../../utils/RecoilData";
-import ProductReview from "../ProductReview";
 import KakaoMap from "../../utils/KakaoMap";
 
 const WeddingHallInfo = () => {
@@ -16,6 +15,7 @@ const WeddingHallInfo = () => {
 	const productNo = params.productNo; // URL에서 상품 번호 가져오기
 	const companyNo = params.companyNo; // URL에서 회사 번호 가져오기
 	const [product, setProduct] = useState({});
+	const [productComment, setProductComment] = useState([]);
 	const [loginId, setLoginId] = useRecoilState(loginIdState);
 	const [company, setCompany] = useState({ companyNo: "", companyName: "", companyAddr: "" });
 	const navigator = useNavigate();
@@ -40,7 +40,20 @@ const WeddingHallInfo = () => {
 				console.log(err);
 			});
 	}, [backServer, productNo, companyNo]);
-	console.log(company);
+
+	useEffect(() => {
+		axios
+			.get(`${backServer}/productComment/${productNo}`)
+			.then((res) => {
+				console.log(res);
+				setProductComment(res.data || []); // 데이터가 없을 경우 빈 배열로 설정
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [backServer, productNo]); // 주의: setProductComment를 여기에 넣지 않음
+	//console.log(productComment);
+
 	const NumberFormatter = ({ number }) => {
 		const formattedNumber = new Intl.NumberFormat("ko-KR").format(number);
 		return <span>{formattedNumber}</span>;
@@ -114,7 +127,7 @@ const WeddingHallInfo = () => {
 				</div>
 				<br />
 				<div>
-					<ProductReview productNo={product.productNo} />
+					<ReviewList productNo={productNo} productComment={productComment} />
 				</div>
 				<br />
 				<div className={styles["product-faq"]}>
@@ -132,4 +145,64 @@ const WeddingHallInfo = () => {
 	);
 };
 
+const ReviewList = (props) => {
+	const backServer = process.env.REACT_APP_BACK_SERVER; // 서버 주소
+	const productNo = props.productNo;
+	const [reviews, setReviews] = useState([]); // 리뷰 리스트 상태
+	const [productComment, setProductComment] = useState([]);
+
+	useEffect(() => {
+		axios
+			.get(`${backServer}/productComment/${productNo}`)
+			.then((res) => {
+				console.log(res);
+				setProductComment(res.data || []); // 데이터가 없을 경우 빈 배열로 설정
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [backServer, productNo]); // 주의: setProductComment를 여기에 넣지 않음
+	console.log(productComment);
+	// 별점 렌더링 함수
+	const renderStars = (rating) => {
+		const stars = [];
+		for (let i = 1; i <= 5; i++) {
+			stars.push(<FaStar key={i} color={i <= rating ? "gold" : "lightgray"} />);
+		}
+		return stars;
+	};
+	return (
+		<div className={styles["review-list"]}>
+			<h3>리뷰 보기</h3>
+			{productComment.length > 0 ? (
+				productComment.map((review) => (
+					<div key={review.productCommentNo} className={styles["review-item"]}>
+						<div className={styles["review-content"]}>
+							{/* 별점 */}
+							<div className={styles["review-rating"]}>
+								{/* 별점 표시 */}
+								{renderStars(review.rating)}
+							</div>
+							{/* 작성 날짜 */}
+							<span className={styles["review-date"]}>작성일: {review.creationDate}</span>
+							{/* 리뷰 내용 */}
+							<p>{review.review}</p>
+							{/* 리뷰 이미지 */}
+							{review.imageUrl && (
+								<div className={styles["review-image"]}>
+									<img
+										src={`${backServer}/${review.imageUrl}`} // 이미지 경로
+										alt="리뷰 이미지"
+									/>
+								</div>
+							)}
+						</div>
+					</div>
+				))
+			) : (
+				<p>아직 등록된 리뷰가 없습니다.</p>
+			)}
+		</div>
+	);
+};
 export default WeddingHallInfo;

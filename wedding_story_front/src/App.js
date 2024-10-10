@@ -20,7 +20,7 @@ import Login from "./component/member/Login";
 import { companyNoState, loginIdState, loginNoState, memberCodeState, memberTypeState } from "./component/utils/RecoilData";
 import AdminMenu from "./component/admin/AdminMenu";
 import MyPage from "./component/member/MyPage";
-import { Report } from "./component/product/components";
+import { Report, ReviewForm } from "./component/product/components";
 import Consult from "./component/consult/Consult";
 import Home from "./component/common/Home";
 import Question from "./component/question/Question";
@@ -83,6 +83,7 @@ function App() {
 					<Route path="/company/*" element={<CompanyMain />} />
 					<Route path="/report/:companyNo" element={<Report />} />
 					<Route path="/question/*" element={<Question />} />
+					<Route path="/reviewForm/:payNo" element={<ReviewForm />} />
 				</Routes>
 			</main>
 			<Footer />

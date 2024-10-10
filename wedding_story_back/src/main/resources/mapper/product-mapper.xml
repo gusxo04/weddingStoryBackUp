@@ -5,7 +5,7 @@
 		select count(*) from product
 		where product_state=1
 	</select>
-	<select id="getProductList" resultType="product">
+	<select id="getProductList2" resultType="product">
 		select * from
 		(select
 		rownum as rnum, b.* from
@@ -21,9 +21,28 @@
 		where rnum
 		between #{pi.start} and#{pi.end}
 	</select>
+	<select id="getProductList" resultType="product">
+		select product_no,product_thumb,product_name,product_price from product
+		<if test="state == 'studio'">
+			where company_category='스튜디오'
+		</if>
+		<if test="state == 'dress'">
+			where company_category='드레스'
+		</if>
+		<if test="state == 'make'">
+			where company_category='메이크업'
+		</if>
+		<if test="state == 'tuxido'">
+			where company_category='예복'
+		</if>
+		<if test="state == 'picture'">
+			where company_category='본식'
+		</if>
+	</select>
+
 
 	<select id="getProductHallList" resultType="product">
-		select * from
+		
 		(select
 		rownum as rnum, b.* from
 		(select
@@ -35,8 +54,7 @@
 		from product where
 		company_category = #{category} order by product_no
 		desc) b)
-		where rnum
-		between #{pi.start} and#{pi.end}
+		
 	</select>
 
 	<insert id="insertProduct">
@@ -314,7 +332,7 @@
 	 select company_no,product_no,product_name,product_IMG,product_price from favorite_product join product using(product_no) where member_no=#{memberNo} order by 2 desc
 </select>
 <insert id="favoriteInsert">
-	insert into favorite_product values(favorite_product_seq.nextval,#{memberNo},#{productNo},#{likes})
+	insert into favorite_product values(favorite_product_seq.nextval,#{memberNo},#{productNo})
 </insert>
 <delete id="favoritedelete">
 	delete from favorite_product where member_no=#{memberNo} and product_no=#{productNo}
@@ -325,6 +343,9 @@
 
 <select id="favoriteOneList" resultType="productFavorite">
 	select * from favorite_product where member_no = #{memberNo}
+</select>
+<select id="favoriteState" resultType="int">
+select count(*) from favorite_product where member_no=#{memberNo} and product_no=#{productNo}
 </select>
 
 </mapper>
