@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import ProductReview from "../ProductReview";
 import styles from "./ProductInfo.module.css";
 import "slick-carousel/slick/slick.css";
 import { loginIdState } from "../../utils/RecoilData";
@@ -76,7 +75,7 @@ const ProductInfo = () => {
 							<tbody>
 								<tr>
 									<th style={{ width: "20%" }}>회사명</th>
-									<td style={{ width: "30%" }}>{product.companyName}</td>
+									<td style={{ width: "30%" }}>{company.companyName}</td>
 								</tr>
 								<tr>
 									<th style={{ width: "20%" }}>상품명</th>
@@ -107,7 +106,8 @@ const ProductInfo = () => {
 				</div>
 				<br />
 				<div>
-					<ProductReview />
+					<h3>리뷰</h3>
+					{product.productContent ? <Viewer initialValue={product.productContent} /> : "상세보기가 없습니다."}
 				</div>
 				<br />
 				<div className={styles["product-faq"]}>

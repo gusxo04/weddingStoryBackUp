@@ -30,9 +30,13 @@ const WeddingHallList = () => {
 	}, [reqPage]);
 
 	const handleScroll = () => {
-		if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
-			// 페이지 하단에 도달하면 8개 더 로드
-			setVisibleCount((prevCount) => prevCount + 8);
+		const scrollTop = window.scrollY; // 현재 스크롤 위치
+		const windowHeight = window.innerHeight; // 현재 창의 높이
+		const documentHeight = document.documentElement.scrollHeight; // 문서 전체의 높이
+
+		// 스크롤이 거의 끝에 도달했을 때 (여기서는 100px 남았을 때 로드하도록 설정)
+		if (windowHeight + scrollTop >= documentHeight - 100) {
+			setVisibleCount((prevCount) => prevCount + 8); // 8개씩 추가 로드
 		}
 	};
 	useEffect(() => {
@@ -82,12 +86,14 @@ const BoardItem = (props) => {
 	}, [productNo, memberNo]);
 
 	const handleLikeToggle = (e) => {
+		//console.log("실행됨");
+
 		e.stopPropagation(); //클릭 시 상품정보로 이동되는 것을 방지
 
 		setLiked((prev) => !prev);
 		// 선택적으로 여기에서 좋아요 상태를 서버에 보낼 수 있습니다.
 		axios
-			.post(`${backServer}/product/favorite`, { productNo: productNo, memberNo: memberNo, likes: 1 })
+			.post(`${backServer}/product/favorite`, { productNo: productNo, memberNo: memberNo, likeState: !liked })
 			.then((res) => {
 				console.log(res);
 			})

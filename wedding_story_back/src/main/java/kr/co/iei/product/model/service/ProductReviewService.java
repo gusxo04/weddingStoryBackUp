@@ -1,5 +1,7 @@
 package kr.co.iei.product.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +46,14 @@ public class ProductReviewService {
 	public MemberPayDTO selectMemberPay(int payNo) {
 		MemberPayDTO memberPay = memberDao.selectMemberPay(payNo);
 		return memberPay;
+	}
+	public int deleteReview(ProductReviewDTO review) {
+		int result = productReviewDao.deleteReview(review);
+		return result;
+	}
+	public List selectProductReview(int productNo) {
+		List list = productReviewDao.selectProductReview(productNo);
+		return list;
 	}
 	
 	

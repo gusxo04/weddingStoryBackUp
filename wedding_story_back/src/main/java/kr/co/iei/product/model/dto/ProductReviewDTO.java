@@ -20,5 +20,5 @@ public class ProductReviewDTO {
 	private int memberNo;	//회원번호
 	private int rating;		//별점
 	private String review;	//리뷰내용(글쓰기)
-	private Date creation;	//작성일
+	private String creationDate;	//작성일
 }

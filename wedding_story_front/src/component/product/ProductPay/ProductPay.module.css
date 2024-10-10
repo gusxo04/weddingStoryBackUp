@@ -1,14 +1,74 @@
 /*결제css*/
-.pay-wrap {
-  padding: 20px;
-  border-radius: 10px;
-  background-color: var(--main2);
-  text-align: center;
-  width: 400px;
-  height: 800px;
-  margin: 0 auto;
-  align-self: center;
+.wedding-wrap {
+	padding: 20px;
+	border-radius: 10px;
+	border: 1px var(--main1) solid;
+	width: 360px;
+	margin: 0 auto;
+	align-self: center;
 }
-.pay-button {
-  padding-top: 100px;
+
+.wedding-wrap > .material-icons {
+	margin-right: 100%;
+}
+
+.wedding-wrap > .title-name {
+	padding: 30px;
+	text-align: center;
+	font-family: ns-b;
+	font-size: 20px;
+	color: var(--main1);
+}
+
+.wedding-content > .input-wrap {
+	padding: 15px 30px;
+	border: none;
+	display: flex;
+	flex-direction: column;
+	border-left: 20px;
+}
+
+.wedding-content > .input-wrap > .input-title > label {
+	text-align: left;
+	font-size: 17px;
+	color: var(--main1);
+	font-family: ns-b;
+}
+
+.wedding-content > .input-wrap > .input-item {
+	text-align: left;
+}
+
+.wedding-content > .input-wrap > .input-item > input {
+	font-size: 16px;
+	padding: 8px 0px;
+	width: 250px;
+	border: 1px var(--main1) solid;
+	border-radius: 5px;
+	font-family: ns-b;
+}
+
+.wedding-content > .pay {
+	text-align: start;
+}
+.pay {
+	color: red;
+	font-size: 20px;
+}
+
+.wedding-button > button {
+	border: 1px solid #fff;
+	padding: 10px 25px;
+	font-size: 16px;
+	border: none;
+	font-family: ns-b;
+	text-align: center;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.wedding-button > button:hover {
+	background-color: var(--main1);
+	color: #fff;
+	cursor: pointer;
 }
