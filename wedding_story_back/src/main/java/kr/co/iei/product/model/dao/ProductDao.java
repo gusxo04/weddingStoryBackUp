@@ -94,6 +94,8 @@ public interface ProductDao {
 
 	Integer getAdSales(String month);
 
+	List<ProductDTO> selectAdHall(String type);
+
 
 
 

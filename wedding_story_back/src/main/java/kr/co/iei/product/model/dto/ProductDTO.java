@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.iei.company.model.dto.CompanyDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,5 @@ public class ProductDTO {
 	private int productState;
 	private String companyCategory;	//카테고리
 	
+	private String companyName;
 }
