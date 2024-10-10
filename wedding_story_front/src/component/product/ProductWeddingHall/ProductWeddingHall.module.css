@@ -4,7 +4,7 @@
 	border-radius: 10px;
 	border: 1px var(--main1) solid;
 	width: 360px;
-	margin: 0 auto;
+	margin: 50px auto;
 	align-self: center;
 }
 
@@ -58,13 +58,13 @@
 
 .wedding-button > button {
 	border: 1px solid #fff;
-	padding: 10px 25px;
+
 	font-size: 16px;
 	border: none;
 	font-family: ns-b;
 	text-align: center;
 	box-sizing: border-box;
-	width: 100%;
+	width: 310px;
 }
 
 .wedding-button > button:hover {

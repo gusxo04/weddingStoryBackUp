@@ -19,9 +19,15 @@ public interface ConsultDao {
 	//세영이가 마이페이지 일정관리에서 상담 일정 삭제할때 사용함
 	int deleteConsult(int consultNo);
 
-	List selectConsultList(List productNo, PageInfo pi);
+	List selectConsultList(List productNo);
 
 	int totalConsultCount(List productNo);
+
+	int totalConsultDayInfoCount(String consultDate);
+
+	List<ConsultDTO> selectListDayInfo(PageInfo pi, String consultDate);
+
+	ConsultDTO selectConsultDetailInfo(int consultNo);
 
 	
 

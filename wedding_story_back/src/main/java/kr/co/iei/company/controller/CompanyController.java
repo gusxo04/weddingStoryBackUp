@@ -271,9 +271,9 @@ public class CompanyController {
 		return ResponseEntity.ok(company);
 	}
 	//일정 조회 (리스트 및 모달창에 들어갈 모든 데이터)
-	@GetMapping(value="/schedule/{companyNo}/{reqPage}")
-	public ResponseEntity<Map> selectScheduleList(@PathVariable String companyNo, @PathVariable int reqPage){
-		Map consult = companyService.selectScheduleList(companyNo,reqPage);
+	@GetMapping(value="/schedule/{companyNo}")
+	public ResponseEntity<List> selectScheduleList(@PathVariable String companyNo){
+		List consult = companyService.selectScheduleList(companyNo);
 		System.out.println(consult);
 		return ResponseEntity.ok(consult);
 	}
@@ -285,6 +285,25 @@ public class CompanyController {
 		
 		return ResponseEntity.ok(monthPrice);
 	}
+	
+	//날짜별 일정 확인 
+	@GetMapping(value="/dayInfo/{consultDate}/{reqPage}")
+	public ResponseEntity<Map> selectListDayInfo(@PathVariable String consultDate, @PathVariable int reqPage){
+		Map map = companyService.selectListDayInfo(consultDate,reqPage);
+		
+		return ResponseEntity.ok(map);
+				
+	}
+	
+	//상담 예약 고객 상세정보
+	@GetMapping(value="/detailInfo/{consultNo}")
+	public ResponseEntity<ConsultDTO> selectConsultDetailInfo(@PathVariable int consultNo){
+		System.out.println(consultNo);
+		ConsultDTO consult = companyService.selectConsultDetailInfo(consultNo);
+		
+		return ResponseEntity.ok(consult);
+	}
+	
 	@GetMapping(value="/getAdPay/{company}")
 	public ResponseEntity<Map>getAdPay(@PathVariable String company){
 		System.err.println(company);

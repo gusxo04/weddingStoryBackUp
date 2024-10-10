@@ -24,18 +24,32 @@ const CompanySchedule = () => {
 			setHeaderFormat({ day: "numeric" }); // 일자 형식 ('1', '2', '3')
 		}
 	};
+	const handleDayCellClick = (info) => {
+		const date = new Date(info.date);
+
+		// 로컬 시간 기준으로 년, 월, 일을 추출
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+		const day = String(date.getDate()).padStart(2, "0");
+
+		const consultDate = `${year}-${month}-${day}`;
+		console.log(date);
+		console.log(info);
+		console.log(consultDate);
+
+		// 선택한 날짜에 해당하는 일정 필터링
+		navigate("/company/schedule/dayInfo", { state: { consultDate: consultDate } });
+	};
 	useEffect(() => {
 		axios
-			.get(`${backServer}/company/schedule/${companyNo}/${reqPage}`)
+			.get(`${backServer}/company/schedule/${companyNo}`)
 			.then((res) => {
 				console.log(res);
-				setScheduleList(res.data.consult.memberDTO.memberName);
 				const updateScheduleList = res.data.map((schedule) => ({
-					title: schedule.consult.memberDTO.memberName,
-					start: `${schedule.consult.consultDate}T${schedule.consult.consultTime}`,
-
-					consultDate: schedule.consult.consultDate,
-					time: schedule.consult.consultTime,
+					title: schedule.memberName,
+					start: `${schedule.consultDate}T${schedule.consultTime}`,
+					consultDate: schedule.consultDate,
+					time: schedule.consultTime,
 				}));
 				setScheduleList(updateScheduleList);
 			})
@@ -55,6 +69,7 @@ const CompanySchedule = () => {
 							initialView="dayGridMonth" //월 기준으로 보여줌
 							locale={koLocale}
 							events={scheduleList}
+							eventClick={(info) => handleDayCellClick(info.event)} // 클릭한 이벤트에만 반응
 							headerToolbar={{
 								left: "", // will normally be on the left. if RTL, will be on the right
 								center: "prev,title,next",
@@ -78,14 +93,11 @@ const CompanySchedule = () => {
 							// datesSet={handleDatesSet} // 뷰 변경 시 호출
 							dayCellDidMount={(info) => {
 								// 클릭 이벤트 추가
-								info.el.addEventListener("click", () => {
-									navigate("/company/schedule/dayInfo");
-									
-								});
-						
+								info.el.addEventListener("click", () => handleDayCellClick(info));
+
 								// 추가적인 스타일 조정이 필요하다면 여기에 작성
 								if (info.isToday) {
-									info.el.style.backgroundColor = '#f0f8ff'; // 오늘 날짜 배경색 변경
+									info.el.style.backgroundColor = "#f0f8ff"; // 오늘 날짜 배경색 변경
 								}
 							}}
 							datesSet={handleDatesSet} // 뷰 변경 시 호출
@@ -97,6 +109,5 @@ const CompanySchedule = () => {
 		</section>
 	);
 };
-
 
 export default CompanySchedule;

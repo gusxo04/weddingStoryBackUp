@@ -417,3 +417,137 @@
 .tbl tbody tr {
 	border-bottom: 1px solid#dce4e9;
 }
+
+/*------상담정보 상세페이지-------------------*/
+
+.tables-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px; /* 테이블 사이 간격 */
+}
+
+.table-wrap {
+	width: 45%; /* 테이블 각각의 너비 */
+	margin: 0px 30px;
+}
+
+.detailInfo-tbl {
+	width: 100%; /* 테이블이 div 너비에 맞게 채워짐 */
+}
+
+.detailInfo-tbl {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.detailInfo-tbl thead tr {
+	background-color: #dce4e9;
+	color: #ffffff;
+	text-align: center;
+}
+.detailInfo-tbl th,
+.detailInfo-tbl td {
+	padding: 12px 15px;
+}
+.detailInfo-tbl td {
+	background-color: white;
+}
+
+.detailInfo-tbl tbody tr {
+	border-bottom: 1px solid#dce4e9;
+}
+
+/*--------------웨딩홀 결제 페이지 css----------------------------------*/
+
+/*웨딩홀예약*/
+.wedding-wrap {
+	padding: 20px;
+	border-radius: 10px;
+	border: 1px var(--main2) solid;
+	width: 360px;
+	margin: 30px auto;
+	align-self: center;
+}
+
+.wedding-wrap > .material-icons {
+	margin-right: 100%;
+}
+
+.wedding-wrap > .title-name {
+	padding: 30px;
+	text-align: center;
+	font-family: ns-b;
+	font-size: 20px;
+	color: var(--main2);
+}
+
+.wedding-content > .input-wrap {
+	padding: 15px 30px;
+	border: none;
+	display: flex;
+	flex-direction: column;
+	border-left: 20px;
+}
+
+.wedding-content > .input-wrap > .input-title > label {
+	text-align: left;
+	font-size: 17px;
+	color: var(--main2);
+	font-family: ns-b;
+}
+
+.wedding-content > .input-wrap > .input-item {
+	text-align: left;
+}
+
+.wedding-content > .input-wrap > .input-item > input {
+	font-size: 16px;
+	padding: 8px 0px;
+	width: 250px;
+	border: 1px var(--main2) solid;
+	border-radius: 5px;
+	font-family: ns-b;
+}
+
+.wedding-content > .pay {
+	text-align: start;
+}
+.pay {
+	color: red;
+	font-size: 20px;
+}
+
+.wedding-button > button {
+	border: 1px solid #fff;
+	font-size: 16px;
+	border: none;
+	font-family: ns-b;
+	text-align: center;
+	box-sizing: border-box;
+	width: 310px;
+	height: 50px;
+}
+
+.wedding-button > button:hover {
+	background-color: var(--main2);
+	color: #fff;
+	cursor: pointer;
+}
+.payment-btn {
+	display: flex;
+	justify-content: center;
+}
+.payment-btn > a,
+button {
+	margin: 10px 20px;
+	border: 1px solid var(--main2);
+	width: 60px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 5px;
+}
