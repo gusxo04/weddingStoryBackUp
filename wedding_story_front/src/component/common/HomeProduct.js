@@ -45,8 +45,8 @@ const HomeProduct = () => {
 					<p>나에게 잘 어울리는 베스트 웨딩홀을 찾으세요!</p>
 				</div>
 			</div>
-			<div class="home-section1-slider">
-				<button class="slider-prev" onClick={handlePrev}>
+			<div className="home-section1-slider">
+				<button className="slider-prev" onClick={handlePrev}>
 					&#10094;
 				</button>
 				<div className="home-section1-productBox-wrapper">
@@ -56,7 +56,7 @@ const HomeProduct = () => {
 						))}
 					</div>
 				</div>
-				<button class="slider-next" onClick={handleNext}>
+				<button className="slider-next" onClick={handleNext}>
 					&#10095;
 				</button>
 			</div>

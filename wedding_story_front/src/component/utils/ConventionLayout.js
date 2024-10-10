@@ -499,7 +499,7 @@ const SeatCompanyAlert = (props) => {
                   setShowType(!showType);
                   setCheckable(true);
                 }}>info</span>
-                <label htmlFor="personal-check" className="cursor-p" ref={checkSpanRef} >이용약관및 개인정보 수집/이용 동의</label>
+                <label htmlFor="personal-check" className="cursor-p" ref={checkSpanRef} >이용약관 및 개인정보 수집/이용 동의</label>
                 <input type="checkbox" id="personal-check" ref={checkedRef} onClick={() => {
                   if(checkable) return;
                   checkedRef.current.checked = false;

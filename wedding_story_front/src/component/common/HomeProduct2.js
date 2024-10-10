@@ -45,8 +45,8 @@ const HomeProduct2 = () => {
 					<p>요즘 신랑 신부님께 가장 사랑받는 스드메 브랜드는?</p>
 				</div>
 			</div>
-			<div class="home-section1-slider">
-				<button class="slider-prev" onClick={handlePrev}>
+			<div className="home-section1-slider">
+				<button className="slider-prev" onClick={handlePrev}>
 					&#10094;
 				</button>
 				<div className="home-section1-productBox-wrapper">
@@ -56,7 +56,7 @@ const HomeProduct2 = () => {
 						))}
 					</div>
 				</div>
-				<button class="slider-next" onClick={handleNext}>
+				<button className="slider-next" onClick={handleNext}>
 					&#10095;
 				</button>
 			</div>

@@ -290,7 +290,7 @@ const BuyTicket = (props) => {
             setCheckable(true);
           }}>info</span>
           {/* ! 누르면 약관 보여주기 언젠간하겠지 */}
-          <label htmlFor="personal" ref={personalMsgRef} >이용약관및 개인정보 수집/이용 동의</label>
+          <label htmlFor="personal" ref={personalMsgRef} >이용약관 및 개인정보 수집/이용 동의</label>
           <input type="checkbox" id="personal" ref={personalRef} onClick={() => {
             if(checkable) return;
             // 옆에 정보 보기는 한 번은 눌러야 체크 가능함
