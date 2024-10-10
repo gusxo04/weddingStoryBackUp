@@ -17,6 +17,8 @@ const SearchPw = (props) => {
 		memberId: member.memberId,
 		memberPw: "",
 	});
+	console.log(emailCode);
+
 	const [rePw, setRePw] = useState("");
 	{
 		/* 새 비밀번호와 상태 체크용state */

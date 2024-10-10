@@ -75,7 +75,7 @@ const WeddingHallProduct = (props) => {
 	return (
 		<Link to={`/product/hallInfo/${product.productNo}`} className="home-section1-product">
 			<div className="sec1-productImgBox">
-				<img src={`${backServer}/product/thumb/${product.productImg}`} />
+				<img src={`${backServer}/product/image/${product.productImg}`} />
 			</div>
 			<div className="sec1-productInfo" style={{ paddingTop: "5px" }}>
 				<p>

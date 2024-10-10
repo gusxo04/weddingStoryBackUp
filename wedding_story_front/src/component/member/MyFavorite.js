@@ -92,7 +92,7 @@ const ProductInfo = (props) => {
 			{companyCategory === "웨딩홀" ? (
 				<Link className="mypage-favorite-product" to={`/product/hallInfo/${product.productNo}`}>
 					<div className="favorite-productImgBox">
-						<img src={product.productImg} />
+						<img src={`${backServer}/product/image/${product.productImg}`} />
 						<div className="favorite-iconBox" onClick={handleLikeToggle}>
 							{liked ? <MdFavorite fill="red" fontSize="28px" /> : <MdFavoriteBorder fontSize="28px" />}
 						</div>

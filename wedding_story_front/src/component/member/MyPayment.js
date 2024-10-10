@@ -109,7 +109,7 @@ const MyPayment = (props) => {
 												}
 											>
 												<div className="payment-productImg">
-													<img src={`${backServer}/product/thumb/${pay.product.productImg}`} />
+													<img src={`${backServer}/product/image/${pay.product.productImg}`} />
 												</div>
 											</Link>
 										</td>

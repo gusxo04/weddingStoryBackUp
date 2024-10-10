@@ -90,13 +90,11 @@ public class ProductService {
 		return list;
 	}
 	
-
-
-
 	public ProductFavoriteDTO favoriteOneList(ProductFavoriteDTO favorite) {
 		ProductFavoriteDTO productFavorite = productDao.favoriteOneList(favorite);
 		return productFavorite;
 	}
+	
 	@Transactional
 	public int favorite(int productNo, int memberNo, Boolean likeState) {
 		int result = 0;
@@ -127,6 +125,7 @@ public class ProductService {
 		List<ProductDTO> list = productDao.selectAdHall(type);
 		return list;
 	}
+	
 	public int favoriteState(int memberNo, int productNo) {
 		System.out.println(memberNo);
 		System.out.println(productNo);

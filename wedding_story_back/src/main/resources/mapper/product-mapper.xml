@@ -368,7 +368,7 @@ JOIN company c
 	</if>
   AND c.company_state = '1'
   ORDER BY ad_rank, ad_start
-  </select>
+ </select>
 <select id="favoriteState" resultType="int">
 select count(*) from favorite_product where member_no=#{memberNo} and product_no=#{productNo}
 </select>
