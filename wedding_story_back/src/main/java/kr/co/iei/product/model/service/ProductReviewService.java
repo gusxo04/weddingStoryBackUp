@@ -2,6 +2,7 @@ package kr.co.iei.product.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -29,9 +30,9 @@ public class ProductReviewService {
 		return member;
 	}
 	//리뷰인서트
-	public int insertReview(ProductReviewDTO productReview, MemberDTO member, ProductDTO product,
-			MemberPayDTO memberPay) {	
-		int result = productReviewDao.insertReview(productReview,member,product,memberPay);
+	@Transactional
+	public int insertReview(ProductReviewDTO productReview) {	
+		int result = productReviewDao.insertReview(productReview);
 		return result;
 	}
 	//상품조회

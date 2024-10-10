@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.MemberPayDTO;
@@ -53,8 +54,10 @@ public class ProductReviewController {
 	
 	//리뷰인서트
 	@PostMapping
-	public ResponseEntity<Integer>insertReview(@ModelAttribute ProductReviewDTO productReview,@ModelAttribute MemberDTO member, @ModelAttribute ProductDTO product, @ModelAttribute MemberPayDTO memberPay){
-		int result = productReviewService.insertReview(productReview,member,product,memberPay);
+	public ResponseEntity<Integer>insertReview(@ModelAttribute ProductReviewDTO productReview, @ModelAttribute MultipartFile image){
+		System.out.println(productReview);
+		System.out.println(image);
+		int result = productReviewService.insertReview(productReview);
 		return ResponseEntity.ok(result);
 	}
 	
