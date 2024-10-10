@@ -76,7 +76,7 @@ const WriteForm = (props) => {
   const [showConventionStartTime, setShowConventionStartTime] = useState("");
   const [showConventionEndTime, setShowConventionEndTime] = useState("");
   // 단순 보여주기 용 state임
-
+  
   useEffect(() => {
     if (writeType !== 2 || conventionStart === "") return;
     const formatShowConventionStart = new Date(conventionStart);
