@@ -218,9 +218,9 @@
 		SELECT DISTINCT
 		SUBSTR(merchant_uid, 1, 4) AS merchant_uid
 		FROM (
-		SELECT merchant_uid FROM member_pay
+		SELECT merchant_uid FROM member_pay where progress!=2 
 		UNION ALL
-		SELECT merchant_uid FROM company_pay
+		SELECT merchant_uid FROM company_pay where progress=0
 		)
 	</select>
 	<select id="getMember" resultType="member">

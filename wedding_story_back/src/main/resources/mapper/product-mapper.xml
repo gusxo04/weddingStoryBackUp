@@ -137,6 +137,7 @@
 		WHERE
 		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
 		AND SUBSTR(merchant_uid, 5, 2) = #{month}
+		and progress !=2
 
 		UNION ALL
 
@@ -145,6 +146,7 @@
 		WHERE
 		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
 		AND SUBSTR(merchant_uid, 5, 2) = #{month}
+		and progress =0
 		)
 	</select>
 	
@@ -158,6 +160,7 @@
 		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
 		AND
 		SUBSTR(merchant_uid, 5, 2) = #{month}
+		and progress != 2
 	</select>
 	
 	<select id="getMontlySalesCompany" resultType="sales">
@@ -170,6 +173,7 @@
 		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
 		AND
 		SUBSTR(merchant_uid, 5, 2) = #{month}
+		and progress=0
 	</select>
 	
 	<select id="getAdSales" resultType="int">
@@ -202,6 +206,7 @@
 		sales
 		FROM member_pay
 		WHERE product_no = #{productNo}
+		and and progress =0
 	</select>
 
   <select id="productTotalCount" resultType="int">
