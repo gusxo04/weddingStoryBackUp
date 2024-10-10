@@ -111,6 +111,13 @@ public class ProductController {
 		return ResponseEntity.ok(productFavorite);
 	}
 	
+	@GetMapping(value = "/selectAd/{type}")
+	public ResponseEntity<List> selectAdHall(@PathVariable String type){
+		List<ProductDTO> list = productService.selectAdHall(type);
+		return ResponseEntity.ok(list);
+		
+	}
+	
 	
 	
 }

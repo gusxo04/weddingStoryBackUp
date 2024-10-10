@@ -107,7 +107,7 @@ const ProductInfo = (props) => {
 			) : (
 				<Link className="mypage-favorite-product" to={`/product/info/${product.productNo}`}>
 					<div className="favorite-productImgBox">
-						<img src={product.productImg} />
+						<img src={`${backServer}/product/thumb/${product.productImg}`} />
 						<div className="favorite-iconBox" onClick={handleLikeToggle}>
 							{liked ? <MdFavorite fill="red" fontSize="28px" /> : <MdFavoriteBorder fontSize="28px" />}
 						</div>
