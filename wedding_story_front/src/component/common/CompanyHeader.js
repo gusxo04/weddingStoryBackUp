@@ -7,7 +7,7 @@ import axios from "axios";
 
 const CompanyHeader = () => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const companyNo = useRecoilValue(companyNoState)
+	const companyNo = useRecoilValue(companyNoState);
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const [company, setCompany] = useState({});
 	// 드롭다운을 토글하는 함수
@@ -39,7 +39,7 @@ const CompanyHeader = () => {
 				</div>
 			</div>
 			<div className="header-c-content">
-				{companyNo !== null && companyNo !== 0 && companyNo !== ""? (
+				{companyNo !== null && companyNo !== 0 && companyNo !== "" ? (
 					<ul>
 						<li>
 							<Link to="/company/product/list" className="nav-item">
@@ -114,7 +114,7 @@ const CompanyHeader = () => {
 							)}
 						</li>
 					</ul>
-				) :	(
+				) : (
 					<ul>
 						<li>
 							<Link to="#" className="nav-item">
@@ -174,8 +174,7 @@ const CompanyHeader = () => {
 							)}
 						</li>
 					</ul>
-				)
-			}
+				)}
 			</div>
 		</header>
 	);

@@ -22,6 +22,8 @@ import Notice from "../admin/Notice";
 import CompanyNotice from "./CompanyNotice";
 import CompanySalesChart from "./CompanySalesChart";
 import DayScheduleInfo from "./DayScheduleInfo";
+import DetailInfo from "./DetailInfo";
+import WeddingPayment from "./WeddingPayment";
 
 const CompanyMain = () => {
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
@@ -62,42 +64,33 @@ const CompanyMain = () => {
 				</div>
 
 				<section className="content-wrap">
-				<div>
-					{companyNo === null || companyNo === 0 ? (
-						<CompanyNoNull />
+					<div>{companyNo === null || companyNo === 0 ? <CompanyNoNull /> : ""}</div>
+					{companyNo === null && companyNo === 0 ? (
+						<Routes>
+							<Route path="join" element={<CompanyJoin />} />
+							<Route path="null" element={<CompanyNoNull />} />
+						</Routes>
 					) : (
-						""
+						<Routes>
+							<Route path="null" element={<CompanyNoNull />} />
+							<Route path="join" element={<CompanyJoin />} />
+							<Route path="info" element={<CompanyInfo />} />
+							<Route path="info/update/" element={<CompanyInfoUpdate />} />
+							<Route path="product/list" element={<CompanyProductList />} />
+							<Route path="product/insert" element={<CompanyProductInsert />} />
+							<Route path="customer" element={<CompanyCustomer />} />
+							<Route path="counsel" element={<CompanyCounsel />} />
+							<Route path="product/update/:productNo" element={<CompanyProductUpdate />} />
+							<Route path="advertisement" element={<CompanyAdvertisement />} />
+							<Route path="advertisementRequest" element={<AdvertisementRequest />} />
+							<Route path="sales" element={<CompanySalesChart />} />
+							<Route path="schedule" element={<CompanySchedule />} />
+							<Route path="notice/*" element={<CompanyNotice />} />
+							<Route path="schedule/dayInfo" element={<DayScheduleInfo />} />
+							<Route path="schedule/dayInfo/detailInfo" element={<DetailInfo />} />
+							<Route path="WeddingHallPayMent/:productNo" element={<WeddingPayment />} />
+						</Routes>
 					)}
-				</div>
-					{companyNo === null && companyNo === 0?
-					<Routes>
-						<Route path="join" element={<CompanyJoin />} />
-						<Route path="null" element={<CompanyNoNull/>} />
-					</Routes>
-					:
-					<Routes>
-						<Route path="null" element={<CompanyNoNull />} />
-						<Route path="join" element={<CompanyJoin />} />
-						<Route path="info" element={<CompanyInfo />} />
-						<Route path="info/update/" element={<CompanyInfoUpdate />} />
-						<Route path="product/list" element={<CompanyProductList />} />
-						<Route path="product/insert" element={<CompanyProductInsert />} />
-						<Route path="customer" element={<CompanyCustomer />} />
-						<Route path="counsel" element={<CompanyCounsel />} />
-						<Route path="product/update/:productNo" element={<CompanyProductUpdate />} />
-						<Route path="advertisement" element={<CompanyAdvertisement />} />
-						<Route path="advertisementRequest" element={<AdvertisementRequest />} />
-						<Route path="sales" element={<CompanySalesChart />} />
-						<Route path="schedule" element={<CompanySchedule />} />
-						<Route path="notice/*" element={<CompanyNotice />} />
-						<Route path="schedule/dayInfo" element={<DayScheduleInfo/>} />
-					</Routes>
-					
-					
-					
-					
-					}
-					
 				</section>
 			</div>
 		</>

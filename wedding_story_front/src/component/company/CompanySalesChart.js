@@ -7,7 +7,7 @@ import { companyNoState } from "../utils/RecoilData";
 const CompanySalesChart = () => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const companyNo = useRecoilValue(companyNoState);
-	const [price,setPrice] = useState(Array(12));
+	const [price, setPrice] = useState(Array(12));
 	console.log(companyNo);
 	useEffect(() => {
 		axios
@@ -20,7 +20,7 @@ const CompanySalesChart = () => {
 				console.log(err);
 			});
 	}, []);
-	console.log(price)
+	console.log(price);
 	/*----chart.js 라이브러리 */
 	const chartRef = useRef(null);
 	let chartInstance = null;
@@ -33,11 +33,24 @@ const CompanySalesChart = () => {
 			chartInstance = new Chart(ctx, {
 				type: "line",
 				data: {
-					labels: ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월",],
+					labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
 					datasets: [
 						{
 							label: "월별 매출액",
-							data: [price[1],price[2],price[3],price[4],price[5],price[6],price[7],price[8],price[9],price[10],price[11],price[12]],
+							data: [
+								price[1],
+								price[2],
+								price[3],
+								price[4],
+								price[5],
+								price[6],
+								price[7],
+								price[8],
+								price[9],
+								price[10],
+								price[11],
+								price[12],
+							],
 							borderColor: "rgba(255, 99, 132, 1)",
 							backgroundColor: "rgba(255, 99, 132, 0.2)",
 							pointRadius: 5, // 포인트 크기

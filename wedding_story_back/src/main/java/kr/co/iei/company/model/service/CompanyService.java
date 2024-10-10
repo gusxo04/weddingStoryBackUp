@@ -247,28 +247,14 @@ public class CompanyService {
 		return list;
 	}
 	//상담일정 조회 
-	public Map selectScheduleList(String companyNo, int reqPage) {
+	public List selectScheduleList(String companyNo) {
 		List productNo = productDao.selectProductNo(companyNo);
-		
-		
-		int totalPage = 0;
-		int numPerPage = 10; //한 페이지당 게시물 수
-		int pageNaviSize = 1; //페이지 네비 길이
-		totalPage  += consultDao.totalConsultCount(productNo);
-		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);
-		
-		List consult = consultDao.selectConsultList(productNo,pi);
-		Map<String, Object> list = new HashMap<String, Object>();
-		list.put("consult",consult);
-		list.put("pi",pi);
-		System.out.println(list);
-		return list;
+		List consult = consultDao.selectConsultList(productNo);
+		return consult;
 	}
 	//광고 등록 페이지 업체번호 조회
 	public List selectAdvertProductNo(String companyNo) {
-		
 		List productNo = productDao.selectAdvertProductNo(companyNo);
-		
 		return productNo;
 	}
 	
@@ -285,6 +271,7 @@ public class CompanyService {
 		
 		
 	}
+	//매출 조회 데이터
 	public Map selectSalesData(String companyNo) {
 		//상품 번호들을 List 로 받음 
 		List productNo = productDao.selectProductNo(companyNo);
@@ -297,6 +284,29 @@ public class CompanyService {
 			result.put(i,totalPrice);
 		}
 		return result;
+	}
+	//일별 예약 고객 리스트 조회
+	public Map selectListDayInfo(String consultDate, int reqPage) {
+		
+		
+		int numPerPage = 10; //한 페이지당 게시물 수
+		int pageNaviSize = 1; //페이지 네비 길이
+		int totalPage  = consultDao.totalConsultDayInfoCount(consultDate);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPage);
+		
+		List<ConsultDTO> list = consultDao.selectListDayInfo(pi,consultDate);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		
+		
+		return map;
+	}
+	//예약 고객 상세정보 
+	public ConsultDTO selectConsultDetailInfo(int consultNo) {
+		ConsultDTO consult = consultDao.selectConsultDetailInfo(consultNo);
+			System.out.println(consult);
+		return consult;
 	}
 	
 

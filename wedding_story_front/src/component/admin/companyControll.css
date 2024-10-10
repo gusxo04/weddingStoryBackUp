@@ -1,149 +1,149 @@
 .company-controll-wrap {
-  width: 75%;
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  border-top: none;
-  padding: 50px;
-  box-sizing: border-box;
+	width: 75%;
+	margin: 0 auto;
+	border: 1px solid #ddd;
+	border-top: none;
+	padding: 50px;
+	box-sizing: border-box;
 }
 .companyInfo-wrap {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  border-top: 1px solid #dddddd;
-  padding-top: 15px;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 auto;
+	border-top: 1px solid #dddddd;
+	padding-top: 15px;
 }
 .tbl1 {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .tbl1 thead tr {
-  background-color: #c19975;
-  color: #ffffff;
-  text-align: center;
+	background-color: #c19975;
+	color: #ffffff;
+	text-align: center;
 }
 .tbl1 th,
 .tbl1 td {
-  padding: 12px 15px;
+	padding: 12px 15px;
 }
 
 .tbl1 tbody tr {
-  border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
 }
 
 .tbl1 tbody tr:last-of-type {
-  border-bottom: 2px solid #c19975;
+	border-bottom: 2px solid #c19975;
 }
 
 .tbl1 tbody tr.active-row {
-  font-weight: bold;
-  color: #dce4e9;
+	font-weight: bold;
+	color: #dce4e9;
 }
 .userInfo {
-  text-align: center;
+	text-align: center;
 }
 
 .tbl2 {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 300px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 300px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .tbl2 tr th {
-  background-color: #c19975;
-  color: black;
-  text-align: center;
+	background-color: #c19975;
+	color: black;
+	text-align: center;
 }
 
 .tbl2 th,
 .tbl2 tr {
-  padding: 12px 15px;
-  border-bottom: 1px solid #dddddd;
-  width: 200px;
+	padding: 12px 15px;
+	border-bottom: 1px solid #dddddd;
+	width: 200px;
 }
 .tbl2 td {
-  padding-left: 15px;
-  border-bottom: 1px solid #dddddd;
+	padding-left: 15px;
+	border-bottom: 1px solid #dddddd;
 }
 
 .tbl2 tr:last-of-type {
-  border-bottom: 2px solid #c19975;
+	border-bottom: 2px solid #c19975;
 }
 
 .company,
 .company-member {
-  flex: 1;
-  margin-left: 25px;
+	flex: 1;
+	margin-left: 25px;
 }
 
 .company-member {
-  margin-right: 0;
+	margin-right: 0;
 }
 .tbl-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 .tbl1 {
-  width: 100%;
+	width: 100%;
 }
 .del-btn-wrap {
-  display: flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 .tbl-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
 }
 .reportOverlay {
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: auto;
 }
 .reportOverlay-content {
-  width: 80%;
-  max-width: 700px;
-  min-width: 400px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  box-sizing: border-box;
-  overflow-y: scroll;
+	width: 80%;
+	max-width: 700px;
+	min-width: 400px;
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	box-sizing: border-box;
+	overflow-y: scroll;
 }
 .report_tbl {
-  width: 80%;
-  height: 80%;
-  margin: 15px auto;
+	width: 80%;
+	height: 80%;
+	margin: 15px auto;
 }
 .company_tbl > tbody > tr > td:last-child {
-  text-decoration: dashed;
-  cursor: pointer;
+	text-decoration: dashed;
+	cursor: pointer;
 }
 .close-btn {
-  width: 100px;
-  background-color: #c19975;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: auto;
+	width: 100px;
+	background-color: #c19975;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: auto;
 }

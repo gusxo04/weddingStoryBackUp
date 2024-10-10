@@ -27,10 +27,19 @@ public class ConsultDTO {
 	private String consultTitle;	//상담제목
 	private String consultWrite;	//상담내용
 	
-	//
-	private MemberDTO memberDTO;
-	private ProductDTO productDTO;
+	//상담 상세정보에 들어갈 내용
+	private String memberName;
+	private String memberPhone;
+	private String partnerName;
+	private String productName;
+	private int productPrice;
+	private int coronation;
+	private int diningRoom;
+	private int numberPeople;
 	
+	
+	//
+
 	//마이페이지 일정관리 모달에 들어갈 내용
 	private String companyNo;
 	private CompanyDTO company;
