@@ -196,18 +196,19 @@ const CompanyItem = (props) => {
 	const company = props.company;
 	console.log(company.salesList);
 
-	const sales = company.salesList.length > 0 && company.salesList[0] ? company.salesList[0].sales : null; // 기본값을 null로 설정
+	// salesList가 비어있지 않을 경우 모든 sales 값을 합산
+	const totalSales = company.salesList.length > 0 ? company.salesList.reduce((sum, item) => sum + (item?.sales || 0), 0) : 0;
 
-	const salesValue = sales !== null ? Number(sales) : 0;
+	const salesValue = totalSales !== 0 ? totalSales : 0;
 
 	return (
 		<tr>
 			<td>{company.companyNo}</td>
 			<td>{company.companyName}</td>
 			<td>{company.companyCategory}</td>
-			<td>{sales !== null ? sales : "없음"}</td>
-			<td>{sales !== null ? salesValue * 0.3 : "없음"}</td>
-			<td>{sales !== null ? salesValue * 0.7 : "없음"}</td>
+			<td>{totalSales > 0 ? totalSales : "없음"}</td>
+			<td>{totalSales > 0 ? (salesValue * 0.3).toFixed(2) : "없음"}</td>
+			<td>{totalSales > 0 ? (salesValue * 0.7).toFixed(2) : "없음"}</td>
 		</tr>
 	);
 };

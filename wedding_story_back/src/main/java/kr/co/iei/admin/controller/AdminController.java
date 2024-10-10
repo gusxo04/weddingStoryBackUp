@@ -146,7 +146,7 @@ public class AdminController {
 	
 	@GetMapping(value = "/getComapnyRank")
 	public ResponseEntity<List> getComapnyRank() {
-		List list = adminService.getComapnyRank();
+		List list = adminService.getCompanyRank();
 		return ResponseEntity.ok(list);
 	}
 

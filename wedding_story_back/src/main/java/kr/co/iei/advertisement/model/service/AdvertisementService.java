@@ -98,6 +98,19 @@ public class AdvertisementService {
 
 		}
 		
+		List<AdvertisementDTO> payAd = advertisementDao.payAd();// (관리자가 승인한 상태)결제 요청, 결제 전 4
+		for (AdvertisementDTO ads : payAd) {
+			String todayString = today.toString();
+			
+			if (todayString.equals(ads.getAdStart().substring(0, 10))) {
+				int date = ads.getAdvertisementNo();
+				int delAdResult = advertisementDao.payAdToDelAd(date);
+				if (delAdResult == 1) {
+					System.out.println("결제 안한 광고 삭제 완료");
+				}
+			}
+		}
+		
 		
 		LocalDate yesterday = LocalDate.now().minusDays(1);
 		List<AdvertisementDTO> activeAd = advertisementDao.activeAd();// 광고 중 2

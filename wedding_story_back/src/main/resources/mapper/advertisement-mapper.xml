@@ -57,6 +57,10 @@
 		ADVERTISEMENT_NO=#{date}
 	</update>
 
+	<delete id="payAdToDelAd">
+		DELETE FROM advertisement WHERE ADVERTISEMENT_NO=#{date}
+	</delete>
+
 	<update id="inProgressToEnd">
 		update advertisement set ADVERTISEMENT_STATE=3 where
 		ADVERTISEMENT_NO=#{date}

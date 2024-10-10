@@ -200,41 +200,43 @@ public class AdminService {
 		return map;
 	}
 	
-	public List getComapnyRank() {
-		//1. 각 회사 별로 product no 가 담긴 List 추출
-		//해당 상품의 매출들을 다 더해서 sales에 넣음
-		//매출이 높은 회사 5개까지만 걸러서 return
-		List<CompanyDTO> list = companyDao.getCompanyList2();
-		for(CompanyDTO company : list) {
-			String companyNo = company.getCompanyNo();
-			//회사 코드로 상품 조회
-			List<ProductDTO> productList = productDao.selectProductList2(companyNo);
-			List<SalesDTO> salesList = new ArrayList<SalesDTO>();
-			
-			
-			for(ProductDTO product : productList) {
-				int productNo = product.getProductNo();
-				SalesDTO sales = productDao.getCompanySales(productNo);//매출 테이블에서 조회
-				if(sales==null) {
-					sales.setSales(0);
-				}
-				System.out.println(product.getCompanyNo()+"의 매출 데이터는"+"sales"+sales);
-				salesList.add(sales);
-				System.out.println("salesList"+salesList);
-			}
-			
-			company.setSalesList(salesList);
-		}
-		
-		 list.sort((c1, c2) -> {
-		        int sales1 = (c1.getSalesList().isEmpty() || c1.getSalesList().get(0) == null) 
-		                      ? 0 : c1.getSalesList().get(0).getSales();
-		        int sales2 = (c2.getSalesList().isEmpty() || c2.getSalesList().get(0) == null) 
-		                      ? 0 : c2.getSalesList().get(0).getSales();
-		        return Integer.compare(sales2, sales1); // 내림차순 정렬
-		    });
-		System.out.println(list);
-		return list;
+	public List<CompanyDTO> getCompanyRank() {
+	    // 1. 각 회사 별로 product no가 담긴 List 추출
+	    List<CompanyDTO> list = companyDao.getCompanyList2();
+	    for (CompanyDTO company : list) {
+	        String companyNo = company.getCompanyNo();
+	        
+	        // 회사 코드로 상품 조회
+	        List<ProductDTO> productList = productDao.selectProductList2(companyNo);
+	        List<SalesDTO> salesList = new ArrayList<>();
+
+	        for (ProductDTO product : productList) {
+	            int productNo = product.getProductNo();
+	            SalesDTO sales = productDao.getCompanySales(productNo); // 매출 테이블에서 조회
+	            
+	            // 매출 데이터가 null이 아닐 경우에만 추가
+	            if (sales != null) {
+	                System.out.println(product.getCompanyNo() + "의 매출 데이터는 sales: " + sales);
+	                salesList.add(sales);
+	            } else {
+	                System.out.println(product.getCompanyNo() + "의 매출 데이터는 sales: null");
+	            }
+	            System.out.println("salesList: " + salesList);
+	        }
+	        
+	        // 각 회사에 대해 매출 리스트 설정
+	        company.setSalesList(salesList);
+	    }
+	    
+	    // 매출 리스트를 기준으로 내림차순 정렬
+	    list.sort((c1, c2) -> {
+	        int sales1 = c1.getSalesList().stream().mapToInt(SalesDTO::getSales).sum();
+	        int sales2 = c2.getSalesList().stream().mapToInt(SalesDTO::getSales).sum();
+	        return Integer.compare(sales2, sales1); // 내림차순 정렬
+	    });
+
+	    System.out.println(list);
+	    return list;
 	}
 
 	public int insertQuestion(QuestionDTO question, List<QuestionFileDTO> questionFileList, MemberDTO member) {
