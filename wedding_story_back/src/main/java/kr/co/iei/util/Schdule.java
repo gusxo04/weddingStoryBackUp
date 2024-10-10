@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import kr.co.iei.advertisement.model.service.AdvertisementService;
 import kr.co.iei.convention.model.service.ConventionService;
 
 @Component
@@ -12,6 +13,9 @@ public class Schdule {
 
     @Autowired
     private ConventionService conventionService;
+    
+    @Autowired
+    private AdvertisementService advertisementService;
 
 		@PostConstruct
 		public void startMethod() {
@@ -43,6 +47,11 @@ public class Schdule {
 
 				conventionService.selectMemberPayEndProgress();
 				
+    }
+    
+    @Scheduled(cron = "0 1 0 * * *")
+    public void advertisementSet() {
+        advertisementService.advertisementSet();
     }
 
 }

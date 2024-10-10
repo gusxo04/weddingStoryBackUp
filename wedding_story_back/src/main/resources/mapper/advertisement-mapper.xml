@@ -1,66 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="kr.co.iei.advertisement.model.dao.AdvertisementDao">
-  <select id="waitAd" resultType="advertisement">
-  	select * from advertisement where advertisement_state=0
-  </select>
-  <select id="yetAd" resultType="advertisement">
-  	select * from advertisement where advertisement_state=1
-  </select>
-  <select id="activeAd" resultType="advertisement">
-  	select * from advertisement where advertisement_state=2
-  </select>
-  <select id="endAd" resultType="advertisement">
-  	select * from advertisement where advertisement_state=3
-  </select>
-  <select id="payAd" resultType="advertisement">
-  	select * from advertisement where advertisement_state=4
-  </select>
-  
-  <update id="changeStartDate">
-  	update advertisement set AD_START=TO_DATE(#{changeStartDate}, 'YYYY/MM/DD') where ADVERTISEMENT_NO=#{advertisementNo}
-  </update>
-  
-  <update id="changeEndDate">
-  	update advertisement set AD_End=TO_DATE(#{changeEndDate}, 'YYYY/MM/DD') where ADVERTISEMENT_NO=#{advertisementNo}
-  </update>
-  <update id="acceptAdvertisement">
-  	update advertisement set advertisement_state=4 where advertisement_no=#{advertisementNo}
-  </update>
-  
-  <update id="refuseAd">
-  	update advertisement set advertisement_state=5 where advertisement_no=#{advertisementNo}
-  </update>
-  <insert id="insertAdvertisement">
-  	insert into advertisement values(advertisement_seq.nextval,#{companyNo},#{adRank},#{adStart},#{adEnd},#{adRequest},0,#{productNo},to_char(sysdate,'yyyy-mm-dd'))
-  </insert>
-  <select id="totalCount" resultType="int">
-  	select count(*) from advertisement where company_no =#{companyNo}
-  </select>
-  <select id="selectAdvertisementList" resultType="advertisement">
-  	
-    select * from 
-  (select rownum as rnum, b.* from 
-  (select 
-  	   a.advertisement_no,
-	   a.company_no,
-	   a.ad_rank,
-	   to_char(a.ad_Start, 'yyyy-mm-dd') as adStart,
-       to_char(a.ad_End,'yyyy-mm-dd') as adEnd,
-       to_char(a.ad_request_date,'yyyy-mm-dd') as adRequestDate,
-  	   a.ad_Request,
-  	   a.advertisement_state,
-       p.product_no,
-       p.product_name
-   from advertisement a
-   join product p on a.product_no = p.product_no
-   where a.company_no = #{companyNo} order by 1 desc) b)
-  where rnum between #{pi.start} and #{pi.end}
-  </select>
-  
-  <update id="updateAdvertisement">
-  	update advertisement set advertisement_state = 1 where advertisement_no = #{advertisementNo}
-  </update>
+<mapper
+	namespace="kr.co.iei.advertisement.model.dao.AdvertisementDao">
+	<select id="waitAd" resultType="advertisement">
+		select * from advertisement where
+		advertisement_state=0
+	</select>
+	<select id="yetAd" resultType="advertisement">
+		select * from advertisement where
+		advertisement_state=1
+	</select>
+	<select id="activeAd" resultType="advertisement">
+		select * from advertisement
+		where advertisement_state=2
+	</select>
+	<select id="endAd" resultType="advertisement">
+		select * from advertisement where
+		advertisement_state=3
+	</select>
+	<select id="payAd" resultType="advertisement">
+		select * from advertisement where
+		advertisement_state=4
+	</select>
+
+	<select id="selectOneAd" resultType="advertisement">
+		select * from advertisement
+		where advertisement_no=#{advertisementNo}
+	</select>
+
+	<select id="totalInprogressCount" resultType="int">
+    <![CDATA[
+	SELECT COUNT(*)
+	FROM advertisement
+	WHERE (ad_start < to_date(#{end}) OR ad_end > to_date(#{start}))
+	AND ADVERTISEMENT_STATE IN (1, 2, 4)
+    ]]>
+	</select>
+
+	<update id="changeEndDate">
+		update advertisement set
+		AD_END=TO_DATE(#{changeEndDate}, 'YYYY/MM/DD')
+		where
+		ADVERTISEMENT_NO=#{advertisementNo}
+	</update>
+
+
+	<update id="changeStartDate">
+		update advertisement set
+		AD_START=TO_DATE(#{changeStartDate}, 'YYYY/MM/DD')
+		where
+		ADVERTISEMENT_NO=#{advertisementNo}
+	</update>
+
+	<update id="yetToStart">
+		update advertisement set ADVERTISEMENT_STATE=2 where
+		ADVERTISEMENT_NO=#{date}
+	</update>
+
+	<update id="inProgressToEnd">
+		update advertisement set ADVERTISEMENT_STATE=3 where
+		ADVERTISEMENT_NO=#{date}
+	</update>
+
+	<update id="acceptAdvertisement">
+		update advertisement set advertisement_state=4 where
+		advertisement_no=#{advertisementNo}
+	</update>
+
+	<update id="refuseAd">
+		update advertisement set advertisement_state=5 where
+		advertisement_no=#{advertisementNo}
+	</update>
+	<insert id="insertAdvertisement">
+		insert into advertisement
+		values(advertisement_seq.nextval,#{companyNo},#{adRank},#{adStart},#{adEnd},#{adRequest},0,#{productNo},to_char(sysdate,'yyyy-mm-dd'))
+	</insert>
+	<select id="totalCount" resultType="int">
+		select count(*) from
+		advertisement where company_no =#{companyNo}
+	</select>
+	<select id="selectAdvertisementList" resultType="advertisement">
+
+		select * from
+		(select rownum as rnum, b.* from
+		(select
+		a.advertisement_no,
+		a.company_no,
+		a.ad_rank,
+		to_char(a.ad_Start, 'yyyy-mm-dd') as adStart,
+		to_char(a.ad_End,'yyyy-mm-dd') as adEnd,
+		to_char(a.ad_request_date,'yyyy-mm-dd') as adRequestDate,
+		a.ad_Request,
+		a.advertisement_state,
+		p.product_no,
+		p.product_name
+		from
+		advertisement a
+		join product p on a.product_no = p.product_no
+		where
+		a.company_no = #{companyNo} order by 1 desc) b)
+		where rnum between
+		#{pi.start} and #{pi.end}
+	</select>
+
+	<update id="updateAdvertisement">
+		update advertisement set advertisement_state = 1
+		where advertisement_no =
+		#{advertisementNo}
+	</update>
 </mapper>
 
   
