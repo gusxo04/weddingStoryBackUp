@@ -43,6 +43,8 @@ public interface AdvertisementDao {
 
 	int totalInprogressCount(String start, String end);
 
+	int payAdToDelAd(int date);
+
 
 
 
