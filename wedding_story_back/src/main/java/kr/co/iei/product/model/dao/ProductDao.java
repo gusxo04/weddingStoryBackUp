@@ -88,6 +88,12 @@ public interface ProductDao {
 
 	int favoriteInsert(ProductFavoriteDTO favorite);
 
+	SalesDTO getMontlySalesMember(String month, String selectedYear);
+
+	SalesDTO getMontlySalesCompany(String month, String selectedYear);
+
+	Integer getAdSales(String month);
+
 
 
 

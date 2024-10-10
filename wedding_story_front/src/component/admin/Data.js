@@ -1,30 +1,14 @@
-export const Data = {
-  2023: {
-    1: { sales: 100 },
-    2: { sales: 150000 },
-    3: { sales: 130000 },
-    4: { sales: 300 },
-    5: { sales: 170000 },
-    6: { sales: 180000 },
-    7: { sales: 190000 },
-    8: { sales: 200000 },
-    9: { sales: 210000 },
-    10: { sales: 220000 },
-    11: { sales: 230000 },
-    12: { sales: 240000 },
-  },
-  2024: {
-    1: { sales: 100000 },
-    2: { sales: 110000 },
-    3: { sales: 120000 },
-    4: { sales: 130000 },
-    5: { sales: 140000 },
-    6: { sales: 150000 },
-    7: { sales: 160000 },
-    8: { sales: 170000 },
-    9: { sales: 180000 },
-    10: { sales: 190000 },
-    11: { sales: 200000 },
-    12: { sales: 210000 },
-  },
+const Data = () => {
+	//월별 광고 수익
+	axios
+		.get(`${backServer}/admin/advertisementPay/${selectedYear}`)
+		.then((res) => {
+			if (res.data) {
+				setData(res.data); // 응답 데이터 설정
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+		});
 };
+export default Data;

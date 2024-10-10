@@ -154,7 +154,52 @@ public class AdminService {
 
 		return map;
 	}
+	public Map<String, Map<Integer, SalesDTO>> getSalesMember(String selectedYear) {
+		Map<String, Map<Integer, SalesDTO>> map = new HashMap<String, Map<Integer, SalesDTO>>();
+		Map<Integer, SalesDTO> subMap = new HashMap<Integer, SalesDTO>();
+		String month;
+		for (int i = 1; i <= 12; i++) {
+			if (i < 10) {
+				month = "0"+Integer.toString(i);
+			} else {
+				month=Integer.toString(i);
+			}
+			SalesDTO sales = productDao.getMontlySalesMember(month, selectedYear);
+			if (sales == null) {
+	            sales = new SalesDTO(); // sales가 null인 경우 새로운 SalesDTO 인스턴스를 생성
+	        } else if (sales.getSales() == null) {
+	            sales.setSales(0); // sales 필드가 null인 경우 0으로 설정
+	        }
+			subMap.put(i, sales);
+		}
+		map.put(selectedYear, subMap);
 
+		return map;
+	}
+	
+	public Map<String, Map<Integer, SalesDTO>> getSalesCompany(String selectedYear) {
+		Map<String, Map<Integer, SalesDTO>> map = new HashMap<String, Map<Integer, SalesDTO>>();
+		Map<Integer, SalesDTO> subMap = new HashMap<Integer, SalesDTO>();
+		String month;
+		for (int i = 1; i <= 12; i++) {
+			if (i < 10) {
+				month = "0"+Integer.toString(i);
+			} else {
+				month=Integer.toString(i);
+			}
+			SalesDTO sales = productDao.getMontlySalesCompany(month, selectedYear);
+			if (sales == null) {
+	            sales = new SalesDTO(); // sales가 null인 경우 새로운 SalesDTO 인스턴스를 생성
+	        } else if (sales.getSales() == null) {
+	            sales.setSales(0); // sales 필드가 null인 경우 0으로 설정
+	        }
+			subMap.put(i, sales);
+		}
+		map.put(selectedYear, subMap);
+
+		return map;
+	}
+	
 	public List getComapnyRank() {
 		//1. 각 회사 별로 product no 가 담긴 List 추출
 		//해당 상품의 매출들을 다 더해서 sales에 넣음
@@ -283,5 +328,27 @@ public class AdminService {
 		map.put("pi", pi);
 		return map;
 	}
+
+	public List<Integer> getAdSales() {
+		List<Integer> list = new ArrayList<Integer>();
+		String month;
+		for (int i = 1; i <= 12; i++) {
+			if (i < 10) {
+				month = "0"+Integer.toString(i);
+			} else {
+				month=Integer.toString(i);
+			}
+			Integer sales = productDao.getAdSales(month);
+			if (sales == null) {
+	            sales = 0;
+	        }
+			list.add(sales);
+		}
+		return list;
+	}
+
+	
+
+	
 
 }

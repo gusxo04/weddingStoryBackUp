@@ -14,10 +14,11 @@
 		select count(*) from
 		member where member_type=1
 	</select>
-	
+
 	<select id="getMemberNo" resultType="member">
 		select count(*) from
-		member where member_no=#{memberNo}
+		member
+		where member_no=#{memberNo}
 	</select>
 
 	<select id="adminTotalCount2" resultType="int">
@@ -159,22 +160,31 @@
 
 	<select id="consultList" resultType="consult">
 		select
-		consult_no,1 AS consult_type,product_no,consult_date,consult_time,company_no from(SELECT consult.*,
+		consult_no,1 AS
+		consult_type,product_no,consult_date,consult_time,company_no
+		from(SELECT consult.*,
 		product.company_no
 		FROM consult
-		JOIN product ON consult.product_no = product.product_no) where
+		JOIN product ON
+		consult.product_no = product.product_no) where
 		member_no=#{memberNo}
 		UNION
-		SELECT 
-		pay_no,2 AS consult_type,product_no,PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),company_no from(SELECT
+		SELECT
+		pay_no,2 AS consult_type,product_no,PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1,
+		5),company_no from(SELECT
 		member_pay.*, product.company_no
-		FROM member_pay
-		JOIN product ON member_pay.product_no = product.product_no) where
+		FROM
+		member_pay
+		JOIN product ON member_pay.product_no = product.product_no)
+		where
 		member_no=#{memberNo} and progress !=2
 		UNION
-		SELECT 
-		pay_no,3 AS consult_type,NVL(product_no, 0),PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no, 0))
-		from member_pay where product_no is null and member_no=#{memberNo} and
+		SELECT
+		pay_no,3 AS consult_type,NVL(product_no,
+		0),PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no,
+		0))
+		from member_pay where product_no is null and member_no=#{memberNo}
+		and
 		progress !=2
 	</select>
 
@@ -186,7 +196,8 @@
 		select convention_title
 		as company_name,SUBSTR(convention_time, 1, 5) as
 		start_time,SUBSTR(convention_time,9) as end_time
-		from convention where #{date} BETWEEN convention_start AND convention_end
+		from convention where
+		#{date} BETWEEN convention_start AND convention_end
 	</select>
 	<select id="paymentList" resultType="memberPay">
 		select progress,merchant_uid,SUBSTR(pay_date,1,8)as
@@ -203,44 +214,57 @@
 		</if>
 		order by 3 desc, 1
 	</select>
-	<select id="getYear" resultType="memberPay">
+	<select id="getYear" resultType="pay">
 		SELECT DISTINCT
 		SUBSTR(merchant_uid, 1, 4) AS merchant_uid
-		FROM member_pay
+		FROM (
+		SELECT merchant_uid FROM member_pay
+		UNION ALL
+		SELECT merchant_uid FROM company_pay
+		)
 	</select>
 	<select id="getMember" resultType="member">
-		SELECT * from member where member_id=#{loginId}
+		SELECT * from member where
+		member_id=#{loginId}
 	</select>
-	
+
 	<select id="selectOneMember" resultType="member">
-		select member_name,member_phone from member where member_no =#{memberNo}
+		select
+		member_name,member_phone from member where member_no =#{memberNo}
 	</select>
-	
+
 	<insert id="insertMemberPay">
-		insert into member_pay values (member_pay_seq.nextval, #{member.memberNo}, #{product.productNo},null,to_char(sysdate,'yy/mm/dd'),#{memberPay.progressDate},#{memberPay.progressTime},#{memberPay.payPrice}, #{memberPay.progress},#{memberPay.merchantUid})
+		insert into member_pay values
+		(member_pay_seq.nextval, #{member.memberNo},
+		#{product.productNo},null,to_char(sysdate,'yy/mm/dd'),#{memberPay.progressDate},#{memberPay.progressTime},#{memberPay.payPrice},
+		#{memberPay.progress},#{memberPay.merchantUid})
 	</insert>
-	
+
 	<select id="selectMemberPay" resultType="memberPay">
-		select * from member_pay where pay_no = #{payNo}
+		select * from member_pay
+		where pay_no = #{payNo}
 	</select>
 
 	<select id="selectSalesData" resultType="int">
-		 select 
-		    coalesce(SUM(pay_price), 0) as pay_price
-		    from
-		    member_pay
-    	where  product_no in 
-		<foreach collection="productNo" item="No" open="(" close=")" separator=",">
-		 	#{No}
-		</foreach> 
- 		and SUBSTR(merchant_uid, 5, 2) = #{month}
-		
+		select
+		coalesce(SUM(pay_price), 0) as pay_price
+		from
+		member_pay
+		where product_no in
+		<foreach collection="productNo" item="No" open="(" close=")"
+			separator=",">
+			#{No}
+		</foreach>
+		and SUBSTR(merchant_uid, 5, 2) = #{month}
+
 	</select>
 	<select id="searchId" resultType="String">
-		select member_id from member where member_name=#{memberName} and member_email=#{memberEmail}
+		select member_id from member
+		where member_name=#{memberName} and member_email=#{memberEmail}
 	</select>
 	<select id="searchMember" resultType="int">
-		select count(*) from member where member_id=#{memberId} and member_email=#{memberEmail}
+		select count(*) from member
+		where member_id=#{memberId} and member_email=#{memberEmail}
 	</select>
-	
+
 </mapper>

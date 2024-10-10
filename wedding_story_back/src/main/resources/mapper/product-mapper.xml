@@ -130,6 +130,26 @@
 
 	<select id="getMontlySales" resultType="sales">
 		SELECT
+		SUM(pay_price) AS sales
+		FROM (
+		SELECT pay_price
+		FROM member_pay
+		WHERE
+		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
+		AND SUBSTR(merchant_uid, 5, 2) = #{month}
+
+		UNION ALL
+
+		SELECT pay_price
+		FROM company_pay
+		WHERE
+		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
+		AND SUBSTR(merchant_uid, 5, 2) = #{month}
+		)
+	</select>
+	
+	<select id="getMontlySalesMember" resultType="sales">
+		SELECT
 		SUM(pay_price) AS
 		sales
 		FROM
@@ -138,6 +158,32 @@
 		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
 		AND
 		SUBSTR(merchant_uid, 5, 2) = #{month}
+	</select>
+	
+	<select id="getMontlySalesCompany" resultType="sales">
+		SELECT
+		SUM(pay_price) AS
+		sales
+		FROM
+		company_pay
+		WHERE
+		SUBSTR(merchant_uid, 1, 4) = #{selectedYear}
+		AND
+		SUBSTR(merchant_uid, 5, 2) = #{month}
+	</select>
+	
+	<select id="getAdSales" resultType="int">
+		SELECT
+		SUM(pay_price) AS
+		sales
+		FROM
+		company_pay
+		WHERE
+		SUBSTR(merchant_uid, 1, 4) = 2024
+		AND
+		SUBSTR(merchant_uid, 5, 2) = #{month}
+		and
+		SELL_TYPE=1
 	</select>
 
 	<select id="selectProductList2" resultType="product">

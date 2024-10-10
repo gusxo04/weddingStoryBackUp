@@ -124,7 +124,26 @@ public class AdminController {
 		Map<String, Map<Integer, SalesDTO>> map = adminService.getSales(selectedYear);
 		return ResponseEntity.ok(map);
 	}
+	
+	@GetMapping(value = "/searchYearPayMember/{selectedYear}")
+	public ResponseEntity<Map> searchYearPayMember(@PathVariable String selectedYear) {
+		Map<String, Map<Integer, SalesDTO>> map = adminService.getSalesMember(selectedYear);
+		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping(value = "/searchYearPayCompany/{selectedYear}")
+	public ResponseEntity<Map> searchYearPayCompany(@PathVariable String selectedYear) {
+		Map<String, Map<Integer, SalesDTO>> map = adminService.getSalesCompany(selectedYear);
+		return ResponseEntity.ok(map);
+	}
 
+	
+	@GetMapping(value = "/getAdSales")
+	public ResponseEntity<List> getAdSales() {
+		List<Integer> list = adminService.getAdSales();
+		return ResponseEntity.ok(list);
+	}
+	
 	@GetMapping(value = "/getComapnyRank")
 	public ResponseEntity<List> getComapnyRank() {
 		List list = adminService.getComapnyRank();

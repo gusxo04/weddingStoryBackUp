@@ -285,6 +285,12 @@ public class CompanyController {
 		
 		return ResponseEntity.ok(monthPrice);
 	}
-	
+	@GetMapping(value="/getAdPay/{company}")
+	public ResponseEntity<Map>getAdPay(@PathVariable String company){
+		System.err.println(company);
+		Map monthPrice = companyService.selectSalesData(company);
+		
+		return ResponseEntity.ok(monthPrice);
+	}
 	
 }
