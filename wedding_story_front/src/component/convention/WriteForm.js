@@ -106,10 +106,10 @@ const WriteForm = (props) => {
       setShowConventionEnd(new Date(conventionEnd));
     }
     if(conventionStartTime){
-      setShowConventionStartTime(new Date(conventionStartTime));
+      setShowConventionStartTime(new Date(`1970-01-01T${conventionStartTime}`));
     }
     if(conventionEndTime){
-      setShowConventionEndTime(new Date(conventionEndTime));
+      setShowConventionEndTime(new Date(`1970-01-01T${conventionEndTime}`));
     }
     
   }, [formType]);
