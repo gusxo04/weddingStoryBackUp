@@ -48,7 +48,7 @@
 		(select
 		company_category,
 		product_no,
-		product_thumb,
+		product_img,
 		product_name,
 		product_price
 		from product where

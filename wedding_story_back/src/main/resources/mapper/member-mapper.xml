@@ -273,7 +273,7 @@
 		m.member_no ,
 		m.member_type 
 		from company c 
-		join member m on c.company_no = m.member_no
+		join member m on c.company_no = m.company_no
 		where c.company_no = #{companyNo} 
 	</select>
 
