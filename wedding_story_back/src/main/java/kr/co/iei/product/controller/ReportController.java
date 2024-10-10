@@ -68,4 +68,11 @@ public class ReportController {
 		return ResponseEntity.ok(report);
 	}
     
+    //카운트
+    @GetMapping(value = "/companyNo/{companyNo}")
+    public ResponseEntity<Integer>selectCount(@PathVariable int companyNo){
+    	int result = reportService.selectCount(companyNo);
+    	return ResponseEntity.ok(result);
+    }
+    
 }

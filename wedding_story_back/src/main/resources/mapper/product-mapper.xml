@@ -22,7 +22,7 @@
 		between #{pi.start} and#{pi.end}
 	</select>
 	<select id="getProductList" resultType="product">
-		select product_no,product_thumb,product_name,product_price from product
+		select product_no,product_img, product_name, product_price from product
 		<if test="state == 'studio'">
 			where company_category='스튜디오'
 		</if>
@@ -48,6 +48,7 @@
 		(select
 		company_category,
 		product_no,
+		product_thumb,
 		product_img,
 		product_name,
 		product_price

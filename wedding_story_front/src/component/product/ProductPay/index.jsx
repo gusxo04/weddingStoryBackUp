@@ -117,7 +117,7 @@ const ProductPay = () => {
 				pay_method: "card",
 				merchant_uid: dateString,
 				name: product.productName,
-				amount: totalPrice,
+				amount: product.productPrice,
 				// 나중에 회원 DB 조회해서 다 넣기
 				// buyer_email: memberEmail,
 				// buyer_name: memberName,
@@ -185,7 +185,7 @@ const ProductPay = () => {
 
 	return (
 		<section className={styles["wedding-wrap"]}>
-			<div className={styles["title-name"]}>웨딩홀 예약</div>
+			<div className={styles["title-name"]}>결제하기</div>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
@@ -238,7 +238,7 @@ const ProductPay = () => {
 							<input type="time" name="progressTime" id="progressTime" value={memberPay.progressTime} onChange={changeDate} />
 						</div>
 					</div>
-					<div className={styles["pay"]}>총 금액 : {product.productPrice.toLocaleString()}원</div>
+					<div className={styles["pay"]}>총 금액 : {product.productPrice}원</div>
 				</div>
 				<div className={styles["wedding-button"]}>
 					<button type="submit" className={styles["btn"]} onClick={requestPay}>

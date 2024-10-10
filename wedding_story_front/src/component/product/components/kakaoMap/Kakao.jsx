@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
-function KakaoMap(props) {
-	// 도로명 주소 또는 구 주소 (예시)
-	const address = props.address;
-	console.log(address);
+const Kakao = (props) => {
 	useEffect(() => {
 		// 지도를 표시할 div
 		const mapContainer = document.getElementById("map");
@@ -17,6 +14,10 @@ function KakaoMap(props) {
 
 		// 주소-좌표 변환 객체 생성
 		const geocoder = new window.kakao.maps.services.Geocoder();
+
+		// 도로명 주소 또는 구 주소 (예시)
+		const address = props.address;
+		console.log(address);
 
 		// 주소로 좌표를 검색합니다.
 		geocoder.addressSearch(address, function (result, status) {
@@ -45,6 +46,6 @@ function KakaoMap(props) {
 			<div id="map" style={{ width: "100%", height: "150px" }}></div>
 		</div>
 	);
-}
+};
 
-export default KakaoMap;
+export default Kakao;

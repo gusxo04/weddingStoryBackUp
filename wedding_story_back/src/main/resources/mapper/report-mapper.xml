@@ -20,4 +20,8 @@
 		select * from report where company_no=#{currentCompanyNo}
 	</select>
 	
+	<select id="selectCount" resultType="int">
+		select count(*) from report where company_no = #{companyNo}
+	</select>
+	
 </mapper>

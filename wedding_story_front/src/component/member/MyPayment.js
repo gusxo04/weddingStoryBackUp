@@ -138,7 +138,9 @@ const MyPayment = (props) => {
 										<td className="payment-info-btnBox" style={{ width: "20%" }}>
 											<div>
 												{pay.progress === 3 ? (
-													<button>후기작성</button>
+													<button>
+														<Review payNo={pay.payNo} productNo={pay.productNo} index={index} />
+													</button>
 												) : pay.progress === 2 ? (
 													"취소완료"
 												) : (
