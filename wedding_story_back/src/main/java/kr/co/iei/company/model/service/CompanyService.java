@@ -121,7 +121,7 @@ public class CompanyService {
 	//페이징 리스트 list , 페이지 목록 생성 
 	public Map productList(int reqPage, String companyNo) {
 		/*게시물 조회 및 페이징에 필요한 데이터를 모두 취합*/
-		int numPerPage = 1; //한 페이지당 게시물 수
+		int numPerPage = 10; //한 페이지당 게시물 수
 		int pageNaviSize = 1; //페이지 네비 길이
 		int totalPage = productDao.productTotalCount(companyNo); //게시물 갯수 count(*) 조회
 		 

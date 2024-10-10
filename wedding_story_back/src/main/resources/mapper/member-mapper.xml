@@ -274,7 +274,7 @@
 		m.member_type 
 		from company c 
 		join member m on c.company_no = m.member_no
-		where m.company_no = #{companyNo} 
+		where c.company_no = #{companyNo} 
 	</select>
 
 </mapper>

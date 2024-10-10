@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const DetailInfo = () => {
 	const location = useLocation();
@@ -8,6 +8,7 @@ const DetailInfo = () => {
 	const [consultNo, setConsultNp] = useState(Object.values(userInfo));
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const [consult, setConsult] = useState([]);
+	const navigate = useNavigate();
 	useEffect(() => {
 		axios
 			.get(`${backServer}/company/detailInfo/${consultNo}`)
@@ -120,7 +121,13 @@ const DetailInfo = () => {
 				</div>
 				<div className="payment-btn">
 					<Link to={`/company/weddingHallPayMent/${consult.productNo}`}>결제</Link>
-					<button onClick={() => {}}>취소</button>
+					<button
+						onClick={() => {
+							navigate("/company/schedule");
+						}}
+					>
+						취소
+					</button>
 				</div>
 			</div>
 		</section>

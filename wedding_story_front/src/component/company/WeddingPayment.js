@@ -284,7 +284,7 @@ const WeddingPayment = () => {
 					</div>
 					<div className="input-wrap">
 						<div className="input-title">
-							<label htmlFor="coronation">보증1121212212인원</label>
+							<label htmlFor="coronation">보증인원</label>
 						</div>
 						<div className="input-item">
 							<input
