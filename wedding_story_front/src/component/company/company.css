@@ -4,11 +4,65 @@
 .side-info {
 	min-width: 310px;
 	height: 300px;
-	border: 1px solid black;
+	border-radius: 20px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 	margin-left: 50px;
 	margin-top: 100px;
+	display: flex;
+	justify-content: center;
 }
 
+/*----사이드 메뉴 css----------------------------------------------*/
+.side-info-content > img {
+	width: 280px;
+	height: auto;
+	margin: 10px;
+	margin-top: 20px;
+}
+.logout {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	padding-top: 20px;
+}
+.logout div {
+	width: 100px;
+	height: 40px;
+	border-radius: 5px;
+	border: 1px solid var(--main1);
+	font-weight: 500;
+	background-color: var(--main1);
+	font-size: 20px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	text-align: center;
+	line-height: 40px;
+}
+.logout div:hover {
+	font-weight: 800;
+}
+.side-tbl {
+	width: 280px;
+	height: 70px;
+	border-left: none;
+	border-right: none;
+	border-collapse: collapse;
+	margin: 0px auto;
+	margin-top: 20px;
+}
+.side-tbl > thead > tr > th {
+	border-left: none;
+	border-right: none;
+}
+.side-tbl > thead > tr > td {
+	border-left: none;
+	border-right: none;
+}
+.convention {
+	margin: 0 auto;
+}
+.convention > button {
+	width: 280px;
+}
 /*---Join--------------------------------------------------------*/
 .company-join-wrap {
 	width: 1200px;

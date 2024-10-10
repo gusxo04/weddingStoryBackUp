@@ -308,6 +308,11 @@ public class CompanyService {
 			System.out.println(consult);
 		return consult;
 	}
+	public MemberDTO selectMainSideInfo(String companyNo) {
+		MemberDTO member = memberDao.selectMemberSideInfo(companyNo);
+		
+		return member;
+	}
 	
 
 

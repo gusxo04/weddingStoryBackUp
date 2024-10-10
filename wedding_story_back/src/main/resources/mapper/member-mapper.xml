@@ -266,5 +266,15 @@
 		select count(*) from member
 		where member_id=#{memberId} and member_email=#{memberEmail}
 	</select>
+	
+	<select id="selectMemberSideInfo" resultType="member">
+		select 
+		m.member_name, 
+		m.member_no ,
+		m.member_type 
+		from company c 
+		join member m on c.company_no = m.member_no
+		where m.company_no = #{companyNo} 
+	</select>
 
 </mapper>

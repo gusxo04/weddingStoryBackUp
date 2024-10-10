@@ -28,6 +28,7 @@ import WeddingPayment from "./WeddingPayment";
 const CompanyMain = () => {
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
 	const [loginNo, setLoginNo] = useRecoilState(loginNoState);
+	const backServer = process.env.REACT_APP_BACK_SERVER;
 	console.log(companyNo);
 	useEffect(() => {
 		// 외부 스크립트 로드 함수
@@ -52,13 +53,42 @@ const CompanyMain = () => {
 			scripts.forEach((script) => script.remove());
 		};
 	}, []);
+
+	useEffect(() => {
+		axios
+			.get(`${backServer}/company/main/${companyNo}`)
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 	return (
 		<>
 			<div className="company-wrap">
 				<div className="side-info">
 					<section className="section">
 						<div className="side-info-content">
+							<img src="/image/main_logo.png" />
+							<table className="side-tbl" border={1} style={{ borderColor: "#000" }}>
+								<thead>
+									<tr>
+										<th style={{ width: "50%" }}>직급 : </th>
+										<td style={{ width: "50%" }}>ㅇ </td>
+									</tr>
+									<tr>
+										<th style={{ width: "50%" }}>이름 : </th>
+										<td style={{ width: "50%" }}>4</td>
+									</tr>
+								</thead>
+							</table>
 							<HeaderLink />
+						</div>
+						<div className="convention">
+							<button>
+								<Link to={"/convention/main"}>박람회로 이동</Link>
+							</button>
 						</div>
 					</section>
 				</div>
@@ -117,15 +147,17 @@ const HeaderLink = () => {
 	return (
 		<>
 			{isLogin ? (
-				<div className="">
+				<div className="logout">
 					<Link to="/logout" onClick={logout}>
-						로그아웃
+						<div>로그아웃</div>
 					</Link>
 					<span>|</span>
-					<Link to="#">고객센터</Link>
+					<Link to="#">
+						<div>고객센터</div>
+					</Link>
 				</div>
 			) : (
-				<div className="">
+				<div className="login">
 					<Link to="/join/agree">회원가입</Link>
 					<span>|</span>
 					<Link to="#">고객센터</Link>

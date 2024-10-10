@@ -303,7 +303,14 @@ public class CompanyController {
 		
 		return ResponseEntity.ok(consult);
 	}
-	
+	//컴퍼니 메인 사이드 메뉴 정보 조회
+	@GetMapping(value="/main/{companyNo}")
+	public ResponseEntity<MemberDTO> selectMainSideInfo(@PathVariable String companyNo){
+		System.out.println(companyNo);
+		MemberDTO member = companyService.selectMainSideInfo(companyNo);
+		System.out.println(member);
+		return ResponseEntity.ok(member);
+	}
 	@GetMapping(value="/getAdPay/{company}")
 	public ResponseEntity<Map>getAdPay(@PathVariable String company){
 		System.err.println(company);
