@@ -331,5 +331,25 @@
 <select id="favoriteOneList" resultType="productFavorite">
 	select * from favorite_product where member_no = #{memberNo}
 </select>
+<select id="selectAdHall" resultType="product">
+SELECT p.product_no,product_name,product_img,product_price,coronation,dining_room,company_name
+FROM (
+    SELECT * 
+    FROM advertisement a 
+    WHERE advertisement_state = 2
+) ad
+JOIN product p 
+    ON p.product_no = ad.product_no
+JOIN company c 
+    ON c.company_no = p.company_no
+	<if test="type == '웨딩홀'">
+	WHERE c.company_category = '웨딩홀'
+	</if>
+	<if test="type == '상품'">
+	WHERE c.company_category != '웨딩홀'
+	</if>
+  AND c.company_state = '1'
+  ORDER BY ad_rank, ad_start
+</select>
 
 </mapper>

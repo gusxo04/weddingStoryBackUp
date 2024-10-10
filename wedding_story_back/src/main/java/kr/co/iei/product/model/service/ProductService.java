@@ -139,5 +139,11 @@ public class ProductService {
 	}
 */
 
+
+	public List<ProductDTO> selectAdHall(String type) {
+		List<ProductDTO> list = productDao.selectAdHall(type);
+		return list;
+	}
+
 	
 }

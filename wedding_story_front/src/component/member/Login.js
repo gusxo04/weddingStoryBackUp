@@ -125,6 +125,7 @@ const Login = () => {
 							비밀번호 찾기
 						</span>
 					</div>
+					{/* 
 					<div className="login-simple-line">
 						<div>
 							<div className="joinLine2"></div>
@@ -133,7 +134,7 @@ const Login = () => {
 							</div>
 							<div className="joinLine2"></div>
 						</div>
-					</div>
+					</div>*/}
 				</div>
 			</div>
 			{/* 모달 */}

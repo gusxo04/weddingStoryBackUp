@@ -92,7 +92,7 @@ public class ConventionController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity<Boolean> writeConvention(@ModelAttribute ConventionDTO convention,
+    public ResponseEntity<Integer> writeConvention(@ModelAttribute ConventionDTO convention,
             @ModelAttribute MultipartFile image) {
         // System.out.println(convention);
         // System.out.println(image);
@@ -102,7 +102,7 @@ public class ConventionController {
             convention.setConventionImg(filepath);
         }
 
-        boolean result = conventionService.insertConvention(convention);
+        int result = conventionService.insertConvention(convention);
         return ResponseEntity.ok(result);
     }
 

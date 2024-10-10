@@ -2,13 +2,13 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-const HomeProduct = () => {
+const HomeProduct2 = () => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const sliderRef = useRef(null);
 	useEffect(() => {
 		axios
-			.get(`${backServer}/product/selectAd/` + "웨딩홀")
+			.get(`${backServer}/product/selectAd/` + "상품")
 			.then((res) => {
 				setProductList(res.data);
 			})
@@ -40,9 +40,9 @@ const HomeProduct = () => {
 			<div className="home-section1-titleBox">
 				<div>
 					<h2>
-						웨딩스토리 <span>BEST WEDDING HALL</span>
+						웨딩스토리 <span>핫한 스드메 브랜드 추천!!</span>
 					</h2>
-					<p>나에게 잘 어울리는 베스트 웨딩홀을 찾으세요!</p>
+					<p>요즘 신랑 신부님께 가장 사랑받는 스드메 브랜드는?</p>
 				</div>
 			</div>
 			<div class="home-section1-slider">
@@ -63,7 +63,7 @@ const HomeProduct = () => {
 		</div>
 	);
 };
-export default HomeProduct;
+export default HomeProduct2;
 
 const WeddingHallProduct = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -82,10 +82,7 @@ const WeddingHallProduct = (props) => {
 					[ {product.companyName} ] {product.productName}
 				</p>
 				<p>
-					대관료 : <NumberFormatter number={product.coronation} /> 원
-				</p>
-				<p>
-					1인 식대 : <NumberFormatter number={product.diningRoom} /> 원
+					<NumberFormatter number={product.productPrice} /> 원
 				</p>
 			</div>
 		</Link>
