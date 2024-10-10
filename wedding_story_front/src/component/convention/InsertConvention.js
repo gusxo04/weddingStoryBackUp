@@ -279,6 +279,7 @@ const InsertConvention = () => {
           showImage={showImage} setShowImage={setShowImage}
           titleRef={titleRef} contentRef={contentRef} timeRef={timeRef} dateRef={dateRef}
           limitRef={limitRef} priceRef={priceRef} imgRef={imgRef} writeType={1} permission={0}
+          formType={formType}
           /> 
 
           <div className="write-btn-zone">
