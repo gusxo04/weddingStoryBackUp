@@ -346,6 +346,7 @@ const WriteForm = (props) => {
             <div className="convention-input-container">
               <input
                 type="text"
+                placeholder="최소 100원이상이여야 합니다."
                 id="convention-price"
                 value={conventionPrice}
                 readOnly={writeType === 2 ? true : false}

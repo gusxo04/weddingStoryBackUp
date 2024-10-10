@@ -23,7 +23,7 @@ public interface ConventionDao {
 
     List selectConventionSeat(int i, int searchType);
 
-    boolean insertConvention(ConventionDTO convention);
+    int insertConvention(ConventionDTO convention);
 
     int insertConventionMember(ConventionMemberDTO conventionMember);
 

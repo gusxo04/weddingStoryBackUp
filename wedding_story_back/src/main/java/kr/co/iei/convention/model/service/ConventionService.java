@@ -75,7 +75,7 @@ public class ConventionService {
     }
 
     @Transactional
-    public boolean insertConvention(ConventionDTO convention) {
+    public int insertConvention(ConventionDTO convention) {
 
         // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         // String conventionStartStr = sdf.format(convention.getConventionStart());
@@ -85,7 +85,11 @@ public class ConventionService {
         // convention.setConventionStart(conventionStartDate);
         // convention.setConventionEnd(conventionEndDate);
         // 아니 이거 안 해도 되는건데 뭐임..1시간 가까이 개고생했네
-        boolean result = conventionDao.insertConvention(convention);
+        //혹시 모르니까 insert 하기 전에 체크 한 번 하기
+        boolean dupe = checkWritePermission();
+        if(dupe) return -1;
+        
+        int result = conventionDao.insertConvention(convention);
         //원래는 삽입하면 1행을 삽입했습니다긴 한데 true로도 값을 받을 수 있음 
         return result;
     }

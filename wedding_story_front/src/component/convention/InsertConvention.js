@@ -133,13 +133,23 @@ const InsertConvention = () => {
       isTest = false;
     }
     
-    if(isNaN(conventionPrice) || conventionPrice === ""){
+    if(isNaN(conventionPrice) || conventionPrice === "" || conventionPrice < 100){
       // setConventionPrice(100000);
       priceRef.current.classList.add("invalid");
       isTest = false;
     }
     
     if(isTest) write();
+    else {
+      Swal.fire({
+        title : "박람회",
+        text : "입력값을 확인해주세요",
+        icon : "warning",
+        iconColor : "var(--main1)",
+        confirmButtonText : "확인",
+        confirmButtonColor : "var(--main1)"
+      })
+    }
   }
 
 
@@ -160,7 +170,38 @@ const InsertConvention = () => {
     axios.post(`${backServer}/convention/write`,form)
     .then(res => {
       console.log(res);
-      navigate("/convention/main");
+      if(res.data === 1){
+        Swal.fire({
+          title : "박람회 작성",
+          text  : "박람회를 개최하였습니다!",
+          icon : "success",
+          iconColor : "var(--main1)",
+          confirmButtonText : "확인",
+          confirmButtonColor : "var(--main1)"
+        })
+        navigate("/convention/main");
+      }
+      else if(res.data === 0){
+        Swal.fire({
+          title : "박람회 작성",
+          text  : "잠시후 다시 시도해주세요",
+          icon : "error",
+          iconColor : "var(--main1)",
+          confirmButtonText : "확인",
+          confirmButtonColor : "var(--main1)"
+        })
+      }
+      else if(res.data === -1){
+        Swal.fire({
+          title : "박람회 작성",
+          text  : "이미 개최중인 박람회가 있습니다",
+          icon : "warning",
+          iconColor : "var(--main1)",
+          confirmButtonText : "확인",
+          confirmButtonColor : "var(--main1)"
+        })
+        navigate("/convention/main");
+      }
     })
     .catch(err => {
       console.error(err); 
