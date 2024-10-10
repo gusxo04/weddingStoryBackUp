@@ -1,4 +1,5 @@
 import { Viewer } from "@toast-ui/react-editor";
+import { useState } from "react";
 
 const ConventionPreviewMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -14,6 +15,8 @@ const ConventionPreviewMain = (props) => {
     conventionImg,
     showImage,
   } = props;
+
+  const [fixedPrice, setFixedPrice] = useState(conventionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
   return (
     <>
@@ -67,7 +70,7 @@ const ConventionPreviewMain = (props) => {
                 className="main-info-inner-span"
                 style={{ fontWeight: "400" }}
               >
-                {conventionPrice}원
+                {fixedPrice}원
               </span>
             </div>
           </div>

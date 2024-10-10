@@ -1,4 +1,5 @@
 import { Viewer } from "@toast-ui/react-editor";
+import { useState } from "react";
 
 const ConventionPreviewBack = (props) => {
 
@@ -15,6 +16,8 @@ const ConventionPreviewBack = (props) => {
     showImage,
     conventionImg
   } = props;
+
+  const [fixedPrice, setFixedPrice] = useState(conventionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
   // console.log(props);
   
@@ -41,7 +44,7 @@ const ConventionPreviewBack = (props) => {
         </div>
         
         <div className="back-info-price">
-          <div>가격 : {conventionPrice}원</div>
+          <div>가격 : {fixedPrice}원</div>
         </div>
 
         <div className="back-info-limit">
