@@ -123,6 +123,7 @@
 	<delete id="deleteProduct">
 		delete from product where product_no =#{productNo}
 	</delete>
+	
 	<delete id="deleteProductFile">
 		delete from product_file where product_no
 		=#{productNo}
@@ -211,6 +212,7 @@
   <select id="selectProductNo" resultType="int">
   	select product_no from product where company_no =#{companyNo}
   </select>
+
   <select id="selectCustomerList" resultMap="CustomerResultMap">
   select * from
   (select rownum as rnum, a.* from(
@@ -221,10 +223,6 @@
     m.member_gender,
     m.member_email,
     m.partner_name
-
-
-
-    
 	from product p 
 	
 	join member_pay mp on p.product_no = mp.product_no 

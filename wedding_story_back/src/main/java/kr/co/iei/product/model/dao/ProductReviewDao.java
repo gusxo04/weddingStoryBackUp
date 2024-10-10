@@ -10,7 +10,7 @@ import kr.co.iei.product.model.dto.ProductReviewDTO;
 @Mapper
 public interface ProductReviewDao {
 	//리뷰인서트
-	int insertReview(ProductReviewDTO productReview, MemberDTO member, ProductDTO product, MemberPayDTO memberPay);
+	int insertReview(ProductReviewDTO productReview);
 
 
 }
