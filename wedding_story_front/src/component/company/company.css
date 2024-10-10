@@ -2,40 +2,63 @@
 	display: flex;
 }
 .side-info {
-	min-width: 310px;
-	height: 300px;
-	border-radius: 20px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	border: 1px solid #c0c0c0;
+	border-radius: 10px;
+	width: 300px;
+	height: 230px;
+	text-align: center;
+	background-color: #f8f8f8;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	margin-left: 50px;
-	margin-top: 100px;
-	display: flex;
-	justify-content: center;
+	margin-top: 50px;
 }
 
+.no-title > h1 {
+	padding-top: 300px;
+	padding-left: 500px;
+}
+.no-title + h1 {
+	padding-left: 500px;
+	font-size: 30px;
+}
+.no-button {
+	margin-left: 500px;
+}
+.no-button > a > button {
+	width: 100px;
+	height: 50px;
+	font-size: 20px;
+}
 /*----사이드 메뉴 css----------------------------------------------*/
 .side-info-content > img {
-	width: 280px;
+	max-width: 80px;
 	height: auto;
-	margin: 10px;
 	margin-top: 20px;
 }
-.logout {
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	padding-top: 20px;
+.login > a {
+	min-width: 85%;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	border: 1px solid #dddddd;
+}
+.logout > a {
+	min-width: 85%;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	border: 1px solid #dddddd;
 }
 .logout div {
-	width: 100px;
-	height: 40px;
-	border-radius: 5px;
-	border: 1px solid var(--main1);
-	font-weight: 500;
-	background-color: var(--main1);
-	font-size: 20px;
-	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	border: 1px solid #c0c0c0;
+	border-radius: 10px;
+	width: 300px;
+	height: 230px;
 	text-align: center;
-	line-height: 40px;
+	background-color: #f8f8f8;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .logout div:hover {
 	font-weight: 800;
@@ -61,7 +84,12 @@
 	margin: 0 auto;
 }
 .convention > button {
-	width: 280px;
+	min-width: 85%;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	border: 1px solid #dddddd;
 }
 /*---Join--------------------------------------------------------*/
 .company-join-wrap {
@@ -521,7 +549,7 @@
 .wedding-wrap {
 	padding: 20px;
 	border-radius: 10px;
-	border: 1px var(--main2) solid;
+	border: 1px var(--main1) solid;
 	width: 360px;
 	margin: 30px auto;
 	align-self: center;
@@ -536,7 +564,7 @@
 	text-align: center;
 	font-family: ns-b;
 	font-size: 20px;
-	color: var(--main2);
+	color: var(--main1);
 }
 
 .wedding-content > .input-wrap {
@@ -550,7 +578,7 @@
 .wedding-content > .input-wrap > .input-title > label {
 	text-align: left;
 	font-size: 17px;
-	color: var(--main2);
+	color: var(--main1);
 	font-family: ns-b;
 }
 
@@ -562,7 +590,7 @@
 	font-size: 16px;
 	padding: 8px 0px;
 	width: 250px;
-	border: 1px var(--main2) solid;
+	border: 1px var(--main1) solid;
 	border-radius: 5px;
 	font-family: ns-b;
 }
@@ -596,8 +624,7 @@
 	justify-content: center;
 }
 .payment-btn > a,
-.payment-btn > button
-{
+.payment-btn > button {
 	margin: 10px 20px;
 	border: 1px solid var(--main2);
 	width: 60px;
