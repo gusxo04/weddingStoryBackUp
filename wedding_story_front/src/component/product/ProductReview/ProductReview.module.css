@@ -81,7 +81,7 @@
 	margin-top: 5px;
 }
 
-img {
+.review-item > img {
 	width: 100%;
 	height: auto;
 	max-height: 200px;

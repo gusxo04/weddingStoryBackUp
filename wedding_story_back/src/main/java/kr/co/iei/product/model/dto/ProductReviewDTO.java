@@ -1,6 +1,7 @@
 package kr.co.iei.product.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
