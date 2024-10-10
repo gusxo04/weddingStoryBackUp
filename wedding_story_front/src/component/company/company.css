@@ -542,7 +542,8 @@
 	justify-content: center;
 }
 .payment-btn > a,
-button {
+.payment-btn > button
+{
 	margin: 10px 20px;
 	border: 1px solid var(--main2);
 	width: 60px;

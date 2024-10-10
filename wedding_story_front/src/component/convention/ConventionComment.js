@@ -10,14 +10,15 @@ const ConventionComment = (props) => {
 
   const [memberNoState, setMemberNoState] = useRecoilState(loginNoState);
   const textareaRef = useRef(null);
+  const [commentContent, setCommentContent] = useState("");
   
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const {
     convention,
     comment,
     setComment,
-    commentContent,
-    setCommentContent,
+    // commentContent,
+    // setCommentContent,
     changedComment,
     setChangedComment,
     reCommentContent,
@@ -49,7 +50,7 @@ const writeCheck = () => {
   }
 
   const writeComment = () => {
-
+    console.log("cc : ",commentContent);
     const checkType = writeCheck();
     if(!checkType) return;
     const form = new FormData();

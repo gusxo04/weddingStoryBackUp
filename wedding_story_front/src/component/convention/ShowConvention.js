@@ -40,7 +40,7 @@ const ShowConvention = (props) => {
     setIsPayment,
   } = props;
 
-  const [commentContent, setCommentContent] = useState("");
+  // const [commentContent, setCommentContent] = useState("");
   const [comment, setComment] = useState([]);
   const [changedComment, setChangedComment] = useState(true);
   const [reCommentContent, setReCommentContent] = useState("");
@@ -326,7 +326,7 @@ const ShowConvention = (props) => {
 
       {isLogin ? 
       <ConventionComment convention={convention} 
-      setCommentContent={setCommentContent} commentContent={commentContent} 
+      // setCommentContent={setCommentContent} commentContent={commentContent} 
       comment={comment} setComment={setComment} 
       changedComment={changedComment} setChangedComment={setChangedComment}
       reCommentContent={reCommentContent} setReCommentContent={setReCommentContent}

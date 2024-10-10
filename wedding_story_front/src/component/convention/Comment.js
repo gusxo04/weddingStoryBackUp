@@ -36,6 +36,11 @@ const Comment = (props) => {
     setChangedComment,
   } = props;
 
+  useEffect(() => {
+    cancelEdit();
+    cancelReCommentBtn();
+  }, [changedComment]);
+
   const [isOpenReComment, setIsOpenReComment] = useState(false);
 
   const getReComment = () => {
@@ -125,6 +130,9 @@ const Comment = (props) => {
 
   const editComment = () => {
     // setEditCommentContent(c.conventionCommentContent);
+    if(lineTypeRef.current){
+      lineTypeRef.current.style.display = "none";
+    }
     editTextareaRef.current.value = c.conventionCommentContent
     contentRef.current.style.display = "none";
     contentContainerRef.current.style.display = "none";
@@ -146,6 +154,9 @@ const Comment = (props) => {
     contentContainerRef.current.style.display = "block";
     editTextContainerRef.current.style.display = "none";
     editTextareaRef.current.style.display = "none";
+    if(lineTypeRef.current){
+      lineTypeRef.current.style.display = "block";
+    }
     setIsEditing(false);
   }
 
@@ -186,6 +197,9 @@ const Comment = (props) => {
 
   const edit = () => {
     const checkType = reCommentWrtieCheck(true);
+    if(lineTypeRef.current){
+      lineTypeRef.current.style.display = "block";
+    }
     if(!checkType) return;
     const form = new FormData();
     form.append("conventionCommentNo", c.conventionCommentNo);
