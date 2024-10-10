@@ -195,8 +195,6 @@
 		select
 		product_no,
 		company_no,
-		product_img,
-		product_name,
 		product_price
 		from product where
 		company_no=#{companyNo}
@@ -207,7 +205,7 @@
 		sales
 		FROM member_pay
 		WHERE product_no = #{productNo}
-		and and progress =0
+		and progress =0
 	</select>
 
   <select id="productTotalCount" resultType="int">

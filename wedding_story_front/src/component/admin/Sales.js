@@ -79,7 +79,7 @@ const Sales = () => {
 		axios
 			.get(`${backServer}/admin/searchYearPay/${selectedYear}`)
 			.then((res) => {
-				console.log(res.data);
+				//console.log(res.data);
 				if (res.data) {
 					setData(res.data);
 					// 그래프 데이터 업데이트
@@ -96,7 +96,7 @@ const Sales = () => {
 		axios
 			.get(`${backServer}/admin/searchYearPayMember/${selectedYear}`)
 			.then((res) => {
-				console.log(res.data);
+				//console.log(res.data);
 				if (res.data) {
 					setMemberData(res.data);
 					// 그래프 데이터 업데이트
@@ -113,7 +113,7 @@ const Sales = () => {
 		axios
 			.get(`${backServer}/admin/searchYearPayCompany/${selectedYear}`)
 			.then((res) => {
-				console.log(res.data);
+				//console.log(res.data);
 				if (res.data) {
 					setCompanyData(res.data);
 					// 그래프 데이터 업데이트
@@ -132,6 +132,7 @@ const Sales = () => {
 			.get(`${backServer}/admin/getComapnyRank`)
 			.then((res) => {
 				if (res.data) {
+					console.log("회사 랭크 데이터 조회");
 					console.log(res.data);
 					setCompanyList(res.data);
 				} else {

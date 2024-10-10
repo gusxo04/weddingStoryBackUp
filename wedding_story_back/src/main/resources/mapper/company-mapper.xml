@@ -96,12 +96,8 @@
 		select 
 		company_no,
 		company_category,
-		company_name,
-		company_tel,
-		company_addr,
-		company_info,
-		company_state
-		from company where company_state=1 order by company_name
+		company_name
+		from company order by company_name
 	</select>
 	
 	<insert id="insertCompanyPayDate">

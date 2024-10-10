@@ -209,12 +209,18 @@ public class AdminService {
 			String companyNo = company.getCompanyNo();
 			//회사 코드로 상품 조회
 			List<ProductDTO> productList = productDao.selectProductList2(companyNo);
-			
 			List<SalesDTO> salesList = new ArrayList<SalesDTO>();
+			
+			
 			for(ProductDTO product : productList) {
 				int productNo = product.getProductNo();
 				SalesDTO sales = productDao.getCompanySales(productNo);//매출 테이블에서 조회
+				if(sales==null) {
+					sales.setSales(0);
+				}
+				System.out.println(product.getCompanyNo()+"의 매출 데이터는"+"sales"+sales);
 				salesList.add(sales);
+				System.out.println("salesList"+salesList);
 			}
 			
 			company.setSalesList(salesList);
