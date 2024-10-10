@@ -41,11 +41,11 @@ public class ProductController {
 	public String root;
 		
 	
-	@GetMapping("/list/{reqPage}")
-	public ResponseEntity<Map> getProductList(@PathVariable int reqPage) {
-		Map map = productService.getProductList(reqPage);
-		System.out.println(map);
-		return ResponseEntity.ok(map);
+	@GetMapping("/list/{state}")
+	public ResponseEntity<List> getProductList(@PathVariable String state) {
+		List<ProductDTO> list = productService.getProductList(state);
+		System.out.println(list);
+		return ResponseEntity.ok(list);
 	}
 	
 	@PostMapping(value = "/editorImage")
@@ -94,6 +94,15 @@ public class ProductController {
 		List<ProductDTO> list = productService.favoriteList(memberNo);
 		return ResponseEntity.ok(list);
 	}
+	//회원이 좋아요한 상태
+		@GetMapping(value = "/favoriteState/{productNo}/{memberNo}")
+		public ResponseEntity<Integer> favoriteState(@PathVariable int productNo,@PathVariable int memberNo){
+			System.out.println(memberNo);
+			System.out.println(productNo);
+			int result = productService.favoriteState(memberNo,productNo);
+			System.out.println("result"+result);
+			return ResponseEntity.ok(result);
+		}
 	
 	//회원이 관심상품 등록,취소하는 로직
 	@PostMapping(value = "/favorite")
@@ -105,11 +114,6 @@ public class ProductController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping(value = "/favorite")
-	public ResponseEntity<ProductFavoriteDTO> favoriteOneList(@ModelAttribute ProductFavoriteDTO favorite){
-		ProductFavoriteDTO productFavorite = productService.favoriteOneList(favorite);
-		return ResponseEntity.ok(productFavorite);
-	}
 	
 	@GetMapping(value = "/selectAd/{type}")
 	public ResponseEntity<List> selectAdHall(@PathVariable String type){
@@ -117,7 +121,7 @@ public class ProductController {
 		return ResponseEntity.ok(list);
 		
 	}
-	
+		
 	
 	
 }

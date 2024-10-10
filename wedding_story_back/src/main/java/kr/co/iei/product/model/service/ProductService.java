@@ -37,35 +37,18 @@ public class ProductService {
 	private PageUtil pageUtil;
 	
 	//올리스트
-	public Map getProductList(int reqPage) {
-		String[] categories = {"스튜디오", "드레스", "메이크업", "예복", "예식"};
-		int numPerPage = 5;
-		int pageNaviSize = 4;
-		int totalCount = productDao.TotalCount();
-		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		Map<String, Object> categoryMap = new HashMap<>();  
-		for (String category : categories) {
-		     List list = productDao.getProductList(pi, category);
-		     categoryMap.put(category, list);
-		}
-		 Map<String, Object> resultMap = new HashMap<>();
-		 resultMap.put("category", categoryMap);
-		 resultMap.put("pi", pi);
-		 return resultMap;
+	public List getProductList(String state) {
+		List<ProductDTO> list = productDao.getProductList(state);
+		return list;
 	}
 
 
 	//웨딩홀리스트
 	public Map getProducthallList(int reqPage) {
 		String category = "웨딩홀";
-		int numPerPage = 5;
-		int pageNaviSize = 4;
-		int totalCount = productDao.TotalCount();
-		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list = productDao.getProductHallList(pi,category);
+		List list = productDao.getProductHallList(category);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
-		map.put("pi", pi);
 		return map;
 	}
 
@@ -144,6 +127,16 @@ public class ProductService {
 		List<ProductDTO> list = productDao.selectAdHall(type);
 		return list;
 	}
-
+	public int favoriteState(int memberNo, int productNo) {
+		System.out.println(memberNo);
+		System.out.println(productNo);
+		int count = productDao.favoriteState(memberNo,productNo);
+		System.out.println("count"+count);
+		if(count>0) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
 	
 }

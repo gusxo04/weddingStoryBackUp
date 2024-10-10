@@ -1,68 +1,113 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { FaStar } from "react-icons/fa"; // 별 아이콘
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginIdState, loginNoState } from "../../../utils/RecoilData";
-import styles from "./ReviewForm.module.css"; // 분리된 CSS 모듈 import
-import { useParams } from "react-router-dom";
+import styles from "./ReviewForm.module.css";
+import { FaStar } from "react-icons/fa";
+import { loginNoState } from "../../../utils/RecoilData";
 
+// 별점 컴포넌트
 const Stars = ({ rating, onClick }) => {
-	const handleStartClick = (starRating) => (e) => {
+	const handleStarClick = (starRating) => () => {
 		onClick(starRating);
 	};
 
 	return (
-		<>
+		<div>
 			{[...Array(5)].map((_, index) => {
 				const starRating = index + 1;
-				return <FaStar key={starRating} onClick={handleStartClick(starRating)} fill={starRating <= rating ? "gold" : "gray"} />;
+				return (
+					<FaStar
+						key={starRating}
+						onClick={handleStarClick(starRating)}
+						fill={starRating <= rating ? "gold" : "gray"}
+						style={{ cursor: "pointer" }}
+					/>
+				);
 			})}
-		</>
+		</div>
 	);
 };
 
-const ReviewForm = ({ isOpen, onClose, onSubmit, initialData }) => {
+const Review = (props) => {
+	const payNo = props.payNo;
+	const index = props.index;
+	const productNo = props.productNo;
+	const [isOpen, setIsOpen] = useState(false);
+	const [isEditing, setIsEditing] = useState(false); // 새로운 검토인지 편집인지 추적하세요.
+
+	const handleOpen = () => {
+		setIsOpen(true);
+	};
+
+	const handleClose = () => {
+		setIsOpen(false);
+		setIsEditing(false); // 닫을 때 편집 상태 재설정
+	};
+
+	return (
+		<div>
+			<button className={styles["review-button"]} onClick={handleOpen}>
+				{isEditing ? "수정하기" : "후기작성"}
+			</button>
+			{isOpen && (
+				<div className={styles["popup-overlay"]}>
+					<div className={styles["popup-content"]}>
+						<ReviewForm
+							onClose={handleClose}
+							payNo={payNo}
+							productNo={productNo}
+							index={index}
+							isEditing={isEditing}
+							setIsEditing={setIsEditing}
+						/>
+					</div>
+				</div>
+			)}
+		</div>
+	);
+};
+
+const ReviewForm = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
+	const isEditing = props.isEditing;
+	const setIsEditing = props.setIsEditing;
+	const payNo = props.payNo;
+	const productNo = props.productNo;
+	const index = props.index;
 	const [memberNo, setMemberNo] = useRecoilState(loginNoState);
-	const params = useParams();
-	const productNo = params.productNo; // URL에서 상품 번호 가져오기
-	const [payNo, setPayNo] = useState(""); // 결제번호 저장할 상태
-	const [rating, setRating] = useState(0);
-	const [review, setReview] = useState("");
+	const [review, setReview] = useState({
+		review: "",
+		rating: 0,
+	});
 	const [image, setImage] = useState(null);
 	const [imagePreview, setImagePreview] = useState("");
+	const navigator = useNavigate();
 
-	// 초기 데이터 설정 및 결제번호 가져오기
 	useEffect(() => {
-		// 초기 리뷰 데이터를 설정하는 부분
-		if (initialData) {
-			setRating(initialData.rating);
-			setReview(initialData.review);
-			setImagePreview(initialData.image);
-		} else {
-			setRating(0);
-			setReview("");
-			setImagePreview("");
-		}
-
-		// 결제번호(payNo)를 가져오는 API 호출
-		if (memberNo && productNo) {
+		if (isEditing) {
 			axios
-				.get(`${backServer}/member/`, {
-					params: { memberNo, productNo }, // 회원번호와 상품번호로 결제 정보를 요청
-				})
+				.get(`${backServer}/productComment/${memberNo}`)
 				.then((res) => {
-					if (res.data && res.data.payNo) {
-						setPayNo(res.data.payNo); // 결제 번호 설정
-					} else {
-						console.log("결제 번호를 찾을 수 없습니다.");
-					}
+					setReview({
+						review: res.data.review,
+						rating: res.data.rating,
+					});
+					setImagePreview(res.data.imageUrl);
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
-	}, [initialData, memberNo, productNo, backServer]);
+	}, [isEditing, memberNo, backServer]);
+
+	const handleChange = (e) => {
+		setReview({ ...review, [e.target.name]: e.target.value });
+	};
+
+	const handleStarClick = (starRating) => {
+		setReview({ ...review, rating: starRating });
+	};
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
@@ -72,91 +117,113 @@ const ReviewForm = ({ isOpen, onClose, onSubmit, initialData }) => {
 		}
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e, index) => {
 		e.preventDefault();
-		const form = new FormData();
-
-		// FormData에 데이터 추가
-		form.append("memberNo", memberNo); // 회원번호
-		form.append("rating", rating); // 별점
-		form.append("review", review); // 리뷰 내용
-		form.append("productNo", productNo); // 제품번호
-		form.append("payNo", payNo); // 결제번호
-
-		// 이미지 파일이 있으면 FormData에 추가
+		const formData = new FormData();
+		formData.append("memberNo", memberNo); //회원정보
+		formData.append("productNo", productNo); //제품번호
+		formData.append("review", review.review); //리뷰내용
+		formData.append("rating", review.rating); //별점
+		formData.append("payNo", payNo); //결제번호
 		if (image) {
-			form.append("image", image);
+			formData.append("image", image);
 		}
 
 		axios
-			.post(`${backServer}/productComment`, form)
+			.post(`${backServer}/productComment`, formData)
 			.then((res) => {
 				console.log(res);
-				onSubmit(res.data); // 서버 응답 데이터를 onSubmit으로 전달
+				//navigator("/list");
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-
-		// 제출 후 초기화 및 팝업 닫기
-		setRating(0);
-		setReview("");
+		setReview({ review: "", rating: 0 });
 		setImage(null);
 		setImagePreview("");
-		onClose();
+		props.onClose();
 	};
 
-	const handleStarClick = (starRating) => {
-		setRating(starRating);
+	const handleDelete = () => {
+		axios
+			.delete(`${backServer}/productComment/${memberNo}`)
+			.then((res) => {
+				console.log("Review deleted:", res);
+				setReview({ review: "", rating: 0 });
+				setImage(null);
+				setImagePreview("");
+				setIsEditing(false);
+				props.onClose();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const handleRemoveImage = () => {
-		setImage(null); // 이미지 초기화
-		setImagePreview(null); // 미리보기 초기화
+		setImage(null);
+		setImagePreview(null);
 	};
 
-	if (!isOpen) return null; // 팝업이 열려 있지 않으면 렌더링하지 않음
-
 	return (
-		<div className={styles["popup"]}>
-			<img src="/image/main_logo.png" style={{ width: "300px" }} alt="로고" />
-			<div className={styles["popup-content"]}>
-				<h2>{initialData ? "리뷰 수정" : "리뷰 작성"}</h2>
-				<form onSubmit={handleSubmit} className={styles["form"]}>
-					<div className={styles["title"]}>
-						<label>별점:</label>
-						<Stars rating={rating} onClick={handleStarClick} />
-					</div>
-
-					<div className={styles["title"]}>
-						<label>리뷰:</label>
-						<textarea value={review} onChange={(e) => setReview(e.target.value)} required />
-					</div>
-
-					<div className={styles["title"]}>
-						<label>이미지 업로드:</label>
-						<input type="file" accept="image/*" onChange={handleImageChange} />
-						{imagePreview && (
-							<div>
-								<button type="button" onClick={handleRemoveImage} className={styles["remove-image"]}>
-									&times;
-								</button>
-								<img src={imagePreview} alt="미리보기" />
-							</div>
-						)}
-					</div>
-					<div className={styles["review-button"]}>
-						<button type="submit" className={styles["submit"]}>
-							제출
+		<div className={styles["review-popup"]} style={popupStyle}>
+			<img src="/image/main_logo.png" style={{ width: "300px" }} alt="Logo" />
+			<h2>{isEditing ? "수정하기" : "작성하기"}</h2>
+			<form onSubmit={handleSubmit}>
+				<label>
+					별점:
+					<Stars rating={review.rating} onClick={handleStarClick} />
+				</label>
+				<label>후기작성</label>
+				<textarea
+					name="review"
+					value={review.review}
+					onChange={handleChange}
+					placeholder="후기를 입력하세요."
+					rows="5"
+					cols="30"
+					required
+				/>
+				<br />
+				<br />
+				<label>
+					이미지 업로드:
+					<input type="file" accept="image/*" onChange={handleImageChange} />
+					{imagePreview && (
+						<div className={styles["image-preview"]}>
+							<button type="button" onClick={handleRemoveImage} className={styles["remove-image"]}>
+								&times;
+							</button>
+							<img src={imagePreview} alt="미리보기" />
+						</div>
+					)}
+				</label>
+				<br />
+				<div className={styles["review-buttons"]}>
+					<button type="submit">{isEditing ? "수정하기" : "작성하기"}</button>
+					<button type="button" onClick={props.onClose} style={{ backgroundColor: "#dc3545" }}>
+						취소
+					</button>
+					{isEditing && (
+						<button type="button" onClick={handleDelete} className={styles["delete-button"]}>
+							삭제하기
 						</button>
-						<button type="button" onClick={onClose} className={styles["close"]}>
-							닫기
-						</button>
-					</div>
-				</form>
-			</div>
+					)}
+				</div>
+			</form>
 		</div>
 	);
 };
 
-export default ReviewForm;
+const popupStyle = {
+	position: "fixed",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	backgroundColor: "white",
+	padding: "20px",
+	border: "1px solid #ccc",
+	zIndex: 1000,
+};
+
+export default Review;

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { cancelPay } from "../convention/conventionRefund";
 import ConventionLoading from "../convention/ConventionLoading";
+import { ReviewForm } from "../product/components";
+import Review from "../product/components/ReviewFrom";
 
 const MyPayment = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -83,7 +85,7 @@ const MyPayment = (props) => {
 					</div>
 				</div>
 				<div className="mypage-payment-list">
-					{paymentList.slice(0, visibleCount).map((pay) => {
+					{paymentList.slice(0, visibleCount).map((pay, index) => {
 						return (
 							<table className="paymentList-tbl">
 								<tbody>
@@ -159,6 +161,7 @@ const MyPayment = (props) => {
 														환불요청
 													</button>
 												)}
+												<Review payNo={pay.payNo} productNo={pay.productNo} index={index} />
 											</div>
 										</td>
 									</tr>
