@@ -147,7 +147,7 @@ const BoardItem = (props) => {
 		const formattedNumber = new Intl.NumberFormat("ko-KR").format(number);
 		return <span>{formattedNumber}</span>;
 	};
-
+	console.log(product.category);
 	return (
 		<li
 			className={styles["posting-item"]}
@@ -158,7 +158,7 @@ const BoardItem = (props) => {
 			<div className={styles["posting-info"]}>
 				<div>
 					<img
-						src={product.productImg ? `${backServer}/product/thumb/${product.productImg}` : "/image/default_img.png"}
+						src={product.productImg ? `${backServer}/product/image/${product.productImg}` : "/image/default_img.png"}
 						alt={product.productName}
 					/>
 				</div>

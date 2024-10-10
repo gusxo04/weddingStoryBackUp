@@ -19,7 +19,6 @@ const WeddingHallInfo = () => {
 	const [loginId, setLoginId] = useRecoilState(loginIdState);
 	const [company, setCompany] = useState({ companyNo: "", companyName: "", companyAddr: "" });
 	const navigator = useNavigate();
-
 	useEffect(() => {
 		axios
 			.get(`${backServer}/product/productInfo/${productNo}`)
@@ -39,7 +38,7 @@ const WeddingHallInfo = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [backServer, productNo, companyNo]);
+	}, [productNo, companyNo, loginId]);
 
 	useEffect(() => {
 		axios
@@ -51,7 +50,7 @@ const WeddingHallInfo = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [backServer, productNo]); // 주의: setProductComment를 여기에 넣지 않음
+	}, [productNo]); // 주의: setProductComment를 여기에 넣지 않음
 	//console.log(productComment);
 
 	const NumberFormatter = ({ number }) => {
@@ -68,7 +67,7 @@ const WeddingHallInfo = () => {
 				<div className={styles["product-view-info"]}>
 					<div className={styles["product-thumbnail"]}>
 						<img
-							src={product.productImg ? `${backServer}/product/thumb/${product.productImg}` : "/image/default_img.png"}
+							src={product.productImg ? `${backServer}/product/image/${product.productImg}` : "/image/default_img.png"}
 							alt={product.productName}
 						/>
 					</div>
@@ -130,15 +129,10 @@ const WeddingHallInfo = () => {
 					<ReviewList productNo={productNo} productComment={productComment} />
 				</div>
 				<br />
-				<div className={styles["product-faq"]}>
-					<h3>QnA</h3>
-					{product.productContent ? <Viewer initialValue={product.productContent} /> : "QnA가 없습니다."}
-				</div>
-				<br />
 				<div className={styles["product-map-view"]}>
 					<h3>회사 위치</h3>
 					{company.companyAddr ? <Viewer initialValue={company.companyAddr} /> : "회사위치 정보가 없습니다."}
-					<KakaoMap address={company.companyAddr} />
+					<div>{company.companyAddr ? <KakaoMap address={company.companyAddr} /> : ""}</div>
 				</div>
 			</div>
 		</section>

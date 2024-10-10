@@ -53,7 +53,7 @@
 }
 .product-view-preview > .prduct-report {
 	display: flex;
-	padding-left: 74%;
+	padding-left: 67%;
 }
 
 .product-content-wrap {
@@ -95,4 +95,8 @@
 	background-color: var(--main1);
 	color: #fff;
 	cursor: pointer;
+}
+.product-report > button {
+	border: none;
+	outline: none;
 }

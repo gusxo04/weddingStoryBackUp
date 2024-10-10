@@ -116,7 +116,7 @@ const BoardItem = (props) => {
 		>
 			<div>
 				<img
-					src={product.productImg ? `${backServer}/product/thumb/${product.productImg}` : "/image/default_img.png"}
+					src={product.productImg ? `${backServer}/product/image/${product.productImg}` : "/image/default_img.png"}
 					alt={product.productName}
 				/>
 			</div>
