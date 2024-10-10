@@ -8,7 +8,6 @@ import "slick-carousel/slick/slick.css";
 import { loginIdState } from "../../utils/RecoilData";
 import { Report } from "../components";
 import { FaStar } from "react-icons/fa";
-import Kakao from "../components/kakaoMap/Kakao";
 import KakaoMap from "../../utils/KakaoMap";
 
 const ProductInfo = () => {
