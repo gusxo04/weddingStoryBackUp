@@ -2,8 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const SearchPw = () => {
+const SearchPw = (props) => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
+	const setIsModal2Open = props.setIsModal2Open;
 	const [member, setMember] = useState({
 		memberEmail: "",
 		memberId: "",
@@ -12,21 +13,39 @@ const SearchPw = () => {
 	const [emailCode, setEmailCode] = useState("");
 	const [inputCode, setInputCode] = useState("");
 	const [codeCheck, setCodeCheck] = useState(0);
+	const [modifyMember, setModifyMember] = useState({
+		memberId: member.memberId,
+		memberPw: "",
+	});
+	const [rePw, setRePw] = useState("");
+	{
+		/* 새 비밀번호와 상태 체크용state */
+	}
+	const [checkNewPw, setCheckNewPw] = useState(0);
+	{
+		/* 새 비밀번호와 비밀번호 확인용state */
+	}
+	const [checkRePw, setCheckRePw] = useState(0);
+
 	const changeInput = (e) => {
 		const name = e.target.name;
-		setMember({ ...member, [name]: e.target.value });
-		if (name === "memberEmail") {
-			const checkEmail = e.target.value;
-			const idRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-			{
-				/*emailCheck 0은 미기재,1은 정규표현식 부적합,2은 적합 */
-			}
-			if (checkEmail === "") {
-				setEmailCheck(0);
-			} else if (!idRegex.test(checkEmail)) {
-				setEmailCheck(1);
-			} else {
-				setEmailCheck(2);
+		if (name === "inputCode") {
+			setInputCode(e.target.value);
+		} else {
+			setMember({ ...member, [name]: e.target.value });
+			if (name === "memberEmail") {
+				const checkEmail = e.target.value;
+				const idRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+				{
+					/*emailCheck 0은 미기재,1은 정규표현식 부적합,2은 적합 */
+				}
+				if (checkEmail === "") {
+					setEmailCheck(0);
+				} else if (!idRegex.test(checkEmail)) {
+					setEmailCheck(1);
+				} else {
+					setEmailCheck(2);
+				}
 			}
 		}
 	};
@@ -44,6 +63,10 @@ const SearchPw = () => {
 						});
 					} else {
 						setEmailCode(res.data);
+						Swal.fire({
+							text: "인증 코드가 전송되었습니다.",
+							icon: "info",
+						});
 					}
 				})
 				.catch((err) => {
@@ -63,8 +86,70 @@ const SearchPw = () => {
 		}
 		if (inputCode === emailCode) {
 			setCodeCheck(1);
+			setModifyMember({ ...modifyMember, memberId: member.memberId });
 		} else if (inputCode !== emailCheck) {
 			setCodeCheck(2);
+		}
+	};
+	const newPwCheck = (e) => {
+		const newPw = e.target.value;
+		const idRegex =
+			/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?\/])[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?\/]{8,20}$/;
+		{
+			/*checkNewPw 0은 미기재,1은 정규표현식 부적합,2은 사용가능 */
+		}
+		if (newPw === "") {
+			setCheckNewPw(0);
+		} else if (!idRegex.test(newPw)) {
+			setCheckNewPw(1);
+		} else if (idRegex.test(newPw)) {
+			setCheckNewPw(2);
+		}
+		rePwCheck(rePw);
+	};
+	const rePwCheck = (rePw) => {
+		const rePwCheck = rePw;
+		{
+			/*checkRePw 0은 미기재,1은 불일치,2은 일치 */
+		}
+		if (rePw !== "") {
+			setCheckRePw(0);
+		}
+		if (modifyMember.memberPw !== rePwCheck) {
+			setCheckRePw(1);
+		} else if (modifyMember.memberPw === rePwCheck) {
+			setCheckRePw(2);
+		}
+	};
+	const modifyPw = () => {
+		console.log(modifyMember);
+
+		if (checkNewPw === 2 && checkRePw === 2) {
+			axios
+				.patch(`${backServer}/member/modifyPw`, modifyMember)
+				.then((res) => {
+					if (res.data === 1) {
+						Swal.fire({
+							text: "비밀번호가 변경되었습니다.",
+							icon: "success",
+						}).then(() => {
+							setIsModal2Open(false);
+						});
+					} else {
+						Swal.fire({
+							text: "오류가 발생하였습니다. 관리자에게 문의해주세요.",
+							icon: "error",
+						});
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else if (checkNewPw !== 2 || checkRePw !== 2) {
+			Swal.fire({
+				text: "입력한 값을 확인해주세요.",
+				icon: "warning",
+			});
 		}
 	};
 	return (
@@ -113,24 +198,92 @@ const SearchPw = () => {
 									</div>
 								</div>
 							</div>
-							<div className="searchMember-buttonBox">
-								<button>확인</button>
-							</div>
+							{emailCode !== "" ? (
+								<>
+									<div style={{ paddingTop: "20px" }}>
+										<div className="searchMember-input">
+											<input type="text" name="inputCode" id="inputCode" placeholder="인증코드를 입력해주세요" onChange={changeInput} />
+										</div>
+										<div className="searchMember-buttonBox">
+											<button onClick={checkEmailCode}>확인</button>
+										</div>
+									</div>
+								</>
+							) : (
+								""
+							)}
 						</div>
 					</div>
 				</>
 			) : (
-				<>
-					<div className="searchMember-title2">
-						<h3>고객님의 웨딩스토리 계정을 찾았습니다.</h3>
-						<p>아이디 확인 후 로그인 해 주세요.</p>
+				<div>
+					<div className="mypage-password-title">
+						<h3>비밀번호 변경</h3>
+						<p>8~20자의 영문 대/소,숫자,특수문자로 조합으로 생성해 주세요.</p>
 					</div>
-					<div className="searchMember-content2">
-						<h4>
-							회원님의 아이디는 <span style={{ color: "var(--main1)" }}>{member.memberId}</span> 입니다.
-						</h4>
+					<div className="mypage-newPassword-content">
+						<div>
+							<div>
+								<div className="mypage-newPassword-inputBox">
+									<div>
+										<label htmlFor="nowPw">새 비밀번호 입력</label>
+									</div>
+									<div className="mypage-password-input">
+										<input
+											type="password"
+											name="newPw"
+											onChange={(e) => {
+												setModifyMember({
+													...modifyMember,
+													memberPw: e.target.value,
+												});
+											}}
+											onBlur={newPwCheck}
+										/>
+									</div>
+								</div>
+								<span className={`${checkNewPw === 2 ? "joinValid" : "joinInvalid"}`} style={{ marginLeft: "250px" }}>
+									{`${
+										checkNewPw === 0
+											? ""
+											: checkNewPw === 1
+												? "8~20자의 영문 대/소,숫자,특수문자로 조합으로 생성해 주세요."
+												: "사용 가능한 비밀번호입니다."
+									}`}
+								</span>
+							</div>
+							<div>
+								<div className="mypage-newPassword-inputBox">
+									<div>
+										<label htmlFor="nowPw">새 비밀번호 확인</label>
+									</div>
+									<div className="mypage-password-input">
+										<input
+											type="password"
+											name="newRePW"
+											onChange={
+												((e) => {
+													setRePw(e.target.value);
+												},
+												(e) => {
+													rePwCheck(e.target.value);
+												})
+											}
+										/>
+									</div>
+								</div>
+								<span className={`${checkRePw === 2 ? "joinValid" : "joinInvalid"}`} style={{ marginLeft: "250px" }}>
+									{`${checkRePw === 0 ? "" : checkRePw === 1 ? "비밀번호가 불일치합니다." : "비밀번호가 일치합니다."}`}
+								</span>
+							</div>
+						</div>
 					</div>
-				</>
+					<div className="mypage-password-btnbox">
+						<button type="button" onClick={modifyPw}>
+							확인
+						</button>
+					</div>
+				</div>
 			)}
 		</>
 	);
