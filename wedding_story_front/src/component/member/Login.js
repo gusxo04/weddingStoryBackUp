@@ -155,7 +155,7 @@ const Login = () => {
 							&times;
 						</span>
 						<div className="login-searchMember-content">
-							<SearchPw />
+							<SearchPw setIsModal2Open={setIsModal2Open} />
 						</div>
 					</div>
 				</div>
