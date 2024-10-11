@@ -37,9 +37,10 @@ const AdvertisementRequest = () => {
 
 	const getTodayDate = () => {
 		const today = new Date();
+		today.setDate(today.getDate() + 1); // 오늘 날짜에 하루를 더해 내일로 설정
 		const year = today.getFullYear();
-		const month = (today.getMonth() + 1).toString().padStart(2, "0"); // Ensure 2 digits for month
-		const day = today.getDate().toString().padStart(2, "0"); // Ensure 2 digits for day
+		const month = (today.getMonth() + 1).toString().padStart(2, "0"); // 2자리 월
+		const day = today.getDate().toString().padStart(2, "0"); // 2자리 일
 		return `${year}-${month}-${day}`;
 	};
 
