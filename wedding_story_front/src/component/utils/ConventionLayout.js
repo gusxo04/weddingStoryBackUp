@@ -912,7 +912,7 @@ const SeatMemberAlert = (props) => {
           </div>
 
           <div className="convention-seat-member-info-link df-basic">
-            <Link className="cursor-p">업체 보러가기</Link>
+            {/* <Link className="cursor-p">업체 보러가기</Link> */}
           </div>
         </>
 
