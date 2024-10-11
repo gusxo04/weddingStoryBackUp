@@ -36,7 +36,7 @@ const WeddingPayment = () => {
 	const location = useLocation();
 	const navigate = useNavigate(); // navigate 사용
 	// const memberNo= useRecoilValue(loginNoState);
-	const [memberNo, setMemberNo] = useRecoilState(loginNoState);
+	const memberNo = params.memberNo;
 	const [member, setMember] = useState({
 		memberName: "",
 		memberPhone: "",

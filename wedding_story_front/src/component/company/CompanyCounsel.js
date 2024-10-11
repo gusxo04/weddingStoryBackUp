@@ -14,7 +14,6 @@ const CompanyCounsel = () => {
 		axios
 			.get(`${backServer}/company/counsel/${companyNo}/${reqPage}`)
 			.then((res) => {
-				console.log(res);
 				setCounsel(res.data.counsel);
 				setPi(res.data.pi);
 			})
@@ -22,7 +21,6 @@ const CompanyCounsel = () => {
 				console.log(err);
 			});
 	}, [companyNo, counsel.progress]);
-	console.log(counsel);
 	return (
 		<div>
 			<section className="section">

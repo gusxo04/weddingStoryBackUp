@@ -65,7 +65,6 @@ const CompanyMain = () => {
 		axios
 			.get(`${backServer}/company/main/${companyNo}`)
 			.then((res) => {
-				console.log(res);
 				setInfo(res.data);
 			})
 			.catch((err) => {
@@ -156,7 +155,7 @@ const CompanyMain = () => {
 						<Route path="notice/*" element={<CompanyNotice />} />
 						<Route path="schedule/dayInfo" element={<DayScheduleInfo />} />
 						<Route path="schedule/dayInfo/detailInfo" element={<DetailInfo />} />
-						<Route path="WeddingHallPayMent/:productNo" element={<WeddingPayment />} />
+						<Route path="WeddingHallPayMent/:productNo/:memberNo" element={<WeddingPayment />} />
 					</Routes>
 				</section>
 			</div>

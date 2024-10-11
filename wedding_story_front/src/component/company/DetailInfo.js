@@ -120,7 +120,7 @@ const DetailInfo = () => {
 					</div>
 				</div>
 				<div className="payment-btn">
-					<Link to={`/company/weddingHallPayMent/${consult.productNo}`}>결제</Link>
+					<Link to={`/company/weddingHallPayMent/${consult.productNo}/${consult.memberNo}`}>결제</Link>
 					<button
 						onClick={() => {
 							navigate("/company/schedule");

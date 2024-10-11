@@ -8,19 +8,16 @@ const CompanySalesChart = () => {
 	const backServer = process.env.REACT_APP_BACK_SERVER;
 	const companyNo = useRecoilValue(companyNoState);
 	const [price, setPrice] = useState(Array(12));
-	console.log(companyNo);
 	useEffect(() => {
 		axios
 			.get(`${backServer}/company/sales/${companyNo}`)
 			.then((res) => {
-				console.log(res);
 				setPrice(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
-	console.log(price);
 	/*----chart.js 라이브러리 */
 	const chartRef = useRef(null);
 	let chartInstance = null;
