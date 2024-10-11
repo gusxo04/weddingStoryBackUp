@@ -276,5 +276,52 @@
 		join member m on c.company_no = m.company_no
 		where c.company_no = #{companyNo} 
 	</select>
+	<select id="searchParter" resultType="int">
+		SELECT count (*)member_no
+FROM member
+WHERE member_id = (
+    SELECT partner_id
+    FROM member
+    WHERE member_no = #{memberNo}
+)
+	</select>
+	<select id="selectPartnerNo" resultType="int">
+	SELECT member_no
+FROM member
+WHERE member_id = (
+    SELECT partner_id
+    FROM member
+    WHERE member_no = #{memberNo}
+)
+	</select>
+	<select id="consultList2">
+	select
+		consult_no,1 AS
+		consult_type,product_no,consult_date,consult_time,company_no
+		from(SELECT consult.*,
+		product.company_no
+		FROM consult
+		JOIN product ON
+		consult.product_no = product.product_no) where
+		member_no=#{memberNo} or member_no=#{parterNo}
+		UNION
+		SELECT
+		pay_no,2 AS consult_type,product_no,PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1,
+		5),company_no from(SELECT
+		member_pay.*, product.company_no
+		FROM
+		member_pay
+		JOIN product ON member_pay.product_no = product.product_no)
+		where
+		(member_no=#{memberNo} or member_no=#{parterNo}) and progress !=2
+		UNION
+		SELECT
+		pay_no,3 AS consult_type,NVL(product_no,
+		0),PROGRESS_DATE,SUBSTR(PROGRESS_TIME, 1, 5),TO_CHAR(NVL(product_no,
+		0))
+		from member_pay where product_no is null and (member_no=#{memberNo} or member_no=#{parterNo})
+		and
+		progress !=2
+	</select>
 
 </mapper>
