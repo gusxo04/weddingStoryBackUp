@@ -20,4 +20,6 @@ public interface ReportDao {
 
 	List<ReportDTO> getReport(String currentCompanyNo);
 
+	int selectCount(int companyNo);
+
 }
