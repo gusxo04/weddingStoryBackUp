@@ -97,4 +97,10 @@ public interface MemberDao {
 
 	MemberDTO selectMemberSideInfo(String companyNo);
 
+	int searchParter(int memberNo);
+
+	int selectPartnerNo(int memberNo);
+
+	List<ConsultDTO> consultList2(int memberNo, int parterNo);
+
 }
