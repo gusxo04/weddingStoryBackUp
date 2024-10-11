@@ -61,7 +61,7 @@ const ProductInfo = () => {
 				<div className={styles["product-view-info"]}>
 					<div className={styles["product-thumbnail"]}>
 						<img
-							src={product.productThumb ? `${backServer}/product/image/${product.productThumb}` : "/image/default_img.png"}
+							src={product.productThumb ? `${backServer}/product/image/${product.productImage}` : "/image/default_img.png"}
 							alt={product.productTitle}
 						/>
 					</div>

@@ -25,6 +25,7 @@ import DayScheduleInfo from "./DayScheduleInfo";
 import DetailInfo from "./DetailInfo";
 import WeddingPayment from "./WeddingPayment";
 import CompanyJoinFrm from "./CompanyJoinFrm";
+import ProductPay from "./ProductPay";
 
 const CompanyMain = () => {
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
@@ -156,6 +157,7 @@ const CompanyMain = () => {
 						<Route path="schedule/dayInfo" element={<DayScheduleInfo />} />
 						<Route path="schedule/dayInfo/detailInfo" element={<DetailInfo />} />
 						<Route path="WeddingHallPayMent/:productNo/:memberNo" element={<WeddingPayment />} />
+						<Route path="productPay/:productNo/:memberNo" element={<ProductPay />} />
 					</Routes>
 				</section>
 			</div>
