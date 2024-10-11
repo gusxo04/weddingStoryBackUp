@@ -129,11 +129,8 @@ const CompanyItem = (props) => {
 		<tr className="userInfo" onClick={() => companyData(company)}>
 			<td>{company.companyNo}</td>
 			<td>{company.companyName}</td>
-			{company.memberList.length === 0 ? (
-				<td>사업자 미정</td>
-			) : (
-				company.memberList.map((c, index) => <td key={"member" + index}>{c.memberName ? c.memberName : "사업자 미정"}</td>)
-			)}
+			<td>{company.memberList.length === 0 ? "사업자 미정" : company.memberList[0].memberName || "사업자 미정"}</td>
+
 			<td>{company.companyCategory}</td>
 			<td>{company.companyTel}</td>
 			<td>{company.companyAddr}</td>
@@ -235,39 +232,27 @@ const CompanyInfo = (props) => {
 							<tbody>
 								<tr>
 									<th>회원번호</th>
-									{selectedCompany.memberList.map((c, index) => (
-										<td key={"member" + index}>{c.memberNo}</td>
-									))}
+									<td>{selectedCompany.memberList.length > 0 ? selectedCompany.memberList[0].memberNo : "정보 없음"}</td>
 								</tr>
 								<tr>
 									<th>아이디</th>
-									{selectedCompany.memberList.map((c, index) => (
-										<td key={"member" + index}>{c.memberId}</td>
-									))}
+									<td>{selectedCompany.memberList.length > 0 ? selectedCompany.memberList[0].memberId : "정보 없음"}</td>
 								</tr>
 								<tr>
 									<th>이름</th>
-									{selectedCompany.memberList.map((c, index) => (
-										<td key={"member" + index}>{c.memberName}</td>
-									))}
+									<td>{selectedCompany.memberList.length > 0 ? selectedCompany.memberList[0].memberName : "정보 없음"}</td>
 								</tr>
 								<tr>
 									<th>전화번호</th>
-									{selectedCompany.memberList.map((c, index) => (
-										<td key={"member" + index}>{c.memberPhone}</td>
-									))}
+									<td>{selectedCompany.memberList.length > 0 ? selectedCompany.memberList[0].memberPhone : "정보 없음"}</td>
 								</tr>
 								<tr>
 									<th>이메일</th>
-									{selectedCompany.memberList.map((c, index) => (
-										<td key={"member" + index}>{c.memberEmail}</td>
-									))}
+									<td>{selectedCompany.memberList.length > 0 ? selectedCompany.memberList[0].memberEmail : "정보 없음"}</td>
 								</tr>
 								<tr>
 									<th>회원가입</th>
-									{selectedCompany.memberList.map((c, index) => (
-										<td key={"member" + index}>{c.enrollDate}</td>
-									))}
+									<td>{selectedCompany.memberList.length > 0 ? selectedCompany.memberList[0].enrollDate : "정보 없음"}</td>
 								</tr>
 							</tbody>
 						</table>
