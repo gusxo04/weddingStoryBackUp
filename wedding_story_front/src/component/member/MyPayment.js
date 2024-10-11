@@ -163,7 +163,6 @@ const MyPayment = (props) => {
 														환불요청
 													</button>
 												)}
-												<Review payNo={pay.payNo} productNo={pay.productNo} index={index} />
 											</div>
 										</td>
 									</tr>
