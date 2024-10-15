@@ -43,8 +43,6 @@ public class ConventionService {
     @Autowired
     private EmailSender emailSender;
 
-    // private final String restApi = "0054761064210788";
-    // private final String restApiSecret = "kzLRR2Iatp4DqnWs05I1lb4JQvhSmFs1xhV8s9UJQa6DkoBvdhnZfwZzry3KgYHrNcXggHVxNdmTEitq";
     @Value("${restApi}")
     private String restApi;
 
