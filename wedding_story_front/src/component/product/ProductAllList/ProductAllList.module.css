@@ -135,3 +135,10 @@
 	flex-direction: column;
 	row-gap: 4px;
 }
+
+.name-title > li > div > button {
+	border: none;
+	background-color: var(--main1);
+	border: 1px solid var(--main1);
+	color: #fff;
+}

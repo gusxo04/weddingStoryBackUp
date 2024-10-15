@@ -200,7 +200,7 @@ const Advertisement = () => {
 					<thead>
 						<tr>
 							<td>업체 이름</td>
-							<td>상품 이름</td>
+							<td>상품 번호</td>
 							<td>광고 시작</td>
 							<td>광고 종료</td>
 						</tr>
@@ -217,7 +217,7 @@ const Advertisement = () => {
 					<thead>
 						<tr>
 							<td>업체 이름</td>
-							<td>상품 이름</td>
+							<td>상품 번호</td>
 							<td>광고 시작</td>
 							<td>광고 종료</td>
 						</tr>
@@ -234,7 +234,7 @@ const Advertisement = () => {
 					<thead>
 						<tr>
 							<td>업체 이름</td>
-							<td>상품 이름</td>
+							<td>상품 번호</td>
 							<td>광고 시작</td>
 							<td>광고 종료</td>
 						</tr>
@@ -251,7 +251,7 @@ const Advertisement = () => {
 					<thead>
 						<tr>
 							<td>업체 이름</td>
-							<td>상품 이름</td>
+							<td>상품 번호</td>
 							<td>광고 시작</td>
 							<td>광고 종료</td>
 							<td>선택</td>
@@ -280,7 +280,7 @@ const Advertisement = () => {
 					<thead>
 						<tr>
 							<td>업체 이름</td>
-							<td>상품 이름</td>
+							<td>상품 번호</td>
 							<td>광고 시작</td>
 							<td>광고 종료</td>
 						</tr>

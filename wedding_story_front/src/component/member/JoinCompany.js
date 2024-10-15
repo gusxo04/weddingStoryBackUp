@@ -33,7 +33,6 @@ const JoinCompany = (props) => {
 		const { name, value } = e.target;
 		setMember({ ...member, [name]: value });
 	};
-	console.log(member);
 
 	const changeInputCode = (e) => {
 		setInputCode(e.target.value);
@@ -169,7 +168,7 @@ const JoinCompany = (props) => {
 			}
 		}
 	};
-	console.log(codeCheck);
+	console.log(emailCode);
 
 	const [gender, setGender] = useState("");
 	const checkGender1 = () => {
@@ -196,7 +195,7 @@ const JoinCompany = (props) => {
 			phoneCheck === 2 &&
 			emailCheck === 2 &&
 			emailcodeCheck === 1 &&
-			codeCheck === 3 &&
+			//codeCheck === 3 &&
 			member.memberGender !== null
 		) {
 			axios

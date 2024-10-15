@@ -15,7 +15,7 @@ const ProductMain = () => {
 			<Route path="hallList" element={<WeddingHallList />} />
 			<Route path="hallInfo/:productNo" element={<WeddingHallInfo />} />
 			<Route path="consult/:productNo" element={<Consult />} />
-			<Route path="pay" element={<ProductPay />} />
+			<Route path="pay/:productNo" element={<ProductPay />} />
 		</Routes>
 	);
 };

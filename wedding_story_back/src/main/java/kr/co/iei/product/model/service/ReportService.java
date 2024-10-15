@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.company.model.dao.CompanyDao;
 import kr.co.iei.company.model.dto.CompanyDTO;
@@ -24,6 +25,7 @@ public class ReportService {
 	
 	
 	//신고
+	@Transactional
 	public int insertReport(ReportDTO report, CompanyDTO company, MemberDTO member) {
 		int result = reportDao.insertReport(report,company,member);
 		return result;
@@ -52,6 +54,11 @@ public class ReportService {
 	public CompanyDTO selectCompanyNo(int companyNo) {
 		CompanyDTO company = companyDao.selectOneCompanyNo(companyNo);
 		return company;
+	}
+
+	public int selectCount(int companyNo) {
+		int result = reportDao.selectCount(companyNo);
+		return 0;
 	}
 	
 	

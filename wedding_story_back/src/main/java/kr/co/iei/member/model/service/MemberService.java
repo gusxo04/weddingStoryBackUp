@@ -168,6 +168,23 @@ public class MemberService {
 	}
 
 	public List<ConsultDTO> consultList(int memberNo) {
+		int parterNo = memberDao.searchParter(memberNo);
+		if(parterNo != 0) {
+			parterNo = memberDao.selectPartnerNo(memberNo);
+			List<ConsultDTO> list = memberDao.consultList2(memberNo,parterNo);
+			for(ConsultDTO consult : list) {
+				if(consult.getCompanyNo().equals("0")) {
+					CompanyDTO company = memberDao.conventionList(consult.getConsultDate());
+					company.setCompanyAddr("서울 영등포구 선유동2로 57");
+					company.setCompanyTel("02-4153-3449");
+					consult.setCompany(company);
+				}else {
+					CompanyDTO company = memberDao.consultCompanyList(consult.getCompanyNo());				
+					consult.setCompany(company);
+				}
+			}
+			return list;
+		}else {
 		List<ConsultDTO> list = memberDao.consultList(memberNo);
 		for(ConsultDTO consult : list) {
 			if(consult.getCompanyNo().equals("0")) {
@@ -181,6 +198,7 @@ public class MemberService {
 			}
 		}
 		return list;
+		}
 	}
 
 	public List<MemberPayDTO> paymentList(int memberNo, String state) {

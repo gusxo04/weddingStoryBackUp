@@ -46,7 +46,6 @@ const CompanyJoinFrm = (props) => {
 	const setDayOff = props.setDayOff;
 	const keyWord = props.keyWord;
 	const setKeyWord = props.setKeyWord;
-	console.log(companyAddr);
 	const thumbnail = props.thumbnail;
 	const setThumbnail = props.setThumbnail;
 
@@ -140,7 +139,6 @@ const CompanyJoinFrm = (props) => {
 	const [checkbox, setCheckbox] = useState([]);
 	const checkboxChange = (e) => {
 		const { value, checked } = e.target;
-		console.log(e.eventPhase);
 		if (checked) {
 			// 체크된 경우
 			setDayOff((PrevDayOff) => {

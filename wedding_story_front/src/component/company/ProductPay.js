@@ -1,9 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import styles from "./ProductPay.module.css";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { loginNoState } from "../../utils/RecoilData";
 
 const ProductPay = () => {
 	useEffect(() => {
@@ -36,7 +33,7 @@ const ProductPay = () => {
 	const location = useLocation();
 	const navigate = useNavigate(); // navigate 사용
 	// const memberNo= useRecoilValue(loginNoState);
-	const [memberNo, setMemberNo] = useRecoilState(loginNoState);
+	const memberNo = params.memberNo;
 	const [member, setMember] = useState({
 		memberName: "",
 		memberPhone: "",
@@ -184,8 +181,8 @@ const ProductPay = () => {
 	};
 
 	return (
-		<section className={styles["wedding-wrap"]}>
-			<div className={styles["title-name"]}>결제하기</div>
+		<section className="wedding-wrap">
+			<div className="title-name">결제하기</div>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
@@ -193,55 +190,55 @@ const ProductPay = () => {
 				}}
 			>
 				<Link to="/hallList">
-					<span className={`material-icons ${styles["material-icons"]}`}>arrow_back</span>
+					<span className="material-icons">arrow_back</span>
 				</Link>
-				<div className={styles["wedding-content"]}>
-					<div className={styles["input-wrap"]}>
-						<div className={styles["input-title"]}>
+				<div className="wedding-content">
+					<div className="input-wrap">
+						<div className="input-title">
 							<label htmlFor="memberName">이름</label>
 						</div>
-						<div className={styles["input-item"]}>
+						<div className="input-item">
 							<input type="text" name="memberName" id="memberName" defaultValue={member.memberName} readOnly />
 						</div>
 					</div>
-					<div className={styles["input-wrap"]}>
-						<div className={styles["input-title"]}>
+					<div className="input-wrap">
+						<div className="input-title">
 							<label htmlFor="memberPhone">전화번호</label>
 						</div>
-						<div className={styles["input-item"]}>
+						<div className="input-item">
 							<input type="text" name="memberPhone" id="memberPhone" value={member.memberPhone} readOnly />
 						</div>
 					</div>
-					<div className={styles["input-wrap"]}>
-						<div className={styles["input-title"]}>
+					<div className="input-wrap">
+						<div className="input-title">
 							<label htmlFor="productName">상품 정보</label>
 						</div>
-						<div className={styles["input-item"]}>
+						<div className="input-item">
 							<input name="productName" id="productName" value={product.productName} readOnly />
 						</div>
 					</div>
 					{/*예식날짜 추가 */}
-					<div className={styles["input-wrap"]}>
-						<div className={styles["input-title"]}>
+					<div className="input-wrap">
+						<div className="input-title">
 							<label htmlFor="progressDate">예식 날짜</label>
 						</div>
-						<div className={styles["input-item"]}>
+						<div className="input-item">
 							<input type="date" name="progressDate" id="progressDate" value={memberPay.progressDate} onChange={changeDate} />
 						</div>
 					</div>
 					{/*예식시간 추가 */}
-					<div className={styles["input-wrap"]}>
-						<div className={styles["input-title"]}>
+					<div className="input-wrap">
+						<div className="input-title">
 							<label htmlFor="progressDate">예식 시간</label>
 						</div>
-						<div className={styles["input-item"]}>
+						<div className="input-item">
 							<input type="time" name="progressTime" id="progressTime" value={memberPay.progressTime} onChange={changeDate} />
 						</div>
 					</div>
-					<div className={styles["pay"]}>총 금액 : {product.productPrice}원</div>
+					<div className="pay">총 금액 : {product.productPrice}원</div>
 				</div>
-				<div className={styles["wedding-button"]}>
-					<button type="submit" className={styles["btn"]} onClick={requestPay}>
+				<div className="wedding-button">
+					<button type="submit" className="btn" onClick={requestPay}>
 						결제하기
 					</button>
 				</div>

@@ -47,7 +47,6 @@ const CompanyAdvertisement = () => {
 		}
 		return "0"; // Default price when conditions don't match
 	};
-	console.log(totalPrice);
 
 	const requestPay = (advert) => {
 		// const { IMP } = window; // 아임포트 window 객체

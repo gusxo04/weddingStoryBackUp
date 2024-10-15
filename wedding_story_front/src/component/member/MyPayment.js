@@ -109,7 +109,11 @@ const MyPayment = (props) => {
 												}
 											>
 												<div className="payment-productImg">
-													<img src={`${backServer}/product/image/${pay.product.productImg}`} />
+													{pay.product.companyCategory === "박람회" ? (
+														<img src={`${backServer}/convention/${pay.product.productImg}`} />
+													) : (
+														<img src={`${backServer}/product/image/${pay.product.productImg}`} />
+													)}
 												</div>
 											</Link>
 										</td>
@@ -138,7 +142,9 @@ const MyPayment = (props) => {
 										<td className="payment-info-btnBox" style={{ width: "20%" }}>
 											<div>
 												{pay.progress === 3 ? (
-													<button>후기작성</button>
+													<button>
+														<Review payNo={pay.payNo} productNo={pay.productNo} index={index} />
+													</button>
 												) : pay.progress === 2 ? (
 													"취소완료"
 												) : (
@@ -161,7 +167,6 @@ const MyPayment = (props) => {
 														환불요청
 													</button>
 												)}
-												<Review payNo={pay.payNo} productNo={pay.productNo} index={index} />
 											</div>
 										</td>
 									</tr>

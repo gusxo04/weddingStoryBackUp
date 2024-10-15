@@ -14,7 +14,6 @@ const CompanyCustomer = () => {
 		axios
 			.get(`${backServer}/company/customer/${companyNo}/${reqPage}`)
 			.then((res) => {
-				console.log(res);
 				setCustomerList(res.data.customer);
 				setPi(res.data.pi);
 			})
@@ -22,7 +21,6 @@ const CompanyCustomer = () => {
 				console.log(err);
 			});
 	}, [companyNo, reqPage]);
-	console.log(customerList);
 	return (
 		<div>
 			<section className="section">
@@ -60,7 +58,6 @@ const CompanyCustomer = () => {
 const CustomerItem = (props) => {
 	const customer = props.customer;
 	const index = props.index;
-	console.log(customer);
 	return (
 		<tr>
 			<th style={{ width: "10%" }}>{customer.memberNo}</th>

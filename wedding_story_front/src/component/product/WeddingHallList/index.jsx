@@ -72,18 +72,21 @@ const BoardItem = (props) => {
 	const memberNo = useRecoilValue(loginNoState);
 	const navigate = useNavigate();
 	const [liked, setLiked] = useState(false);
-
 	// 서버에서 좋아요 상태 받아오기
 	useEffect(() => {
 		axios
-			.get(`${backServer}/product/favorite/${productNo}/${memberNo}`)
+			.get(`${backServer}/product/favoriteState/${productNo}/${memberNo}`)
 			.then((res) => {
-				setLiked(res.data.liked); // 서버에서 받은 좋아요 상태 설정
+				if (res.data > 0) {
+					setLiked(true);
+				} else {
+					setLiked(false);
+				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [productNo, memberNo]);
+	}, []);
 
 	const handleLikeToggle = (e) => {
 		//console.log("실행됨");
@@ -116,7 +119,7 @@ const BoardItem = (props) => {
 		>
 			<div>
 				<img
-					src={product.productImg ? `${backServer}/product/thumb/${product.productImg}` : "/image/default_img.png"}
+					src={product.productImg ? `${backServer}/product/image/${product.productImg}` : "/image/default_img.png"}
 					alt={product.productName}
 				/>
 			</div>

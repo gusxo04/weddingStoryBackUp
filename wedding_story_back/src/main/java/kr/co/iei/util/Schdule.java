@@ -49,7 +49,7 @@ public class Schdule {
 				
     }
     
-    @Scheduled(cron = "0 1 0 * * *")
+    @Scheduled(cron = "0 13 4 * * *")
     public void advertisementSet() {
         advertisementService.advertisementSet();
     }

@@ -25,6 +25,7 @@ import DayScheduleInfo from "./DayScheduleInfo";
 import DetailInfo from "./DetailInfo";
 import WeddingPayment from "./WeddingPayment";
 import CompanyJoinFrm from "./CompanyJoinFrm";
+import ProductPay from "./ProductPay";
 
 const CompanyMain = () => {
 	const [companyNo, setCompanyNo] = useRecoilState(companyNoState);
@@ -65,7 +66,6 @@ const CompanyMain = () => {
 		axios
 			.get(`${backServer}/company/main/${companyNo}`)
 			.then((res) => {
-				console.log(res);
 				setInfo(res.data);
 			})
 			.catch((err) => {
@@ -156,7 +156,8 @@ const CompanyMain = () => {
 						<Route path="notice/*" element={<CompanyNotice />} />
 						<Route path="schedule/dayInfo" element={<DayScheduleInfo />} />
 						<Route path="schedule/dayInfo/detailInfo" element={<DetailInfo />} />
-						<Route path="WeddingHallPayMent/:productNo" element={<WeddingPayment />} />
+						<Route path="WeddingHallPayMent/:productNo/:memberNo" element={<WeddingPayment />} />
+						<Route path="productPay/:productNo/:memberNo" element={<ProductPay />} />
 					</Routes>
 				</section>
 			</div>
