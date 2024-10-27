@@ -14,16 +14,19 @@
 조원 : 정현태, 김도엽, 김연우, 김준석
 
 
-## 사용한 프로그래밍 언어, 프레임워크, 라이브러리
-BackEnd
+## 사용한 프로그래밍 언어, 프레임워크, 라이브러리, 데이터베이스
+#### BackEnd
 Language : Java
 <br/>
 Framework : Spring Boot
 
-FrontEnd
+#### FrontEnd
 Language : Html5, Css3, JavaScript
 <br/>
 Framework : React
+
+#### DB
+Oracle, Mybatis
 
 ## 사용한 주요 라이브러리
 - **react-router-dom**: 클라이언트 사이드 라우팅을 위한 라이브러리
@@ -48,6 +51,22 @@ Framework : React
 
 ## API
 - **PortOne(결제 및 환불)**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - **KakaoMaps(지도)**
 
 
