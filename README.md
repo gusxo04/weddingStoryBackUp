@@ -10,23 +10,21 @@
 방문 상담 및 진행 일정을 관리해주는 서비스
 
 ## 프로젝트 개발자들 (5명)
-팀장 : 김세영<br/>
+팀장 : 김세영  
 조원 : 정현태, 김도엽, 김연우, 김준석
 
 
 ## 사용한 프로그래밍 언어, 프레임워크, 라이브러리, 데이터베이스
 #### BackEnd
-Language : Java
-<br/>
+Language : Java  
 Framework : Spring Boot
 
 #### FrontEnd
-Language : Html5, Css3, JavaScript
-<br/>
+Language : Html5, Css3, JavaScript  
 Framework : React
 
 #### DB
-Oracle, Mybatis
+Oracle, Mybatis  
 
 #### 사용한 주요 라이브러리
 - **react-router-dom**: 클라이언트 사이드 라우팅을 위한 라이브러리
@@ -57,7 +55,7 @@ Oracle, Mybatis
 
 ## 설치 및 설정 가이드
 #### 1. git clone
-git clone https://github.com/gusxo04/weddingStoryBackUp.git <br/>
+git clone https://github.com/gusxo04/weddingStoryBackUp.git  
 cd weddingStoryBackUp
 
 #### 2. 의존성 설치
@@ -73,24 +71,21 @@ npm start
 
 ## 프로젝트 주요 기능
 ### 일반 유저
-웨딩 관련 상품 구매가능
-<br/>
-웨딩 상담 신청
-<br/>
-박람회로 다양한 업체 확인가능
-<br/>
+웨딩 관련 상품 구매가능  
+웨딩 상담 신청  
+박람회로 다양한 업체 확인가능  
+  
 ### 업체
-업체등록후 업체에서 파는 상품 광고 및 판매가능
-<br/>
+업체등록후 업체에서 파는 상품 광고 및 판매가능  
 박람회 부스 구입후 업체 홍보가능
 
 
 ### 관리자
-전체적인 회원 관리<br/>
-박람회 개최<br/>
-매출 조회<br/>
-광고 관리<br/>
-고객센터 / 문의사항<br/>
+전체적인 회원 관리  
+박람회 개최  
+매출 조회  
+광고 관리  
+고객센터 / 문의사항  
 
 
 
