@@ -20,7 +20,7 @@ Language : Java
 Framework : Spring Boot
 
 #### FrontEnd
-Language : Html5, Css3, JavaScript  
+Language : HTML5, CSS3, JavaScript  
 Framework : React
 
 #### DB
