@@ -57,7 +57,7 @@ Oracle, Mybatis
 
 ## 설치 및 설정 가이드
 #### 1. git clone
-git clone https://github.com/gusxo04/weddingStoryBackUp.git
+git clone https://github.com/gusxo04/weddingStoryBackUp.git <br/>
 cd weddingStoryBackUp
 
 #### 2. 의존성 설치
@@ -82,6 +82,7 @@ npm start
 ### 업체
 업체등록후 업체에서 파는 상품 광고 및 판매가능
 <br/>
+박람회 부스 구입후 업체 홍보가능
 
 
 ### 관리자
