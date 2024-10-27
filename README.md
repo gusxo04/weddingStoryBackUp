@@ -44,4 +44,11 @@ Framework : React
 - **@fullcalendar/react**: 캘린더 컴포넌트
 - **prettier**: 코드 포매터
 - **@mui/material**: 머티리얼 UI
-- **@emotion/react, @emotion/styled**: 
+- **@emotion/react, @emotion/styled**: 스타일 컴포넌트
+
+## API
+- **PortOne(결제 및 환불)**
+- **KakaoMaps(지도)**
+
+
+
