@@ -28,7 +28,7 @@ Framework : React
 #### DB
 Oracle, Mybatis
 
-## 사용한 주요 라이브러리
+#### 사용한 주요 라이브러리
 - **react-router-dom**: 클라이언트 사이드 라우팅을 위한 라이브러리
 - **axios**: HTTP 클라이언트를 위한 라이브러리
 - **recoil**: 상태 관리를 위한 라이브러리
@@ -49,25 +49,30 @@ Oracle, Mybatis
 - **@mui/material**: 머티리얼 UI
 - **@emotion/react, @emotion/styled**: 스타일 컴포넌트
 
-## API
+#### API
 - **PortOne(결제 및 환불)**
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - **KakaoMaps(지도)**
+
+
+
+## 설치 및 설정 가이드
+#### 1. git clone
+git clone https://github.com/gusxo04/weddingStoryBackUp.git
+cd weddingStoryBackUp
+
+#### 2. 의존성 설치
+npm install
+
+#### 3. 환경 변수 파일 설정 (env)
+REACT_APP_BACK_SERVER = http://site-name.com
+
+#### 4. 서버 시작
+npm start
+
+
+
+
+
 
 
 
