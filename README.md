@@ -5,6 +5,8 @@
 </p>
 
 
+<hr style="width: 100vw; height: 1px; border-bottom: 1px solid 
+
 프로젝트 소개 및 목적
 결혼식을 처음 준비해보는 고객을 위하여
 웨딩 업체를 소개하고 원하는 웨딩 상품을 구매하도록 하며
