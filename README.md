@@ -5,7 +5,8 @@
 </p>
 
 
-<hr style="width: 100vw; height: 1px; border-bottom: 1px solid 
+<hr style="width: 100vw; height: 1px; border-bottom: 1px solid black;">
+
 
 프로젝트 소개 및 목적
 결혼식을 처음 준비해보는 고객을 위하여
