@@ -55,9 +55,9 @@ Oracle, Mybatis
 
 ## 설치 및 설정 가이드
 #### 개발환경
-Java 17
-Node.js 16.20.2
-React 18
+Java 17  
+Node.js 16.20.2  
+React 18  
 
 #### 1. git clone
 git clone https://github.com/gusxo04/weddingStoryBackUp.git  
